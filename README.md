@@ -20,7 +20,9 @@ Making your life at uni better
 
 ## Defined Resources so far
 
-Embedded tomcat uses the port 8080 by default 
-So the base url is localhost:8080 
+Embedded tomcat uses the port 8080 by default <br />
+So the base url is localhost:8080 <br />
 
-GET `localhost:8080/buildings` returns a list of buildings including rooms of each building
+GET <br />
+`localhost:8080/buildings` <br />
+returns a list of buildings including rooms of each building<br />
