@@ -10,3 +10,9 @@ Making your life at uni better
 ⋅⋅2. `git commit -m "some useful comments"`
 ⋅⋅3. `git push origin master`
 
+1. First ordered list item
+2. Another item
+⋅⋅* Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+⋅⋅1. Ordered sub-list
+4. And another item.
