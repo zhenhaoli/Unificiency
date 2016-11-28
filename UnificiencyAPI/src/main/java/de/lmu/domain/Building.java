@@ -26,4 +26,6 @@ public class Building {
 	@ElementCollection
 	private List<Room> rooms;
 
+	private transient Double distanceFromUser;
+
 }

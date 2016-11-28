@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.lmu.domain.Building;
-import de.lmu.repository.BuildingRepository;
+import de.lmu.service.BuildingService;
 
 @RestController
 public class BuildingController {
 
 	@Autowired
-	BuildingRepository buildingRepository;
+	private BuildingService buildingService;
 
 	/** retrieve all buildings */
 	@RequestMapping(value = "/buildings", method = RequestMethod.GET)
 	public List<Building> listBuildings() {
-		return buildingRepository.findAll();
+		return buildingService.findAll();
 	}
 }
