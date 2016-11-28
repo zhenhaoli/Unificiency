@@ -75,6 +75,7 @@ public class BuildingServiceImpl implements BuildingService {
 			System.out.println("rows: ");
 			System.out.println(rows.toString(2));
 			
+			//based on response result set the distance of each building from the user
 			for(int i = 0; i<buildings.size(); i++){
 				JSONObject distance = elements.getJSONObject(i).getJSONObject("distance");
 				buildings.get(i).setDistanceFromUser(new Distance(distance.getString("text"), distance.getInt("value")));
@@ -85,7 +86,7 @@ public class BuildingServiceImpl implements BuildingService {
 			e.printStackTrace();
 		}
 		System.err.println("Printing buildings:");
-		// sort building so nearest are shown first
+		// sort building by distance from user so nearest are shown first
 		buildings.sort((Building b1, Building b2) -> b1.getDistanceFromUser().getValue()
 				- b2.getDistanceFromUser().getValue());
 		buildings.forEach(System.out::println);
