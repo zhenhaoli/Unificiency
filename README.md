@@ -5,6 +5,8 @@ Making your life at uni better
 
 ### Version Control
 
+#### If you have the repo set up, make sure you always update your project! e.g by `git pull`
+
 1. install git
 2. clone this repo: `git clone https://github.com/zhenhaoli/Unificiency.git`
 3. after changes push your code to this repo:
