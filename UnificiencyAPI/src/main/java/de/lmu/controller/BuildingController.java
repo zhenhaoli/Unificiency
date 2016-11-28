@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.lmu.domain.Building;
@@ -18,7 +19,8 @@ public class BuildingController {
 
 	/** retrieve all buildings */
 	@RequestMapping(value = "/buildings", method = RequestMethod.GET)
-	public List<Building> listBuildings() {
-		return buildingService.findAll();
+	public List<Building> listBuildingsByDistance(@RequestParam(value = "latitude", required = false) Double latitude,
+			@RequestParam(value = "longitude", required = false) Double longitude) {
+		return buildingService.findAllSortByDistance(latitude, longitude);
 	}
 }

@@ -12,4 +12,8 @@ public class Address {
 	private String zipcode;
 	private String city;
 	private String country;
+
+	public String getFormattedAddress() {
+		return this.street + this.streetNum + " " + this.zipcode + " " + this.city;
+	}
 }
