@@ -12,6 +12,12 @@ Making your life at uni better
   2. `git commit -m "some useful comments"`
   3. `git push origin master`
   
+### Initiate MySQL
+
+You can install MySQL standalone, however, it's recommended to use XAMPP since it brings everything you need especially the GUI aka phpMyAdmin.
+
+Run the sql script in `Unificiency/UnificiencyAPI/src/sql/init.sql` to create the database and user accounts to access it.
+ 
 ### Spring Boot on Eclipse
 
 1. Download latest Eclipse
