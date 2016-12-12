@@ -26,11 +26,5 @@ Run the sql script in `Unificiency/UnificiencyAPI/src/sql/init.sql` to create th
 2. In Eclipse -> Help -> Eclipse Marketplace -> Search for 'Spring' and download the Spring IDE
 3. After installtion of the Spring IDE you can run application as Spring Boot Application in Eclipse (right click on project -> run as -> spring boot app)
 
-## Defined Resources so far
 
-Embedded tomcat uses the port 8080 by default <br />
-So the base url is localhost:8080 <br />
-
-GET `localhost:8080/buildings` returns a list of buildings including rooms of each building<br />
-GET `http://localhost:8080/buildings?latitude=48.12893&longitude=11.6381313` returns the list of buildings ordered by the nearest distance from user <br />
 
