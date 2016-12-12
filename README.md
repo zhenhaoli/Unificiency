@@ -1,30 +1,17 @@
-# Unificiency
+## Unificiency
 Making your life at uni better
 
-## Getting Started
+### Unificiency Documentation ###
 
-### Version Control
+Before you start, make sure to read the [documentations](https://github.com/zhenhaoli/Unificiency/tree/master/Documentations) to get started
 
-#### If you have the repo set up, make sure you always update your project! e.g by `git pull`
+#### Shortcuts ####
 
-1. install git
-2. clone this repo: `git clone https://github.com/zhenhaoli/Unificiency.git`
-3. after changes push your code to this repo:
-  1. `git add *`
-  2. `git commit -m "some useful comments"`
-  3. `git push origin master`
-  
-### Initiate MySQL
-
-You can install MySQL standalone, however, it's recommended to use XAMPP since it brings everything you need especially the GUI aka phpMyAdmin.
-
-Run the sql script in `Unificiency/UnificiencyAPI/src/sql/init.sql` to create the database and user accounts to access it.
- 
-### Spring Boot on Eclipse
-
-1. Download latest Eclipse
-2. In Eclipse -> Help -> Eclipse Marketplace -> Search for 'Spring' and download the Spring IDE
-3. After installtion of the Spring IDE you can run application as Spring Boot Application in Eclipse (right click on project -> run as -> spring boot app)
+0. [Getting Started]
+1. [UI Navigation Tree](https://github.com/zhenhaoli/Unificiency/blob/master/Documentations/navigation_flow/README.md)
+2. [UI Wireframes](https://unificency.mybalsamiq.com/projects/androidapp/grid)
+3. [REST Interface Online Doc](https://zhenhao.li/lmu/msp/rest_doc/)
+4. [Android Client Model Classes](https://github.com/zhenhaoli/Unificiency/blob/master/Documentations/android_model_classes/README.md)
 
 
 
