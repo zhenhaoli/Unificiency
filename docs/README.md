@@ -25,10 +25,10 @@ When a menu of main menu drawer is clicked, show the tabs below
    - embedd good maps with markers of the buildings
   
 #### Menu 2 Study Group ####
-  1. all groups
-   - when one is clicked, show latest news/members/notes
-  2. members
-     - when one is clicked, show email/matrikelnummer etc.
+  1. all public groups
+   - when one is clicked, show latest news/members/notes, then - when one is clicked, show email/matrikelnummer etc.
+  2. all groups where the user is in (private groups)
+
   3. notes
     - preview and details view
   
