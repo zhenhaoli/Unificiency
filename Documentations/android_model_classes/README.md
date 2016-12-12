@@ -1,7 +1,7 @@
 ### Model Class for the Android Client ###
 
 #### Following Classes will be needed for the android client, e.g. when using list view or showing details of a certain model e.g. building
-
+```javascript
 User {
 	id: long,
 	email: string, (unique) (dont return when request for list of notes etc.)
@@ -62,4 +62,5 @@ Note {
 	creationDate: timestamp,
 	rating: int //+1 or -1 for every user on each note
 }
+```
 
