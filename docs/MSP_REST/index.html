@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="RESTDOC" ng-controller="MainController">
+<head>
+    <meta charset="UTF-8">
+    <title>Unificiency - REST Resource Definition </title>
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
+</head>
+<body class="container">
+
+<table class="striped highlight">
+    <thead>
+    <tr>
+        <th data-field="api">API</th>
+        <th data-field="description">Beschreibung</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr ng-repeat="api in apis">
+        <td>{{api.name}}</td>
+        <td>{{api.description}}</td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/materialize/dist/js/materialize.min.js"></script>
+
+<script src="app.js"></script>
+</body>
+</html>
