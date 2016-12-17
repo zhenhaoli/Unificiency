@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import lmu.de.unificiencyandroid.R;
 
 import static lmu.de.unificiencyandroid.R.id.textView;
@@ -14,10 +17,12 @@ import static lmu.de.unificiencyandroid.R.id.textView;
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
 
     private LayoutInflater layoutInflater;
-    private String[] data = {"The Nonames", "The Pirates", "The Langstrumpfs", "The Arnolds"};
+    private ArrayList<String> data;
 
     public GroupsAdapter(Context context) {
         this.layoutInflater = LayoutInflater.from(context);
+        this.data = new ArrayList<String>();
+        this.data.addAll(Arrays.asList("The Nonames", "The Pirates", "The Langstrumpfs", "The Arnolds"));
     }
 
     @Override
@@ -30,13 +35,13 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolderGroups holder, int position) {
         //filling data in
-        holder.groupNameTextView.setText(this.data[position]);
+        holder.groupNameTextView.setText(this.data.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return this.data.length;
+        return this.data.size();
     }
 
     static class ViewHolderGroups extends RecyclerView.ViewHolder {
