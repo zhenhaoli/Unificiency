@@ -8,5 +8,12 @@
     <string name="nav_item_logout">Abmelden</string>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <!-- Groups Fragment -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="groups_title">Lerngruppen</string>
+    <string name="groups_new_group">Neue Gruppe erstellen</string>
+    <string name="groups_details_description">Gruppenbeschreibung</string>
+    <string name="groups_details_description_default">Diese Gruppe hat noch keine Beschreibung angegeben.</string>
+    <string name="groups_details_members">Mitglieder</string>
+    <string name="groups_details_join">Beitreten</string>
 </resources>
