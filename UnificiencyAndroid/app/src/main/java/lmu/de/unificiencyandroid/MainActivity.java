@@ -9,6 +9,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import lmu.de.unificiencyandroid.view.buildings.BuildingsTab;
+import lmu.de.unificiencyandroid.view.notes.NotesTab;
+
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView,new BuildingsTab()).commit();
         /**
          * Setup click events on the Navigation View Items.
          */
@@ -44,8 +47,43 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
 
+                if (menuItem.getItemId() == R.id.nav_item_buildings) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new BuildingsTab()).commit();
 
+                }
 
+                if (menuItem.getItemId() == R.id.nav_item_groups) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_notes) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new NotesTab()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_setting) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_account) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_logout) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                /*
                 if (menuItem.getItemId() == R.id.nav_item_sent) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
@@ -56,6 +94,7 @@ public class MainActivity extends AppCompatActivity{
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
                 }
+                */
 
                 return false;
             }
