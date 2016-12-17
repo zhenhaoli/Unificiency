@@ -47,7 +47,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int color = generator.getColor(name);
         TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect(name.substring(0,1), color, 100);
+                .buildRoundRect(name.substring(0,2), color, 100);
         holder.groupFirtCharsImageView.setImageDrawable(drawable);
 
     }
