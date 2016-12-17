@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import lmu.de.unificiencyandroid.view.buildings.BuildingsTab;
+import lmu.de.unificiencyandroid.view.groups.GroupsFragment;
 import lmu.de.unificiencyandroid.view.notes.NotesTab;
 import lmu.de.unificiencyandroid.view.trash.SentFragment;
 

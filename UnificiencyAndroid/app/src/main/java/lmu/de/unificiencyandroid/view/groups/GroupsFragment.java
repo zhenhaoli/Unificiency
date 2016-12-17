@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid;
+package lmu.de.unificiencyandroid.view.groups;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.adapters.GroupsAdapter;
 
 
@@ -47,6 +48,7 @@ public class GroupsFragment extends Fragment {
                 }
             }
         });
+        this.groupsRecyclerView.setVerticalScrollBarEnabled(true);
         //bind to data
         groupsAdapter = new GroupsAdapter((getActivity()));
         groupsRecyclerView.setAdapter(groupsAdapter);
