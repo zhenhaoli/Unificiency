@@ -1,38 +1,29 @@
-package lmu.de.unificiencyandroid;
+package lmu.de.unificiencyandroid.view.login;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Debug;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.view.View;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import lmu.de.unificiencyandroid.MainActivity;
+import lmu.de.unificiencyandroid.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AuthActivity {
 
-    private Button login_button;
-    private Button register_button;
+    private Button loginButton;
+    private Button registerButton;
 
     private TextInputLayout usernameWrapper;
     private TextInputLayout passwordWrapper;
-
-    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
-    private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-    private Matcher matcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login_button= (Button) findViewById(R.id.login);
-        register_button= (Button) findViewById(R.id.register);
+        loginButton= (Button) findViewById(R.id.login);
+        registerButton= (Button) findViewById(R.id.register);
         usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
         passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
 
@@ -43,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameWrapper.getEditText().setText("WeAreBest@Jindoing");
         passwordWrapper.getEditText().setText("WeAreBest@Jindoing");
 
-        login_button.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideKeyboard();
@@ -73,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
-        register_button.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -86,23 +77,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void hideKeyboard() {
-        View view = getCurrentFocus();
-        if (view != null) {
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
-                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
 
-    public boolean validateEmail(String email) {
-        matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
-    public boolean validatePassword(String password) {
-        Log.d("pw length: ", ""+password.length());
-        return password.length() > 5;
-    }
+
 
 
 }

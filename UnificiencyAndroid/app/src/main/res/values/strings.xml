@@ -6,10 +6,11 @@
     <string name="nickname">Nickname</string>
     <string name="password_confirm">Passwort Wiederholen</string>
     <string name="major">Studiengang</string>
-    <string name="creat_account">Nutzer anlegen</string>
+    <string name="creat_account">Konto anlegen</string>
 
     <string name="validation_email">Bitte eine gültige Email Adresse eingeben</string>
-    <string name="validation_password">Passwort muss mindestens 6 Zeichen enhalten</string>
+    <string name="validation_password">Passwort muss mindestens 6 Zeichen enthalten</string>
+    <string name="validation_passwords_equal">Eingegebene Passwörter stimmen nicht überein</string>
 
     <string name="app_name">Unificiency</string>
     <string name="nav_item_buildings">Gebäude</string>
