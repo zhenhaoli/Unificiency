@@ -5,6 +5,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lmugreen</item>
         <item name="colorPrimaryDark">@color/lmugreen</item>
-
+        <item name="colorAccent">@color/lmugreen</item>
     </style>
 </resources>
