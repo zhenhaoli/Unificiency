@@ -1,9 +1,9 @@
 package lmu.de.unificiencyandroid;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +16,9 @@ import lmu.de.unificiencyandroid.adapters.GroupsAdapter;
 public class GroupsFragment extends Fragment {
     private RecyclerView groupsRecyclerView;
     private RecyclerView.Adapter groupsAdapter;
-    private RecyclerView.LayoutManager GroupsLayoutManager;
+    private RecyclerView.LayoutManager groupsLayoutManager;
+    private NestedScrollView groupsScrollview;
+    private AppBarLayout groupsAppBar;
 
 
     public GroupsFragment() {
@@ -32,8 +34,19 @@ public class GroupsFragment extends Fragment {
         //fix scrolling issues when inside a nestedScrollView
         groupsRecyclerView.setNestedScrollingEnabled(false);
         // use a linear layout manager
-        GroupsLayoutManager = new LinearLayoutManager(this.getActivity());
-        groupsRecyclerView.setLayoutManager(GroupsLayoutManager);
+        groupsLayoutManager = new LinearLayoutManager(this.getActivity());
+        groupsRecyclerView.setLayoutManager(groupsLayoutManager);
+        this.groupsScrollview = (NestedScrollView) view.findViewById(R.id.groups_nested_scroll_view);
+        this.groupsAppBar = (AppBarLayout) view.findViewById(R.id.groups_app_bar_layout);
+        groupsScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
+                                       int oldScrollY) {
+                if(scrollY == 0){
+                    groupsAppBar.setExpanded(true);
+                }
+            }
+        });
         //bind to data
         groupsAdapter = new GroupsAdapter((getActivity()));
         groupsRecyclerView.setAdapter(groupsAdapter);
