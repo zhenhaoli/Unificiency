@@ -20,11 +20,6 @@ import lmu.de.unificiencyandroid.R;
 
 import static lmu.de.unificiencyandroid.R.id.textView;
 
-/**
- * Created by robertMueller on 17.12.16.
- */
-
-
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
 
     private LayoutInflater layoutInflater;

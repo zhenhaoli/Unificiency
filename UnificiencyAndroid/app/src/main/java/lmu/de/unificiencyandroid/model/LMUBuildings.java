@@ -1,4 +1,5 @@
-package lmu.de.unificiencyandroid.domain;
+package lmu.de.unificiencyandroid.model;
+
 import java.util.List;
 
 public class LMUBuildings {
