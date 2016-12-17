@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import lmu.de.unificiencyandroid.view.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.view.notes.NotesTab;
+import lmu.de.unificiencyandroid.view.trash.SentFragment;
 
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;

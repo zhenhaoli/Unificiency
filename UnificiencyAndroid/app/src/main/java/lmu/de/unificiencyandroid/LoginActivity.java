@@ -12,6 +12,7 @@ public class LoginActivity extends AppCompatActivity {
     Button register_button;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

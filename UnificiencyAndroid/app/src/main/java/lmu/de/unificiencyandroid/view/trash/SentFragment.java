@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid;
+package lmu.de.unificiencyandroid.view.trash;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import lmu.de.unificiencyandroid.R;
 
-public class PrimaryFragment extends Fragment {
+
+public class SentFragment extends Fragment {
 
     @Nullable
     @Override
