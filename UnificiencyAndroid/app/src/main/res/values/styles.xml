@@ -5,6 +5,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lmugreen</item>
         <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
-
+        <item name="colorAccent">@color/lmugreen</item>
     </style>
 </resources>

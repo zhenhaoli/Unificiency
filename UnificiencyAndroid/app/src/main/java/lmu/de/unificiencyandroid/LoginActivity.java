@@ -2,9 +2,11 @@ package lmu.de.unificiencyandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.view.View;
@@ -43,7 +45,12 @@ public class LoginActivity extends AppCompatActivity {
                 hideKeyboard();
 
                 String username = usernameWrapper.getEditText().getText().toString();
-                String password = usernameWrapper.getEditText().getText().toString();
+                String password = passwordWrapper.getEditText().getText().toString();
+
+                usernameWrapper.setError(null);
+                usernameWrapper.setErrorEnabled(false);
+                passwordWrapper.setError(null);
+                passwordWrapper.setErrorEnabled(false);
 
                 if(!validateEmail(username)){
                     usernameWrapper.setError(getString(R.string.validation_email));
@@ -51,9 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(!validatePassword(password)){
                     passwordWrapper.setError(getString(R.string.validation_password));
                 }
-                
+
                 //TODO: If received Oauth Token??
                 if(validateEmail(username)&&validatePassword(password)) {
+                    usernameWrapper.setErrorEnabled(false);
+                    passwordWrapper.setErrorEnabled(false);
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(loginIntent);
                 }
@@ -87,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean validatePassword(String password) {
+        Log.d("pw length: ", ""+password.length());
         return password.length() > 5;
     }
 
