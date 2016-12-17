@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameWrapper.setHint(getString(R.string.username));
         passwordWrapper.setHint(getString(R.string.password));
 
+        //TODO: remove this in prd
         usernameWrapper.getEditText().setText("WeAreBest@Jindoing");
         passwordWrapper.getEditText().setText("WeAreBest@Jindoing");
 
