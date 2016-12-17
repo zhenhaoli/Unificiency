@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.parceler.Parcels;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
@@ -31,9 +29,6 @@ public class BuildungDetails extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        Building building= (Building) Parcels.unwrap(getIntent().getParcelableExtra("building"));
-        textView.setText(building.toString());
-
 
 
     }
