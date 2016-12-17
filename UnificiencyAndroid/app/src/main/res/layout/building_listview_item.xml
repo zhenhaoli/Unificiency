@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imgitem"
+        android:contentDescription="@string/app_name"
+        android:layout_width="200px"
+        android:layout_height="200px"
+
+         />
+
+    <TextView
+        android:id="@+id/txitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sssss"
+        android:layout_toRightOf="@+id/imgitem"
+        android:layout_centerVertical="true"
+        android:paddingLeft="6dip" />
+
+</RelativeLayout>

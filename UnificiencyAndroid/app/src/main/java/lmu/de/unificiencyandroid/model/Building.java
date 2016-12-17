@@ -18,4 +18,7 @@ public class Building {
     public String toString() {
         return(address+"\n"+city);
     }
+    public Bitmap getImg() {
+        return img;
+    }
 }
