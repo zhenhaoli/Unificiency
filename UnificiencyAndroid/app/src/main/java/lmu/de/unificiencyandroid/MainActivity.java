@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import lmu.de.unificiencyandroid.view.BuildingsFragment;
+
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
 
                 if (menuItem.getItemId() == R.id.nav_item_buildings) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+                    fragmentTransaction.replace(R.id.containerView,new BuildingsFragment()).commit();
 
                 }
 
