@@ -14,6 +14,7 @@ import lmu.de.unificiencyandroid.R;
 public class GroupDetails extends Fragment {
 
 
+
     private OnFragmentInteractionListener mListener;
 
     public GroupDetails() {
