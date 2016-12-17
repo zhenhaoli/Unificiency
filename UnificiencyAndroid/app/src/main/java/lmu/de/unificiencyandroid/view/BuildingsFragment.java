@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import lmu.de.unificiencyandroid.PrimaryFragment;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.SocialFragment;
-import lmu.de.unificiencyandroid.UpdatesFragment;
 
 public class BuildingsFragment extends Fragment {
 

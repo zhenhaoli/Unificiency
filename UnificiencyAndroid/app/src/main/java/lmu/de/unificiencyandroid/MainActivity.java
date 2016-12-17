@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity{
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView,new BuildingsFragment()).commit();
         /**
          * Setup click events on the Navigation View Items.
          */
