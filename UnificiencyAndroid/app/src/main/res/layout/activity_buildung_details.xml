@@ -25,4 +25,47 @@
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
 
+    <TextView
+        android:id="@+id/now_availableRoom_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgitem"
+        android:layout_centerVertical="true"
+        android:paddingLeft="6dip" />
+    <ListView
+        android:id="@+id/now_availableRoom_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
+
+
+    <TextView
+        android:id="@+id/later_availableRoom_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgitem"
+        android:layout_centerVertical="true"
+        android:paddingLeft="6dip" />
+    <ListView
+        android:id="@+id/later_availableRoom_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
+
+    <TextView
+        android:id="@+id/allRooms_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgitem"
+        android:layout_centerVertical="true"
+        android:paddingLeft="6dip" />
+    <ListView
+        android:id="@+id/allRooms_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
+
+
+
+
 </RelativeLayout>

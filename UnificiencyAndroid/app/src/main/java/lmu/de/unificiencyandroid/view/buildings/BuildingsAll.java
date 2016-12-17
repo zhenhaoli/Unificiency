@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.model.Room;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -53,6 +54,7 @@ public class BuildingsAll extends Fragment {
             data.add(new Building("Öttingenstr. 67","München",imgo67str));
             data.add(new Building("Geschwister-Scholl-Platz 1","München",imgg1str));
         }
+
 
 
         //useful code to show list view
