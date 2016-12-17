@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.view;
+package lmu.de.unificiencyandroid.view.buildings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

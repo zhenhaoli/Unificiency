@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.view;
+package lmu.de.unificiencyandroid.view.buildings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import lmu.de.unificiencyandroid.R;
 
-public class BuildingsFragment extends Fragment {
+public class BuildingsTab extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;

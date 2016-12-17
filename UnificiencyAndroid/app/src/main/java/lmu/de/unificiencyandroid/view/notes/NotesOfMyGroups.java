@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.view;
+package lmu.de.unificiencyandroid.view.notes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,11 @@ import lmu.de.unificiencyandroid.R;
  * Created by dev on 17.12.2016.
  */
 
-public class BuildingsNearest extends Fragment {
+public class NotesOfMyGroups extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.buildings_nearest, null);
+        return inflater.inflate(R.layout.notes_ofmygroups, null);
     }
 }
