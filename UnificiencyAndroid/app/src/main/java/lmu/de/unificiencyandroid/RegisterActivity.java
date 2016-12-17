@@ -3,7 +3,7 @@ package lmu.de.unificiencyandroid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Register_Activity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
