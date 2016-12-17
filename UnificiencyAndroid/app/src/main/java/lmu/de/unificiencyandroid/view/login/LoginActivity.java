@@ -40,8 +40,9 @@ public class LoginActivity extends AuthActivity {
             SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
                     .setText(registeredMsg)
                     .setDuration(Style.DURATION_LONG)
+                    .setFrame(Style.FRAME_KITKAT)
                     .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
-                    .setAnimations(Style.ANIMATIONS_FADE)
+                    .setAnimations(Style.ANIMATIONS_SCALE)
                     .show();
         }
 
