@@ -1,8 +1,8 @@
 package lmu.de.unificiencyandroid.view.buildings;
 import lmu.de.unificiencyandroid.adapters.BuildingsAdapter;
-import lmu.de.unificiencyandroid.view.buildings.BuildingDetails;
 import lmu.de.unificiencyandroid.model.Building;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +34,12 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 public class BuildingsAll extends Fragment {
 
 
+    List<Building> data = new ArrayList<Building>();
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        List<Building> data = new ArrayList<Building>();
         //just to fake data, it useless
         Resources res = this.getResources();
         Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a17str)).getBitmap();
@@ -55,7 +57,7 @@ public class BuildingsAll extends Fragment {
 
         //useful code to show list view
         final View x =  inflater.inflate(R.layout.buildings_all,null);
-        ListView all_building_listview = (ListView) x.findViewById(R.id.all_building_listview);
+        final ListView all_building_listview = (ListView) x.findViewById(R.id.all_building_listview);
 
         BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1,data);
         all_building_listview.setAdapter(adapter);
@@ -66,13 +68,9 @@ public class BuildingsAll extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
 
-                Fragment fragment = new BuildingDetails();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.buildings_all_fragment, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
+                Intent buildungDetails=new Intent(getActivity(),BuildungDetails.class);
+                buildungDetails.putExtra("building", Parcels.wrap(all_building_listview.getItemAtPosition(position)));
+                startActivity(buildungDetails);
             }
         });
 

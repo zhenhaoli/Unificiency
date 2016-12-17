@@ -16,7 +16,6 @@
         android:id="@+id/txitem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sssss"
         android:layout_toRightOf="@+id/imgitem"
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
