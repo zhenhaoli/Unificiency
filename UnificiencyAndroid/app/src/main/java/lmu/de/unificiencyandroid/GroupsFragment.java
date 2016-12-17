@@ -29,6 +29,8 @@ public class GroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_groups, container, false);
         groupsRecyclerView = (RecyclerView) view.findViewById(R.id.groups_recycler_view);
+        //fix scrolling issues when inside a nestedScrollView
+        groupsRecyclerView.setNestedScrollingEnabled(false);
         // use a linear layout manager
         GroupsLayoutManager = new LinearLayoutManager(this.getActivity());
         groupsRecyclerView.setLayoutManager(GroupsLayoutManager);
