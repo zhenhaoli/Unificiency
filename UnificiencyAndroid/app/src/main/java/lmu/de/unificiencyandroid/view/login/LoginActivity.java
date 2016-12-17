@@ -5,9 +5,12 @@ import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
+import android.widget.Toast;
 
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
+
+import static android.R.attr.data;
 
 public class LoginActivity extends AuthActivity {
 
@@ -21,6 +24,15 @@ public class LoginActivity extends AuthActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Bundle extras = getIntent().getExtras();
+        String registeredMsg;
+
+        if (extras != null) {
+            registeredMsg = extras.getString("registerSuccess");
+            Toast.makeText(this, registeredMsg,
+                    Toast.LENGTH_LONG).show();
+        }
 
         loginButton= (Button) findViewById(R.id.login);
         registerButton= (Button) findViewById(R.id.register);
