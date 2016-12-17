@@ -1,11 +1,18 @@
 package lmu.de.unificiencyandroid.view.login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.widget.Button;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperActivityToast;
+import com.github.johnpersano.supertoasts.library.utils.PaletteUtils;
 
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
@@ -30,8 +37,12 @@ public class LoginActivity extends AuthActivity {
 
         if (extras != null) {
             registeredMsg = extras.getString("registerSuccess");
-            Toast.makeText(this, registeredMsg,
-                    Toast.LENGTH_LONG).show();
+            SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
+                    .setText(registeredMsg)
+                    .setDuration(Style.DURATION_LONG)
+                    .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
+                    .setAnimations(Style.ANIMATIONS_FADE)
+                    .show();
         }
 
         loginButton= (Button) findViewById(R.id.login);

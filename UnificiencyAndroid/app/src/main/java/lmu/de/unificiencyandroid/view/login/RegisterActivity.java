@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 public class RegisterActivity extends AuthActivity {
     //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
     private String[] majors ={"C","C++","Java",".NET","iPhone","Android","ASP.NET","PHP"};
@@ -47,6 +49,10 @@ public class RegisterActivity extends AuthActivity {
         AutoCompleteTextView actv= (AutoCompleteTextView)findViewById(R.id.major);
         actv.setThreshold(1);//will start working from first character
         actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+
+        usernameWrapper.getEditText().setText("asd@sdss");
+        passwordWrapper.getEditText().setText("asd@sdss");
+        passwordConfirmWrapper.getEditText().setText("asd@sdss");
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +91,8 @@ public class RegisterActivity extends AuthActivity {
                 } else {
                     passwordWrapper.setError(getString(R.string.validation_passwords_equal));
                 }
+
+                //TODO: validate nickname and major not being empty
 
                 //TODO: If received Oauth Token??
                 if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm)) {
