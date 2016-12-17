@@ -28,7 +28,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     public GroupsAdapter(Context context) {
         this.layoutInflater = LayoutInflater.from(context);
         this.data = new ArrayList<String>();
-        this.data.addAll(Arrays.asList("The Nonames", "The Pirates", "The Langstrumpfs", "The Arnolds"));
+        this.data.addAll(Arrays.asList("The Nonames", "The Pirates", "The Langstrumpfs", "The Arnolds", "Chinese Democracy", "Colony", "Fear is the Weakness", "Dijkstra", "Analysis", "Tim und Struppi"));
     }
 
     @Override
