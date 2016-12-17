@@ -22,10 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.view.buildings.BuildingDetails;
+
 import lmu.de.unificiencyandroid.view.groups.GroupDetails;
 
-import static lmu.de.unificiencyandroid.R.id.textView;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
 

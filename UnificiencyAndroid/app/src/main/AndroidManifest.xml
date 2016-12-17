@@ -15,22 +15,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".MainActivity" />
-        <activity android:name=".view.login.RegisterActivity" />
+
         <activity
             android:name=".view.groups.GroupDetails"
             android:label="@string/title_activity_group_details"
             android:theme="@style/AppTheme"></activity>
-||||||| merged common ancestors
+
         <activity android:name=".MainActivity"></activity>
 
         <activity android:name=".view.login.RegisterActivity"></activity>
-=======
-        <activity android:name=".MainActivity" />
-        <activity android:name=".view.login.RegisterActivity" />
         <activity android:name=".view.buildings.BuildungDetails"></activity>
->>>>>>> 3b4b5114ce7e884c39d91a7d45b0f95e6cf68f90
+
     </application>
 
 </manifest>
