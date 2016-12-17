@@ -48,7 +48,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         public TextView groupNameTextView;
         public ViewHolderGroups(View itemView) {
             super(itemView);
-            this.groupNameTextView = (TextView) itemView;
+            this.groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
         }
     }
 }
