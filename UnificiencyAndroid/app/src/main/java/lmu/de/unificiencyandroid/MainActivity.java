@@ -44,8 +44,43 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
 
+                if (menuItem.getItemId() == R.id.nav_item_buildings) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
 
+                }
 
+                if (menuItem.getItemId() == R.id.nav_item_groups) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_notes) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_setting) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_account) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_logout) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+
+                }
+
+                /*
                 if (menuItem.getItemId() == R.id.nav_item_sent) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
@@ -56,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
                 }
+                */
 
                 return false;
             }

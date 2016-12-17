@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">UnificiencyAndroid</string>
+    <string name="app_name">Unificiency</string>
+    <string name="nav_item_buildings">Gebäude</string>
+    <string name="nav_item_groups">Lerngruppen</string>
+    <string name="nav_item_notes">Notizen</string>
+    <string name="nav_item_setting">Einstellungen</string>
+    <string name="nav_item_account">Mein Konto</string>
+    <string name="nav_item_logout">Abmelden</string>
 </resources>
