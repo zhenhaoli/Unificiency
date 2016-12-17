@@ -1,11 +1,17 @@
 package lmu.de.unificiencyandroid.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +46,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolderGroups holder, int position) {
         //filling data in
-        holder.groupNameTextView.setText(this.data.get(position));
+        String name = this.data.get(position);
+        holder.groupNameTextView.setText(name);
+        //make colored circle with text
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getColor(name);
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRoundRect(name.substring(0,1), color, 100);
+        holder.groupFirtCharsImageView.setImageDrawable(drawable);
 
     }
 
@@ -51,9 +64,11 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
     static class ViewHolderGroups extends RecyclerView.ViewHolder {
         public TextView groupNameTextView;
+        public ImageView groupFirtCharsImageView;
         public ViewHolderGroups(View itemView) {
             super(itemView);
             this.groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
+            this.groupFirtCharsImageView = (ImageView) itemView.findViewById(R.id.group_name_first_chars);
         }
     }
 }
