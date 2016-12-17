@@ -8,6 +8,9 @@
     <string name="major">Studiengang</string>
     <string name="creat_account">Nutzer anlegen</string>
 
+    <string name="validation_email">Bitte eine gültige Email Adresse eingeben</string>
+    <string name="validation_password">Passwort muss mindestens 6 Zeichen enhalten</string>
+
     <string name="app_name">Unificiency</string>
     <string name="nav_item_buildings">Gebäude</string>
     <string name="nav_item_groups">Lerngruppen</string>
