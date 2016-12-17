@@ -39,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         usernameWrapper.setHint(getString(R.string.username));
         passwordWrapper.setHint(getString(R.string.password));
 
+        usernameWrapper.getEditText().setText("WeAreBest@Jindoing");
+        passwordWrapper.getEditText().setText("WeAreBest@Jindoing");
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
