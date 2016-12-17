@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="lmu.de.unificiencyandroid.GroupsFragment"
-    android:padding="10dp">
+    tools:context="lmu.de.unificiencyandroid.GroupsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/groups_recycler_view"
@@ -13,5 +12,5 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-    
+
 </RelativeLayout>

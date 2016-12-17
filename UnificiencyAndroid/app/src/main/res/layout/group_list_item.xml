@@ -10,6 +10,7 @@
         android:orientation = "horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
+
         <ImageView android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/group_name_first_chars"
@@ -27,8 +28,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
-            />
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
     <View
