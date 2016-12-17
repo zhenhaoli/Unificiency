@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/group_general_id">
-        <item android:title="@string/nav_item_buildings"
-            android:id="@+id/nav_item_buildings"
-            android:icon="@drawable/buildings"/>
 
-        <item android:title="@string/nav_item_groups"
-            android:id="@+id/nav_item_groups"
-            android:icon="@drawable/groups"/>
+    <item android:title="@string/nav_item_buildings"
+        android:id="@+id/nav_item_buildings"
+        android:icon="@drawable/buildings"/>
 
-        <item android:title="@string/nav_item_notes"
-            android:id="@+id/nav_item_notes"
-            android:icon="@drawable/notes"/>
-    </group>
+    <item android:title="@string/nav_item_groups"
+        android:id="@+id/nav_item_groups"
+        android:icon="@drawable/groups"/>
+
+    <item android:title="@string/nav_item_notes"
+        android:id="@+id/nav_item_notes"
+        android:icon="@drawable/notes"/>
+
 
     <group android:id="@+id/group_settings_id">
         <item android:title="@string/nav_item_setting"
