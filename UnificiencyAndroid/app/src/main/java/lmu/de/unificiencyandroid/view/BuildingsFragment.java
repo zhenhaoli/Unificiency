@@ -68,9 +68,9 @@ public class BuildingsFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new PrimaryFragment();
-                case 1 : return new SocialFragment();
-                case 2 : return new UpdatesFragment();
+                case 0 : return new BuildingsNearest();
+                case 1 : return new BuildingsAll();
+                case 2 : return new BuildingsMap();
             }
             return null;
         }
