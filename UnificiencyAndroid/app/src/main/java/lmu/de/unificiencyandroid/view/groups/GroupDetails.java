@@ -1,68 +1,55 @@
 package lmu.de.unificiencyandroid.view.groups;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import lmu.de.unificiencyandroid.R;
 
+import static java.security.AccessController.getContext;
 
-public class GroupDetails extends Fragment {
+public class GroupDetails extends AppCompatActivity {
 
+    private TextView hero;
+    private ListView memberList;
+    private TextView description;
+    private Button joinButton;
 
-
-    private OnFragmentInteractionListener mListener;
-
-    public GroupDetails() {
-        // Required empty public constructor
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        setContentView(R.layout.activity_group_details);
+        Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+        String groupName = intent.getStringExtra("group_name");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        //View view = getLayoutInflater().inflate(R.layout.activity_group_details, null);
+        this.hero = (TextView) findViewById(R.id.groups_details_hero);
+        this.memberList = (ListView) findViewById(R.id.group_details_member);
+        this.description = (TextView) findViewById(R.id.groups_details_description);
+        this.joinButton = (Button) findViewById(R.id.groups_details_join);
+        this.hero.setText(groupName);
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }
