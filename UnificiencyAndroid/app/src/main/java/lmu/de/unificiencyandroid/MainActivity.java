@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
 
                 if (menuItem.getItemId() == R.id.nav_item_groups) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+                    fragmentTransaction.replace(R.id.containerView,new GroupsFragment()).commit();
 
                 }
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity{
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, toolbar,R.string.app_name,
                 R.string.app_name);
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mDrawerToggle.syncState();
 
