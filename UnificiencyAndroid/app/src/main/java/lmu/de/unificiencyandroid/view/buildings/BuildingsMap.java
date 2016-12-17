@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+import lmu.de.unificiencyandroid.view.buildings.BuildingsAll;
 import lmu.de.unificiencyandroid.R;
 
 /**
@@ -18,6 +20,8 @@ public class BuildingsMap extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        BuildingsAll buildungsAll=new BuildingsAll();
         return inflater.inflate(R.layout.buildings_map, null);
     }
 }
