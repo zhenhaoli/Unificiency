@@ -11,14 +11,14 @@
     tools:context="lmu.de.unificiencyandroid.view.buildings.BuildungDetails">
 
     <ImageView
-        android:id="@+id/imgitem"
+        android:id="@+id/img_details"
         android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="300px"
         />
 
     <TextView
-        android:id="@+id/txitem"
+        android:id="@+id/text_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imgitem"
