@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">UnificiencyAndroid</string>
+    <string name="username">Email:   </string>
+    <string name="password">Passwort:</string>
+    <string name="login">Login</string>
+    <string name="register">Registrieren</string>
+    <string name="nickname">Nickname</string>
+    <string name="password_confirm">Passwort Wiederholen</string>
+    <string name="major">Studiengang</string>
+    <string name="creat_account">Nutzer anlegen</string>
 </resources>
