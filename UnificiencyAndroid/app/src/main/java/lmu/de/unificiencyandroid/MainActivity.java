@@ -7,30 +7,41 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.view.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.view.groups.GroupsFragment;
 import lmu.de.unificiencyandroid.view.notes.NotesTab;
 import lmu.de.unificiencyandroid.view.trash.SentFragment;
 
 public class MainActivity extends AppCompatActivity{
+
+    @BindView(R.id.drawerLayout)
     DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.navigation_view)
     NavigationView mNavigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar mActionBarToolbar;
+
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         /**
-         *Setup the DrawerLayout and NavigationView
+         * To set our Toolbar Title depending on the current fragment
          */
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view) ;
+        setSupportActionBar(mActionBarToolbar);
 
         /**
          * Lets inflate the very first fragment
@@ -40,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView,new BuildingsTab()).commit();
+
         /**
          * Setup click events on the Navigation View Items.
          */
@@ -52,52 +64,40 @@ public class MainActivity extends AppCompatActivity{
                 if (menuItem.getItemId() == R.id.nav_item_buildings) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new BuildingsTab()).commit();
-
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_buildings));
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_groups) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new GroupsFragment()).commit();
-
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_groups));
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_notes) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new NotesTab()).commit();
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_notes));
 
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_setting) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_setting));
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_account) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_account));
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_logout) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-
+                    getSupportActionBar().setTitle(getString(R.string.nav_item_logout));
                 }
-
-                /*
-                if (menuItem.getItemId() == R.id.nav_item_sent) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-
-                }
-
-                if (menuItem.getItemId() == R.id.nav_item_inbox) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
-                }
-                */
-
+                
                 return false;
             }
 

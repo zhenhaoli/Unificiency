@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="app_name">Unificiency</string>
+
     <string name="username">Email</string>
     <string name="password">Passwort</string>
     <string name="login">Login</string>
@@ -12,7 +15,7 @@
     <string name="validation_password">Passwort muss mindestens 6 Zeichen enthalten</string>
     <string name="validation_passwords_equal">Eingegebene Passwörter stimmen nicht überein</string>
 
-    <string name="app_name">Unificiency</string>
+
     <string name="nav_item_buildings">Gebäude</string>
     <string name="nav_item_groups">Lerngruppen</string>
     <string name="nav_item_notes">Notizen</string>
@@ -30,4 +33,6 @@
     <string name="groups_details_members">Mitglieder</string>
     <string name="groups_details_join">Beitreten</string>
     <string name="title_activity_group_details">GroupDetails</string>
+
+
 </resources>
