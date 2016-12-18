@@ -1,6 +1,7 @@
 package lmu.de.unificiencyandroid;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.view.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.view.groups.GroupsFragment;
+import lmu.de.unificiencyandroid.view.login.LoginActivity;
 import lmu.de.unificiencyandroid.view.notes.NotesTab;
 import lmu.de.unificiencyandroid.view.trash.SentFragment;
 
@@ -94,9 +96,9 @@ public class MainActivity extends AppCompatActivity{
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_logout) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-                    getSupportActionBar().setTitle(getString(R.string.nav_item_logout));
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    finish();
                 }
                 
                 return false;
