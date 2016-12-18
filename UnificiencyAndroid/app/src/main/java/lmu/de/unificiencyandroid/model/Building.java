@@ -10,7 +10,19 @@ public class Building {
     String address;
     String city;
     Bitmap img;
+
+    Double lat;
+    Double lng;
+
     List<Room> rooms;
+
+    public Building(String address, String city, Bitmap img, Double lat, Double lng) {
+        this.address = address;
+        this.city = city;
+        this.img = img;
+        this.lat = lat;
+        this.lng = lng;
+    }
 
     public Building(String address, String city, Bitmap img){
         this.address=address;
@@ -53,13 +65,26 @@ public class Building {
         this.img = img;
     }
 
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
     @Override
     public String toString() {
-        return "Building{" +
-                "address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", img=" + img +
-                '}';
+        return(address+"\n"+city+"\n"+lat+", "+lng);
     }
 
 }
