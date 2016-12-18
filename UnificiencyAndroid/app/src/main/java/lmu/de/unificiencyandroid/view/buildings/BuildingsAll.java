@@ -17,9 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +68,7 @@ public class BuildingsAll extends Fragment {
             {
 
                 Intent buildungDetails=new Intent(getActivity(),BuildungDetails.class);
-                buildungDetails.putExtra("building", Parcels.wrap(all_building_listview.getItemAtPosition(position)));
+                buildungDetails.putExtra("building", position);
                 startActivity(buildungDetails);
             }
         });

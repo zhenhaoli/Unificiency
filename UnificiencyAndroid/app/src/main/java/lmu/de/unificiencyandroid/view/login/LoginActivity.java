@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.TextView;

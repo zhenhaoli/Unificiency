@@ -21,7 +21,7 @@
         android:id="@+id/text_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgitem"
+        android:layout_below="@+id/img_details"
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
 
@@ -29,13 +29,14 @@
         android:id="@+id/now_availableRoom_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgitem"
+        android:layout_below="@+id/text_details"
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
     <ListView
         android:id="@+id/now_availableRoom_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/now_availableRoom_details"
         ></ListView>
 
 
@@ -43,26 +44,28 @@
         android:id="@+id/later_availableRoom_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgitem"
+        android:layout_below="@+id/now_availableRoom_listview"
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
     <ListView
         android:id="@+id/later_availableRoom_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/later_availableRoom_details"
         ></ListView>
 
     <TextView
         android:id="@+id/allRooms_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgitem"
+        android:layout_below="@+id/later_availableRoom_listview"
         android:layout_centerVertical="true"
         android:paddingLeft="6dip" />
     <ListView
         android:id="@+id/allRooms_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/allRooms_details"
         ></ListView>
 
 

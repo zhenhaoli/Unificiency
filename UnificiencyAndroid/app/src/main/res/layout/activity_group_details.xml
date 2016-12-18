@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:id="@+id/groups_details_hero"
+        android:textColor="@color/white"
+        android:textSize="50dp"/>
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="@string/groups_details_description"
+        android:layout_margin="10dp"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/groups_details_description"
+        android:textStyle="bold"
+        android:text="@string/groups_details_description_default"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_details_member">
+    </ListView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/groups_details_join"
+        android:layout_margin="4dp"/>
+
+</LinearLayout>

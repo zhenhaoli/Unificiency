@@ -29,4 +29,5 @@
     <string name="groups_details_description_default">Diese Gruppe hat noch keine Beschreibung angegeben.</string>
     <string name="groups_details_members">Mitglieder</string>
     <string name="groups_details_join">Beitreten</string>
+    <string name="title_activity_group_details">GroupDetails</string>
 </resources>

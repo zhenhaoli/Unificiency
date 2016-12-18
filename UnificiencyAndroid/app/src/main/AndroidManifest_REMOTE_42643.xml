@@ -15,17 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.groups.GroupDetails"
-            android:label="@string/title_activity_group_details"
-            android:theme="@style/AppTheme"></activity>
-
-        <activity android:name=".MainActivity"></activity>
-
-        <activity android:name=".view.login.RegisterActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".view.login.RegisterActivity" />
         <activity android:name=".view.buildings.BuildungDetails"></activity>
-
     </application>
 
 </manifest>

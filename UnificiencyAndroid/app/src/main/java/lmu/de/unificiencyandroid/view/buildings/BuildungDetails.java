@@ -1,14 +1,15 @@
 package lmu.de.unificiencyandroid.view.buildings;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,27 +26,29 @@ public class BuildungDetails extends AppCompatActivity {
     List<Room> rooms= new ArrayList<Room>();
     List<Room> rooms_availabe= new ArrayList<Room>();
 
-    @BindView(R.id.img_details)
     ImageView imgView;
 
-    @BindView(R.id.text_details)
     TextView textView;
 
-    @BindView(R.id.allRooms_listview)
     ListView allRooms_listview;
 
-    @BindView(R.id.now_availableRoom_details)
-    ListView now_availableRoom_details;
+    ListView now_availableRoom_listview;
 
-    @BindView(R.id.later_availableRoom_details)
-    ListView later_availableRoom_details;
+    ListView later_availableRoom_listview;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buildung_details);
-        ButterKnife.bind(this);
+
+        imgView= (ImageView) findViewById(R.id.img_details);
+        textView= (TextView) findViewById(R.id.text_details);
+
+        allRooms_listview=(ListView) findViewById(R.id.allRooms_listview);
+        now_availableRoom_listview=(ListView) findViewById(R.id.now_availableRoom_listview);
+        later_availableRoom_listview=(ListView) findViewById(R.id.later_availableRoom_listview);
+
 
 
         //
@@ -66,18 +69,21 @@ public class BuildungDetails extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        Building building= (Building) Parcels.unwrap(getIntent().getParcelableExtra("building"));
-        textView.setText(building.getAddress()+building.getCity());
+        Resources res = this.getResources();
+        Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a17str)).getBitmap();
+        Building building= new Building("Amalienstr. 17","München",imga17str);
+
+
+        textView.setText(building.getAddress()+"  "+building.getCity());
         imgView.setImageBitmap(building.getImg());
 
         ArrayAdapter adapter1= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms_availabe);
-        now_availableRoom_details.setAdapter(adapter1);
+        now_availableRoom_listview.setAdapter(adapter1);
 
         ArrayAdapter adapter2= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms_availabe);
-        later_availableRoom_details.setAdapter(adapter2);
+        later_availableRoom_listview.setAdapter(adapter2);
 
         ArrayAdapter adapter3= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms);
         allRooms_listview.setAdapter(adapter3);
-
     }
 }
