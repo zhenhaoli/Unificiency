@@ -5,6 +5,15 @@ import android.graphics.Bitmap;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor(suppressConstructorProperties = true)
 public class Building {
 
     String address;
@@ -15,72 +24,6 @@ public class Building {
     Double lng;
 
     List<Room> rooms;
-
-    public Building(String address, String city, Bitmap img, Double lat, Double lng) {
-        this.address = address;
-        this.city = city;
-        this.img = img;
-        this.lat = lat;
-        this.lng = lng;
-    }
-
-    public Building(String address, String city, Bitmap img){
-        this.address=address;
-        this.city=city;
-        this.img=img;
-
-    }
-    public Building(String address, String city, Bitmap img, List<Room> rooms){
-        this.address=address;
-        this.city=city;
-        this.img=img;
-        this.rooms=rooms;
-
-    }
-
-    public Building() {
-    }
-
-    public Bitmap getImg() {
-        return img;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setImg(Bitmap img) {
-        this.img = img;
-    }
-
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLng() {
-        return lng;
-    }
-
-    public void setLng(Double lng) {
-        this.lng = lng;
-    }
 
     @Override
     public String toString() {

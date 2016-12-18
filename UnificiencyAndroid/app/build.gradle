@@ -40,6 +40,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
+    provided "org.projectlombok:lombok:1.12.6"
+
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.github.johnpersano:supertoasts:2.0'
 

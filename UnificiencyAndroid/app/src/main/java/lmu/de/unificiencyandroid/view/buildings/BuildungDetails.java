@@ -71,7 +71,7 @@ public class BuildungDetails extends AppCompatActivity {
         Intent intent = getIntent();
         Resources res = this.getResources();
         Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a17str)).getBitmap();
-        Building building= new Building("Amalienstr. 17","München",imga17str);
+        Building building= new Building("Amalienstr. 17","München",imga17str, null, null, null);
 
 
         textView.setText(building.getAddress()+"  "+building.getCity());
