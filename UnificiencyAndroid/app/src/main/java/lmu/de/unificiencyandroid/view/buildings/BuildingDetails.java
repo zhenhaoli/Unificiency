@@ -21,7 +21,7 @@ import lmu.de.unificiencyandroid.model.Building;
 import lmu.de.unificiencyandroid.model.Room;
 
 
-public class BuildungDetails extends AppCompatActivity {
+public class BuildingDetails extends AppCompatActivity {
 
     List<Room> rooms= new ArrayList<Room>();
     List<Room> rooms_availabe= new ArrayList<Room>();

@@ -24,7 +24,7 @@
         <activity android:name=".MainActivity"></activity>
 
         <activity android:name=".view.login.RegisterActivity"></activity>
-        <activity android:name=".view.buildings.BuildungDetails"></activity>
+        <activity android:name=".view.buildings.BuildingDetails"></activity>
 
     </application>
 

@@ -9,8 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.ListView;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -29,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.model.Room;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by dev on 17.12.2016.
@@ -83,7 +77,7 @@ public class BuildingsAll extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
 
-                Intent buildungDetails=new Intent(getActivity(),BuildungDetails.class);
+                Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
                 buildungDetails.putExtra("building", position);
                 startActivity(buildungDetails);
             }
