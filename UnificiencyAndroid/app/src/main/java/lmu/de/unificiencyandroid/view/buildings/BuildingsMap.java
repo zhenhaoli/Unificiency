@@ -1,12 +1,18 @@
 package lmu.de.unificiencyandroid.view.buildings;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -18,16 +24,49 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import lmu.de.unificiencyandroid.R;
 
-public class BuildingsMap extends Fragment {
+public class BuildingsMap extends Fragment implements
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+  Location mLastLocation;
   MapView mMapView;
+  GoogleApiClient mGoogleApiClient;
   private GoogleMap googleMap;
+
+
+
+  @Override
+  public void onConnected(@Nullable Bundle bundle) {
+    try {
+      mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+          mGoogleApiClient);
+      Log.d("loc obj", mLastLocation.toString());
+    } catch (SecurityException e){
+    }
+  }
+
+  @Override
+  public void onConnectionSuspended(int i) {
+
+  }
+
+  @Override
+  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.buildings_map, container, false);
     mMapView = (MapView) rootView.findViewById(R.id.mapView);
     mMapView.onCreate(savedInstanceState);
+
+    if (mGoogleApiClient == null) {
+      mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+          .addConnectionCallbacks(this)
+          .addOnConnectionFailedListener(this)
+          .addApi(LocationServices.API)
+          .build();
+    }
 
     mMapView.onResume(); // needed to get the map to display immediately
 
@@ -41,16 +80,23 @@ public class BuildingsMap extends Fragment {
       @Override
       public void onMapReady(GoogleMap mMap) {
         googleMap = mMap;
+        double myLat = 50, myLng = 10;
 
         // For showing a move to my location button
         try {
           googleMap.setMyLocationEnabled(true);
+
         } catch (SecurityException e) {
           Log.e("permission not got", e.toString());
         }
 
+        if(mLastLocation!=null){
+          myLat = mLastLocation.getLatitude();
+          myLng = mLastLocation.getLongitude();
+        }
+
         // For dropping a marker at a point on the Map
-        LatLng sydney = new LatLng(-34, 151);
+        LatLng sydney = new LatLng(myLat, myLng);
         googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
 
         // For zooming automatically to the location of the marker
@@ -85,4 +131,15 @@ public class BuildingsMap extends Fragment {
     super.onLowMemory();
     mMapView.onLowMemory();
   }
+
+  public void onStart() {
+    mGoogleApiClient.connect();
+    super.onStart();
+  }
+
+  public void onStop() {
+    mGoogleApiClient.disconnect();
+    super.onStop();
+  }
+
 }
