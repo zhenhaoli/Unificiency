@@ -2,24 +2,16 @@ package lmu.de.unificiencyandroid.view.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.support.design.widget.TextInputLayout;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class RegisterActivity extends AuthActivity {
     //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too

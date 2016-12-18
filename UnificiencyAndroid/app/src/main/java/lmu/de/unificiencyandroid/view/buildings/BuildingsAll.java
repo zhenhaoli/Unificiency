@@ -1,6 +1,4 @@
 package lmu.de.unificiencyandroid.view.buildings;
-import lmu.de.unificiencyandroid.adapters.BuildingsAdapter;
-import lmu.de.unificiencyandroid.model.Building;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -26,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.adapters.BuildingsAdapter;
+import lmu.de.unificiencyandroid.model.Building;
 
 /**
  * Created by dev on 17.12.2016.

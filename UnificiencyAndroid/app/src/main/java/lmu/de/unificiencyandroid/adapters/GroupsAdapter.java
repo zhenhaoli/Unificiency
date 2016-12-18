@@ -1,14 +1,8 @@
 package lmu.de.unificiencyandroid.adapters;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import lmu.de.unificiencyandroid.R;
-
 import lmu.de.unificiencyandroid.view.groups.GroupDetails;
 
 

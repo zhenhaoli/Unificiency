@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 interface OnItemClickListener {
-    public void onItemClick(View view , int position);
+    void onItemClick(View view, int position);
 }

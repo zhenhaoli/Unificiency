@@ -2,19 +2,12 @@ package lmu.de.unificiencyandroid.view.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
-import android.widget.Button;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.library.Style;
 import com.github.johnpersano.supertoasts.library.SuperActivityToast;
-import com.github.johnpersano.supertoasts.library.utils.PaletteUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +15,7 @@ import butterknife.OnClick;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 
-import static android.R.attr.data;
+
 
 public class LoginActivity extends AuthActivity {
 
