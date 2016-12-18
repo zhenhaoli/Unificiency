@@ -1,8 +1,10 @@
 package lmu.de.unificiencyandroid.view.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -86,10 +88,10 @@ public class RegisterActivity extends AuthActivity {
             passwordWrapper.setErrorEnabled(false);
             passwordConfirmWrapper.setErrorEnabled(false);
 
-            Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-            loginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
-
-            startActivity(loginIntent);
+            Intent returnToLoginIntent = new Intent();
+            returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
+            setResult(Activity.RESULT_OK,returnToLoginIntent);
+            finish();
         }
     }
 
@@ -115,7 +117,17 @@ public class RegisterActivity extends AuthActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent returnToLoginIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnToLoginIntent);
+        finish();
+    }
+
+
     boolean passwordsEqual(String password, String passwordConfirm) {
         return password.equals(passwordConfirm);
     }
+
+
 }
