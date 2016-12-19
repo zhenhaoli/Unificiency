@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class GroupDetails extends AppCompatActivity {
     private ListView memberList;
     private TextView description;
     private Button joinButton;
-    private Toolbar toolbar;
+    private ImageView toolbar;
 
 
     public void onBack(View view) {
@@ -41,14 +42,13 @@ public class GroupDetails extends AppCompatActivity {
         this.description = (TextView) findViewById(R.id.groups_details_description);
         this.joinButton = (Button) findViewById(R.id.groups_details_join);
         this.hero.setText(groupName);
-        this.toolbar = (Toolbar) findViewById(R.id.groups_details_toolbar);
-       /* toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        this.toolbar = (ImageView) findViewById(R.id.groups_details_backButton);
+        toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack(v);
             }
-        });*/
+        });
         ColorGenerator generator = ColorGenerator.MATERIAL;
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
         }
