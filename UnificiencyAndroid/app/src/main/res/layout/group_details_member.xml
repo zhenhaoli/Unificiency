@@ -5,8 +5,8 @@
     android:paddingTop="3dp"
     android:paddingBottom="3dp">
 
-    <ImageView android:layout_width="30dp"
-        android:layout_height="30dp"
+    <ImageView android:layout_width="35dp"
+        android:layout_height="35dp"
         android:id="@+id/group_name_first_chars"
         android:layout_margin="10dp"/>
 
