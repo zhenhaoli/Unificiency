@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.adapters.BuildingsAdapter;
+import lmu.de.unificiencyandroid.model.Building;
 
 public class BuildingsAll extends BuildingsFragment {
 
@@ -33,8 +34,10 @@ public class BuildingsAll extends BuildingsFragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
 
+                Building building=(Building) all_building_listview.getItemAtPosition(position);
                 Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
-                buildungDetails.putExtra("building", position);
+                buildungDetails.putExtra("address", building.getAddress());
+                buildungDetails.putExtra("city", building.getCity());
                 startActivity(buildungDetails);
             }
         });

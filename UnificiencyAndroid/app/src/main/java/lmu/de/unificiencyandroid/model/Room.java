@@ -20,4 +20,9 @@ public class Room {
     public Boolean getAvailability() {
         return  availability;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

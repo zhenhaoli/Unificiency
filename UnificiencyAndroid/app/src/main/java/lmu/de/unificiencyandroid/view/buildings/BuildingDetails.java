@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.adapters.BuildingDetailsAdapter;
 import lmu.de.unificiencyandroid.model.Building;
 import lmu.de.unificiencyandroid.model.Room;
 
@@ -28,11 +29,7 @@ public class BuildingDetails extends AppCompatActivity {
 
     TextView textView;
 
-    ListView allRooms_listview;
-
-    ListView now_availableRoom_listview;
-
-    ListView later_availableRoom_listview;
+    ListView section_listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,44 +38,62 @@ public class BuildingDetails extends AppCompatActivity {
 
         imgView= (ImageView) findViewById(R.id.img_details);
         textView= (TextView) findViewById(R.id.text_details);
+        section_listview=(ListView) findViewById(R.id.section_listview);
 
-        allRooms_listview=(ListView) findViewById(R.id.allRooms_listview);
-        now_availableRoom_listview=(ListView) findViewById(R.id.now_availableRoom_listview);
-        later_availableRoom_listview=(ListView) findViewById(R.id.later_availableRoom_listview);
+        for (int i=0; i<3;i++){
+            rooms.add(new Room("U01"+i, true));
+            rooms.add(new Room("10"+i, true));
+            rooms.add(new Room("03"+i, false));
+            rooms.add(new Room("12"+i, false));
+            rooms.add(new Room("20"+i, false));
+            rooms.add(new Room("13"+i, false));
+            rooms.add(new Room("22"+i, false));
+            rooms.add(new Room("00"+i, false));
+            rooms.add(new Room("33"+i, false));
+            rooms.add(new Room("10"+i, false));
+            rooms.add(new Room("23"+i, false));
+            rooms.add(new Room("03"+i, false));
+            rooms.add(new Room("12"+i, false));
+            rooms.add(new Room("20"+i, false));
+            rooms.add(new Room("13"+i, false));
+            rooms.add(new Room("22"+i, false));
+            rooms.add(new Room("00"+i, false));
+            rooms.add(new Room("33"+i, false));
+            rooms.add(new Room("10"+i, false));
+            rooms.add(new Room("23"+i, false));
 
-        //
-        for (int i=0; i<10;i++) {
-            rooms.add(new Room("U139", true));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
-            rooms.add(new Room("033", false));
+
         }
+
+        BuildingDetailsAdapter buildingDetailsAdapter;
+        buildingDetailsAdapter=new BuildingDetailsAdapter(this);
+
+
+        buildingDetailsAdapter.addSectionHeaderItem("Jetzt Frei");
         for (Room room : rooms) {
-            if(room.getAvailability()==true) rooms_availabe.add(room);
+            if(room.getAvailability()==true) buildingDetailsAdapter.addItem(room.toString());
         }
 
-        Intent intent = getIntent();
+        buildingDetailsAdapter.addSectionHeaderItem("Bald Frei");
+        for (Room room : rooms) {
+            if(room.getAvailability()==true) buildingDetailsAdapter.addItem(room.toString());
+        }
+
+        buildingDetailsAdapter.addSectionHeaderItem("Alle");
+        for (Room room : rooms) {
+            buildingDetailsAdapter.addItem(room.toString());
+        }
+
+
+        Intent intent=getIntent();
         Resources res = this.getResources();
-        Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a17str)).getBitmap();
+        Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a7astr)).getBitmap();
         Building building= new Building("Amalienstr. 17","München",imga17str, null, null, null);
 
 
-        textView.setText(building.getAddress()+"  "+building.getCity());
+        textView.setText(intent.getStringExtra("address")+",  "+intent.getStringExtra("city"));
         imgView.setImageBitmap(building.getImg());
 
-        ArrayAdapter adapter1= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms_availabe);
-        now_availableRoom_listview.setAdapter(adapter1);
-
-        ArrayAdapter adapter2= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms_availabe);
-        later_availableRoom_listview.setAdapter(adapter2);
-
-        ArrayAdapter adapter3= new ArrayAdapter(this, android.R.layout.simple_list_item_1,rooms);
-        allRooms_listview.setAdapter(adapter3);
+        section_listview.setAdapter(buildingDetailsAdapter);
     }
 }
