@@ -42,13 +42,13 @@ public class GroupDetails extends AppCompatActivity {
         this.joinButton = (Button) findViewById(R.id.groups_details_join);
         this.hero.setText(groupName);
         this.toolbar = (Toolbar) findViewById(R.id.groups_details_toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+       /* toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack(v);
             }
-        });
+        });*/
         ColorGenerator generator = ColorGenerator.MATERIAL;
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
         }
