@@ -3,18 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        xmlns:app="schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:id="@+id/group_details_root">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:id="@+id/groups_details_toolbar"
         android:background="@color/lmugreen"
-        android:elevation="6dp"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:elevation="6dp">
 
         <ImageView
             android:id="@+id/groups_details_backButton"
@@ -22,6 +18,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_back"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             />
         <TextView
             android:layout_below="@id/groups_details_backButton"
@@ -32,16 +31,17 @@
             android:layout_centerInParent="true"
             android:textSize="40sp"
             android:gravity="center"
-
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="24dp"
         android:layout_weight="1">
         <TextView
             android:id="@+id/groups_details_description_header"
@@ -56,7 +56,7 @@
             android:id="@+id/groups_details_description"
             android:text="@string/groups_details_description_default"
             android:layout_below="@id/groups_details_description_header"
-            android:layout_margin="8dp"/>
+            android:layout_margin="16dp"/>
         <TextView
             android:id="@+id/groups_details_member_header"
             android:layout_width="match_parent"

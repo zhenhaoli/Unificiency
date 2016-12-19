@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,15 +12,21 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.model.Group;
 
 public class GroupDetails extends AppCompatActivity {
-
+    private Group group;
+    private GroupMemberAdapter adapter;
     private TextView hero;
     private ListView memberList;
     private TextView description;
     private Button joinButton;
     private ImageView toolbar;
+
 
 
     public void onBack(View view) {
@@ -51,7 +56,15 @@ public class GroupDetails extends AppCompatActivity {
         });
         ColorGenerator generator = ColorGenerator.MATERIAL;
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
+        /**/
+        ArrayList<String> member = new ArrayList<String>();
+        member.addAll(Arrays.asList("Rob", "Jin", "Zhen"));
+        /**/
+        this.adapter = new GroupMemberAdapter(this, member);
+        this.memberList.setAdapter(this.adapter);
         }
+
+
 
 
 }

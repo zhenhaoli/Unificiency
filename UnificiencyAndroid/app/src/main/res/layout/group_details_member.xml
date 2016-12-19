@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation = "horizontal"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
+
+    <ImageView android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/group_name_first_chars"
+        android:layout_margin="10dp"/>
+
+    <TextView android:id="@+id/group_details_member_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>
