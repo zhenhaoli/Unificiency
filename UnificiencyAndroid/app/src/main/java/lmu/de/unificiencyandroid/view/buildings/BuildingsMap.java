@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +17,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.model.Building;
 
-public class BuildingsMap extends Fragment implements
+public class BuildingsMap extends BuildingsFragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   Location mLastLocation;
   MapView mMapView;
   GoogleApiClient mGoogleApiClient;
   private GoogleMap googleMap;
-
-
 
   @Override
   public void onConnected(@Nullable Bundle bundle) {
@@ -56,6 +55,7 @@ public class BuildingsMap extends Fragment implements
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater,container,savedInstanceState);
     View rootView = inflater.inflate(R.layout.buildings_map, container, false);
     mMapView = (MapView) rootView.findViewById(R.id.mapView);
     mMapView.onCreate(savedInstanceState);
@@ -96,11 +96,22 @@ public class BuildingsMap extends Fragment implements
         }
 
         // For dropping a marker at a point on the Map
-        LatLng sydney = new LatLng(myLat, myLng);
-        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+        LatLng myPos = new LatLng(myLat, myLng);
+        googleMap.addMarker(new MarkerOptions().position(myPos).title("Marker Title").snippet("Marker Description"));
+
+        Log.d("buildings value", buildings.toString());
+
+        //TODO: make custom icon
+        for(Building building : buildings){
+          googleMap.addMarker(new MarkerOptions().position(
+              new LatLng(building.getLat(), building.getLng()))
+              .title(building.getAddress())
+              .snippet(building.getCity())
+              .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        }
 
         // For zooming automatically to the location of the marker
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(myPos).zoom(15).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
       }
     });

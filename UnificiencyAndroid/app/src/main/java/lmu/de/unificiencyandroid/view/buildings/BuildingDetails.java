@@ -34,7 +34,6 @@ public class BuildingDetails extends AppCompatActivity {
 
     ListView later_availableRoom_listview;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +45,6 @@ public class BuildingDetails extends AppCompatActivity {
         allRooms_listview=(ListView) findViewById(R.id.allRooms_listview);
         now_availableRoom_listview=(ListView) findViewById(R.id.now_availableRoom_listview);
         later_availableRoom_listview=(ListView) findViewById(R.id.later_availableRoom_listview);
-
-
 
         //
         for (int i=0; i<10;i++) {

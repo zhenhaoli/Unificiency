@@ -2,18 +2,13 @@ package lmu.de.unificiencyandroid.view.buildings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import lmu.de.unificiencyandroid.R;
 
-/**
- * Created by dev on 17.12.2016.
- */
-
-public class BuildingsNearest extends Fragment {
+public class BuildingsNearest extends BuildingsFragment {
 
     @Nullable
     @Override
