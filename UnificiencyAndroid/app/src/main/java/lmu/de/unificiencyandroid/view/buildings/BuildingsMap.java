@@ -26,7 +26,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.model.Building;
 
 public class BuildingsMap extends BuildingsFragment implements
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   Location mLastLocation;
   MapView mMapView;
@@ -37,8 +37,10 @@ public class BuildingsMap extends BuildingsFragment implements
   public void onConnected(@Nullable Bundle bundle) {
     try {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-          mGoogleApiClient);
-      Log.d("loc obj", mLastLocation.toString());
+              mGoogleApiClient);
+      if(mLastLocation != null) {
+        Log.d("loc obj", mLastLocation.toString());
+      }
     } catch (SecurityException e){
     }
   }
@@ -62,10 +64,10 @@ public class BuildingsMap extends BuildingsFragment implements
 
     if (mGoogleApiClient == null) {
       mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-          .addConnectionCallbacks(this)
-          .addOnConnectionFailedListener(this)
-          .addApi(LocationServices.API)
-          .build();
+              .addConnectionCallbacks(this)
+              .addOnConnectionFailedListener(this)
+              .addApi(LocationServices.API)
+              .build();
     }
 
     mMapView.onResume(); // needed to get the map to display immediately
@@ -104,10 +106,10 @@ public class BuildingsMap extends BuildingsFragment implements
         //TODO: make custom icon
         for(Building building : buildings){
           googleMap.addMarker(new MarkerOptions().position(
-              new LatLng(building.getLat(), building.getLng()))
-              .title(building.getAddress())
-              .snippet(building.getCity())
-              .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                  new LatLng(building.getLat(), building.getLng()))
+                  .title(building.getAddress())
+                  .snippet(building.getCity())
+                  .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
 
         // For zooming automatically to the location of the marker
