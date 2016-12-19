@@ -73,7 +73,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
             String groupName = String.valueOf(groupNameTextView.getText());
             Context context = view.getContext();
             Intent intent = new Intent(context, GroupDetails.class);
-            intent.putExtra("group_name", groupName);
+            intent.putExtra(context.getString(R.string.groups_extras_details_groupname_extra), groupName);
             context.startActivity(intent);
     }
 }}

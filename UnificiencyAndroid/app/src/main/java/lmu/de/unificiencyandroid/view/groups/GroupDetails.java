@@ -25,8 +25,8 @@ public class GroupDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_details);
         Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
-        String groupName = intent.getStringExtra("group_name");
+        Bundle extras = intent.getExtras();
+        String groupName = intent.getStringExtra(getResources().getString(R.string.groups_extras_details_groupname_extra));
         // Inflate the layout for this fragment
         //View view = getLayoutInflater().inflate(R.layout.activity_group_details, null);
         this.hero = (TextView) findViewById(R.id.groups_details_hero);

@@ -11,7 +11,7 @@
         android:paddingTop="3dp"
         android:paddingBottom="3dp">
 
-        <ImageView android:layout_width="55dp"
+        <ImageView android:layout_width="50dp"
             android:layout_height="55dp"
             android:id="@+id/group_name_first_chars"
             android:layout_margin="10dp"/>
