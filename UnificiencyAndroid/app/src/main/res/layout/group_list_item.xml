@@ -12,10 +12,10 @@
         android:paddingBottom="3dp"
         android:background="?android:attr/selectableItemBackground">
 
-        <ImageView android:layout_width="50dp"
-            android:layout_height="50dp"
+        <ImageView android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/group_name_first_chars"
-            android:layout_margin="10dp" />
+            android:layout_margin="12dp" />
 
         <TextView android:id="@+id/group_name"
             android:layout_width="match_parent"
