@@ -1,7 +1,10 @@
 package lmu.de.unificiencyandroid.view.groups;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +23,7 @@ public class GroupsFragment extends Fragment {
     private RecyclerView.LayoutManager groupsLayoutManager;
     private NestedScrollView groupsScrollview;
     private AppBarLayout groupsAppBar;
+    private FloatingActionButton addNewGroupBtn;
 
 
     public GroupsFragment() {
@@ -39,7 +43,8 @@ public class GroupsFragment extends Fragment {
         groupsRecyclerView.setLayoutManager(groupsLayoutManager);
         this.groupsScrollview = (NestedScrollView) view.findViewById(R.id.groups_nested_scroll_view);
         this.groupsAppBar = (AppBarLayout) view.findViewById(R.id.groups_app_bar_layout);
-        groupsScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        this.addNewGroupBtn = (FloatingActionButton) view.findViewById(R.id.groups_floating_button);
+        this.groupsScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
                                        int oldScrollY) {
@@ -48,11 +53,22 @@ public class GroupsFragment extends Fragment {
                 }
             }
         });
+        this.addNewGroupBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onAddGroup(view);
+            }
+        });
         this.groupsRecyclerView.setVerticalScrollBarEnabled(true);
         //bind to data
-        groupsAdapter = new GroupsAdapter((getActivity()));
-        groupsRecyclerView.setAdapter(groupsAdapter);
+        this.groupsAdapter = new GroupsAdapter((getActivity()));
+        this.groupsRecyclerView.setAdapter(groupsAdapter);
         return view;
+    }
+
+    public void onAddGroup(View view) {
+        Context context = view.getContext();
+        Intent intent = new Intent(context, NewGroup.class);
+        context.startActivity(intent);
     }
 
 
