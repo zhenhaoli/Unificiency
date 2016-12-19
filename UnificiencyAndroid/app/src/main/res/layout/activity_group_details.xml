@@ -2,38 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/groups_details_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lmugreen"
+        ></android.support.v7.widget.Toolbar>
 
     <TextView
-        android:layout_height="200dp"
+        android:layout_height="80dp"
         android:layout_width="match_parent"
         android:gravity="center"
         android:id="@+id/groups_details_hero"
         android:textColor="@color/white"
-        android:textSize="50dp"/>
-    >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/groups_details_description"
-        android:layout_margin="10dp"
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/groups_details_description"
-        android:textStyle="bold"
-        android:text="@string/groups_details_description_default"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/group_details_member">
-    </ListView>
+        android:textSize="45dp"/>
+    />
 
-    <Button
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/groups_details_join"
-        android:layout_margin="4dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/groups_details_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/groups_details_description"
+            android:textSize="22sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/groups_details_description"
+            android:text="@string/groups_details_description_default"
+            android:layout_below="@id/groups_details_header"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/group_details_member"
+            android:layout_below="@id/groups_details_description">
+        </ListView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/groups_details_join"
+            android:background="@color/lmugreen"
+            android:text="@string/groups_details_join"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/lmugreen</item>
         <item name="colorPrimaryDark">@color/lmugreen</item>
         <item name="colorAccent">@color/lmugreen</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
