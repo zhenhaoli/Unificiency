@@ -33,7 +33,7 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -48,9 +48,9 @@
             <ListView
                 android:id="@+id/section_listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_below="@+id/text_details"></ListView>
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
