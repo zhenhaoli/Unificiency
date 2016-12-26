@@ -1,5 +1,7 @@
 package lmu.de.unificiencyandroid.view.groups;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -30,6 +32,7 @@ public class GroupDetails extends AppCompatActivity {
 
 
     public Group fetchGroupDetails(String groupName){
+        /*later: http request with name as parameter*/
         ArrayList<String> member = new ArrayList<String>();
         member.addAll(Arrays.asList("Rob", "Jin", "Zhen"));
         String description = "Wir sind eine Gruppe ohne Namen. Eine Beschreibung müssen wir uns noch ausdenken ...";
@@ -64,6 +67,11 @@ public class GroupDetails extends AppCompatActivity {
         this.memberList.setAdapter(this.adapter);
     }
 
+    public void onJoin(View view){
+        EnterGroupPassword enterPwDialog = new EnterGroupPassword();
+        enterPwDialog.show(getSupportFragmentManager(), "enter_password");
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,12 @@ public class GroupDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBack(v);
+            }
+        });
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onJoin(v);
             }
         });
         /** Data handling **/
