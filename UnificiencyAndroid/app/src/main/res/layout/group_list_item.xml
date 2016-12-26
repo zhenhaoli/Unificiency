@@ -12,7 +12,7 @@
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
         android:background="?android:attr/selectableItemBackground"
-        
+
         android:focusable="true">
 
         <ImageView android:layout_width="48dp"

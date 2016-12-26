@@ -29,6 +29,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".view.login.RegisterActivity" />
         <activity android:name=".view.groups.NewGroup"/>
+        <activity android:name=".view.buildings.BuildingDetails"/>
 
 
         <!--
