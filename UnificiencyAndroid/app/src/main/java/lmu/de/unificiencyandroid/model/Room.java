@@ -1,13 +1,9 @@
 package lmu.de.unificiencyandroid.model;
 
-/**
- * Created by ostdong on 18/12/2016.
- */
-
 public class Room {
 
-    String name;
-    Boolean availability;
+    private String name;
+    private Boolean availability;
 
     public Room(String name, Boolean availabity){
         this.name=name;

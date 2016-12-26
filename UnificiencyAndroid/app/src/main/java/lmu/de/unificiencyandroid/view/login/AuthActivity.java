@@ -8,10 +8,6 @@ import android.view.inputmethod.InputMethodManager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by dev on 17.12.2016.
- */
-
 public abstract class AuthActivity extends AppCompatActivity {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);

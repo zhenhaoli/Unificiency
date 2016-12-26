@@ -1,7 +1,5 @@
 package lmu.de.unificiencyandroid.view.groups;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -105,7 +103,4 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
         bindGroupData();
         }
-
-
-
 }

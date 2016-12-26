@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import lmu.de.unificiencyandroid.R;
 
-
 public class GroupsFragment extends Fragment {
     private RecyclerView groupsRecyclerView;
     private RecyclerView.Adapter groupsAdapter;

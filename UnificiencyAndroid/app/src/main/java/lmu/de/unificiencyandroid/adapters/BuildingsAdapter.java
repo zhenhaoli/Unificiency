@@ -13,10 +13,6 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.model.Building;
 
-/**
- * Created by ostdong on 17/12/2016.
- */
-
 public class BuildingsAdapter extends ArrayAdapter {
 
 

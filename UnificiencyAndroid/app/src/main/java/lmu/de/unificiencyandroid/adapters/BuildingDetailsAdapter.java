@@ -1,7 +1,5 @@
 package lmu.de.unificiencyandroid.adapters;
 
-import lmu.de.unificiencyandroid.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-
-/**
- * Created by ostdong on 19/12/2016.
- */
+import lmu.de.unificiencyandroid.R;
 
 public class BuildingDetailsAdapter extends BaseAdapter {
 

@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 import lmu.de.unificiencyandroid.R;
 
-
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
     /*extras : groups_details_groupname_extra*/
     private LayoutInflater layoutInflater;

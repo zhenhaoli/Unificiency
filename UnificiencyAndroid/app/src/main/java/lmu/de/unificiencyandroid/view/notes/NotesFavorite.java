@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 
 import lmu.de.unificiencyandroid.R;
 
-/**
- * Created by dev on 17.12.2016.
- */
-
 public class NotesFavorite extends Fragment {
 
     @Nullable

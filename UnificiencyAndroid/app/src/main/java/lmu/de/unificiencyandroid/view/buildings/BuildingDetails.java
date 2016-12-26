@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +19,6 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.adapters.BuildingDetailsAdapter;
 import lmu.de.unificiencyandroid.model.Building;
 import lmu.de.unificiencyandroid.model.Room;
-
 
 public class BuildingDetails extends AppCompatActivity {
 

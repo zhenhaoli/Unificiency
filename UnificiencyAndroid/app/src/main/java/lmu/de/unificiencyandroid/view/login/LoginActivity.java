@@ -15,8 +15,6 @@ import butterknife.OnClick;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 
-
-
 public class LoginActivity extends AuthActivity {
 
     @BindView(R.id.usernameWrapper)
