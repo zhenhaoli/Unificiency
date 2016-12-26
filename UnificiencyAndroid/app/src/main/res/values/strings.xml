@@ -33,7 +33,7 @@
     <string name="title_activity_group_details">GroupDetails</string>
     <string name="title_activity_maps">Map</string>
     <!-- Groups Fragment Extras -->
-    <string name="groups_extras_details_groupname_extra">groups_details_groupname</string>
+    <string name="groups_details_groupname_extra">groups_details_groupname</string>
     <!-- Group Details Activity -->
 
 

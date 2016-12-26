@@ -19,52 +19,72 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.model.Group;
 
 public class GroupDetails extends AppCompatActivity {
-    private Group group;
+    /*extras : groups_details_groupname_extra*/
     private GroupMemberAdapter adapter;
     private TextView hero;
     private ListView memberList;
     private TextView description;
     private Button joinButton;
     private ImageView toolbar;
+    private Group group;
 
 
+    public Group fetchGroupDetails(String groupName){
+        ArrayList<String> member = new ArrayList<String>();
+        member.addAll(Arrays.asList("Rob", "Jin", "Zhen"));
+        String description = "Wir sind eine Gruppe ohne Namen. Eine Beschreibung müssen wir uns noch ausdenken ...";
+        Group mockGroup = new Group(groupName,description, member);
+        this.group = mockGroup;
+        return this.group;
+    }
+
+    public String handleIntent(){
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        String extra = intent.getStringExtra(getResources().getString(R.string.groups_details_groupname_extra));
+        return extra;
+    }
+
+    public void setupViewReferences() {
+        this.hero = (TextView) findViewById(R.id.groups_details_hero);
+        this.memberList = (ListView) findViewById(R.id.group_details_member);
+        this.description = (TextView) findViewById(R.id.groups_details_description);
+        this.joinButton = (Button) findViewById(R.id.groups_details_join);
+        this.toolbar = (ImageView) findViewById(R.id.groups_details_backButton);
+    }
 
     public void onBack(View view) {
         onBackPressed();
     }
 
+    public void bindGroupData() {
+        this.hero.setText(this.group.getName());
+        this.description.setText(this.group.getDescription());
+        this.adapter = new GroupMemberAdapter(this, this.group.getMember());
+        this.memberList.setAdapter(this.adapter);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /** View setup **/
         setContentView(R.layout.activity_group_details);
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        String groupName = intent.getStringExtra(getResources().getString(R.string.groups_extras_details_groupname_extra));
-        // Inflate the layout for this fragment
-        //View view = getLayoutInflater().inflate(R.layout.activity_group_details, null);
-        this.hero = (TextView) findViewById(R.id.groups_details_hero);
-        this.memberList = (ListView) findViewById(R.id.group_details_member);
-        this.description = (TextView) findViewById(R.id.groups_details_description);
-        this.joinButton = (Button) findViewById(R.id.groups_details_join);
-        this.hero.setText(groupName);
-        this.toolbar = (ImageView) findViewById(R.id.groups_details_backButton);
+        setupViewReferences();
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack(v);
             }
         });
+        /** Data handling **/
+        String groupNameExtra = handleIntent();
+        fetchGroupDetails(groupNameExtra); //this is where we will dispatch a http request to our server
+       /* View population/data binding and styling */
         ColorGenerator generator = ColorGenerator.MATERIAL;
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
-        /**/
-        ArrayList<String> member = new ArrayList<String>();
-        member.addAll(Arrays.asList("Rob", "Jin", "Zhen"));
-        /**/
-        this.adapter = new GroupMemberAdapter(this, member);
-        this.memberList.setAdapter(this.adapter);
+        bindGroupData();
         }
-
-
 
 
 }

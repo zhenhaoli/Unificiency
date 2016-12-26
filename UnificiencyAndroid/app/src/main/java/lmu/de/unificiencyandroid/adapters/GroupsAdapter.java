@@ -20,7 +20,7 @@ import lmu.de.unificiencyandroid.view.groups.GroupDetails;
 
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
-
+    /*extras : groups_details_groupname_extra*/
     private LayoutInflater layoutInflater;
     private ArrayList<String> data;
 
@@ -73,7 +73,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
             String groupName = String.valueOf(groupNameTextView.getText());
             Context context = view.getContext();
             Intent intent = new Intent(context, GroupDetails.class);
-            intent.putExtra(context.getString(R.string.groups_extras_details_groupname_extra), groupName);
+            intent.putExtra(context.getString(R.string.groups_details_groupname_extra), groupName);
             context.startActivity(intent);
     }
 }}
