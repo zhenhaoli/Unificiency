@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation = "vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -10,7 +11,9 @@
         android:orientation = "horizontal"
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="?android:attr/selectableItemBackground"
+        
+        android:focusable="true">
 
         <ImageView android:layout_width="48dp"
             android:layout_height="48dp"
