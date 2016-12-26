@@ -38,7 +38,7 @@
         android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:scrollbars="vertical">
-        <!---wraping recycler view in a relative layout is a strange fix for the scrolling issue when inside a nested scroll view-->
+        <!---wraping recycler components in a relative layout is a strange fix for the scrolling issue when inside a nested scroll components-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
