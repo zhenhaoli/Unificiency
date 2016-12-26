@@ -57,15 +57,15 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
         this.toolbar = (ImageView) findViewById(R.id.groups_details_backButton);
     }
 
-    public void onBack(View view) {
-        onBackPressed();
-    }
-
     public void bindGroupData() {
         this.hero.setText(this.group.getName());
         this.description.setText(this.group.getDescription());
         this.adapter = new GroupMemberAdapter(this, this.group.getMember());
         this.memberList.setAdapter(this.adapter);
+    }
+
+    public void onBack(View view) {
+        onBackPressed();
     }
 
     public void onJoin(View view){

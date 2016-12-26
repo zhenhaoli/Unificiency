@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.adapters.GroupsAdapter;
 
 
 public class GroupsFragment extends Fragment {

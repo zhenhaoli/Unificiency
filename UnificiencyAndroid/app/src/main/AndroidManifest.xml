@@ -28,7 +28,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
         <activity android:name=".view.login.RegisterActivity" />
-        <activity android:name=".view.buildings.BuildingDetails" />
+        <activity android:name=".view.groups.NewGroup"/>
+
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -41,8 +42,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <activity android:name=".view.groups.NewGroup"></activity>
     </application>
 
 </manifest>
