@@ -33,7 +33,7 @@
     <!-- Group Details -->
     <string name="groups_details_password_message">Passwort eingeben</string>
     <string name="groups_details_password_title">Diese Gruppe verlangt ein Passwort</string>
-    <string name="groups_details_password_default">hier Passwort eingeben</string>
+    <string name="groups_details_password_default">Hier Passwort eingeben</string>
     <string name="groups_details_password_send">Senden</string>
     <string name="groups_details_password_cancel">Abbrechen</string>
     <string name="title_activity_group_details">GroupDetails</string>

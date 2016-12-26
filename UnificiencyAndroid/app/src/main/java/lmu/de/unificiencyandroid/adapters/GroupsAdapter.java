@@ -49,8 +49,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(name.substring(0,2), color, 100);
         holder.groupFirtCharsImageView.setImageDrawable(drawable);
-
-
     }
 
     @Override
