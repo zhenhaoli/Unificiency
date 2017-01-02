@@ -1,6 +1,7 @@
 package lmu.de.unificiencyandroid.components.groups;
 
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +10,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 
 import lmu.de.unificiencyandroid.InputValidation.InputValidation;
 import lmu.de.unificiencyandroid.InputValidation.ValidateGroupDescription;
@@ -38,6 +39,13 @@ public class NewGroup extends AppCompatActivity {
                 this.descriptionValidator.validate(this.description.getEditText().getText().toString())){
             Log.i("GROUP_CREATION", "NO VALIDATION ERRORS");
         } else {
+            SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
+                    .setText(getString(R.string.groups_new_group_error_create))
+                    .setDuration(Style.DURATION_MEDIUM)
+                    .setFrame(Style.FRAME_KITKAT)
+                    .setColor(ResourcesCompat.getColor(getResources(), R.color.red_500, null))
+                    .setAnimations(Style.ANIMATIONS_SCALE)
+                    .show();
             Log.i("NO_GROUP_CREATION_NAME", String.valueOf(this.nameValidator.validate(this.name.getEditText().toString())));
             Log.i("NO_GROUP_CREATION_DESCR", String.valueOf(this.descriptionValidator.validate(this.description.getEditText().toString())));
         }
