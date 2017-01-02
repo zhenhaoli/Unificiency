@@ -39,6 +39,7 @@ public class NewGroup extends AppCompatActivity {
             /*this is where we send the new group to the server*/
             Log.i("GROUP_CREATION", "NO VALIDATION ERRORS");
         } else {
+            SuperActivityToast.cancelAllSuperToasts();
             SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
                     .setText(getString(R.string.groups_new_group_error_create))
                     .setDuration(Style.DURATION_MEDIUM)
