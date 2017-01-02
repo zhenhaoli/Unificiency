@@ -47,6 +47,8 @@
     <string name="groups_new_group_groupname">Gruppenname angeben</string>
     <string name="groups_new_group_description">Gruppenbeschreibung angeben</string>
     <string name="groups_new_group_password">Passwort angeben (optional)</string>
+    <string name="groups_new_group_error_name">mindestens 3 Zeichen und keine Leerzeichen</string>
+    <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen angeben</string>
 
 
 </resources>
