@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.groups;
+package lmu.de.unificiencyandroid.components.groups.models;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ public class Group {
     private ArrayList<String> member;
     private String password;
 
+    /* second constructer with password already filled in. Maybe lombok provides a better alternative*/
     public Group(String name, String description, ArrayList<String> member) {
         this.name = name;
         this.description = description;

@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.groups;
+package lmu.de.unificiencyandroid.components.groups.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.groups.GroupDetails;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
     /*extras : groups_details_groupname_extra*/

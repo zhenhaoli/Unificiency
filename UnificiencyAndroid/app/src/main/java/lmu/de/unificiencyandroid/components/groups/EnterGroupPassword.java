@@ -11,12 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.groups.interfaces.EnterGroupPasswordListener;
 
 public class EnterGroupPassword extends DialogFragment {
 
-    public interface EnterGroupPasswordListener {
-        public void onPwEntered(String pw);
-    }
     EnterGroupPasswordListener epwListener;
 
     @Override

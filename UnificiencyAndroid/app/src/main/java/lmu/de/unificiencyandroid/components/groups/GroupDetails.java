@@ -17,8 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.groups.adapters.GroupMemberAdapter;
+import lmu.de.unificiencyandroid.components.groups.interfaces.EnterGroupPasswordListener;
+import lmu.de.unificiencyandroid.components.groups.models.Group;
 
-public class GroupDetails extends AppCompatActivity implements EnterGroupPassword.EnterGroupPasswordListener{
+public class GroupDetails extends AppCompatActivity implements EnterGroupPasswordListener {
     /*extras : groups_details_groupname_extra*/
     private GroupMemberAdapter adapter;
     private TextView hero;
