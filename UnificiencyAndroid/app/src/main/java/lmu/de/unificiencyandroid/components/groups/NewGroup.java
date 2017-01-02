@@ -28,15 +28,15 @@ public class NewGroup extends AppCompatActivity {
     private InputValidation nameValidator;
     private InputValidation descriptionValidator;
 
-    public void getFormData(){
+
+    public void onCreateGroup() {
         String name = this.name.getEditText().getText().toString();
         String description = this.description.getEditText().getText().toString();
         String password = this.description.getEditText().getText().toString();
-    }
 
-    public void onCreateGroup() {
-        if(this.nameValidator.validate(this.name.getEditText().getText().toString()) &&
-                this.descriptionValidator.validate(this.description.getEditText().getText().toString())){
+        if(this.nameValidator.validate(name) &&
+                this.descriptionValidator.validate(description)){
+            /*this is where we send the new group to the server*/
             Log.i("GROUP_CREATION", "NO VALIDATION ERRORS");
         } else {
             SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
@@ -84,7 +84,6 @@ public class NewGroup extends AppCompatActivity {
         this.createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getFormData();
                 onCreateGroup();
             }
         });
