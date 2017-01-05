@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
+import android.support.v7.widget.DividerItemDecoration;
 
 public class NotesPublic extends Fragment {
 
@@ -22,14 +23,15 @@ public class NotesPublic extends Fragment {
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Note_DividerItemDecoration mDividerItemDecoration;
 
-  List<Note> notes = Arrays.asList(
-      new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
-      new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),
-      new Note("IV", "GPS", "Outdoor Positioning", "Jin", 12),
-      new Note("MMu2", "REST", "CRUD with HTTP", "Zhen", -3),
-      new Note("itsec", "REST", "CRUD with HTTP", "Zhen", -5),
-      new Note("itjur", "REST", "CRUD with HTTP", "Zhen", -9)
+  List<Note> publicNotes = Arrays.asList(
+          new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
+          new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),
+          new Note("IV", "GPS", "Outdoor Positioning", "Jin", 12),
+          new Note("MMu2", "REST", "CRUD with HTTP", "Zhen", -3),
+          new Note("itsec", "REST", "CRUD with HTTP", "Zhen", -5),
+          new Note("itjur", "REST", "CRUD with HTTP", "Zhen", -9)
   );
 
     @Nullable
@@ -42,10 +44,14 @@ public class NotesPublic extends Fragment {
       mLayoutManager = new LinearLayoutManager(getContext());
       mRecyclerView.setLayoutManager(mLayoutManager);
 
-      // specify an adapter (see also next example)
-      mAdapter = new NotesAdapter(notes);
+      // specify an adapter
+      mAdapter = new NotesAdapter(publicNotes);
       mRecyclerView.setAdapter(mAdapter);
 
-        return v;
+      // specify an itemDecoration
+      mDividerItemDecoration = new Note_DividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getContext())).getOrientation());
+      mRecyclerView.addItemDecoration(mDividerItemDecoration);
+
+      return v;
     }
 }

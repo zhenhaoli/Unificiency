@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor(suppressConstructorProperties = true)
+//@AllArgsConstructor(suppressConstructorProperties = true)
 public class Group {
     private String name;
     private String description;
@@ -20,4 +20,18 @@ public class Group {
         this.member = member;
         this.password = "";
     }
+
+    public Group(String name, String description, ArrayList<String> member, String password) {
+        this.name = name;
+        this.description = description;
+        this.member = member;
+        this.password = password;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public String getDescription(){
+        return this.description;
+    }
+
 }

@@ -83,7 +83,7 @@ public class BuildingDetailsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        
+
         holder.textView.setText(mData.get(position));
         return convertView;
     }
