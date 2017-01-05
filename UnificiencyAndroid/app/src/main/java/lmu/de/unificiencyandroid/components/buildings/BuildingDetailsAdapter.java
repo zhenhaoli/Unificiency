@@ -83,13 +83,12 @@ public class BuildingDetailsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        
         holder.textView.setText(mData.get(position));
-        System.out.println("dadadddd");
         return convertView;
     }
 
     public static class ViewHolder {
         public TextView textView;
     }
-
 }
