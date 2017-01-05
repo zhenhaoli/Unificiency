@@ -3,6 +3,7 @@ package lmu.de.unificiencyandroid.components.notes;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,12 +17,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 import android.support.v7.widget.DividerItemDecoration;
+import android.widget.Toast;
 
-public class NotesPublic extends Fragment {
+public class NotesPublic extends Fragment implements NotesAdapter.MyItemClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Note_DividerItemDecoration mDividerItemDecoration;
 
@@ -46,12 +48,17 @@ public class NotesPublic extends Fragment {
 
       // specify an adapter
       mAdapter = new NotesAdapter(publicNotes);
+      mAdapter.setOnItemClickListener(this);
       mRecyclerView.setAdapter(mAdapter);
-
+      mRecyclerView.setItemAnimator(new DefaultItemAnimator());
       // specify an itemDecoration
       mDividerItemDecoration = new Note_DividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getContext())).getOrientation());
       mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
       return v;
+    }
+    public void onItemClick(View view, int postion) {
+
+            Toast.makeText(this.getContext(),"click",Toast.LENGTH_SHORT).show();
     }
 }

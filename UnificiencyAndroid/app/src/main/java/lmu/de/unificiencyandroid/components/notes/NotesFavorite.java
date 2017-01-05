@@ -16,11 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 
+import static java.lang.Boolean.TRUE;
+
 public class NotesFavorite extends Fragment {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Note_DividerItemDecoration mDividerItemDecoration;
 
@@ -45,6 +47,7 @@ public class NotesFavorite extends Fragment {
 
         // specify an adapter
         mAdapter = new NotesAdapter(favoriteNotes);
+        mAdapter.setFavoriteFalg(TRUE);
         mRecyclerView.setAdapter(mAdapter);
 
         // specify an itemDecoration

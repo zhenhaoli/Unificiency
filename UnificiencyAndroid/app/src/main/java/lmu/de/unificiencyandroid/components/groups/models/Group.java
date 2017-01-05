@@ -27,11 +27,5 @@ public class Group {
         this.member = member;
         this.password = password;
     }
-    public String getName(){
-        return this.name;
-    }
-    public String getDescription(){
-        return this.description;
-    }
 
 }

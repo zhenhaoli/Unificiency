@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.Vi
     // Provide a reference to the views for each data item
     // Complex data items may need more than one components per item, and
     // you provide access to all the views for a data item in a components holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
 
         public TextView groupName;
@@ -30,6 +31,8 @@ public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.Vi
             layout = v;
             groupName = (TextView) v.findViewById(R.id.notes_group_name);
             groupDescription = (TextView) v.findViewById(R.id.notes_group_description);
+
+
         }
     }
 
@@ -69,15 +72,7 @@ public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.Vi
         // - replace the contents of the components with that element
         final Group group = mDataset.get(position);
         holder.groupName.setText(group.getName());
-        holder.groupName.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(position);
-            }
-        });
-
         holder.groupDescription.setText(group.getDescription());
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

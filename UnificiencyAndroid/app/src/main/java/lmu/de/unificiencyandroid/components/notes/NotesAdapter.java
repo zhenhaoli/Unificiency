@@ -1,36 +1,63 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.buildings.BuildingDetails;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
-  private List<Note> mDataset;
 
+  private List<Note> mDataset;
+  private Boolean favorite_flag= Boolean.FALSE;
+  private MyItemClickListener mItemClickListener;
+
+
+  public interface MyItemClickListener {
+    public void onItemClick(View view,int postion);
+  }
   // Provide a reference to the views for each data item
   // Complex data items may need more than one components per item, and
   // you provide access to all the views for a data item in a components holder
-  public class ViewHolder extends RecyclerView.ViewHolder {
+  public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
     // each data item is just a string in this case
+
+    private MyItemClickListener mListener;
 
     public TextView tvCourse;
     public TextView tvTitel;
+    public ImageView img;
     public View layout;
 
-    public ViewHolder(View v) {
+    public ViewHolder(View v, MyItemClickListener listener) {
       super(v);
       layout = v;
       tvCourse = (TextView) v.findViewById(R.id.note_course);
       tvTitel = (TextView) v.findViewById(R.id.note_title);
+      img=(ImageView) v.findViewById(R.id.icon);
+
+      this.mListener = listener;
+      v.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+      if(mListener != null){
+        mListener.onItemClick(v, getPosition());
+      }
     }
   }
+
+
 
   public void add(int position, Note item) {
     mDataset.add(position, item);
@@ -57,8 +84,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     View v =
         inflater.inflate(R.layout.notes_list_item, parent, false);
     // set the components's size, margins, paddings and layout parameters
-    ViewHolder vh = new ViewHolder(v);
+    ViewHolder vh = new ViewHolder(v, mItemClickListener);
     return vh;
+  }
+
+  public void setOnItemClickListener(MyItemClickListener listener){
+    this.mItemClickListener = listener;
   }
 
   // Replace the contents of a components (invoked by the layout manager)
@@ -68,15 +99,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     // - replace the contents of the components with that element
     final Note note = mDataset.get(position);
     holder.tvCourse.setText(note.getCourse());
-    holder.tvCourse.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        remove(position);
-      }
-    });
-
     holder.tvTitel.setText(note.getTitle());
-
+    if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.notes_favorite);
   }
 
   // Return the size of your dataset (invoked by the layout manager)
@@ -84,5 +108,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
   public int getItemCount() {
     return mDataset.size();
   }
+  public void setFavoriteFalg(Boolean favorite_flag){ this.favorite_flag=favorite_flag;}
 
 }
