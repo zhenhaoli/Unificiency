@@ -23,9 +23,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
   private MyItemClickListener mItemClickListener;
 
 
-  public interface MyItemClickListener {
-    public void onItemClick(View view,int postion);
-  }
   // Provide a reference to the views for each data item
   // Complex data items may need more than one components per item, and
   // you provide access to all the views for a data item in a components holder

@@ -1,5 +1,6 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,14 +21,15 @@ import lmu.de.unificiencyandroid.components.groups.adapters.GroupMemberAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 
 
-public class NotesOfMyGroups extends Fragment {
+public class NotesOfMyGroups extends Fragment implements MyItemClickListener{
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NotesGroupAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Note_DividerItemDecoration mDividerItemDecoration;
 
+    //fake data
     ArrayList<String> GroupMember =new ArrayList<String>(){{
         add("Zhenhao");
         add("Robert");
@@ -53,6 +55,7 @@ public class NotesOfMyGroups extends Fragment {
 
         // specify an adapter
         mAdapter = new NotesGroupAdapter(GroupNotes);
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         // specify an itemDecoration
@@ -60,5 +63,13 @@ public class NotesOfMyGroups extends Fragment {
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return v;
+    }
+    public void onItemClick(View view, int position) {
+        Group group=(Group) GroupNotes.get(position);
+        Intent notesFromSingleGroup=new Intent(getActivity(),NotesFromSingleGroup.class);
+        notesFromSingleGroup.putExtra("groupName", group.getName());
+        notesFromSingleGroup.putExtra("groupDescription", group.getDescription());
+        notesFromSingleGroup.putExtra("groupMember", group.getMember());
+        startActivity(notesFromSingleGroup);
     }
 }

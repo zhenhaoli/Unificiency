@@ -43,7 +43,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".components.notes.NoteDetails"></activity>
+        <activity android:name=".components.notes.NoteDetails" />
+        <activity android:name=".components.notes.NotesFromSingleGroup"></activity>
     </application>
 
 </manifest>

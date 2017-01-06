@@ -1,5 +1,6 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import lmu.de.unificiencyandroid.R;
 
 import static java.lang.Boolean.TRUE;
 
-public class NotesFavorite extends Fragment {
+public class NotesFavorite extends Fragment implements MyItemClickListener{
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
@@ -48,6 +49,7 @@ public class NotesFavorite extends Fragment {
         // specify an adapter
         mAdapter = new NotesAdapter(favoriteNotes);
         mAdapter.setFavoriteFalg(TRUE);
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         // specify an itemDecoration
@@ -55,5 +57,15 @@ public class NotesFavorite extends Fragment {
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return v;
+    }
+    public void onItemClick(View view, int position) {
+        Note note=(Note) favoriteNotes.get(position);
+        Intent notesDetails=new Intent(getActivity(),NoteDetails.class);
+        notesDetails.putExtra("course", note.getCourse());
+        notesDetails.putExtra("title", note.getTitle());
+        notesDetails.putExtra("content", note.getContent());
+        notesDetails.putExtra("creator", note.getCreatedBy());
+        notesDetails.putExtra("rating", note.getRating().toString());
+        startActivity(notesDetails);
     }
 }
