@@ -30,9 +30,9 @@ public class NotesFavorite extends Fragment implements MyItemClickListener{
     List<Note> favoriteNotes = Arrays.asList(
             new Note("Favorite_Note1", "Bluetooth", "Connectivity", "Rob", 6),
             new Note("Favorite_Note3", "GPS", "Outdoor Positioning", "Jin", 12),
-            new Note("Favorite_Note4", "REST", "CRUD with HTTP", "Zhen", -3),
-            new Note("Favorite_Note2", "REST", "CRUD with HTTP", "Zhen", -5),
-            new Note("Favorite_Note5", "REST", "CRUD with HTTP", "Zhen", -9)
+            new Note("Favorite_Note4", "REST", "CRUD with HTTP", "Zhen", 3),
+            new Note("Favorite_Note2", "REST", "CRUD with HTTP", "Zhen", 5),
+            new Note("Favorite_Note5", "REST", "CRUD with HTTP", "Zhen", 9)
     );
 
 

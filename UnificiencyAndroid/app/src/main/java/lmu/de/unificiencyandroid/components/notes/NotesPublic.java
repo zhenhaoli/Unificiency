@@ -34,9 +34,9 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
           new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
           new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),
           new Note("IV", "GPS", "Outdoor Positioning", "Jin", 12),
-          new Note("MMu2", "REST", "CRUD with HTTP", "Zhen", -3),
-          new Note("itsec", "REST", "CRUD with HTTP", "Zhen", -5),
-          new Note("itjur", "REST", "CRUD with HTTP", "Zhen", -9)
+          new Note("MMu2", "REST", "CRUD with HTTP", "Zhen", 3),
+          new Note("itsec", "REST", "CRUD with HTTP", "Zhen", 5),
+          new Note("itjur", "REST", "CRUD with HTTP", "Zhen", 9)
    );
 
     @Nullable
