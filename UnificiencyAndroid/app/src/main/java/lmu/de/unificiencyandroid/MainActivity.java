@@ -15,10 +15,12 @@ import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lmu.de.unificiencyandroid.components.account.Account;
 import lmu.de.unificiencyandroid.components.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.components.groups.GroupsFragment;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.components.notes.NotesTab;
+import lmu.de.unificiencyandroid.components.setting.Setting;
 import lmu.de.unificiencyandroid.components.trash.SentFragment;
 
 public class MainActivity extends AppCompatActivity{
@@ -87,14 +89,14 @@ public class MainActivity extends AppCompatActivity{
 
           case R.id.nav_item_setting: {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+            fragmentTransaction.replace(R.id.containerView,new Setting()).commit();
             getSupportActionBar().setTitle(getString(R.string.nav_item_setting));
             break;
           }
 
           case R.id.nav_item_account: {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+            fragmentTransaction.replace(R.id.containerView,new Account()).commit();
             getSupportActionBar().setTitle(getString(R.string.nav_item_account));
             break;
           }
