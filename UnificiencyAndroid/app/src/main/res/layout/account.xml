@@ -9,7 +9,6 @@
         android:layout_width="120dp"
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo"
         />
 
     <TextView
@@ -22,7 +21,6 @@
         android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:layout_marginLeft="10dp"
-        android:text="Jindong"
         android:textSize="16.0sp" />
 
     <TextView
@@ -35,7 +33,6 @@
         android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:layout_marginLeft="10dp"
-        android:text="ostdong@gmail.com"
         android:textSize="16.0sp" />
 
     <TextView
@@ -48,7 +45,6 @@
         android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:layout_marginLeft="10dp"
-        android:text="Informatik"
         android:textSize="16.0sp" />
 
     <ImageView
@@ -69,7 +65,6 @@
         android:drawablePadding="10.0dip"
         android:includeFontPadding="false"
         android:layout_marginLeft="10dp"
-        android:text="18"
         android:textSize="16.0sp" />
 
     <ImageView
@@ -90,7 +85,6 @@
         android:drawablePadding="10.0dip"
         android:includeFontPadding="false"
         android:layout_marginLeft="10dp"
-        android:text="7"
         android:textSize="16.0sp" />
 
     <TextView
@@ -103,6 +97,13 @@
         android:layout_marginLeft="10dp"
         android:text="Meine Gruppen:"
         android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/group_list_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_account"
+        ></ListView>
 
 
 </RelativeLayout>

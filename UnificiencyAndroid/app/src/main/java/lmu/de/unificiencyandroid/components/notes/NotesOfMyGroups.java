@@ -30,13 +30,13 @@ public class NotesOfMyGroups extends Fragment implements MyItemClickListener{
     private Note_DividerItemDecoration mDividerItemDecoration;
 
     //fake data
-    ArrayList<String> GroupMember =new ArrayList<String>(){{
+   public static ArrayList<String> GroupMember =new ArrayList<String>(){{
         add("Zhenhao");
         add("Robert");
         add("Jindong");
     }};
 
-    List<Group> GroupNotes = Arrays.asList(
+   public static List<Group> GroupNotes = Arrays.asList(
             new Group("Group_Name_1", "MSP", GroupMember, "wearebest"),
             new Group("Group_Name_2", "GPS", GroupMember,"wearebest"),
             new Group("Group_Name_3", "REST", GroupMember, "wearebest")

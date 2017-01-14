@@ -30,7 +30,7 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
     private RecyclerView.LayoutManager mLayoutManager;
     private Note_DividerItemDecoration mDividerItemDecoration;
 
-   List<Note> publicNotes = Arrays.asList(
+   public static List<Note> publicNotes = Arrays.asList(
           new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
           new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),
           new Note("IV", "GPS", "Outdoor Positioning", "Jin", 12),

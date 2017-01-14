@@ -44,7 +44,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".components.notes.NoteDetails" />
-        <activity android:name=".components.notes.NotesFromSingleGroup"></activity>
+        <activity android:name=".components.notes.NotesFromSingleGroup" />
+        <activity android:name=".components.setting.SettingGroups" />
+        <activity android:name=".components.setting.SettingNotes"></activity>
     </application>
 
 </manifest>

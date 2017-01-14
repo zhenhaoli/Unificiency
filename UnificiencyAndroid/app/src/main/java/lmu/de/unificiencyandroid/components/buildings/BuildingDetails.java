@@ -60,8 +60,6 @@ public class BuildingDetails extends AppCompatActivity {
             rooms.add(new Room("33"+i, false));
             rooms.add(new Room("10"+i, false));
             rooms.add(new Room("23"+i, false));
-
-
         }
 
 
