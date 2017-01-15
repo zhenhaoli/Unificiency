@@ -280,7 +280,7 @@ CREATE TABLE `user` (
   `major` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +289,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'rob','rob.m@lmu.de','123456','data science'),(2,'jin','jin.d@lmu.de','654321','print media'),(3,'zhen','zhen.h@lmu.de','qwertz','finance');
+INSERT INTO `user` VALUES (1,'rob','rob.m@lmu.de','123456','data science'),(2,'jin','jin.d@lmu.de','654321','print media'),(3,'zhen','zhen.h@lmu.de','qwertz','finance'),(4,'best','@@@','123',NULL),(5,'best','@@@','123',NULL),(6,'best','@@@','123',NULL),(7,'best','real@rea.com','123',NULL),(8,'best','real@rea.com','123',NULL),(9,'best','real@rea.com','123',NULL),(10,'best','real@rea.com','123',NULL),(11,'best','ral@rea.com','123',NULL),(12,'hehe','wo@123','xxx',NULL),(13,'hehe','wo@1234','xxx',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-15  6:34:58
+-- Dump completed on 2017-01-15 12:25:01
