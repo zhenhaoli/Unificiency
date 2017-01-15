@@ -60,10 +60,14 @@ SET ?
 
   this.login = function (req, res) {
 
+
+
     var user = {
       email: req.body.email,
       password: req.body.password,
     };
+
+    console.log(user)
 
     if (!user.email || !user.password) {
       return res.status(400).send("Some required fields missing");
