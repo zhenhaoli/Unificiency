@@ -1,7 +1,9 @@
 package lmu.de.unificiencyandroid;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import butterknife.BindView;
@@ -21,7 +24,6 @@ import lmu.de.unificiencyandroid.components.groups.GroupsFragment;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.components.notes.NotesTab;
 import lmu.de.unificiencyandroid.components.setting.Setting;
-import lmu.de.unificiencyandroid.components.trash.SentFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -37,11 +39,21 @@ public class MainActivity extends AppCompatActivity{
   FragmentManager mFragmentManager;
   FragmentTransaction mFragmentTransaction;
 
+  String authToken;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+
+    authToken = getIntent().getStringExtra("authToken");
+    Log.d("Main token", authToken);
+
+    SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
+    editor.putString("authToken", authToken);
+    editor.commit();
 
     /**
      * To set our Toolbar Title depending on the current fragment
@@ -128,6 +140,7 @@ public class MainActivity extends AppCompatActivity{
     mDrawerToggle.syncState();
 
   }
+
 
   @Override
   public void onBackPressed() {

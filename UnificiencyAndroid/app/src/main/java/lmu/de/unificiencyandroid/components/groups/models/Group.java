@@ -1,7 +1,5 @@
 package lmu.de.unificiencyandroid.components.groups.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Group {
   private String name;
   private String topic;

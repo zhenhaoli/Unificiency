@@ -67,6 +67,12 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
     protected ArrayList<Group> doInBackground(Void... params) {
       try {
+
+       // SharedPreferences sharedPref = Activity.getPreferences(Context.MODE_PRIVATE);
+       // String authToken = sharedPref.getString("authToken", null);
+
+        //Log.d("Token in sharedPref", authToken);
+
         final String url = "http://li.mz-host.de:5048/groups";
         Log.d("url", url);
         RestTemplate restTemplate = new RestTemplate(true);

@@ -1,7 +1,8 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,74 +12,96 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 
 public class BuildingsNearest extends BuildingsFragment {
 
 
-    View x;
-    ListView nearestBuildingListview;
+  View x;
+  ListView nearestBuildingListview;
 
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Nullable
+  @Override
+  public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        super.onCreateView(inflater, container, savedInstanceState);
-        new HttpRequestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        //useful code to show list components
-        x =  inflater.inflate(R.layout.buildings_nearest,null);
+    super.onCreateView(inflater, container, savedInstanceState);
 
-        return x;
-    }
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    String authToken = sharedPref.getString("authToken", null);
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Building>> {
-        protected ArrayList<Building> doInBackground(Void... params) {
-            try {
-                final String url = "http://li.mz-host.de:5048/buildings/nearest";
-                RestTemplate restTemplate = new RestTemplate(true);
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+    Log.d("bA Token in sharedPref", authToken);
 
-                ResponseEntity<Building[]> responseEntity = restTemplate.getForEntity(url, Building[].class);
+    BuildingClient client = new BuildingClient();
+    client.addHeader("Authorization", "Bearer " + authToken);
+    client.get("buildings/nearest", null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        // If the response is JSONObject instead of expected JSONArray
+      }
+      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
+        Log.e("status", statusCode + "" );
+        Log.e("e", e.toString());
+      }
 
-                Building[] buildings = responseEntity.getBody();
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
+        // Pull out the first event on the public timeline
+        try {
+          Log.d("buildings", buildings.length()+"");
 
-                return new ArrayList<>(Arrays.asList(buildings));
-            } catch (Exception e) {
-                Log.e("MainActivity", e.getMessage(), e);
-            }
+          List<Building> buildingsFromServer = new ArrayList<>();
+          for(int i=0; i<buildings.length(); i++){
+            String address = buildings.getJSONObject(i).getString("address");
+            String city = buildings.getJSONObject(i).getString("city");
+            Double lat = buildings.getJSONObject(i).getDouble("lat");
+            Double lng = buildings.getJSONObject(i).getDouble("lng");
+            String distanceText = buildings.getJSONObject(i).getString("distanceText");
+            String durationText = buildings.getJSONObject(i).getString("durationText");
+            Integer distance = buildings.getJSONObject(i).getInt("distance");
+            Integer duration = buildings.getJSONObject(i).getInt("duration");
+            buildingsFromServer.add(new Building(address, city, lat, lng, distanceText, durationText, distance, duration, null, null));
+          }
 
-            return null;
-        }
+          nearestBuildingListview = (ListView) x.findViewById(R.id.nearest_building_listview);
 
-        protected void onPostExecute( ArrayList<Building> buildings) {
-            nearestBuildingListview = (ListView) x.findViewById(R.id.nearest_building_listview);
+          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildingsFromServer);
+          nearestBuildingListview.setAdapter(adapter);
 
-            BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildings);
-            nearestBuildingListview.setAdapter(adapter);
-
-            nearestBuildingListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          nearestBuildingListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-                {
 
-                    Building building=(Building) nearestBuildingListview.getItemAtPosition(position);
-                    Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
-                    buildungDetails.putExtra("address", building.getAddress());
-                    buildungDetails.putExtra("city", building.getCity());
-                    startActivity(buildungDetails);
-                }
-            });
+              Building building=(Building) nearestBuildingListview.getItemAtPosition(position);
+              Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
+              buildungDetails.putExtra("address", building.getAddress());
+              buildungDetails.putExtra("city", building.getCity());
+              startActivity(buildungDetails);
+            }
+          });
 
+
+        } catch (Exception e) {
+          Log.e("BuildingAll", e.toString());
         }
 
-    }
+      }
+    });
+
+
+    x =  inflater.inflate(R.layout.buildings_nearest,null);
+
+    return x;
+  }
 
 }

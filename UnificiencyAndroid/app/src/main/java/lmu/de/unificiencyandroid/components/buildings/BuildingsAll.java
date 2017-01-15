@@ -1,7 +1,8 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,74 +12,90 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 
 public class BuildingsAll extends BuildingsFragment {
 
-    View x;
-    ListView all_building_listview;
+  View x;
+  ListView all_building_listview;
 
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Nullable
+  @Override
+  public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        super.onCreateView(inflater, container, savedInstanceState);
-        new HttpRequestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        //useful code to show list components
-        x =  inflater.inflate(R.layout.buildings_all,null);
+    super.onCreateView(inflater, container, savedInstanceState);
 
-        return x;
-    }
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    String authToken = sharedPref.getString("authToken", null);
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Building>> {
-        protected ArrayList<Building> doInBackground(Void... params) {
-            try {
-                final String url = "http://li.mz-host.de:5048/buildings";
-                RestTemplate restTemplate = new RestTemplate(true);
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-               
-                ResponseEntity<Building[]> responseEntity = restTemplate.getForEntity(url, Building[].class);
+    Log.d("bA Token in sharedPref", authToken);
 
-                Building[] buildings = responseEntity.getBody();
+    BuildingClient client = new BuildingClient();
+    client.addHeader("Authorization", "Bearer " + authToken);
+    client.get("buildings", null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        // If the response is JSONObject instead of expected JSONArray
+      }
+      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
+        Log.e("status", statusCode + "" );
+        Log.e("e", e.toString());
+      }
 
-                return new ArrayList<>(Arrays.asList(buildings));
-            } catch (Exception e) {
-                Log.e("MainActivity", e.getMessage(), e);
-            }
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
+        // Pull out the first event on the public timeline
+        try {
+          Log.d("buildings", buildings.length()+"");
 
-            return null;
-        }
-        
-        protected void onPostExecute( ArrayList<Building> buildings) {
-            all_building_listview = (ListView) x.findViewById(R.id.all_building_listview);
+          List<Building> buildingsFromServer = new ArrayList<>();
+          for(int i=0; i<buildings.length(); i++){
+            String address = buildings.getJSONObject(i).getString("address");
+            String city = buildings.getJSONObject(i).getString("city");
+            Double lat = buildings.getJSONObject(i).getDouble("lat");
+            Double lng = buildings.getJSONObject(i).getDouble("lng");
+            buildingsFromServer.add(new Building(address, city, lat, lng, null, null, null, null, null, null));
+          }
 
-            BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildings);
-            all_building_listview.setAdapter(adapter);
+          all_building_listview = (ListView) x.findViewById(R.id.all_building_listview);
 
-            all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildingsFromServer);
+          all_building_listview.setAdapter(adapter);
+
+          all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-                {
 
-                    Building building=(Building) all_building_listview.getItemAtPosition(position);
-                    Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
-                    buildungDetails.putExtra("address", building.getAddress());
-                    buildungDetails.putExtra("city", building.getCity());
-                    startActivity(buildungDetails);
-                }
-            });
+              Building building=(Building) all_building_listview.getItemAtPosition(position);
+              Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
+              buildungDetails.putExtra("address", building.getAddress());
+              buildungDetails.putExtra("city", building.getCity());
+              startActivity(buildungDetails);
+            }
+          });
 
+
+        } catch (Exception e) {
+          Log.e("BuildingAll", e.toString());
         }
 
-    }
+      }
+    });
+
+    x =  inflater.inflate(R.layout.buildings_all,null);
+    return x;
+  }
 
 }
 
