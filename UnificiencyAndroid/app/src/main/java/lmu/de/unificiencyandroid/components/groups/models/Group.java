@@ -36,7 +36,7 @@ public class Group {
 
   @Override
   public String toString() {
-    return topic +"\t" + name;
+    return "[" + topic +"]  " + name;
   }
 
 
