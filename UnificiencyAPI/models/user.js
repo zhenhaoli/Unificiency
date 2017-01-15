@@ -11,6 +11,8 @@ function Group() {
 
   this.register = function (req, res) {
 
+    console.log(req.body)
+
     var user = {
       email: req.body.email,
       username: req.body.username,
@@ -18,7 +20,8 @@ function Group() {
       major: req.body.major
     };
 
-    if (!user.email || !user.username || !user.password) {
+
+    if (!user.email || !user.password) {
       return res.status(400).send("Some required fields missing");
     }
 
@@ -29,18 +32,14 @@ function Group() {
  from user
 `, function (err, users) {
 
-        con.release();
-
         if (_.find(users, {email: user.email})) {
-          return res.status(400).send("A user with that email already in use");
+          return res.status(409).send("A user with that email already in use");
         }
 
         con.query(`
 Insert into user
 SET ?
 `, user, function (err, result) {
-
-          con.release();
 
           if (err) {
             res.status(400).send({
@@ -55,13 +54,13 @@ SET ?
 
         });
       });
+
+      con.release();
     });
   };
 
   this.login = function (req, res) {
-
-
-
+    
     var user = {
       email: req.body.email,
       password: req.body.password,
