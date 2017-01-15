@@ -71,13 +71,9 @@ function Building() {
 
         getDistranceFromAPI('transit'); //this api requires key but is better for real time usage since student will use public transits ...
 
-
       })
-
     });
   }
-
-
 }
 
 module.exports = new Building();

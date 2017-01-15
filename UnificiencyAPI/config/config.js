@@ -15,6 +15,4 @@ var apiKeys = [
 ];
 
 exports.GOOGLE_API_KEY = apiKeys[0];
-
 exports.DistanceMatrixAPI = "https://maps.googleapis.com/maps/api/distancematrix/json";
-
