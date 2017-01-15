@@ -280,7 +280,7 @@ CREATE TABLE `user` (
   `major` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +289,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'rob','rob.m@lmu.de','123456','data science'),(2,'jin','jin.d@lmu.de','654321','print media'),(3,'zhen','zhen.h@lmu.de','qwertz','finance'),(4,'best','@@@','123',NULL),(5,'best','@@@','123',NULL),(6,'best','@@@','123',NULL),(7,'best','real@rea.com','123',NULL),(8,'best','real@rea.com','123',NULL),(9,'best','real@rea.com','123',NULL),(10,'best','real@rea.com','123',NULL),(11,'best','ral@rea.com','123',NULL),(12,'hehe','wo@123','xxx',NULL),(13,'hehe','wo@1234','xxx',NULL);
+INSERT INTO `user` VALUES (1,'rob','rob.m@lmu.de','123456','data science'),(2,'jin','jin.d@lmu.de','654321','print media'),(3,'zhen','zhen.h@lmu.de','qwertz','finance'),(4,'best','@@@','123',NULL),(5,'best','@@@','123',NULL),(6,'best','@@@','123',NULL),(7,'best','real@rea.com','123',NULL),(8,'best','real@rea.com','123',NULL),(9,'best','real@rea.com','123',NULL),(10,'best','real@rea.com','123',NULL),(11,'best','ral@rea.com','123',NULL),(12,'hehe','wo@123','xxx',NULL),(13,'hehe','wo@1234','xxx',NULL),(14,'JinRobZhen','unificiency@lmu.de','wearebest','CS');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +318,7 @@ CREATE TABLE `usergroup` (
 
 LOCK TABLES `usergroup` WRITE;
 /*!40000 ALTER TABLE `usergroup` DISABLE KEYS */;
-INSERT INTO `usergroup` VALUES (1,1,'2017-01-15 04:11:55'),(1,2,'2017-01-15 04:11:55'),(3,2,'2017-01-15 04:12:26');
+INSERT INTO `usergroup` VALUES (1,1,'2017-01-15 04:11:55'),(1,2,'2017-01-15 04:11:55'),(3,2,'2017-01-15 04:12:26'),(14,1,'2017-01-15 14:48:30'),(14,3,'2017-01-15 14:48:36');
 /*!40000 ALTER TABLE `usergroup` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -331,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-15 12:25:01
+-- Dump completed on 2017-01-15 17:10:32
