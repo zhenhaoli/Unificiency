@@ -13,11 +13,12 @@ module.exports = {
 
     app.get('/groups', function(req, res) {
 
-      if(!req.query.userid) {
+      if (!req.query.userid) {
         return group.getAll(req, res);
       }
 
       return group.getByUser(req, res);
+
     });
 
   }
