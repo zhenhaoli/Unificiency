@@ -6,10 +6,10 @@ module.exports = {
     app.get('/groups', function(req, res) {
 
       if(!req.query.userid) {
-        group.getAll(req, res);
+        return group.getAll(req, res);
       }
 
-      group.getByUser(req, res);
+      return group.getByUser(req, res);
     });
 
   }

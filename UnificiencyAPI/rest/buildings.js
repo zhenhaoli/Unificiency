@@ -4,11 +4,11 @@ module.exports = {
   setRoutes: function(app) {
 
     app.get('/buildings', function(req, res) {
-      building.getAll(res);
+      return building.getAll(res);
     });
 
     app.get('/buildings/nearest', function(req, res) {
-      building.getNearest(req, res);
+      return building.getNearest(req, res);
     });
 
   }
