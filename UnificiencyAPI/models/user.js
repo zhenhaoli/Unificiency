@@ -101,5 +101,4 @@ SET ?
   };
 }
 
-
 module.exports = new Group();

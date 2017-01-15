@@ -1,1 +1,1 @@
-mysqldump -uroot -proot msp > msp.sql
+mysqldump -uroot msp > msp.sql
