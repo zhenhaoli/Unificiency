@@ -37,7 +37,13 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     this.data = new ArrayList<String>();
     try {
       //TODO: this is blocking UI thread, but how to make result to that callback??
-      List<Group> groups = new HttpRequestTask().execute().get();
+      Log.d("start", "before http");
+      HttpRequestTask h = new HttpRequestTask();
+      h.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+      List<Group> groups = h.get();
+
+      Log.d("end", "after http");
       for(Group group : groups){
         this.data.add(group.toString());
       }
@@ -47,17 +53,34 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
   }
 
   private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Group>> {
+
+    public HttpRequestTask() {
+
+    }
+
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      Log.d("in pre group task", "yes");
+
+    }
+
     protected ArrayList<Group> doInBackground(Void... params) {
       try {
         final String url = "http://li.mz-host.de:5048/groups";
+        Log.d("url", url);
         RestTemplate restTemplate = new RestTemplate(true);
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         ResponseEntity<Group[]> responseEntity = restTemplate.getForEntity(url, Group[].class);
 
-        Group[] buildings = responseEntity.getBody();
+        Group[] groups = responseEntity.getBody();
 
-        return new ArrayList<>(Arrays.asList(buildings));
+for(int i = 0; i<groups.length; i++){
+  Log.d("groups", groups[i].toString());
+}
+
+        return new ArrayList<>(Arrays.asList(groups));
       } catch (Exception e) {
         Log.e("MainActivity", e.getMessage(), e);
       }
@@ -65,7 +88,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
       return null;
     }
 
-    protected void onPostExecute( ArrayList<Group> buildings) {
+    protected void onPostExecute( ArrayList<Group> groups) {
 
     }
 

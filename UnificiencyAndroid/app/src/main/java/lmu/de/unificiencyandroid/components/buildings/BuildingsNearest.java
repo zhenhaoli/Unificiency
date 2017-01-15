@@ -31,7 +31,7 @@ public class BuildingsNearest extends BuildingsFragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-        new BuildingsNearest.HttpRequestTask().execute();
+        new HttpRequestTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //useful code to show list components
         x =  inflater.inflate(R.layout.buildings_nearest,null);
 
