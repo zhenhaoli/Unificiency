@@ -41,9 +41,13 @@ function Building() {
               destinations: dest,
               language: 'de-DE',
               mode: mode,
-              key: config.GOOGLE_API_KEY
+              //key: config.GOOGLE_API_KEY
             })
             .end(function (response) {
+              if(!response  || !response.body){
+                getDistranceFromAPI('walking');
+                return;
+              }
 
               //if we we used up our API limit we use the unlimited mode aka walking
               if(response.body.error_message){
@@ -64,7 +68,7 @@ function Building() {
                 return a.duration - b.duration;
               });
 
-              res.json(buildings)
+              return res.json(buildings)
 
             });
         }

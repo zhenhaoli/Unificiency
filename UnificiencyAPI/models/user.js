@@ -92,7 +92,7 @@ SET ?
           return res.status(401).send("The username or password don't match");
         }
 
-        res.status(201).send({
+        res.status(200).send({
           id_token: createToken(user)
         });
 
