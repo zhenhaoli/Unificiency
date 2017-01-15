@@ -12,13 +12,11 @@ module.exports = {
     app.use('/groups', jwtCheck);
 
     app.get('/groups', function(req, res) {
+      return group.getAll(req, res);
+    });
 
-      if (!req.query.userid) {
-        return group.getAll(req, res);
-      }
-
+    app.get('/groups/user', function(req, res) {
       return group.getByUser(req, res);
-
     });
 
   }

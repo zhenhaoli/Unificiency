@@ -1,10 +1,16 @@
+var jwt = require('jsonwebtoken');
 var connection = require('../db/connection');
 var config = require('../config/config.js');
 
 function Group() {
 
-  //TODO: make req.id based on token to identify user
   this.getByUser = function(req, res) {
+
+    var token = req.header('Authorization').substring(7); //remove 'bearer'
+
+    // verify a token symmetric
+    var decoded = jwt.verify(token, config.secret);
+
     connection.acquire(function(err, con) {
       con.query(`
  SELECT name, topic, description
@@ -13,8 +19,8 @@ function Group() {
  on ug.groupid = sg.id 
  left join user u 
  on u.id = ug.userid
- where u.id = ?
-`, [req.query.userid], function(err, groups) {
+ where u.email = ?
+`, [decoded.email], function(err, groups) {
 
         con.release();
         res.json(groups);
@@ -22,6 +28,7 @@ function Group() {
       });
     });
   };
+
 
   this.getAll = function(req, res) {
     connection.acquire(function(err, con) {
@@ -38,7 +45,6 @@ function Group() {
       });
     });
   };
-
 
 
 }
