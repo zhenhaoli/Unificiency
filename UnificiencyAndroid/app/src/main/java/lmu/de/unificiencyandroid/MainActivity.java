@@ -1,9 +1,7 @@
 package lmu.de.unificiencyandroid;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -50,10 +48,6 @@ public class MainActivity extends AppCompatActivity{
     authToken = getIntent().getStringExtra("authToken");
     Log.d("Main token", authToken);
 
-    SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPref.edit();
-    editor.putString("authToken", authToken);
-    editor.commit();
 
     /**
      * To set our Toolbar Title depending on the current fragment

@@ -15,10 +15,12 @@ connection.init();
 var users = require('./rest/users');
 var buildings = require('./rest/buildings');
 var groups = require('./rest/groups');
+var rooms = require('./rest/rooms');
 
 users.setRoutes(app);
 buildings.setRoutes(app);
 groups.setRoutes(app);
+rooms.setRoutes(app);
 
 app.use(function(err, req, res, next) {
   if (err.name === 'StatusError') {

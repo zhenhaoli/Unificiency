@@ -8,6 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Room {
-    private String name;
-    private Boolean availability;
+  private String name;
+  private String level;
+  private String address;
+  private Boolean available;
+
+  @Override
+  public String toString() {
+    return "[" + level + "]  " + name +  (available? "(icon für frei)" : "(icon für besetzt)");
+  }
+
 }

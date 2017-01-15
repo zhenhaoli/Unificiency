@@ -1,8 +1,6 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,6 +21,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.untils.SharedPref;
 
 public class BuildingsAll extends BuildingsFragment {
 
@@ -35,8 +34,7 @@ public class BuildingsAll extends BuildingsFragment {
 
     super.onCreateView(inflater, container, savedInstanceState);
 
-    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-    String authToken = sharedPref.getString("authToken", null);
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     Log.d("bA Token in sharedPref", authToken);
 

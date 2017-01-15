@@ -60,7 +60,7 @@ SET ?
   };
 
   this.login = function (req, res) {
-    
+
     var user = {
       email: req.body.email,
       password: req.body.password,

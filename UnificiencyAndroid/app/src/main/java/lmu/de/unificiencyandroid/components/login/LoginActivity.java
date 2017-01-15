@@ -22,6 +22,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.untils.SharedPref;
 
 public class LoginActivity extends AuthActivity {
 
@@ -87,6 +88,7 @@ public class LoginActivity extends AuthActivity {
 
             Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
             loginIntent.putExtra("authToken", token);
+            SharedPref.setDefaults("authToken", token, getApplicationContext());
             startActivity(loginIntent);
             finish();
           }
