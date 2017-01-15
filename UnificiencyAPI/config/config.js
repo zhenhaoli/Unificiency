@@ -16,3 +16,6 @@ var apiKeys = [
 
 exports.GOOGLE_API_KEY = apiKeys[0];
 exports.DistanceMatrixAPI = "https://maps.googleapis.com/maps/api/distancematrix/json";
+
+// jwt secret
+exports.secret = 'This secret is unbreachable!!1337';
