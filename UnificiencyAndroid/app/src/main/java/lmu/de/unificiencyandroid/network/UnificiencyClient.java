@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.buildings;
+package lmu.de.unificiencyandroid.network;
 
 import android.util.Log;
 
@@ -6,12 +6,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class BuildingClient {
+public class UnificiencyClient {
   private final String BASE_URL = "http://li.mz-host.de:5048/";
 
   private AsyncHttpClient client;
 
-  public BuildingClient(){
+  public UnificiencyClient(){
     client = new AsyncHttpClient();
   }
 

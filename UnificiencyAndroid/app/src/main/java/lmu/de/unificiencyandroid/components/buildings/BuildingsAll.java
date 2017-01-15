@@ -22,6 +22,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
 
 public class BuildingsAll extends BuildingsFragment {
 
@@ -39,7 +40,7 @@ public class BuildingsAll extends BuildingsFragment {
 
     Log.d("bA Token in sharedPref", authToken);
 
-    BuildingClient client = new BuildingClient();
+    UnificiencyClient client = new UnificiencyClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings", null, new JsonHttpResponseHandler() {
       @Override
