@@ -41,7 +41,7 @@ public class BuildingsNearest extends BuildingsFragment {
     private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Building>> {
         protected ArrayList<Building> doInBackground(Void... params) {
             try {
-                final String url = "http://li.mz-host.de:5048/buildings";
+                final String url = "http://li.mz-host.de:5048/buildings/nearest";
                 RestTemplate restTemplate = new RestTemplate(true);
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
@@ -58,7 +58,7 @@ public class BuildingsNearest extends BuildingsFragment {
         }
 
         protected void onPostExecute( ArrayList<Building> buildings) {
-            nearestBuildingListview = (ListView) x.findViewById(R.id.all_building_listview);
+            nearestBuildingListview = (ListView) x.findViewById(R.id.nearest_building_listview);
 
             BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildings);
             nearestBuildingListview.setAdapter(adapter);

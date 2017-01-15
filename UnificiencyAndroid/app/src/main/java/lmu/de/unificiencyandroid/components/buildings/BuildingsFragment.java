@@ -47,7 +47,7 @@ public abstract class BuildingsFragment extends Fragment {
         Double lat = Double.parseDouble(record.get("lat"));
         Double lng = Double.parseDouble(record.get("lng"));
         String city = record.get("city");
-        buildings.add(new Building(address, city, lat, lng, imga7astr, null));
+       // buildings.add(new Building(address, city, lat, lng, imga7astr, null));
       }
     } catch (Exception e){
       Log.e("failed to parse csv", e.toString());

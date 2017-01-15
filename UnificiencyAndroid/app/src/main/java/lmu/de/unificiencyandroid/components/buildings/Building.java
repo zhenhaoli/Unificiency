@@ -17,19 +17,32 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Building {
 
-    String address;
-    String city;
+  String address;
+  String city;
 
-    Double lat;
-    Double lng;
+  Double lat;
+  Double lng;
 
-    Bitmap img;
-    List<Room> rooms;
+  String distanceText;
+  String durationText;
 
-    @Override
-    public String toString() {
-        return(address+"\n"+city+"\n"+lat+", "+lng);
+  Integer distance;
+  Integer duration;
+
+  Bitmap img;
+  List<Room> rooms;
+
+  @Override
+  public String toString() {
+    if(distanceText == null || durationText == null){
+      return address+"\n"+city;
     }
+  return address +"\n" +
+      city +"\n" +
+      "Distanz: " + distanceText +"\n" +
+      "Dauer: " + durationText
+      ;
+  }
 
 }
 
