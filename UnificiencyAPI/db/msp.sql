@@ -236,6 +236,91 @@ LOCK TABLES `street` WRITE;
 INSERT INTO `street` VALUES ('S0003','Butenandtstraße','MUC'),('S0004','Amalienstraße','MUC'),('S0006','Akademiestraße','MUC'),('S0009','Bavariaring','MUC'),('S0013','Feodor-Lynen-Straße','MUC'),('S0016','Georgenstraße','MUC'),('S0017','Geschwister-Scholl-Platz','MUC'),('S0018','Goethestraße','MUC'),('S0026','Kaulbachstraße','MUC'),('S0027','Königinstraße','MUC'),('S0029','Konradstraße','MUC'),('S0030','Leopoldstraße','MUC'),('S0031','Lessingstraße','MUC'),('S0032','Lindwurmstraße','MUC'),('S0035','Ludwigstraße','MUC'),('S0036','Luisenstraße','MUC'),('S0038','Marchioninistraße','MUC'),('S0039','Maria-Theresia-Straße','MUC'),('S0048','Oettingenstraße','MUC'),('S0049','Pettenkoferstraße','MUC'),('S0051','Professor-Huber-Platz ','MUC'),('S0052','Richard-Wagner-Straße','MUC'),('S0053','Schackstraße','MUC'),('S0054','Scheinerstraße','MUC'),('S0055','Schellingstraße','MUC'),('S0056','Schillerstraße','MUC'),('S0060','Thalkirchner Straße','MUC'),('S0061','Theresienstraße','MUC'),('S0062','Veterinärstraße','MUC'),('S0064','Sonnenstraße','OSH'),('S0069','Großhaderner Straße','MPL'),('S0071','Schönleutnerstraße','OSH'),('S0073','Martiusstraße','MUC'),('S0078','Zentnerstraße','MUC'),('S0082','Laplacestraße','MUC'),('S0083','Giselastraße','MUC'),('S0087','Seestraße','MUC'),('S0089','Edmund-Rumpler-Straße','MUC'),('S0102','Fraunhoferstraße','MPL'),('S0103','Schönfeldstraße','MUC');
 /*!40000 ALTER TABLE `street` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `studygroup`
+--
+
+DROP TABLE IF EXISTS `studygroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `studygroup` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `topic` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `studygroup`
+--
+
+LOCK TABLES `studygroup` WRITE;
+/*!40000 ALTER TABLE `studygroup` DISABLE KEYS */;
+INSERT INTO `studygroup` VALUES (1,'MSP Praktikum ','Praktikum','Organisation rund um das Praktikum wo wir unsere App Unificiency entwickeln','wearebest'),(2,'machine learning','data science','neuronale netzwerke sind so geil',''),(3,'Interface Design','UX','Wie man professionell schöne Oberfläche malt','');
+/*!40000 ALTER TABLE `studygroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `major` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'rob','rob.m@lmu.de','123456','data science'),(2,'jin','jin.d@lmu.de','654321','print media'),(3,'zhen','zhen.h@lmu.de','qwertz','finance');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usergroup`
+--
+
+DROP TABLE IF EXISTS `usergroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usergroup` (
+  `userid` bigint(20) NOT NULL,
+  `groupid` bigint(20) NOT NULL,
+  `joined_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`userid`,`groupid`),
+  KEY `userid` (`userid`,`groupid`),
+  KEY `groupid` (`groupid`),
+  CONSTRAINT `usergroup_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`),
+  CONSTRAINT `usergroup_ibfk_2` FOREIGN KEY (`groupid`) REFERENCES `studygroup` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usergroup`
+--
+
+LOCK TABLES `usergroup` WRITE;
+/*!40000 ALTER TABLE `usergroup` DISABLE KEYS */;
+INSERT INTO `usergroup` VALUES (1,1,'2017-01-15 04:11:55'),(1,2,'2017-01-15 04:11:55'),(3,2,'2017-01-15 04:12:26');
+/*!40000 ALTER TABLE `usergroup` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -246,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-15  2:39:16
+-- Dump completed on 2017-01-15  6:34:58
