@@ -161,8 +161,8 @@ public class LoginActivity extends AuthActivity {
     ButterKnife.bind(this);
 
     //TODO: remove this in prd
-    usernameWrapper.getEditText().setText("unificiency@lmu.de");
-    passwordWrapper.getEditText().setText("wearebest");
+    usernameWrapper.getEditText().setText("unificiency2@lmu.de");
+    passwordWrapper.getEditText().setText("123456");
 
   }
 

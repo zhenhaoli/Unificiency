@@ -21,12 +21,12 @@ public abstract class UnificiencyClient {
   }
 
   public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Log.d("url", getAbsoluteUrl(url));
+    Log.d("GET", getAbsoluteUrl(url) + ((params != null) ? params.toString() : ' '));
     client.get(getAbsoluteUrl(url), params, responseHandler);
   }
 
   public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Log.d("url", getAbsoluteUrl(url));
+    Log.d("POST", getAbsoluteUrl(url)+ ((params != null) ? params.toString() : ' '));
     client.post(getAbsoluteUrl(url), params, responseHandler);
   }
 

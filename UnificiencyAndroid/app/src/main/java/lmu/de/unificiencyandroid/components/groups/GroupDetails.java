@@ -41,7 +41,6 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
   private ImageView toolbar;
   private Group group;
 
-
   public Group fetchGroupDetails(final Integer groupId){
     String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
 
@@ -84,7 +83,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
         Log.e("groupdetailserr", errorResponse.toString());
         String errmsg = null;
         try {
-           errmsg = errorResponse.getString("message");
+          errmsg = errorResponse.getString("message");
         } catch (Exception e) {
 
         }
@@ -130,13 +129,78 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
   }
 
   public void onJoin(View view){
-    EnterGroupPassword enterPwDialog = new EnterGroupPassword();
-    enterPwDialog.show(getSupportFragmentManager(), "enter_password");
+    Boolean groupHasPassword = false;
+
+    if(groupHasPassword) {
+      EnterGroupPassword enterPwDialog = new EnterGroupPassword();
+      enterPwDialog.show(getSupportFragmentManager(), "enter_password");
+
+    } else {
+
+      String authToken = SharedPref.getDefaults("authTokenPython", getApplicationContext());
+
+      Log.d("gd Token in sharedPref", authToken);
+
+      UnificiencyClient client = new PythonAPIClient();
+      client.addHeader("Authorization", authToken);
+      client.post("groups/" + group.getId() + "/join/", null, new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+          // If the response is JSONObject instead of expected JSONArray
+          String resMessage = null;
+          try {
+            resMessage = response.getString("message");
+
+          } catch (Exception e) {
+            Log.e("jsonerr", e.toString());
+          }
+
+          String[] msg = resMessage.split("\\s+");
+          String res = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
+
+          SuperActivityToast.cancelAllSuperToasts();
+          SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
+              .setText(res)
+              .setDuration(Style.DURATION_LONG)
+              .setFrame(Style.FRAME_KITKAT)
+              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
+              .setAnimations(Style.ANIMATIONS_SCALE)
+              .show();
+
+          fetchGroupDetails(group.getId());
+
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+          Log.e("groupdetailserr", errorResponse.toString());
+          String errmsg = null;
+          try {
+            errmsg = errorResponse.getString("message");
+          } catch (Exception e) {
+
+          }
+          SuperActivityToast.cancelAllSuperToasts();
+          SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
+              .setText(errmsg)
+              .setDuration(Style.DURATION_LONG)
+              .setFrame(Style.FRAME_KITKAT)
+              .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+              .setAnimations(Style.ANIMATIONS_SCALE)
+              .show();
+
+        }
+
+      });
+
+    }
+
   }
 
   @Override
   public void onPwEntered(String pw) {
     Log.i("Password retrievied: ", pw);
+    //TODO POST JOIN for groups with pw
   }
 
 
