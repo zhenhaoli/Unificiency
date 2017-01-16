@@ -14,7 +14,7 @@
     <string name="validation_email">Bitte eine gültige Email Adresse eingeben</string>
     <string name="validation_password">Passwort muss mindestens 6 Zeichen enthalten</string>
     <string name="validation_passwords_equal">Eingegebene Passwörter stimmen nicht überein</string>
-
+    <string name="validation_nickname">Bitte einen Nickname eingeben</string>
 
     <string name="nav_item_buildings">Gebäude</string>
     <string name="nav_item_groups">Lerngruppen</string>

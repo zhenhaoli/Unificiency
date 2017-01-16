@@ -86,10 +86,14 @@ public class RegisterActivity extends AuthActivity {
       passwordWrapper.setError(getString(R.string.validation_passwords_equal));
     }
 
-    if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm)) {
+    if(!validateNickname(nickname)){
+      nicknameWrapper.setError(getString(R.string.validation_nickname));
+    }
 
+    if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm) && validateNickname(nickname)) {
       doPost(username, nickname, password, major);
     }
+
   }
 
   private void doPost(String username, String nickname, String password, String major) {
@@ -117,6 +121,15 @@ public class RegisterActivity extends AuthActivity {
             // If the response is JSONObject instead of expected JSONArray
             Log.d("res", response.toString());
 
+            usernameWrapper.setErrorEnabled(false);
+            passwordWrapper.setErrorEnabled(false);
+            passwordConfirmWrapper.setErrorEnabled(false);
+
+            Intent returnToLoginIntent = new Intent();
+            returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
+            setResult(Activity.RESULT_OK,returnToLoginIntent);
+            finish();
+
           }
 
           @Override
@@ -134,7 +147,7 @@ public class RegisterActivity extends AuthActivity {
             super.onFailure(statusCode, headers, responseString, throwable);
             String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
             SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-                .setText(failedLogin)
+                .setText(responseString)
                 .setDuration(Style.DURATION_LONG)
                 .setFrame(Style.FRAME_KITKAT)
                 .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
@@ -143,14 +156,7 @@ public class RegisterActivity extends AuthActivity {
           }
         });
 
-        usernameWrapper.setErrorEnabled(false);
-        passwordWrapper.setErrorEnabled(false);
-        passwordConfirmWrapper.setErrorEnabled(false);
 
-        Intent returnToLoginIntent = new Intent();
-        returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
-        setResult(Activity.RESULT_OK,returnToLoginIntent);
-        finish();
       }
 
       @Override
@@ -162,11 +168,10 @@ public class RegisterActivity extends AuthActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-        Log.e("res err", responseString.toString());
+        Log.e("res err str", responseString.toString());
 
-        String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
         SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-            .setText(failedLogin)
+            .setText(responseString)
             .setDuration(Style.DURATION_LONG)
             .setFrame(Style.FRAME_KITKAT)
             .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
@@ -177,13 +182,13 @@ public class RegisterActivity extends AuthActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e("res err", errorResponse.toString());
+        Log.e("res err js", errorResponse.toString());
 
-        String failMsg = null;
-        try {
-          failMsg = errorResponse.getString("message");
-        } catch (Exception e){
-          Log.e("json err", e.toString());
+        String failMsg = errorResponse.toString();
+        if(failMsg.contains("username")){
+          failMsg = "Nickname bereits vergeben, bitte einen anderen eingeben";
+        } else if(failMsg.contains("email")){
+          failMsg = "Dieses Email wird bereits verwendet, bitte ein anderes eingeben!";
         }
         SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
             .setText(failMsg)
@@ -216,9 +221,10 @@ public class RegisterActivity extends AuthActivity {
     actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
 
     //TODO remove this in prd
-    usernameWrapper.getEditText().setText("asd@sdss");
-    passwordWrapper.getEditText().setText("asd@sdss");
-    passwordConfirmWrapper.getEditText().setText("asd@sdss");
+    usernameWrapper.getEditText().setText("NewUser@LMU.de");
+    passwordWrapper.getEditText().setText("123456");
+    passwordConfirmWrapper.getEditText().setText("123456");
+    nicknameWrapper.getEditText().setText("MSPPraktikant");
 
   }
 

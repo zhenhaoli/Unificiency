@@ -9,24 +9,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class AuthActivity extends AppCompatActivity {
-    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
-    private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-    private Matcher matcher;
+  private static final String EMAIL_PATTERN = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)";
+  private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+  private Matcher matcher;
 
-    public boolean validateEmail(String email) {
-        matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+  public boolean validateEmail(String email) {
+    matcher = pattern.matcher(email);
+    return matcher.matches();
+  }
 
-    public boolean validatePassword(String password) {
-        return password.length() > 5;
-    }
+  public boolean validatePassword(String password) {
+    return password.length() > 5;
+  }
 
-    protected void hideKeyboard() {
-        View view = getCurrentFocus();
-        if (view != null) {
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
-                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+  public boolean validateNickname(String name) {
+    return name != null && name.length() > 0;
+  }
+
+  protected void hideKeyboard() {
+    View view = getCurrentFocus();
+    if (view != null) {
+      ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+          hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
+  }
 }
