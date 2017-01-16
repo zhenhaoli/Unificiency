@@ -122,6 +122,7 @@ public class LoginActivity extends AuthActivity {
               public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 String failedLogin = "Email oder Passwort falsch!";
+                SuperActivityToast.cancelAllSuperToasts();
                 SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
                     .setText(failedLogin)
                     .setDuration(Style.DURATION_LONG)
