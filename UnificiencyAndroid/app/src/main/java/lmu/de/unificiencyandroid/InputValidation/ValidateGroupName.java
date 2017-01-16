@@ -12,6 +12,6 @@ public class ValidateGroupName extends InputValidation {
     }
     @Override
     public boolean validate(String text) {
-        return text.length() >= 3 && !text.contains(" ");
+        return text.length() >= 3;
     }
 }
