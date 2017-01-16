@@ -146,6 +146,7 @@ public class RegisterActivity extends AuthActivity {
           public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             super.onFailure(statusCode, headers, responseString, throwable);
             String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
+            SuperActivityToast.cancelAllSuperToasts();
             SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
                 .setText(responseString)
                 .setDuration(Style.DURATION_LONG)
@@ -169,7 +170,7 @@ public class RegisterActivity extends AuthActivity {
       public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
         Log.e("res err str", responseString.toString());
-
+        SuperActivityToast.cancelAllSuperToasts();
         SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
             .setText(responseString)
             .setDuration(Style.DURATION_LONG)
@@ -190,6 +191,7 @@ public class RegisterActivity extends AuthActivity {
         } else if(failMsg.contains("email")){
           failMsg = "Dieses Email wird bereits verwendet, bitte ein anderes eingeben!";
         }
+        SuperActivityToast.cancelAllSuperToasts();
         SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
             .setText(failMsg)
             .setDuration(Style.DURATION_LONG)

@@ -1,11 +1,12 @@
 package lmu.de.unificiencyandroid.components.groups;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -33,7 +37,7 @@ import lmu.de.unificiencyandroid.untils.SharedPref;
 
 public class GroupsFragment extends Fragment {
    RecyclerView groupsRecyclerView;
-   RecyclerView.Adapter groupsAdapter;
+   GroupsAdapter groupsAdapter;
    RecyclerView.LayoutManager groupsLayoutManager;
    NestedScrollView groupsScrollview;
    AppBarLayout groupsAppBar;
@@ -85,12 +89,15 @@ public class GroupsFragment extends Fragment {
               memberNames.add(members.getJSONObject(j).getString("username"));
             }
 
-            Log.d("groupname", name);
-            Log.d("topic", topic);
             groupsFromServer.add(new Group(name, topic, description, memberNames, null));
           }
-          
-          groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer);
+          Collections.reverse(groupsFromServer);
+          if(groupsAdapter == null) {
+            groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer);
+          } else {
+            groupsAdapter.setData(groupsFromServer);
+          }
+
           groupsRecyclerView.setAdapter(groupsAdapter);
           
         } catch (Exception e) {
@@ -103,9 +110,8 @@ public class GroupsFragment extends Fragment {
   }
 
   public void onAddGroup(View view) {
-    Context context = view.getContext();
-    Intent intent = new Intent(context, NewGroup.class);
-    context.startActivity(intent);
+    Intent intent= new Intent(getContext(), NewGroup.class);
+    startActivityForResult(intent, 1);
   }
 
   @Override
@@ -139,6 +145,36 @@ public class GroupsFragment extends Fragment {
     bindGroupData();
     return view;
   }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    if (requestCode == 1) {
+      if(resultCode == Activity.RESULT_OK){
+
+        bindGroupData();
+
+        Bundle extras = data.getExtras();
+        String createdGroupMsg;
+
+        if (extras != null) {
+          createdGroupMsg = extras.getString("createGroupSuccess");
+          SuperActivityToast.cancelAllSuperToasts();
+          SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
+              .setText(createdGroupMsg)
+              .setDuration(Style.DURATION_LONG)
+              .setFrame(Style.FRAME_KITKAT)
+              .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
+              .setAnimations(Style.ANIMATIONS_SCALE)
+              .show();
+        }
+
+      }
+      if (resultCode == Activity.RESULT_CANCELED) {
+        //Write your code if there's no result
+      }
+    }
+  }//onActivityResult
 
 
 

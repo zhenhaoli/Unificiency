@@ -28,6 +28,10 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     this.data = groups;
   }
 
+  public void setData(List<Group> groups){
+    this.data = groups;
+  }
+
   @Override
   public ViewHolderGroups onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = layoutInflater.inflate(R.layout.group_list_item, parent, false);
