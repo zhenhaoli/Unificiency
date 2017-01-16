@@ -229,10 +229,8 @@ public class RegisterActivity extends AuthActivity {
     finish();
   }
 
-
   boolean passwordsEqual(String password, String passwordConfirm) {
     return password.equals(passwordConfirm);
   }
-
 
 }
