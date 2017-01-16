@@ -62,7 +62,7 @@ public class BuildingsAdapter extends BaseAdapter {
             ImageView imageView = (ImageView)grid.findViewById(R.id.imgitem);
             //textView.setText(buildings.get(position).toString());
             ColorGenerator generator = ColorGenerator.MATERIAL;
-            String address = buildings.get(position).address + "\n" + buildings.get(position);
+            String address = buildings.get(position).address;
             TextDrawable drawable = TextDrawable.builder()
                     .beginConfig()
                     .fontSize(42)

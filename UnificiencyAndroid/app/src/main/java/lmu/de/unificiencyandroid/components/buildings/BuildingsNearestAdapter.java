@@ -50,8 +50,8 @@ public class BuildingsNearestAdapter extends RecyclerView.Adapter<BuildingsNeare
         holder.address.setText(building.address);
         holder.description.setText(building.city);
         String unit_ = building.distance < 1000 ? "m" : "Km";
-        Integer distance = building.distance < 1000 ? building.distance : building.distance/1000;
-        holder.duration.setText(distance.toString());
+        String distance = building.distance < 1000 ? building.distance.toString() : String.format("%.2f",building.distance/1000f);
+        holder.duration.setText(distance);
         holder.unit.setText(unit_);
     }
 
