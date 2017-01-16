@@ -41,6 +41,7 @@ public class BuildingsNearest extends BuildingsFragment {
     Log.d("bA Token in sharedPref", authToken);
 
     UnificiencyClient client = new NodeAPIClient();
+
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings/nearest", null, new JsonHttpResponseHandler() {
       @Override
@@ -71,9 +72,9 @@ public class BuildingsNearest extends BuildingsFragment {
             buildingsFromServer.add(new Building(address, city, lat, lng, distanceText, durationText, distance, duration, null, null));
           }
 
-          nearestBuildingListview = (ListView) x.findViewById(R.id.nearest_building_listview);
+          nearestBuildingListview = (ListView) x.findViewById(R.id.buildings_nearest_buildings_list);
 
-          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), buildingsFromServer);
+          BuildingsNearestAdapter adapter= new BuildingsNearestAdapter(getContext(), buildingsFromServer);
           nearestBuildingListview.setAdapter(adapter);
 
           nearestBuildingListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -99,7 +100,7 @@ public class BuildingsNearest extends BuildingsFragment {
     });
 
 
-    x =  inflater.inflate(R.layout.buildings_nearest,null);
+    x =  inflater.inflate(R.layout.nearest_buildings_listview,null);
 
     return x;
   }
