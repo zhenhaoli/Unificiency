@@ -6,11 +6,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class UnificiencyClient {
+public abstract class UnificiencyClient {
   private final String BASE_URL = "http://li.mz-host.de:5048/";
   //private final String BASE_URL = "http://192.168.178.24:5048/";
 
-  private AsyncHttpClient client;
+  protected AsyncHttpClient client;
 
   public UnificiencyClient(){
     client = new AsyncHttpClient();
@@ -29,7 +29,7 @@ public class UnificiencyClient {
     client.post(getAbsoluteUrl(url), params, responseHandler);
   }
 
-  private String getAbsoluteUrl(String relativeUrl) {
+  protected String getAbsoluteUrl(String relativeUrl) {
     return BASE_URL + relativeUrl;
   }
 }

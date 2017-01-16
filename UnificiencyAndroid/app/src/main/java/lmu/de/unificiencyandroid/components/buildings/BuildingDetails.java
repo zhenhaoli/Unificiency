@@ -23,6 +23,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -54,7 +55,7 @@ public class BuildingDetails extends AppCompatActivity {
 
     String clickedBuilding = intent.getStringExtra("address");
 
-    UnificiencyClient client = new UnificiencyClient();
+    UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("rooms?address="+clickedBuilding, null, new JsonHttpResponseHandler() {
       @Override

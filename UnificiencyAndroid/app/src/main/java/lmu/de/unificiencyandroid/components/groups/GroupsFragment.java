@@ -26,6 +26,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -55,7 +56,7 @@ public class GroupsFragment extends Fragment {
 
     Log.d("gf Token in sharedPref", authToken);
 
-    UnificiencyClient client = new UnificiencyClient();
+    UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("groups", null, new JsonHttpResponseHandler() {
       @Override

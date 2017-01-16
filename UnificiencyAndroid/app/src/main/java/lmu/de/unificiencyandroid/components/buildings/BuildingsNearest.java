@@ -20,6 +20,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -39,7 +40,7 @@ public class BuildingsNearest extends BuildingsFragment {
 
     Log.d("bA Token in sharedPref", authToken);
 
-    UnificiencyClient client = new UnificiencyClient();
+    UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings/nearest", null, new JsonHttpResponseHandler() {
       @Override

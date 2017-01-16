@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -69,7 +70,7 @@ public class LoginActivity extends AuthActivity {
         params.put("password", password);
         params.setUseJsonStreamer(true);
 
-        UnificiencyClient client = new UnificiencyClient();
+        UnificiencyClient client = new NodeAPIClient();
         client.post("users/login", params, new JsonHttpResponseHandler() {
           @Override
           public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

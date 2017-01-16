@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 
 public class RegisterActivity extends AuthActivity {
@@ -96,7 +97,7 @@ public class RegisterActivity extends AuthActivity {
       params.put("major", major);
       params.setUseJsonStreamer(true);
 
-      UnificiencyClient client = new UnificiencyClient();
+      UnificiencyClient client = new NodeAPIClient();
       client.post("users/register", params, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

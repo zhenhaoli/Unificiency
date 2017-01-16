@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -21,6 +20,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -39,7 +39,7 @@ public class BuildingsAll extends BuildingsFragment {
 
         Log.d("bA Token in sharedPref", authToken);
 
-        UnificiencyClient client = new UnificiencyClient();
+        UnificiencyClient client = new NodeAPIClient();
         client.addHeader("Authorization", "Bearer " + authToken);
         client.get("buildings", null, new JsonHttpResponseHandler() {
             @Override
