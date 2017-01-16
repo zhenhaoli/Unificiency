@@ -24,7 +24,7 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
-import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
 
 public class RegisterActivity extends AuthActivity {
   //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
@@ -85,70 +85,102 @@ public class RegisterActivity extends AuthActivity {
       passwordWrapper.setError(getString(R.string.validation_passwords_equal));
     }
 
-    //TODO: validate nickname and major not being empty
-
-    //TODO: If received Oauth Token??
     if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm)) {
 
-      RequestParams params = new RequestParams();
-      params.put("email", username);
-      params.put("username", nickname);
-      params.put("password", password);
-      params.put("major", major);
-      params.setUseJsonStreamer(true);
+      doPost(username, nickname, password, major);
+    }
+  }
 
-      UnificiencyClient client = new NodeAPIClient();
-      client.post("users/register", params, new JsonHttpResponseHandler() {
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          // If the response is JSONObject instead of expected JSONArray
-          Log.d("res", response.toString());
+  private void doPost(String username, String nickname, String password, String major) {
+    final RequestParams params = new RequestParams();
+    params.put("email", username);
+    params.put("username", nickname);
+    params.put("password", password);
+    params.put("major", major);
+    params.put("university_id", 1);
+    params.setUseJsonStreamer(true);
 
-          String token = null;
-          try {
-            token = response.getString("id_token");
-          } catch (Exception e) {
-            Log.e("JSON EER", e.toString());
+    NodeAPIClient client = new NodeAPIClient();
+    client.post("users/register", params, new JsonHttpResponseHandler() {
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, String responseString) {
+        // If the response is JSONObject instead of expected JSONArray
+        Log.d("res", responseString.toString());
+
+        PythonAPIClient pythonClient = new PythonAPIClient();
+        pythonClient.post("users/", params, new JsonHttpResponseHandler() {
+          @Override
+          public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            // If the response is JSONObject instead of expected JSONArray
+            Log.d("res", response.toString());
           }
 
-          usernameWrapper.setErrorEnabled(false);
-          passwordWrapper.setErrorEnabled(false);
-          passwordConfirmWrapper.setErrorEnabled(false);
+          @Override
+          public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            super.onSuccess(statusCode, headers, responseString);
+            Log.d("res str", responseString.toString());
 
-          Intent returnToLoginIntent = new Intent();
-          returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
-          setResult(Activity.RESULT_OK,returnToLoginIntent);
-          finish();
-        }
+            usernameWrapper.setErrorEnabled(false);
+            passwordWrapper.setErrorEnabled(false);
+            passwordConfirmWrapper.setErrorEnabled(false);
 
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-          super.onFailure(statusCode, headers, throwable, errorResponse);
-        }
+            Intent returnToLoginIntent = new Intent();
+            returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
+            setResult(Activity.RESULT_OK,returnToLoginIntent);
+            finish();
 
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-          super.onFailure(statusCode, headers, throwable, errorResponse);
-        }
+          }
 
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-          super.onFailure(statusCode, headers, responseString, throwable);
-          String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
-          SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-              .setText(failedLogin)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
-        }
-      });
+          @Override
+          public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            super.onFailure(statusCode, headers, responseString, throwable);
+
+            Log.e("res err", responseString.toString());
+
+            String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
+            SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
+                .setText(failedLogin)
+                .setDuration(Style.DURATION_LONG)
+                .setFrame(Style.FRAME_KITKAT)
+                .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+                .setAnimations(Style.ANIMATIONS_SCALE)
+                .show();
+          }
+
+          @Override
+          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+            Log.e("res err", errorResponse.toString());
+          }
+        });
 
 
+      }
 
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+      }
 
-    }
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+        super.onFailure(statusCode, headers, responseString, throwable);
+        String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
+        SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
+            .setText(failedLogin)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+      }
+    });
   }
 
   @Override

@@ -40,7 +40,7 @@ public class BuildingsNearest extends BuildingsFragment {
 
     Log.d("bA Token in sharedPref", authToken);
 
-    UnificiencyClient client = new NodeAPIClient();
+    NodeAPIClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings/nearest", null, new JsonHttpResponseHandler() {
       @Override

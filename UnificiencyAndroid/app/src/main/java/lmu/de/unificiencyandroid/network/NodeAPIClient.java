@@ -5,4 +5,9 @@ public class NodeAPIClient extends UnificiencyClient {
   public NodeAPIClient(){
     super();
   }
+
+  @Override
+  protected String getAbsoluteUrl(String relativeUrl) {
+    return BASE_URL + relativeUrl;
+  }
 }

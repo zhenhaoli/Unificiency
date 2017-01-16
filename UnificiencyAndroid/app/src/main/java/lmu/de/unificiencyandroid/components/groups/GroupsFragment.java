@@ -56,7 +56,7 @@ public class GroupsFragment extends Fragment {
 
     Log.d("gf Token in sharedPref", authToken);
 
-    UnificiencyClient client = new NodeAPIClient();
+    NodeAPIClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("groups", null, new JsonHttpResponseHandler() {
       @Override

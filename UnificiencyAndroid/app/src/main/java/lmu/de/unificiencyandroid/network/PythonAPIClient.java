@@ -5,4 +5,9 @@ public class PythonAPIClient extends UnificiencyClient {
   public PythonAPIClient(){
     super();
   }
+
+  @Override
+  protected String getAbsoluteUrl(String relativeUrl) {
+    return BASE_URL + relativeUrl;
+  }
 }
