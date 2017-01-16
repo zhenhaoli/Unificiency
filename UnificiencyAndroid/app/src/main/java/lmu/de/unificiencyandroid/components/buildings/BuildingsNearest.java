@@ -72,7 +72,7 @@ public class BuildingsNearest extends BuildingsFragment {
 
           nearestBuildingListview = (ListView) x.findViewById(R.id.nearest_building_listview);
 
-          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), android.R.layout.simple_list_item_1, buildingsFromServer);
+          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), buildingsFromServer);
           nearestBuildingListview.setAdapter(adapter);
 
           nearestBuildingListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
