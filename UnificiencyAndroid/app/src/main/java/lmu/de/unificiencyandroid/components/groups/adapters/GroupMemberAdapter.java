@@ -12,13 +12,13 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
 
 public class GroupMemberAdapter extends ArrayAdapter<String> {
-    public GroupMemberAdapter(Context context, ArrayList<String> member) {
-        super(context, 0, member);
+    public GroupMemberAdapter(Context context, List<String> members) {
+        super(context, 0, members);
     }
 
     @NonNull

@@ -60,7 +60,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
     public void bindGroupData() {
         this.hero.setText(this.group.getName());
         this.description.setText(this.group.getDescription());
-        this.adapter = new GroupMemberAdapter(this, this.group.getMember());
+        this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
         this.memberList.setAdapter(this.adapter);
     }
 

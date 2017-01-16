@@ -1,6 +1,6 @@
 package lmu.de.unificiencyandroid.components.groups.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,21 +13,21 @@ public class Group {
   private String name;
   private String topic;
   private String description;
-  private ArrayList<String> member;
+  private List<String> members;
   private String password;
 
   /* second constructer with password already filled in. Maybe lombok provides a better alternative*/
-  public Group(String name, String description, ArrayList<String> member) {
+  public Group(String name, String description, List<String> members) {
     this.name = name;
     this.description = description;
-    this.member = member;
+    this.members = members;
     this.password = "";
   }
 
-  public Group(String name, String description, ArrayList<String> member, String password) {
+  public Group(String name, String description, List<String> members, String password) {
     this.name = name;
     this.description = description;
-    this.member = member;
+    this.members = members;
     this.password = password;
   }
 

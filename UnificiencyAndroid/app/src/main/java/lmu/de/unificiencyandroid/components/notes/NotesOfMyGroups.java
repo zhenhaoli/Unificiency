@@ -17,7 +17,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.adapters.GroupMemberAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 
 
@@ -69,7 +68,7 @@ public class NotesOfMyGroups extends Fragment implements MyItemClickListener{
         Intent notesFromSingleGroup=new Intent(getActivity(),NotesFromSingleGroup.class);
         notesFromSingleGroup.putExtra("groupName", group.getName());
         notesFromSingleGroup.putExtra("groupDescription", group.getDescription());
-        notesFromSingleGroup.putExtra("groupMember", group.getMember());
+       // notesFromSingleGroup.putExtra("groupMember", group.getMembers());
         startActivity(notesFromSingleGroup);
     }
 }

@@ -26,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
-import lmu.de.unificiencyandroid.network.NodeAPIClient;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -52,13 +52,13 @@ public class GroupsFragment extends Fragment {
 
   public void bindGroupData(){
 
-    String authToken =  SharedPref.getDefaults("authToken", getContext());
+    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
 
     Log.d("gf Token in sharedPref", authToken);
 
-    UnificiencyClient client = new NodeAPIClient();
-    client.addHeader("Authorization", "Bearer " + authToken);
-    client.get("groups", null, new JsonHttpResponseHandler() {
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.get("groups/lmu/", null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         // If the response is JSONObject instead of expected JSONArray
@@ -77,9 +77,17 @@ public class GroupsFragment extends Fragment {
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
             String name = groups.getJSONObject(i).getString("name");
-            String topic = groups.getJSONObject(i).getString("topic");
+            String topic = groups.getJSONObject(i).getString("topic_area");
             String description = groups.getJSONObject(i).getString("description");
-            groupsFromServer.add(new Group(name, topic, description, null, null));
+            JSONArray members = groups.getJSONObject(i).getJSONArray("members");
+            List<String> memberNames = new ArrayList<String>();
+            for(int j = 0; j<members.length(); j++){
+              memberNames.add(members.getJSONObject(j).getString("username"));
+            }
+
+            Log.d("groupname", name);
+            Log.d("topic", topic);
+            groupsFromServer.add(new Group(name, topic, description, memberNames, null));
           }
           
           groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer);
