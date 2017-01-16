@@ -32,29 +32,41 @@ public class BuildingDetails extends AppCompatActivity {
   List<Room> rooms_taken = new ArrayList<Room>();
   List<Room> rooms_availabe= new ArrayList<Room>();
 
-  ImageView imgView;
-
-  TextView textView;
-
+  ImageView backBtn;
+  TextView hero;
   ListView section_listview;
-
   BuildingDetailsAdapter buildingDetailsAdapter;
+
+  public void setUpViewReferences(){
+    backBtn = (ImageView) findViewById(R.id.buildings_details_backButton);
+    section_listview = (ListView) findViewById(R.id.section_listview);
+    hero = (TextView) findViewById(R.id.groups_details_hero);
+  }
+
+  public void setData(Intent intent){
+    hero.setText(intent.getStringExtra("address"));
+  }
+
+  public void onBack(View view) {
+    onBackPressed();
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_buildung_details);
-
-    imgView= (ImageView) findViewById(R.id.img_details);
-    textView= (TextView) findViewById(R.id.text_details);
-    section_listview=(ListView) findViewById(R.id.section_listview);
-
-    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
-
+    setUpViewReferences();
+    backBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        onBack(v);
+      }
+    });
     Intent intent=getIntent();
-
+    setData(intent);
     String clickedBuilding = intent.getStringExtra("address");
 
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
     UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("rooms?address="+clickedBuilding, null, new JsonHttpResponseHandler() {
@@ -85,7 +97,7 @@ public class BuildingDetails extends AppCompatActivity {
             }
           }
 
-          buildingDetailsAdapter=new BuildingDetailsAdapter(BuildingDetails.this);
+          buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this);
 
           buildingDetailsAdapter.addSectionHeaderItem("Jetzt Frei");
           for (Room room : rooms_availabe) {
@@ -97,21 +109,8 @@ public class BuildingDetails extends AppCompatActivity {
             if(!room.getAvailable()) buildingDetailsAdapter.addItem(room.toString());
           }
 
-          buildingDetailsAdapter.addSectionHeaderItem("Alle");
-          for (Room room : rooms_taken) {
-            buildingDetailsAdapter.addItem(room.toString());
-          }
-
-          Intent intent=getIntent();
-          Resources res = BuildingDetails.this.getResources();
-          Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a7astr)).getBitmap();
-          Building building= new Building();
-
-          textView.setText(intent.getStringExtra("address")+",  "+intent.getStringExtra("city"));
-          imgView.setImageBitmap(building.getImg());
-
           section_listview.setAdapter(buildingDetailsAdapter);
-          setListViewHeightBasedOnChildren(section_listview);
+
 
 
         } catch (Exception e) {
@@ -124,7 +123,7 @@ public class BuildingDetails extends AppCompatActivity {
   }
 
 
-  public void setListViewHeightBasedOnChildren(ListView listView) {
+  /*public void setListViewHeightBasedOnChildren(ListView listView) {
     if (buildingDetailsAdapter == null) {
       // pre-condition
       return;
@@ -139,5 +138,5 @@ public class BuildingDetails extends AppCompatActivity {
     ViewGroup.LayoutParams params = listView.getLayoutParams();
     params.height = totalHeight + (listView.getDividerHeight() * (buildingDetailsAdapter.getCount() - 1));
     listView.setLayoutParams(params);
-  }
+  }*/
 }

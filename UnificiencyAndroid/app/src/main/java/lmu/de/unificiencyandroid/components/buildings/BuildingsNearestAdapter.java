@@ -45,7 +45,7 @@ public class BuildingsNearestAdapter extends RecyclerView.Adapter<BuildingsNeare
     public void onBindViewHolder(ViewHolderBuildings holder, int position) {
         Building building = this.buildings.get(position);
         ColorGenerator generator = ColorGenerator.MATERIAL;
-        holder.info.setBackgroundColor(generator.getRandomColor());
+        holder.info.setBackgroundColor(generator.getColor(building.address));
 
         holder.address.setText(building.address);
         holder.description.setText(building.city);

@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dp"
-        android:text=""
         android:textAllCaps="false"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000"
