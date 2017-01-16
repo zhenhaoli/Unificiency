@@ -6,6 +6,16 @@ exports.USER = 'root';
 exports.PASSWORD = 'root';
 exports.DATABASE = 'msp';
 
+
+/*
+//mysql settings
+exports.HOST = 'romue404.mysql.pythonanywhere-services.com';
+exports.MAX_CONNECTIONS = 100;
+exports.USER = 'romue404';
+exports.PASSWORD = 'neuralnetwork';
+exports.DATABASE = 'romue404$unificency';
+*/
+
 //google api settings
 
 var apiKeys = [
@@ -18,4 +28,11 @@ exports.GOOGLE_API_KEY = apiKeys[0];
 exports.DistanceMatrixAPI = "https://maps.googleapis.com/maps/api/distancematrix/json";
 
 // jwt secret
-exports.secret = 'This secret is unbreachable!!1337';
+exports.secret = 'p9Bv<3Eid9%$i01';
+
+
+
+
+
+
+

@@ -2,7 +2,6 @@ package lmu.de.unificiencyandroid.components.groups;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,32 +13,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.buildings.BuildingDetails;
-import lmu.de.unificiencyandroid.components.buildings.BuildingsAdapter;
 import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.untils.SharedPref;
 
-import static android.R.attr.x;
-import static lmu.de.unificiencyandroid.R.id.all_building_listview;
 
 public class GroupsFragment extends Fragment {
-  private RecyclerView groupsRecyclerView;
-  private RecyclerView.Adapter groupsAdapter;
-  private RecyclerView.LayoutManager groupsLayoutManager;
-  private NestedScrollView groupsScrollview;
-  private AppBarLayout groupsAppBar;
-  private FloatingActionButton addNewGroupBtn;
+   RecyclerView groupsRecyclerView;
+   RecyclerView.Adapter groupsAdapter;
+   RecyclerView.LayoutManager groupsLayoutManager;
+   NestedScrollView groupsScrollview;
+   AppBarLayout groupsAppBar;
+   FloatingActionButton addNewGroupBtn;
 
 
   public GroupsFragment() {
@@ -53,8 +50,47 @@ public class GroupsFragment extends Fragment {
   }
 
   public void bindGroupData(){
-    this.groupsAdapter = new GroupsAdapter((getActivity()));
-    this.groupsRecyclerView.setAdapter(groupsAdapter);
+
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
+
+    Log.d("gf Token in sharedPref", authToken);
+
+    UnificiencyClient client = new UnificiencyClient();
+    client.addHeader("Authorization", "Bearer " + authToken);
+    client.get("groups", null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        // If the response is JSONObject instead of expected JSONArray
+      }
+      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
+        Log.e("status", statusCode + "" );
+        Log.e("e", e.toString());
+      }
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
+        // Pull out the first event on the public timeline
+        try {
+          Log.d("Groups", groups.length()+"");
+
+          List<Group> groupsFromServer = new ArrayList<>();
+          for(int i=0; i<groups.length(); i++){
+            String name = groups.getJSONObject(i).getString("name");
+            String topic = groups.getJSONObject(i).getString("topic");
+            String description = groups.getJSONObject(i).getString("description");
+            groupsFromServer.add(new Group(name, topic, description, null, null));
+          }
+          
+          groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer);
+          groupsRecyclerView.setAdapter(groupsAdapter);
+          
+        } catch (Exception e) {
+          Log.e("GroupAll", e.toString());
+        }
+
+      }
+    });
+
   }
 
   public void onAddGroup(View view) {

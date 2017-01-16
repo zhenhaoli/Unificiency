@@ -1,1 +1,1 @@
-mysql -uroot msp < msp.sql
+mysql -uroot -p msp < msp.sql
