@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import butterknife.BindView;
@@ -37,16 +36,11 @@ public class MainActivity extends AppCompatActivity{
   FragmentManager mFragmentManager;
   FragmentTransaction mFragmentTransaction;
 
-  String authToken;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
-    authToken = getIntent().getStringExtra("authToken");
-    Log.d("Main token", authToken);
 
 
     /**

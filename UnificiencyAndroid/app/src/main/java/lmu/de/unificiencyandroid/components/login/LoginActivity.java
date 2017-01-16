@@ -22,6 +22,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.untils.SharedPref;
 
@@ -38,8 +39,6 @@ public class LoginActivity extends AuthActivity {
     Intent register_Intent= new Intent(LoginActivity.this, RegisterActivity.class);
     startActivityForResult(register_Intent, 1);
   }
-
-  Boolean receivedToken = false;
 
   @OnClick(R.id.login)
   void login() {
@@ -65,51 +64,83 @@ public class LoginActivity extends AuthActivity {
       if(validInput) {
 
 
-        RequestParams params = new RequestParams();
+        final RequestParams params = new RequestParams();
         params.put("email", username);
         params.put("password", password);
         params.setUseJsonStreamer(true);
 
-        UnificiencyClient client = new NodeAPIClient();
-        client.post("users/login", params, new JsonHttpResponseHandler() {
+        UnificiencyClient pythonClient = new PythonAPIClient();
+        pythonClient.post("login/", params, new JsonHttpResponseHandler() {
           @Override
           public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            // If the response is JSONObject instead of expected JSONArray
-            Log.d("res", response.toString());
 
-            String token = null;
+            Log.d("res python", response.toString());
+
+            String tokenPython = null;
             try {
-              token = response.getString("id_token");
+              tokenPython = response.getString("token");
             } catch (Exception e) {
               Log.e("JSON EER", e.toString());
             }
 
-            usernameWrapper.setErrorEnabled(false);
-            passwordWrapper.setErrorEnabled(false);
+            SharedPref.setDefaults("authTokenPython", tokenPython, getApplicationContext());
 
-            Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-            loginIntent.putExtra("authToken", token);
-            SharedPref.setDefaults("authToken", token, getApplicationContext());
-            startActivity(loginIntent);
-            finish();
+            UnificiencyClient client = new NodeAPIClient();
+            client.post("users/login", params, new JsonHttpResponseHandler() {
+              @Override
+              public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                Log.d("res node", response.toString());
+
+                String token = null;
+                try {
+                  token = response.getString("id_token");
+                } catch (Exception e) {
+                  Log.e("JSON EER", e.toString());
+                }
+
+                usernameWrapper.setErrorEnabled(false);
+                passwordWrapper.setErrorEnabled(false);
+
+                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                SharedPref.setDefaults("authToken", token, getApplicationContext());
+                startActivity(loginIntent);
+                finish();
+              }
+
+              @Override
+              public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+              }
+
+              @Override
+              public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+              }
+
+              @Override
+              public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                String failedLogin = "Email oder Passwort falsch!";
+                SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
+                    .setText(failedLogin)
+                    .setDuration(Style.DURATION_LONG)
+                    .setFrame(Style.FRAME_KITKAT)
+                    .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+                    .setAnimations(Style.ANIMATIONS_SCALE)
+                    .show();
+              }
+            });
           }
 
           @Override
           public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-          }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-          }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            super.onFailure(statusCode, headers, responseString, throwable);
-            String failedLogin = "Email oder Passwort falsch!";
+            String errMsg =  errorResponse.toString();
+            if(errMsg.contains("user")||errMsg.contains("password")){
+               errMsg = "Email oder Passwort falsch!";
+            }
             SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
-                .setText(failedLogin)
+                .setText(errMsg)
                 .setDuration(Style.DURATION_LONG)
                 .setFrame(Style.FRAME_KITKAT)
                 .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
@@ -117,6 +148,8 @@ public class LoginActivity extends AuthActivity {
                 .show();
           }
         });
+
+
       }
   }
 
