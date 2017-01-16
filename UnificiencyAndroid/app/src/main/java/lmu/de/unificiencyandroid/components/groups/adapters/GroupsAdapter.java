@@ -23,9 +23,16 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
   private LayoutInflater layoutInflater;
   private List<Group> data;
 
-  public GroupsAdapter(Context context, List<Group> groups) {
+  public interface OnGroupItemClickListener {
+    void onGroupClick(Group group);
+  }
+  private final OnGroupItemClickListener listener;
+
+
+  public GroupsAdapter(Context context, List<Group> groups, OnGroupItemClickListener listener) {
     this.layoutInflater = LayoutInflater.from(context);
     this.data = groups;
+    this.listener = listener;
   }
 
   public void setData(List<Group> groups){
@@ -53,6 +60,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     TextDrawable drawable = TextDrawable.builder()
         .buildRoundRect(name.substring(0,2), color, 100);
     holder.groupFirtCharsImageView.setImageDrawable(drawable);
+    holder.bind(group, listener);
   }
 
   @Override
@@ -60,7 +68,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     return this.data.size();
   }
 
-  static class ViewHolderGroups extends RecyclerView.ViewHolder implements View.OnClickListener {
+  static class ViewHolderGroups extends RecyclerView.ViewHolder {
     public TextView groupTopicTextView;
     public TextView groupNameTextView;
     public ImageView groupFirtCharsImageView;
@@ -69,10 +77,17 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
       this.groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
       this.groupTopicTextView = (TextView) itemView.findViewById(R.id.group_topic);
       this.groupFirtCharsImageView = (ImageView) itemView.findViewById(R.id.group_name_first_chars);
-      itemView.setOnClickListener(this);
     }
 
-    @Override
+    public void bind(final Group group, final OnGroupItemClickListener listener) {
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          listener.onGroupClick(group);
+        }
+      });
+
+    }
+
     public void onClick(View view) {
       String groupName = String.valueOf(groupNameTextView.getText());
       Context context = view.getContext();

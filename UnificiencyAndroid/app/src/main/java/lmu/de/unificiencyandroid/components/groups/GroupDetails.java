@@ -32,20 +32,20 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
     private Group group;
 
 
-    public Group fetchGroupDetails(String groupName){
+    public Group fetchGroupDetails(Integer groupId){
         /*later: http request with name as parameter*/
         ArrayList<String> member = new ArrayList<String>();
         member.addAll(Arrays.asList("Rob", "Jin", "Zhen"));
         String description = "Wir sind eine Gruppe ohne Namen. Eine Beschreibung müssen wir uns noch ausdenken ...";
-        Group mockGroup = new Group(groupName,description, member);
+        Group mockGroup = new Group(groupId, "Best group","topic here", description, member, null);
         this.group = mockGroup;
         return this.group;
     }
 
-    public String handleIntent(){
+    public Integer handleIntent(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        String extra = intent.getStringExtra(getResources().getString(R.string.groups_details_groupname_extra));
+        Integer extra = intent.getIntExtra("groupId", 0);
         return extra;
     }
 
@@ -58,7 +58,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
     }
 
     public void bindGroupData() {
-        this.hero.setText(this.group.getName());
+        this.hero.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
         this.description.setText(this.group.getDescription());
         this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
         this.memberList.setAdapter(this.adapter);
@@ -98,8 +98,8 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
             }
         });
         /** Data handling **/
-        String groupNameExtra = handleIntent();
-        fetchGroupDetails(groupNameExtra); //this is where we will dispatch a http request to our server
+        Integer groupId = handleIntent();
+        fetchGroupDetails(groupId); //this is where we will dispatch a http request to our server
        /* View population/data binding and styling */
         ColorGenerator generator = ColorGenerator.MATERIAL;
         this.hero.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));

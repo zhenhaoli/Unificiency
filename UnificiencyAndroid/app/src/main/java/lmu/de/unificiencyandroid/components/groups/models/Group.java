@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Group {
+  private Integer id;
   private String name;
   private String topic;
   private String description;
@@ -33,7 +34,7 @@ public class Group {
 
   @Override
   public String toString() {
-    return "[" + topic +"]  " + name;
+    return "[" + topic + id.toString() +"]  " + name;
   }
 
 

@@ -24,7 +24,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.untils.SharedPref;
+import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class LoginActivity extends AuthActivity {
 

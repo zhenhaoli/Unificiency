@@ -32,16 +32,16 @@ import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.untils.SharedPref;
+import lmu.de.unificiencyandroid.utils.SharedPref;
 
 
 public class GroupsFragment extends Fragment {
-   RecyclerView groupsRecyclerView;
-   GroupsAdapter groupsAdapter;
-   RecyclerView.LayoutManager groupsLayoutManager;
-   NestedScrollView groupsScrollview;
-   AppBarLayout groupsAppBar;
-   FloatingActionButton addNewGroupBtn;
+  RecyclerView groupsRecyclerView;
+  GroupsAdapter groupsAdapter;
+  RecyclerView.LayoutManager groupsLayoutManager;
+  NestedScrollView groupsScrollview;
+  AppBarLayout groupsAppBar;
+  FloatingActionButton addNewGroupBtn;
 
 
   public GroupsFragment() {
@@ -80,6 +80,8 @@ public class GroupsFragment extends Fragment {
 
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
+            Integer id = groups.getJSONObject(i).getInt("id");
+
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
             String description = groups.getJSONObject(i).getString("description");
@@ -89,17 +91,24 @@ public class GroupsFragment extends Fragment {
               memberNames.add(members.getJSONObject(j).getString("username"));
             }
 
-            groupsFromServer.add(new Group(name, topic, description, memberNames, null));
+            groupsFromServer.add(new Group(id, name, topic, description, memberNames, null));
           }
           Collections.reverse(groupsFromServer);
           if(groupsAdapter == null) {
-            groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer);
+            groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer, new GroupsAdapter.OnGroupItemClickListener() {
+              @Override
+              public void onGroupClick(Group group) {
+                Intent intent = new Intent(getContext(), GroupDetails.class);
+                intent.putExtra("groupId", group.getId());
+                startActivity(intent);
+              }
+            });
           } else {
             groupsAdapter.setData(groupsFromServer);
           }
 
           groupsRecyclerView.setAdapter(groupsAdapter);
-          
+
         } catch (Exception e) {
           Log.e("GroupAll", e.toString());
         }

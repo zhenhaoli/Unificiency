@@ -27,7 +27,7 @@ import lmu.de.unificiencyandroid.InputValidation.ValidateGroupName;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.untils.SharedPref;
+import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class NewGroup extends AppCompatActivity {
 
@@ -43,8 +43,6 @@ public class NewGroup extends AppCompatActivity {
     String name = this.name.getEditText().getText().toString();
     String description = this.description.getEditText().getText().toString();
     String password = this.description.getEditText().getText().toString();
-
-
 
     if(this.nameValidator.validate(name) && this.descriptionValidator.validate(description)){
 

@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.untils;
+package lmu.de.unificiencyandroid.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
