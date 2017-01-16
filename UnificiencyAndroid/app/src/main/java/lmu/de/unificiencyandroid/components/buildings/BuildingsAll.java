@@ -39,7 +39,7 @@ public class BuildingsAll extends BuildingsFragment {
 
         Log.d("bA Token in sharedPref", authToken);
 
-        NodeAPIClient client = new NodeAPIClient();
+        UnificiencyClient client = new NodeAPIClient();
         client.addHeader("Authorization", "Bearer " + authToken);
         client.get("buildings", null, new JsonHttpResponseHandler() {
             @Override

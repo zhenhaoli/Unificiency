@@ -25,6 +25,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
 
 public class RegisterActivity extends AuthActivity {
   //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
@@ -100,44 +101,37 @@ public class RegisterActivity extends AuthActivity {
     params.put("university_id", 1);
     params.setUseJsonStreamer(true);
 
-    NodeAPIClient client = new NodeAPIClient();
-    client.post("users/register", params, new JsonHttpResponseHandler() {
 
+    UnificiencyClient pythonClient = new PythonAPIClient();
+    pythonClient.post("users/", params, new JsonHttpResponseHandler() {
       @Override
-      public void onSuccess(int statusCode, Header[] headers, String responseString) {
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         // If the response is JSONObject instead of expected JSONArray
-        Log.d("res", responseString.toString());
+        Log.d("res", response.toString());
 
-        PythonAPIClient pythonClient = new PythonAPIClient();
-        pythonClient.post("users/", params, new JsonHttpResponseHandler() {
+        UnificiencyClient client = new NodeAPIClient();
+        client.post("users/register", params, new JsonHttpResponseHandler() {
+
           @Override
           public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             // If the response is JSONObject instead of expected JSONArray
             Log.d("res", response.toString());
+
           }
 
           @Override
-          public void onSuccess(int statusCode, Header[] headers, String responseString) {
-            super.onSuccess(statusCode, headers, responseString);
-            Log.d("res str", responseString.toString());
+          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+          }
 
-            usernameWrapper.setErrorEnabled(false);
-            passwordWrapper.setErrorEnabled(false);
-            passwordConfirmWrapper.setErrorEnabled(false);
-
-            Intent returnToLoginIntent = new Intent();
-            returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
-            setResult(Activity.RESULT_OK,returnToLoginIntent);
-            finish();
-
+          @Override
+          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
           }
 
           @Override
           public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             super.onFailure(statusCode, headers, responseString, throwable);
-
-            Log.e("res err", responseString.toString());
-
             String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
             SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
                 .setText(failedLogin)
@@ -147,30 +141,29 @@ public class RegisterActivity extends AuthActivity {
                 .setAnimations(Style.ANIMATIONS_SCALE)
                 .show();
           }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-            Log.e("res err", errorResponse.toString());
-          }
         });
 
+        usernameWrapper.setErrorEnabled(false);
+        passwordWrapper.setErrorEnabled(false);
+        passwordConfirmWrapper.setErrorEnabled(false);
 
+        Intent returnToLoginIntent = new Intent();
+        returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
+        setResult(Activity.RESULT_OK,returnToLoginIntent);
+        finish();
       }
 
       @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        super.onFailure(statusCode, headers, throwable, errorResponse);
-      }
-
-      @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-        super.onFailure(statusCode, headers, throwable, errorResponse);
+      public void onSuccess(int statusCode, Header[] headers, String responseString) {
+        super.onSuccess(statusCode, headers, responseString);
+        Log.d("res str", responseString.toString());
       }
 
       @Override
       public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-        super.onFailure(statusCode, headers, responseString, throwable);
+
+        Log.e("res err", responseString.toString());
+
         String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
         SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
             .setText(failedLogin)
@@ -180,7 +173,31 @@ public class RegisterActivity extends AuthActivity {
             .setAnimations(Style.ANIMATIONS_SCALE)
             .show();
       }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        Log.e("res err", errorResponse.toString());
+
+        String failMsg = null;
+        try {
+          failMsg = errorResponse.getString("message");
+        } catch (Exception e){
+          Log.e("json err", e.toString());
+        }
+        SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
+            .setText(failMsg)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+      }
     });
+
+
+
+
   }
 
   @Override
