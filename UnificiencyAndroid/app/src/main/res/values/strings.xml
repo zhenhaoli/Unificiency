@@ -51,5 +51,10 @@
     <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen angeben</string>
     <string name="groups_new_group_error_create">Ihre Eingaben sind fehlerhaft</string>
 
+    <!-- Settings -->
+    <string name="setting_hint">Hier können Sie Ihr Nickname and Studiengang verändern und speichern.</string>
+
+
+
 
 </resources>

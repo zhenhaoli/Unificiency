@@ -52,7 +52,7 @@ public class Account extends Fragment {
         stars_nummber.setText("18");
         notes_nummber.setText("6");
 
-        image_Account.setImageResource(R.drawable.logo);
+        image_Account.setImageResource(R.drawable.user);
 
         //fake data
         ArrayList<String> GroupMember =new ArrayList<String>(){{

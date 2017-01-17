@@ -97,7 +97,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     final Note note = mDataset.get(position);
     holder.tvCourse.setText(note.getCourse());
     holder.tvTitel.setText(note.getTitle());
-    if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.notes_favorite);
+    if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.favorite_note);
   }
 
   // Return the size of your dataset (invoked by the layout manager)

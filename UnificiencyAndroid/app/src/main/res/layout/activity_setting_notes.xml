@@ -9,10 +9,11 @@
     <TextView
         android:id="@+id/settingnote_meinnote"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:text="Meine Notes:"
-        android:textSize="40dp"
+        android:textSize="25dp"
+        android:textColor="@color/white"
         android:gravity="center"
         android:background="#009440"
         />

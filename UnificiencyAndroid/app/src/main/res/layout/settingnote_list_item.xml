@@ -6,35 +6,30 @@
 
     <ImageView
         android:id="@+id/icon_settingnote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
         android:contentDescription="TODO"
-        android:src="@drawable/notes" />
+        android:src="@drawable/note" />
 
     <TextView
         android:id="@+id/settingnote_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/icon_settingnote"
-        android:ellipsize="marquee"
-        android:singleLine="true"
         android:text="Description"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/settingnote_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/note_title"
         android:layout_below="@id/icon_settingnote"
         android:layout_toRightOf="@id/icon_settingnote"
-        android:layout_alignWithParentIfMissing="true"
-        android:gravity="center_vertical"
         android:text="Example application"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 
 
 </RelativeLayout>

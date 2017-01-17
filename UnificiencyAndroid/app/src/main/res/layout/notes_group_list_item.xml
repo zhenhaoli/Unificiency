@@ -5,13 +5,13 @@
 
     <ImageView
         android:id="@+id/note_group_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
         android:contentDescription="TODO"
-        android:src="@drawable/groups" />
+        android:src="@drawable/group" />
 
     <TextView
         android:id="@+id/notes_group_name"
