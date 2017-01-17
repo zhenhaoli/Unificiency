@@ -42,7 +42,7 @@ public class GroupsFragment extends Fragment {
   NestedScrollView groupsScrollview;
   AppBarLayout groupsAppBar;
   FloatingActionButton addNewGroupBtn;
-
+  com.wang.avi.AVLoadingIndicatorView avi;
 
   public GroupsFragment() {
     // Required empty public constructor
@@ -52,10 +52,11 @@ public class GroupsFragment extends Fragment {
     this.groupsScrollview = (NestedScrollView) view.findViewById(R.id.groups_nested_scroll_view);
     this.groupsAppBar = (AppBarLayout) view.findViewById(R.id.groups_app_bar_layout);
     this.addNewGroupBtn = (FloatingActionButton) view.findViewById(R.id.groups_floating_button);
+    this.avi = (com.wang.avi.AVLoadingIndicatorView)view.findViewById(R.id.avi);
   }
 
   public void bindGroupData(){
-
+    avi.show();
     String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
 
     Log.d("gf Token in sharedPref", authToken);
@@ -111,6 +112,9 @@ public class GroupsFragment extends Fragment {
 
         } catch (Exception e) {
           Log.e("GroupAll", e.toString());
+
+        } finally {
+          avi.hide();
         }
 
       }
