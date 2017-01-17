@@ -15,6 +15,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.github.johnpersano.supertoasts.library.Style;
 import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,11 +56,13 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
         String topic = null;
         String name= null;
         String description= null;
+        Boolean hasPassword = null;
         List<String> memberNames = new ArrayList<String>();
         try {
           topic = groupJSON.getString("topic_area");
           name = groupJSON.getString("name");
           description = groupJSON.getString("description");
+          hasPassword = groupJSON.getBoolean("protected");
           JSONArray membersJSON = groupJSON.getJSONArray("members");
           memberNames = new ArrayList<String>();
           for(int j = 0; j<membersJSON.length(); j++){
@@ -69,7 +72,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
           Log.e("jsonerr", e.toString());
         }
 
-        group = new Group(groupId, name, topic, description, memberNames, null);
+        group = new Group(groupId, name, topic, description, memberNames, hasPassword);
 
        /* View population/data binding and styling */
         ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -104,7 +107,6 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
 
   public Integer handleIntent(){
     Intent intent = getIntent();
-    Bundle extras = intent.getExtras();
     Integer extra = intent.getIntExtra("groupId", 0);
     return extra;
   }
@@ -129,7 +131,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
   }
 
   public void onJoin(View view){
-    Boolean groupHasPassword = false;
+    Boolean groupHasPassword = group.getHasPassword();
 
     if(groupHasPassword) {
       EnterGroupPassword enterPwDialog = new EnterGroupPassword();
@@ -200,7 +202,70 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
   @Override
   public void onPwEntered(String pw) {
     Log.i("Password retrievied: ", pw);
-    //TODO POST JOIN for groups with pw
+    String authToken = SharedPref.getDefaults("authTokenPython", getApplicationContext());
+
+    Log.d("gd Token in sharedPref", authToken);
+
+    final RequestParams params = new RequestParams();
+
+    params.put("password", pw);
+    params.setUseJsonStreamer(true);
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.post("groups/" + group.getId() + "/join/", params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        // If the response is JSONObject instead of expected JSONArray
+        String resMessage = null;
+        try {
+          resMessage = response.getString("message");
+
+        } catch (Exception e) {
+          Log.e("jsonerr", e.toString());
+        }
+
+        String[] msg = resMessage.split("\\s+");
+        String res = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
+
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
+            .setText(res)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+
+        fetchGroupDetails(group.getId());
+
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Log.e("groupdetailserr", errorResponse.toString());
+        String errmsg = null;
+        try {
+          errmsg = errorResponse.getString("message");
+        } catch (Exception e) {
+
+        }
+
+        if(errmsg.contains("protected")){
+         // errmsg = "Password falsch oder nicht eingegeben, bitte nochmal versuchen!";
+        }
+
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
+            .setText(errmsg)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+
+      }
+
+    });
   }
 
 

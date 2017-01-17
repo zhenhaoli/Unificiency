@@ -15,22 +15,15 @@ public class Group {
   private String topic;
   private String description;
   private List<String> members;
-  private String password;
+  private Boolean hasPassword;
 
   /* second constructer with password already filled in. Maybe lombok provides a better alternative*/
   public Group(String name, String description, List<String> members) {
     this.name = name;
     this.description = description;
     this.members = members;
-    this.password = "";
   }
 
-  public Group(String name, String description, List<String> members, String password) {
-    this.name = name;
-    this.description = description;
-    this.members = members;
-    this.password = password;
-  }
 
   @Override
   public String toString() {

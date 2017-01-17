@@ -36,9 +36,7 @@ public class NotesOfMyGroups extends Fragment implements MyItemClickListener{
     }};
 
    public static List<Group> GroupNotes = Arrays.asList(
-            new Group("Group_Name_1", "MSP", GroupMember, "wearebest"),
-            new Group("Group_Name_2", "GPS", GroupMember,"wearebest"),
-            new Group("Group_Name_3", "REST", GroupMember, "wearebest")
+
     );
 
 

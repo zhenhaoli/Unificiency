@@ -42,7 +42,7 @@ public class NewGroup extends AppCompatActivity {
   public void onCreateGroup() {
     String name = this.name.getEditText().getText().toString();
     String description = this.description.getEditText().getText().toString();
-    String password = this.description.getEditText().getText().toString();
+    String password = this.password.getEditText().getText().toString();
 
     if(this.nameValidator.validate(name) && this.descriptionValidator.validate(description)){
 
@@ -51,7 +51,7 @@ public class NewGroup extends AppCompatActivity {
       final RequestParams params = new RequestParams();
       params.put("topic_area", name);
       params.put("name", name);
-      params.put("description", password);
+      params.put("description", description);
       if(password!=null || password.length()>1) {
         params.put("password", password);
       }
@@ -136,9 +136,9 @@ public class NewGroup extends AppCompatActivity {
     setupToolbar();
     setupViewReferences();
 
-    this.name.getEditText().setText("Best Group 1 ");
+    this.name.getEditText().setText("Group xx ");
     this.description.getEditText().setText("A very long long long description to pass this validation");
-    this.password.getEditText().setText("hehehehe top secret highly confidential");
+    this.password.getEditText().setText("123456");
 
     setupFormValidation();
     this.createButton.setOnClickListener(new View.OnClickListener() {

@@ -61,13 +61,14 @@ public class Account extends Fragment {
             add("Jindong");
         }};
 
+
         List<Group> groups = Arrays.asList(
-                new Group("Group_Name_1", "MSP", GroupMember, "wearebest"),
-                new Group("Group_Name_2", "GPS", GroupMember,"wearebest"),
-                new Group("Group_Name_3", "REST", GroupMember, "wearebest"),
-                new Group("Group_Name_4", "MSP", GroupMember, "wearebest"),
-                new Group("Group_Name_5", "GPS", GroupMember,"wearebest"),
-                new Group("Group_Name_6", "REST", GroupMember, "wearebest")
+                new Group(1,"Group_Name_1", "MSP", "description", GroupMember, false),
+                new Group(2, "Group_Name_2", "GPS", "description", GroupMember,false),
+                new Group(3, "Group_Name_3", "REST","description",  GroupMember, false),
+                new Group(4, "Group_Name_4", "MSP","description",  GroupMember, false),
+                new Group(5, "Group_Name_5", "GPS", "description", GroupMember,false),
+                new Group(6, "Group_Name_6", "REST","description",  GroupMember, false)
         );
 
         AccountAdapter adapter= new AccountAdapter(getContext(), android.R.layout.simple_list_item_1, groups);
