@@ -30,6 +30,7 @@ public class BuildingsNearest extends BuildingsFragment {
     RecyclerView nearestBuildingListview;
     ArrayList<Building> buildings;
     RecyclerView.LayoutManager groupsLayoutManager;
+    com.wang.avi.AVLoadingIndicatorView avi;
 
     @Nullable
     @Override
@@ -37,6 +38,8 @@ public class BuildingsNearest extends BuildingsFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.nearest_buildings_listview, container, false);
         nearestBuildingListview = (RecyclerView) view.findViewById(R.id.buildings_nearest_buildings_list);
+
+      this.avi = (com.wang.avi.AVLoadingIndicatorView)view.findViewById(R.id.avi);
         nearestBuildingListview.setNestedScrollingEnabled(false);
         groupsLayoutManager = new LinearLayoutManager(this.getActivity());
         nearestBuildingListview.setLayoutManager(groupsLayoutManager);
@@ -45,6 +48,7 @@ public class BuildingsNearest extends BuildingsFragment {
     }
 
     public void fetchData() {
+      avi.show();
         String authToken =  SharedPref.getDefaults("authToken", getContext());
 
         Log.d("bA Token in sharedPref", authToken);
@@ -96,6 +100,8 @@ public class BuildingsNearest extends BuildingsFragment {
 
                 } catch (Exception e) {
                     Log.e("BuildingAll", e.toString());
+                } finally {
+                  avi.hide();
                 }
 
             }

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
+            android:layout_marginLeft="150dp"
+            style="@style/AVLoadingIndicatorView.Large"
+            app:indicatorName="BallClipRotatePulseIndicator"
+            app:indicatorColor="@color/green_500"
+            />
+
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/groups_app_bar_layout"
         android:layout_width="match_parent"
@@ -14,6 +34,8 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="?attr/colorPrimary">
+
+
             <ImageView
                 android:id="@+id/expandedImage"
                 android:layout_width="match_parent"
@@ -27,6 +49,19 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <!--
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="150dp"
+        style="@style/AVLoadingIndicatorView.Large"
+        app:indicatorName="BallClipRotatePulseIndicator"
+        app:indicatorColor="@color/green_500"
+        />
+        -->
+
     <android.support.v4.widget.NestedScrollView
         android:id = "@+id/groups_nested_scroll_view"
         android:layout_width="match_parent"
@@ -35,6 +70,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:scrollbars="vertical"
         android:fillViewport="true">
+
 
         <android.support.v7.widget.RecyclerView
 
@@ -45,9 +81,12 @@
             android:clipToPadding="false"
             android:scrollbarStyle="outsideOverlay">
         </android.support.v7.widget.RecyclerView>
+
+
             <!--android:clipToPadding="false"-->
             <!--android:scrollbarStyle="outsideOverlay"></ListView>-->
 
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

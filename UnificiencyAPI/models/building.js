@@ -68,7 +68,10 @@ function Building() {
                 return a.duration - b.duration;
               });
 
-              return res.json(buildings)
+              setTimeout(function () {
+                return res.json(buildings)
+              },5000);
+
 
             });
         }
