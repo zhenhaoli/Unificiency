@@ -43,12 +43,13 @@
     <!-- New Group -->
     <string name="groups_new_group_title">Neue Gruppe erstellen</string>
     <string name="groups_new_group_create">Erstellen</string>
-    <string name="groups_new_group_information">Hier können Sie eine neue Lerngruppe erstellen. Wenn sie kein Passwort angeben kann jeder der Gruppe beitreten.</string>
-    <string name="groups_new_group_groupname">Gruppenname angeben</string>
-    <string name="groups_new_group_description">Gruppenbeschreibung angeben</string>
-    <string name="groups_new_group_password">Passwort angeben (optional)</string>
+    <string name="groups_new_group_information">Hier können Sie eine neue Lerngruppe erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe beitreten.</string>
+    <string name="groups_new_group_groupname">Gruppenname eingeben</string>
+    <string name="groups_new_group_topic">Topic eingeben</string>
+    <string name="groups_new_group_description">Gruppenbeschreibung eingeben</string>
+    <string name="groups_new_group_password">Passwort eingeben (optional)</string>
     <string name="groups_new_group_error_name">mindestens 3 Zeichen eingeben bitte!</string>
-    <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen angeben</string>
+    <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen eingeben</string>
     <string name="groups_new_group_error_create">Ihre Eingaben sind fehlerhaft</string>
 
     <!-- Settings -->

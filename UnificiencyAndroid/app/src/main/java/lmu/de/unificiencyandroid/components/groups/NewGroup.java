@@ -32,6 +32,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 public class NewGroup extends AppCompatActivity {
 
   private Button createButton;
+  private TextInputLayout topic;
   private TextInputLayout description;
   private TextInputLayout name;
   private TextInputLayout password;
@@ -43,13 +44,14 @@ public class NewGroup extends AppCompatActivity {
     String name = this.name.getEditText().getText().toString();
     String description = this.description.getEditText().getText().toString();
     String password = this.password.getEditText().getText().toString();
+  String topic =  this.topic.getEditText().getText().toString();
 
     if(this.nameValidator.validate(name) && this.descriptionValidator.validate(description)){
 
       Log.i("GROUP_CREATION", "NO VALIDATION ERRORS");
 
       final RequestParams params = new RequestParams();
-      params.put("topic_area", name);
+      params.put("topic_area", topic);
       params.put("name", name);
       params.put("description", description);
       if(password!=null || password.length()>1) {
@@ -118,6 +120,7 @@ public class NewGroup extends AppCompatActivity {
     this.description = (TextInputLayout) findViewById(R.id.groups_new_group_description);
     this.name = (TextInputLayout) findViewById(R.id.groups_new_group_name);
     this.password = (TextInputLayout) findViewById(R.id.groups_new_group_password);
+    this.topic = (TextInputLayout) findViewById(R.id.groups_new_group_topic);
   }
 
   public void setupToolbar(){
@@ -136,6 +139,7 @@ public class NewGroup extends AppCompatActivity {
     setupToolbar();
     setupViewReferences();
 
+    //TODO: remove this in prd
     this.name.getEditText().setText("Group xx ");
     this.description.getEditText().setText("A very long long long description to pass this validation");
     this.password.getEditText().setText("123456");
