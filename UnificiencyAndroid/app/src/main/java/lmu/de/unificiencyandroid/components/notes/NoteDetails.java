@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import lmu.de.unificiencyandroid.R;
@@ -51,5 +52,18 @@ public class NoteDetails extends AppCompatActivity {
         note_detail_creator.setText("Ersteller: "+intent.getStringExtra("creator"));
         note_detail_rating.setText("Rank: "+intent.getStringExtra("rating"));
         note_detail_content.setText("Content: \n"+intent.getStringExtra("content"));
+    }
+
+    /* restore back button functionality*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home: {
+                onBackPressed();
+                return true;
+            }
+            default:{return super.onOptionsItemSelected(item);}
+
+        }
     }
 }
