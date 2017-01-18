@@ -2,7 +2,6 @@ package lmu.de.unificiencyandroid.components.notes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import lmu.de.unificiencyandroid.R;
 
 public class NotesTab extends Fragment {
 
-  public static TabLayout tabLayout;
+  public static PagerSlidingTabStrip tabLayout;
   public static ViewPager viewPager;
   public static int int_items = 10 ;
 
@@ -26,7 +27,7 @@ public class NotesTab extends Fragment {
      *Inflate tab_layout and setup Views.
      */
     View x =  inflater.inflate(R.layout.notes_tab,null);
-    tabLayout = (TabLayout) x.findViewById(R.id.notes_tab);
+    tabLayout = (PagerSlidingTabStrip) x.findViewById(R.id.notes_tab);
     viewPager = (ViewPager) x.findViewById(R.id.notes_viewpager);
 
     /**
@@ -34,18 +35,7 @@ public class NotesTab extends Fragment {
      */
     viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager()));
 
-    /**
-     * Now , this is a workaround ,
-     * The setupWithViewPager dose't works without the runnable .
-     * Maybe a Support Library Bug .
-     */
-
-    tabLayout.post(new Runnable() {
-      @Override
-      public void run() {
-        tabLayout.setupWithViewPager(viewPager);
-      }
-    });
+    tabLayout.setViewPager(viewPager);
 
     return x;
 
@@ -66,8 +56,8 @@ public class NotesTab extends Fragment {
     {
       switch (position){
         case 0 : return new NotesPublic();
-        case 1 : return new NotesOfMyGroups();
-        case 2 : return new NotesFavorite();
+        case 1 : return new NotesFavorite();
+        case 2 :
         case 3 :
         case 4 :
         case 5 :
@@ -75,7 +65,7 @@ public class NotesTab extends Fragment {
         case 7 :
         case 8 :
         case 9:
-          return new NotesFavorite();
+          return new NotesPublic();
       }
       return null;
     }
@@ -98,17 +88,23 @@ public class NotesTab extends Fragment {
         case 0 :
           return "Öffentlich";
         case 1 :
-          return "Von meinen Gruppen";
-        case 2:
           return "Favoriten";
+        case 2:
+          return "MSP Praktikum";
         case 3 :
+          return "Verteilte Systeme";
         case 4 :
+          return "Lernen";
         case 5 :
+          return "Chillen";
         case 6 :
+          return "Essen";
         case 7 :
+          return "Python";
         case 8 :
+          return "Java";
         case 9:
-          return "Weitere";
+          return "iOS";
       }
       return null;
     }
