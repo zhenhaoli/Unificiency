@@ -15,87 +15,103 @@ import lmu.de.unificiencyandroid.R;
 
 public class NotesTab extends Fragment {
 
-    public static TabLayout tabLayout;
-    public static ViewPager viewPager;
-    public static int int_items = 3 ;
+  public static TabLayout tabLayout;
+  public static ViewPager viewPager;
+  public static int int_items = 10 ;
 
-    @Nullable
+  @Nullable
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    /**
+     *Inflate tab_layout and setup Views.
+     */
+    View x =  inflater.inflate(R.layout.notes_tab,null);
+    tabLayout = (TabLayout) x.findViewById(R.id.notes_tab);
+    viewPager = (ViewPager) x.findViewById(R.id.notes_viewpager);
+
+    /**
+     *Set an Apater for the View Pager
+     */
+    viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager()));
+
+    /**
+     * Now , this is a workaround ,
+     * The setupWithViewPager dose't works without the runnable .
+     * Maybe a Support Library Bug .
+     */
+
+    tabLayout.post(new Runnable() {
+      @Override
+      public void run() {
+        tabLayout.setupWithViewPager(viewPager);
+      }
+    });
+
+    return x;
+
+  }
+
+  class MyAdapter extends FragmentPagerAdapter {
+
+    public MyAdapter(FragmentManager fm) {
+      super(fm);
+    }
+
+    /**
+     * Return fragment with respect to Position .
+     */
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /**
-         *Inflate tab_layout and setup Views.
-         */
-        View x =  inflater.inflate(R.layout.notes_tab,null);
-        tabLayout = (TabLayout) x.findViewById(R.id.notes_tab);
-        viewPager = (ViewPager) x.findViewById(R.id.notes_viewpager);
+    public Fragment getItem(int position)
+    {
+      switch (position){
+        case 0 : return new NotesPublic();
+        case 1 : return new NotesOfMyGroups();
+        case 2 : return new NotesFavorite();
+        case 3 :
+        case 4 :
+        case 5 :
+        case 6 :
+        case 7 :
+        case 8 :
+        case 9:
+          return new NotesFavorite();
+      }
+      return null;
+    }
 
-        /**
-         *Set an Apater for the View Pager
-         */
-        viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager()));
+    @Override
+    public int getCount() {
 
-        /**
-         * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
-         * Maybe a Support Library Bug .
-         */
-
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                tabLayout.setupWithViewPager(viewPager);
-            }
-        });
-
-        return x;
+      return int_items;
 
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
+    /**
+     * This method returns the title of the tab according to the position.
+     */
 
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
+    @Override
+    public CharSequence getPageTitle(int position) {
 
-        /**
-         * Return fragment with respect to Position .
-         */
-
-        @Override
-        public Fragment getItem(int position)
-        {
-            switch (position){
-                case 0 : return new NotesPublic();
-                case 1 : return new NotesOfMyGroups();
-                case 2 : return new NotesFavorite();
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-
-            return int_items;
-
-        }
-
-        /**
-         * This method returns the title of the tab according to the position.
-         */
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position){
-                case 0 :
-                    return "Öffentlich";
-                case 1 :
-                    return "Von meinen Gruppen";
-                case 2:
-                    return "Favoriten";
-            }
-            return null;
-        }
+      switch (position){
+        case 0 :
+          return "Öffentlich";
+        case 1 :
+          return "Von meinen Gruppen";
+        case 2:
+          return "Favoriten";
+        case 3 :
+        case 4 :
+        case 5 :
+        case 6 :
+        case 7 :
+        case 8 :
+        case 9:
+          return "Weitere";
+      }
+      return null;
     }
+  }
 
 }
