@@ -36,7 +36,7 @@ public class BuildingsNearest extends BuildingsFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.nearest_buildings_listview, container, false);
+        view = inflater.inflate(R.layout.buildings_nearest, container, false);
         nearestBuildingListview = (RecyclerView) view.findViewById(R.id.buildings_nearest_buildings_list);
 
       this.avi = (com.wang.avi.AVLoadingIndicatorView)view.findViewById(R.id.avi);

@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="5dp">
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="220dp"
-            android:layout_marginLeft="150dp"
-            style="@style/AVLoadingIndicatorView.Large"
-            app:indicatorName="BallClipRotatePulseIndicator"
-            app:indicatorColor="@color/green_500"
-            />
+
+
 
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,18 +34,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="150dp"
-        style="@style/AVLoadingIndicatorView.Large"
-        app:indicatorName="BallClipRotatePulseIndicator"
-        app:indicatorColor="@color/green_500"
-        />
-        -->
+
 
     <android.support.v4.widget.NestedScrollView
         android:id = "@+id/groups_nested_scroll_view"
@@ -71,22 +45,38 @@
         android:scrollbars="vertical"
         android:fillViewport="true">
 
-
-        <android.support.v7.widget.RecyclerView
-
-            android:id="@+id/buildings_nearest_buildings_list"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="6dp"
-            android:clipToPadding="false"
-            android:scrollbarStyle="outsideOverlay">
-        </android.support.v7.widget.RecyclerView>
+            android:orientation="vertical"
+            >
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="100dp"
+                style="@style/AVLoadingIndicatorView.Large"
+                app:indicatorName="BallClipRotatePulseIndicator"
+                app:indicatorColor="@color/green_500"
+                />
 
 
-            <!--android:clipToPadding="false"-->
-            <!--android:scrollbarStyle="outsideOverlay"></ListView>-->
+            <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/buildings_nearest_buildings_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:clipToPadding="false"
+                android:scrollbarStyle="outsideOverlay">
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+        <!--android:clipToPadding="false"-->
+        <!--android:scrollbarStyle="outsideOverlay"></ListView>-->
 
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
-</LinearLayout>

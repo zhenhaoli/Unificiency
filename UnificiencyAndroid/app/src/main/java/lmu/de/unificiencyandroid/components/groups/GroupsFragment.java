@@ -85,14 +85,14 @@ public class GroupsFragment extends Fragment {
 
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
-            String description = groups.getJSONObject(i).getString("description");
-            JSONArray members = groups.getJSONObject(i).getJSONArray("members");
-            List<String> memberNames = new ArrayList<String>();
-            for(int j = 0; j<members.length(); j++){
-              memberNames.add(members.getJSONObject(j).getString("username"));
-            }
+            //String description = groups.getJSONObject(i).getString("description");
+            //JSONArray members = groups.getJSONObject(i).getJSONArray("members");
+           // List<String> memberNames = new ArrayList<String>();
+            //for(int j = 0; j<members.length(); j++){
+            //  memberNames.add(members.getJSONObject(j).getString("username"));
+           // }
 
-            groupsFromServer.add(new Group(id, name, topic, description, memberNames, null));
+            groupsFromServer.add(new Group(id, name, topic, null, null, null));
           }
           Collections.reverse(groupsFromServer);
           if(groupsAdapter == null) {
@@ -131,7 +131,7 @@ public class GroupsFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_groups, container, false);
+    View view = inflater.inflate(R.layout.groups, container, false);
     groupsRecyclerView = (RecyclerView) view.findViewById(R.id.groups_recycler_view);
     //fix scrolling issues when inside a nestedScrollView
     groupsRecyclerView.setNestedScrollingEnabled(false);

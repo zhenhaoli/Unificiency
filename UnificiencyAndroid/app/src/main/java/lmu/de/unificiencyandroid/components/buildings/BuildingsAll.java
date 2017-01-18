@@ -26,75 +26,83 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class BuildingsAll extends BuildingsFragment {
 
-    View x;
-    GridView all_building_listview;
+  View x;
+  GridView all_building_listview;
+  com.wang.avi.AVLoadingIndicatorView avi;
 
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Nullable
+  @Override
+  public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
 
-        super.onCreateView(inflater, container, savedInstanceState);
+    x =  inflater.inflate(R.layout.buildings_all,null);
+    this.avi = (com.wang.avi.AVLoadingIndicatorView)x.findViewById(R.id.avi);
 
-        String authToken =  SharedPref.getDefaults("authToken", getContext());
 
-        Log.d("bA Token in sharedPref", authToken);
 
-        UnificiencyClient client = new NodeAPIClient();
-        client.addHeader("Authorization", "Bearer " + authToken);
-        client.get("buildings", null, new JsonHttpResponseHandler() {
+    avi.show();
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
+
+    Log.d("bA Token in sharedPref", authToken);
+
+    UnificiencyClient client = new NodeAPIClient();
+    client.addHeader("Authorization", "Bearer " + authToken);
+    client.get("buildings", null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        // If the response is JSONObject instead of expected JSONArray
+      }
+      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
+        Log.e("status", statusCode + "" );
+        Log.e("e", e.toString());
+      }
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
+        // Pull out the first event on the public timeline
+        try {
+          Log.d("buildings", buildings.length()+"");
+
+          List<Building> buildingsFromServer = new ArrayList<>();
+          for(int i=0; i<buildings.length(); i++){
+            String address = buildings.getJSONObject(i).getString("address");
+            String city = buildings.getJSONObject(i).getString("city");
+            Double lat = buildings.getJSONObject(i).getDouble("lat");
+            Double lng = buildings.getJSONObject(i).getDouble("lng");
+            buildingsFromServer.add(new Building(address, city, lat, lng, null, null, null, null, null, null));
+          }
+
+          all_building_listview = (GridView) x.findViewById(R.id.all_building_listview);
+
+          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), buildingsFromServer);
+          all_building_listview.setAdapter(adapter);
+
+          all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // If the response is JSONObject instead of expected JSONArray
+            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
+            {
+
+              Building building=(Building) all_building_listview.getItemAtPosition(position);
+              Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
+              buildungDetails.putExtra("address", building.getAddress());
+              buildungDetails.putExtra("city", building.getCity());
+              startActivity(buildungDetails);
             }
-            public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-                Log.e("status", statusCode + "" );
-                Log.e("e", e.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
-                // Pull out the first event on the public timeline
-                try {
-                    Log.d("buildings", buildings.length()+"");
-
-                    List<Building> buildingsFromServer = new ArrayList<>();
-                    for(int i=0; i<buildings.length(); i++){
-                        String address = buildings.getJSONObject(i).getString("address");
-                        String city = buildings.getJSONObject(i).getString("city");
-                        Double lat = buildings.getJSONObject(i).getDouble("lat");
-                        Double lng = buildings.getJSONObject(i).getDouble("lng");
-                        buildingsFromServer.add(new Building(address, city, lat, lng, null, null, null, null, null, null));
-                    }
-
-                    all_building_listview = (GridView) x.findViewById(R.id.all_building_listview);
-
-                    BuildingsAdapter adapter= new BuildingsAdapter(getContext(), buildingsFromServer);
-                    all_building_listview.setAdapter(adapter);
-
-                    all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-                        {
-
-                            Building building=(Building) all_building_listview.getItemAtPosition(position);
-                            Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
-                            buildungDetails.putExtra("address", building.getAddress());
-                            buildungDetails.putExtra("city", building.getCity());
-                            startActivity(buildungDetails);
-                        }
-                    });
+          });
 
 
-                } catch (Exception e) {
-                    Log.e("BuildingAll", e.toString());
-                }
+        } catch (Exception e) {
+          Log.e("BuildingAll", e.toString());
+        } finally {
+          avi.hide();
+        }
 
-            }
-        });
+      }
+    });
 
-        x =  inflater.inflate(R.layout.buildings_all,null);
-        return x;
-    }
+
+    return x;
+  }
 
 }
