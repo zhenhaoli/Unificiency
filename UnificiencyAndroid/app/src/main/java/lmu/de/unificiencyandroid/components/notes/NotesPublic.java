@@ -3,6 +3,7 @@ package lmu.de.unificiencyandroid.components.notes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.buildings.BuildingDetails;
-
 import android.support.v7.widget.DividerItemDecoration;
 import android.widget.Toast;
 
@@ -26,9 +26,13 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.notes_floating_button)
+    FloatingActionButton addNewNoteBtn;
     private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Note_DividerItemDecoration mDividerItemDecoration;
+
+
 
    public static List<Note> publicNotes = Arrays.asList(
           new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
@@ -39,11 +43,22 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
           new Note("itjur", "REST", "CRUD with HTTP", "Zhen", 9)
    );
 
+    public void onAddNote(View view) {
+        Intent intent= new Intent(getContext(), NewNote.class);
+        startActivity(intent);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View v = inflater.inflate(R.layout.notes_public, null);
         ButterKnife.bind(this, v);
+
+      this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) {
+              onAddNote(view);
+          }
+      });
 
       // use a linear layout manager
       mLayoutManager = new LinearLayoutManager(getContext());

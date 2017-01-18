@@ -52,6 +52,17 @@
     <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen eingeben</string>
     <string name="groups_new_group_error_create">Ihre Eingaben sind fehlerhaft</string>
 
+    <!-- Notes -->
+    <string name="notes_new_note_title">Neue Notiz erstellen</string>
+    <string name="note_detail">Notizdetail</string>
+    <string name="notes_new_note_topic">Topic eingeben</string>
+    <string name="notes_new_note_create">Erstellen</string>
+    <string name="notes_new_note_name">Notizenname eingeben</string>
+    <string name="notes_new_note_content">Notizinhalt eingeben</string>
+    <string name="notes_new_note_password">Passwort eingeben (optional)</string>
+    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe sehen.</string>
+
+
     <!-- Settings -->
     <string name="setting_hint">Hier können Sie Ihr Nickname and Studiengang verändern und speichern.</string>
 

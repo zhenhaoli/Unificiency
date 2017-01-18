@@ -47,7 +47,8 @@
         <activity android:name=".components.notes.NoteDetails" />
         <activity android:name=".components.notes.NotesFromSingleGroup" />
         <activity android:name=".components.setting.SettingGroups" />
-        <activity android:name=".components.setting.SettingNotes"></activity>
+        <activity android:name=".components.setting.SettingNotes" />
+        <activity android:name=".components.notes.NewNote"></activity>
     </application>
 
 </manifest>
