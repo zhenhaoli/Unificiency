@@ -30,6 +30,7 @@
     <string name="groups_details_description_default">Diese Gruppe hat noch keine Beschreibung angegeben.</string>
     <string name="groups_details_members">Mitglieder</string>
     <string name="groups_details_join">Beitreten</string>
+    <string name="groups_details_leave">Verlassen</string>
     <!-- Group Details -->
     <string name="groups_details_password_message">Passwort eingeben</string>
     <string name="groups_details_password_title">Diese Gruppe verlangt ein Passwort</string>

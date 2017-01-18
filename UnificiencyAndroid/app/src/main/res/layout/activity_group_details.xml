@@ -78,7 +78,18 @@
             android:id="@+id/groups_details_join"
             android:background="@color/lmugreen"
             android:text="@string/groups_details_join"
+            android:visibility="invisible"
             android:textColor="@color/white"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/groups_details_leave"
+            android:background="@color/red_400"
+            android:text="@string/groups_details_leave"
+            android:textColor="@color/white"
+            android:visibility="invisible"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 

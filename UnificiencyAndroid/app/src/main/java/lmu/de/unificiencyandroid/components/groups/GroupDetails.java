@@ -1,6 +1,5 @@
 package lmu.de.unificiencyandroid.components.groups;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +22,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.adapters.GroupMemberAdapter;
@@ -33,104 +35,32 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupDetails extends AppCompatActivity implements EnterGroupPasswordListener {
+
   /*extras : groups_details_groupname_extra*/
-  private GroupMemberAdapter adapter;
-  private TextView groupName;
-  private ListView memberList;
-  private TextView description;
-  private Button joinButton;
-  private ImageView toolbar;
-  private Group group;
+  GroupMemberAdapter adapter;
+  Group group;
+  Boolean isMemberInGroup;
 
-  public Group fetchGroupDetails(final Integer groupId){
-    String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+  @BindView(R.id.groups_details_hero)
+  TextView groupName;
 
-    Log.d("gd Token in sharedPref", authToken);
+  @BindView(R.id.group_details_member)
+  ListView memberList;
 
-    UnificiencyClient client = new PythonAPIClient();
-    client.addHeader("Authorization", authToken);
-    client.get("groups/"+groupId, null, new JsonHttpResponseHandler() {
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject groupJSON) {
-        // If the response is JSONObject instead of expected JSONArray
-        String topic = null;
-        String name= null;
-        String description= null;
-        Boolean hasPassword = null;
-        List<String> memberNames = new ArrayList<String>();
-        try {
-          topic = groupJSON.getString("topic_area");
-          name = groupJSON.getString("name");
-          description = groupJSON.getString("description");
-          hasPassword = groupJSON.getBoolean("protected");
-          JSONArray membersJSON = groupJSON.getJSONArray("members");
-          memberNames = new ArrayList<String>();
-          for(int j = 0; j<membersJSON.length(); j++){
-            memberNames.add(membersJSON.getJSONObject(j).getString("username"));
-          }
-        } catch (Exception e){
-          Log.e("jsonerr", e.toString());
-        }
+  @BindView(R.id.groups_details_description)
+  TextView description;
 
-        group = new Group(groupId, name, topic, description, memberNames, hasPassword);
+  @BindView(R.id.groups_details_join)
+  Button joinButton;
 
-       /* View population/data binding and styling */
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        groupName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
-        bindGroupData();
+  @BindView(R.id.groups_details_leave)
+  Button leaveButton;
 
-      }
+  @BindView(R.id.groups_details_backButton)
+  ImageView toolbar;
 
-      @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("groupdetailserr", errorResponse.toString());
-        String errmsg = null;
-        try {
-          errmsg = errorResponse.getString("message");
-        } catch (Exception e) {
-
-        }
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(errmsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
-      }
-
-    });
-    return group;
-  }
-
-  public Integer handleIntent(){
-    Intent intent = getIntent();
-    Integer extra = intent.getIntExtra("groupId", 0);
-    return extra;
-  }
-
-  public void setupViewReferences() {
-    this.groupName = (TextView) findViewById(R.id.groups_details_hero);
-    this.memberList = (ListView) findViewById(R.id.group_details_member);
-    this.description = (TextView) findViewById(R.id.groups_details_description);
-    this.joinButton = (Button) findViewById(R.id.groups_details_join);
-    this.toolbar = (ImageView) findViewById(R.id.groups_details_backButton);
-  }
-
-  public void bindGroupData() {
-    this.groupName.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
-    this.description.setText(this.group.getDescription());
-    this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
-    this.memberList.setAdapter(this.adapter);
-  }
-
-  public void onBack(View view) {
-    onBackPressed();
-  }
-
-  public void onJoin(View view){
+  @OnClick(R.id.groups_details_join)
+  void joinGroup() {
     Boolean groupHasPassword = group.getHasPassword();
 
     if(groupHasPassword) {
@@ -196,7 +126,95 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
       });
 
     }
+  }
 
+  @OnClick(R.id.groups_details_leave)
+  void leaveGroup() {
+
+  }
+
+
+  @OnClick(R.id.groups_details_backButton)
+  void goBack() {
+    onBackPressed();
+  }
+
+
+  public Group fetchGroupDetails(final Integer groupId){
+    String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.get("groups/"+groupId, null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject groupJSON) {
+        String topic = null;
+        String name= null;
+        String description= null;
+        Boolean hasPassword = null;
+        Boolean isMember = null;
+        List<String> memberNames = new ArrayList<String>();
+        try {
+          topic = groupJSON.getString("topic_area");
+          name = groupJSON.getString("name");
+          description = groupJSON.getString("description");
+          hasPassword = groupJSON.getBoolean("protected");
+          JSONArray membersJSON = groupJSON.getJSONArray("members");
+          isMember = groupJSON.getBoolean("im_a_member");
+          memberNames = new ArrayList<String>();
+          for(int j = 0; j<membersJSON.length(); j++){
+            memberNames.add(membersJSON.getJSONObject(j).getString("username"));
+          }
+        } catch (Exception e){
+          Log.e("jsonerr", e.toString());
+        }
+
+        isMemberInGroup = isMember;
+        group = new Group(groupId, name, topic, description, memberNames, hasPassword);
+
+       /* View population/data binding and styling */
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        groupName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
+        bindGroupData();
+
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Log.e("groupdetailserr", errorResponse.toString());
+        String errmsg = null;
+        try {
+          errmsg = errorResponse.getString("message");
+        } catch (Exception e) {
+
+        }
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
+            .setText(errmsg)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+
+      }
+
+    });
+    return group;
+  }
+
+
+  public void bindGroupData() {
+    if(isMemberInGroup) {
+      leaveButton.setVisibility(View.VISIBLE);
+    } else {
+      joinButton.setVisibility(View.VISIBLE);
+    }
+
+    this.groupName.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
+    this.description.setText(this.group.getDescription());
+    this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
+    this.memberList.setAdapter(this.adapter);
   }
 
   @Override
@@ -251,7 +269,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
         }
 
         if(errmsg.contains("protected")){
-         // errmsg = "Password falsch oder nicht eingegeben, bitte nochmal versuchen!";
+          // errmsg = "Password falsch oder nicht eingegeben, bitte nochmal versuchen!";
         }
 
         SuperActivityToast.cancelAllSuperToasts();
@@ -274,21 +292,11 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
     super.onCreate(savedInstanceState);
     /** View setup **/
     setContentView(R.layout.activity_group_details);
-    setupViewReferences();
-    toolbar.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        onBack(v);
-      }
-    });
-    joinButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        onJoin(v);
-      }
-    });
+
+    ButterKnife.bind(this);
+
     /** Data handling **/
-    Integer groupId = handleIntent();
+    Integer groupId = getIntent().getIntExtra("groupId", 0);
     fetchGroupDetails(groupId);
   }
 }
