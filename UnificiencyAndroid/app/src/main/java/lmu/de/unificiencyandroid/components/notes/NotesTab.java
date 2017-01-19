@@ -44,9 +44,7 @@ public class NotesTab extends Fragment {
 
     getTabsForMyGroups(view);
 
-
     return view;
-
   }
 
   class MyAdapter extends FragmentPagerAdapter {
@@ -63,7 +61,7 @@ public class NotesTab extends Fragment {
     public Fragment getItem(int position)
     {
 
-      if(position <= myGroups.size() && position >= 0){
+      if(position <=  getCount() && position >= 0){
         switch (position) {
           case 0:
             return new NotesPublic();
@@ -89,7 +87,7 @@ public class NotesTab extends Fragment {
 
     @Override
     public CharSequence getPageTitle(int position) {
-      if(position <= myGroups.size() && position >= 0) {
+      if(position <= getCount() && position >= 0) {
         switch (position) {
           case 0:
             return "Öffentlich";
@@ -126,6 +124,9 @@ public class NotesTab extends Fragment {
           Log.d("Groups", groups.length()+"");
 
           List<Group> groupsFromServer = new ArrayList<>();
+
+          groupsFromServer.add(new Group("Öffentlich", null, null));
+          groupsFromServer.add(new Group("Favoriten", null, null));
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
             String name = groups.getJSONObject(i).getString("name");

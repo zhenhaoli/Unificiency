@@ -171,7 +171,7 @@ public class LoginActivity extends AuthActivity {
     ButterKnife.bind(this);
 
     //TODO: remove this in prd
-    usernameWrapper.getEditText().setText("unificiency2@lmu.de");
+    usernameWrapper.getEditText().setText("unificiency3@lmu.de");
     passwordWrapper.getEditText().setText("123456");
 
   }
@@ -191,7 +191,7 @@ public class LoginActivity extends AuthActivity {
               .setText(registeredMsg)
               .setDuration(Style.DURATION_LONG)
               .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
+              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
               .setAnimations(Style.ANIMATIONS_SCALE)
               .show();
         }
