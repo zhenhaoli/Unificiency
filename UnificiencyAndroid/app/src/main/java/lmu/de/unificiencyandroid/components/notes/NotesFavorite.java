@@ -39,7 +39,7 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.notes_public, null);
+        View v = inflater.inflate(R.layout.notes, null);
         ButterKnife.bind(this, v);
 
         // use a linear layout manager
@@ -61,7 +61,7 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
     public void onItemClick(View view, int position) {
         Note note=(Note) favoriteNotes.get(position);
         Intent notesDetails=new Intent(getActivity(),NoteDetails.class);
-        notesDetails.putExtra("course", note.getCourse());
+        notesDetails.putExtra("course", note.getTopic());
         notesDetails.putExtra("title", note.getTitle());
         notesDetails.putExtra("content", note.getContent());
         notesDetails.putExtra("creator", note.getCreatedBy());

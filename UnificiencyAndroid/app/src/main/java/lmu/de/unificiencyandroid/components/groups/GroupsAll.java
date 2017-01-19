@@ -56,8 +56,6 @@ public class GroupsAll extends Fragment {
     avi.show();
     String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
 
-    Log.d("gf Token in sharedPref", authToken);
-
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
     client.get("groups/lmu/", null, new JsonHttpResponseHandler() {

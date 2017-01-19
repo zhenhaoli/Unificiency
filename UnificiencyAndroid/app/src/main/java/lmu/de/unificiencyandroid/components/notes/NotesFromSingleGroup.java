@@ -39,7 +39,7 @@ public class NotesFromSingleGroup extends AppCompatActivity implements NoteClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notes_public);
+        setContentView(R.layout.notes);
 
         mRecyclerView=(RecyclerView) findViewById(R.id.notes_public_recycler_view);
 
@@ -81,7 +81,7 @@ public class NotesFromSingleGroup extends AppCompatActivity implements NoteClick
 
         Note note=(Note) notes_from_singleGroup.get(position);
         Intent notesDetails=new Intent(getApplicationContext(),NoteDetails.class);
-        notesDetails.putExtra("course", note.getCourse());
+        notesDetails.putExtra("course", note.getTopic());
         notesDetails.putExtra("title", note.getTitle());
         notesDetails.putExtra("content", note.getContent());
         notesDetails.putExtra("creator", note.getCreatedBy());

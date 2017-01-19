@@ -22,6 +22,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +93,25 @@ public class BuildingsNearest extends BuildingsBase {
 
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings/nearest", params, new JsonHttpResponseHandler() {
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        String err = "Fehler beim Server, bitte später nochmal versuchen";
+        if(errorResponse!=null){
+          err = errorResponse.toString();
+        }
+
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
+            .setText(err)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
       }
+
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
         // Pull out the first event on the public timeline

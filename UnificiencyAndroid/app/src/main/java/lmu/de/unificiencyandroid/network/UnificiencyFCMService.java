@@ -16,7 +16,6 @@ public class UnificiencyFCMService extends FirebaseMessagingService {
 
     Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-    // Check if message contains a data payload.
     if (remoteMessage.getData().size() > 0) {
       Log.d(TAG, "Message data payload: " + remoteMessage.getData());
       sendMessageToActivity(remoteMessage.getData().toString());
@@ -30,7 +29,6 @@ public class UnificiencyFCMService extends FirebaseMessagingService {
 
   private void sendMessageToActivity(String msg) {
     Intent intent = new Intent("ServerUpdates");
-    // You can also include some extra data.
     intent.putExtra("Status", msg);
     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
   }

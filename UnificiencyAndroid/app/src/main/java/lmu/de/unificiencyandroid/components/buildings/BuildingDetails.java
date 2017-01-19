@@ -77,7 +77,7 @@ public class BuildingDetails extends AppCompatActivity {
           Log.d("rooms", rooms.length()+"");
 
           for(int i=0; i<rooms.length(); i++){
-            String name = rooms.getJSONObject(i).getString("name");
+            String name = rooms.getJSONObject(i).getString("title");
             String level = rooms.getJSONObject(i).getString("level");
             String address = rooms.getJSONObject(i).getString("address");
             Boolean available = rooms.getJSONObject(i).getBoolean("available");

@@ -91,7 +91,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     // - get element from your dataset at this position
     // - replace the contents of the components with that element
     final Note note = mDataset.get(position);
-    holder.tvCourse.setText(note.getCourse());
+    holder.tvCourse.setText(note.getTopic());
     holder.tvTitel.setText(note.getTitle());
     if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.favorite_note);
   }
