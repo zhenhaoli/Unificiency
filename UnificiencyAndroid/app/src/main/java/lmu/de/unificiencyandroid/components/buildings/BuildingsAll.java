@@ -36,14 +36,10 @@ public class BuildingsAll extends BuildingsFragment {
     super.onCreateView(inflater, container, savedInstanceState);
 
     x =  inflater.inflate(R.layout.buildings_all,null);
+
     this.avi = (com.wang.avi.AVLoadingIndicatorView)x.findViewById(R.id.avi);
-
-
-
     avi.show();
     String authToken =  SharedPref.getDefaults("authToken", getContext());
-
-    Log.d("bA Token in sharedPref", authToken);
 
     UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
@@ -90,7 +86,6 @@ public class BuildingsAll extends BuildingsFragment {
               startActivity(buildungDetails);
             }
           });
-
 
         } catch (Exception e) {
           Log.e("BuildingAll", e.toString());

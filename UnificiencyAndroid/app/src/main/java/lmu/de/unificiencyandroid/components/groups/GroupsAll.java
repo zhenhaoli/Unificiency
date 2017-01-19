@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -33,7 +34,8 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class GroupsMyFragment extends Fragment {
+
+public class GroupsAll extends Fragment {
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
   RecyclerView.LayoutManager groupsLayoutManager;
@@ -42,7 +44,7 @@ public class GroupsMyFragment extends Fragment {
   FloatingActionButton addNewGroupBtn;
   com.wang.avi.AVLoadingIndicatorView avi;
 
-  public GroupsMyFragment() {
+  public GroupsAll() {
     // Required empty public constructor
   }
 
@@ -56,6 +58,8 @@ public class GroupsMyFragment extends Fragment {
   public void bindGroupData(){
     avi.show();
     String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+
+    Log.d("gf Token in sharedPref", authToken);
 
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
@@ -83,16 +87,14 @@ public class GroupsMyFragment extends Fragment {
             String topic = groups.getJSONObject(i).getString("topic_area");
             //String description = groups.getJSONObject(i).getString("description");
             //JSONArray members = groups.getJSONObject(i).getJSONArray("members");
-            // List<String> memberNames = new ArrayList<String>();
+           // List<String> memberNames = new ArrayList<String>();
             //for(int j = 0; j<members.length(); j++){
             //  memberNames.add(members.getJSONObject(j).getString("username"));
-            // }
+           // }
 
             groupsFromServer.add(new Group(id, name, topic, null, null, null));
           }
-          //Collections.reverse(groupsFromServer);
-
-          //TODO: Load groups by user
+          Collections.reverse(groupsFromServer);
           if(groupsAdapter == null) {
             groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer, new GroupsAdapter.OnGroupItemClickListener() {
               @Override

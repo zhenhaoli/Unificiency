@@ -1,14 +1,8 @@
 package lmu.de.unificiencyandroid.InputValidation;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.TextView;
-
-/**
- * Created by robertMueller on 02.01.17.
- */
 
 public abstract class InputValidation implements TextWatcher {
     private final TextInputLayout textView;

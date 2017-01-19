@@ -25,7 +25,7 @@ public class NotesFavorite extends Fragment implements MyItemClickListener{
     RecyclerView mRecyclerView;
     private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Note_DividerItemDecoration mDividerItemDecoration;
+    private NoteDividerItemDecoration mDividerItemDecoration;
 
     List<Note> favoriteNotes = Arrays.asList(
             new Note("Favorite_Note1", "Bluetooth", "Connectivity", "Rob", 6),
@@ -53,7 +53,7 @@ public class NotesFavorite extends Fragment implements MyItemClickListener{
         mRecyclerView.setAdapter(mAdapter);
 
         // specify an itemDecoration
-        mDividerItemDecoration = new Note_DividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(this.getContext())).getOrientation());
+        mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(this.getContext())).getOrientation());
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return v;

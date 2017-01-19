@@ -10,12 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
 import lmu.de.unificiencyandroid.components.notes.Note;
-
-/**
- * Created by ostdong on 12/01/2017.
- */
 
 public class SettingNotesAdapter extends ArrayAdapter {
 

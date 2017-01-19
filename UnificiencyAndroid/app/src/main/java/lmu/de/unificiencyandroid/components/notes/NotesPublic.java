@@ -18,9 +18,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.buildings.BuildingDetails;
-import android.support.v7.widget.DividerItemDecoration;
-import android.widget.Toast;
 
 public class NotesPublic extends Fragment implements MyItemClickListener {
 
@@ -30,7 +27,7 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
     FloatingActionButton addNewNoteBtn;
     private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Note_DividerItemDecoration mDividerItemDecoration;
+    private NoteDividerItemDecoration mDividerItemDecoration;
 
 
 
@@ -70,7 +67,7 @@ public class NotesPublic extends Fragment implements MyItemClickListener {
       mRecyclerView.setAdapter(mAdapter);
       mRecyclerView.setItemAnimator(new DefaultItemAnimator());
       // specify an itemDecoration
-      mDividerItemDecoration = new Note_DividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getContext())).getOrientation());
+      mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getContext())).getOrientation());
       mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
       return v;

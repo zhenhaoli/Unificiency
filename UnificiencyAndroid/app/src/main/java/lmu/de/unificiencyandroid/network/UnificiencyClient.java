@@ -8,7 +8,6 @@ import com.loopj.android.http.RequestParams;
 
 public abstract class UnificiencyClient {
   protected String BASE_URL;
-  //private final String BASE_URL = "http://192.168.178.24:5048/";
 
   protected AsyncHttpClient client;
 

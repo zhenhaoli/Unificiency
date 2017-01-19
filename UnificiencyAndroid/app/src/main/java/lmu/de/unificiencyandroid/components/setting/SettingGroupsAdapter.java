@@ -13,10 +13,6 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 
 
-/**
- * Created by ostdong on 12/01/2017.
- */
-
 public class SettingGroupsAdapter extends ArrayAdapter {
 
     public SettingGroupsAdapter(Context context, int textViewResourceId,

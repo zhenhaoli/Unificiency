@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.notes.NotesFavorite;
 
 public class GroupsTab  extends Fragment {
 
@@ -57,8 +56,8 @@ public class GroupsTab  extends Fragment {
     public Fragment getItem(int position)
     {
       switch (position){
-        case 0 : return new GroupsFragment();
-        case 1 : return new GroupsMyFragment();
+        case 0 : return new GroupsAll();
+        case 1 : return new GroupsJoined();
       }
       return null;
     }
@@ -79,7 +78,7 @@ public class GroupsTab  extends Fragment {
 
       switch (position){
         case 0 :
-          return "Lerngruppen";
+          return "Lerngruppen finden";
         case 1 :
           return "Meine Gruppen";
       }

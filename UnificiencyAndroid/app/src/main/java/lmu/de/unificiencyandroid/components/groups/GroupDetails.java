@@ -28,13 +28,13 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.adapters.GroupMemberAdapter;
-import lmu.de.unificiencyandroid.components.groups.interfaces.EnterGroupPasswordListener;
+import lmu.de.unificiencyandroid.components.groups.interfaces.GroupPasswordEnterListener;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class GroupDetails extends AppCompatActivity implements EnterGroupPasswordListener {
+public class GroupDetails extends AppCompatActivity implements GroupPasswordEnterListener {
 
   /*extras : groups_details_groupname_extra*/
   GroupMemberAdapter adapter;
@@ -64,7 +64,7 @@ public class GroupDetails extends AppCompatActivity implements EnterGroupPasswor
     Boolean groupHasPassword = group.getHasPassword();
 
     if(groupHasPassword) {
-      EnterGroupPassword enterPwDialog = new EnterGroupPassword();
+      GroupPasswordEnter enterPwDialog = new GroupPasswordEnter();
       enterPwDialog.show(getSupportFragmentManager(), "enter_password");
 
     } else {

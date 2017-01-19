@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.interfaces.EnterGroupPasswordListener;
+import lmu.de.unificiencyandroid.components.groups.interfaces.GroupPasswordEnterListener;
 
-public class EnterGroupPassword extends DialogFragment {
+public class GroupPasswordEnter extends DialogFragment {
 
-    EnterGroupPasswordListener epwListener;
+    GroupPasswordEnterListener epwListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class EnterGroupPassword extends DialogFragment {
         super.onAttach(context);
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            epwListener = (EnterGroupPasswordListener) context;
+            epwListener = (GroupPasswordEnterListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(context.toString()

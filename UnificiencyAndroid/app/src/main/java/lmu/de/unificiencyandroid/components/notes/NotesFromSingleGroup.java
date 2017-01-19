@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ public class NotesFromSingleGroup extends AppCompatActivity implements MyItemCli
     private TextView notes_singleGroup_name;
     private RecyclerView mRecyclerView;
     private NotesAdapter mAdapter;
-    private Note_DividerItemDecoration mDividerItemDecoration;
+    private NoteDividerItemDecoration mDividerItemDecoration;
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<Note> notes_from_singleGroup = Arrays.asList(
@@ -72,7 +71,7 @@ public class NotesFromSingleGroup extends AppCompatActivity implements MyItemCli
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // specify an itemDecoration
-        mDividerItemDecoration = new Note_DividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getApplicationContext())).getOrientation());
+        mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getApplicationContext())).getOrientation());
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
     }

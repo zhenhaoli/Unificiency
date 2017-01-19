@@ -1,15 +1,11 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v13.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -17,12 +13,6 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.GroupDetails;
-import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
-
-/**
- * Created by robertMueller on 16.01.17.
- */
 
 public class BuildingsNearestAdapter extends RecyclerView.Adapter<BuildingsNearestAdapter.ViewHolderBuildings> {
     private List<Building> buildings;

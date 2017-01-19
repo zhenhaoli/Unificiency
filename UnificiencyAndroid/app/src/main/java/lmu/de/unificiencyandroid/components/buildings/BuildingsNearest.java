@@ -35,7 +35,6 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 public class BuildingsNearest extends BuildingsFragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-
   View view;
   RecyclerView nearestBuildingListview;
   ArrayList<Building> buildings;

@@ -17,10 +17,6 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 
-/**
- * Created by ostdong on 10/01/2017.
- */
-
 public class Account extends Fragment {
 
 
@@ -63,12 +59,12 @@ public class Account extends Fragment {
 
 
         List<Group> groups = Arrays.asList(
-                new Group(1,"Group_Name_1", "MSP", "description", GroupMember, false),
-                new Group(2, "Group_Name_2", "GPS", "description", GroupMember,false),
-                new Group(3, "Group_Name_3", "REST","description",  GroupMember, false),
-                new Group(4, "Group_Name_4", "MSP","description",  GroupMember, false),
-                new Group(5, "Group_Name_5", "GPS", "description", GroupMember,false),
-                new Group(6, "Group_Name_6", "REST","description",  GroupMember, false)
+            new Group(1,"Group_Name_1", "MSP", "description", GroupMember, false),
+            new Group(2, "Group_Name_2", "GPS", "description", GroupMember,false),
+            new Group(3, "Group_Name_3", "REST","description",  GroupMember, false),
+            new Group(4, "Group_Name_4", "MSP","description",  GroupMember, false),
+            new Group(5, "Group_Name_5", "GPS", "description", GroupMember,false),
+            new Group(6, "Group_Name_6", "REST","description",  GroupMember, false)
         );
 
         AccountAdapter adapter= new AccountAdapter(getContext(), android.R.layout.simple_list_item_1, groups);

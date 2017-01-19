@@ -1,9 +1,5 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
-/**
- * Created by robertMueller on 16.01.17.
- */
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;

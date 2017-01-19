@@ -5,24 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.buildings.Building;
 import lmu.de.unificiencyandroid.components.groups.models.Group;
 
-/**
- * Created by ostdong on 11/01/2017.
- */
 
 public class AccountAdapter extends ArrayAdapter {
 
     public AccountAdapter(Context context, int textViewResourceId,
-                            List<Group> groups) {
+                          List<Group> groups) {
         super(context, textViewResourceId, groups);
     }
 
