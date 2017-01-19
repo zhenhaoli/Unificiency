@@ -203,7 +203,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         List<String> memberNames = new ArrayList<String>();
         try {
           topic = groupJSON.getString("topic_area");
-          name = groupJSON.getString("title");
+          name = groupJSON.getString("name");
           description = groupJSON.getString("description");
           hasPassword = groupJSON.getBoolean("protected");
           JSONArray membersJSON = groupJSON.getJSONArray("members");
