@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.components.groups.Group;
 
 
 public class AccountAdapter extends ArrayAdapter {

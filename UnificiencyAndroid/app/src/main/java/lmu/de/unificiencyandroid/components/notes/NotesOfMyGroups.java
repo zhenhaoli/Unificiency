@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.components.groups.Group;
 
 public class NotesOfMyGroups extends Fragment implements MyItemClickListener{
 

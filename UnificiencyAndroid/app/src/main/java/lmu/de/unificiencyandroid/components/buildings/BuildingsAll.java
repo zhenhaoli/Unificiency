@@ -13,7 +13,6 @@ import android.widget.GridView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class BuildingsAll extends BuildingsFragment {
+public class BuildingsAll extends BuildingsBase {
 
   View x;
   GridView all_building_listview;
@@ -44,10 +43,7 @@ public class BuildingsAll extends BuildingsFragment {
     UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings", null, new JsonHttpResponseHandler() {
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-      }
+
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
         Log.e("status", statusCode + "" );
         Log.e("e", e.toString());
@@ -95,7 +91,6 @@ public class BuildingsAll extends BuildingsFragment {
 
       }
     });
-
 
     return x;
   }

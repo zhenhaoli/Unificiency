@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.groups.adapters;
+package lmu.de.unificiencyandroid.components.groups;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -111,6 +111,16 @@ public class LoginActivity extends AuthActivity {
               @Override
               public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                String failedLogin = "Server Fehler, bitte später nochmal versuchen!";
+                SuperActivityToast.cancelAllSuperToasts();
+                SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
+                    .setText(failedLogin)
+                    .setDuration(Style.DURATION_LONG)
+                    .setFrame(Style.FRAME_KITKAT)
+                    .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+                    .setAnimations(Style.ANIMATIONS_SCALE)
+                    .show();
+
               }
 
               @Override

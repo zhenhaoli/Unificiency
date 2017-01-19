@@ -28,8 +28,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.adapters.GroupsAdapter;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;

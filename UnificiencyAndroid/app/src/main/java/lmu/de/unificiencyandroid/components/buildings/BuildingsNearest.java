@@ -1,14 +1,8 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 
@@ -32,17 +25,13 @@ import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class BuildingsNearest extends BuildingsFragment implements
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class BuildingsNearest extends BuildingsBase {
 
   View view;
   RecyclerView nearestBuildingListview;
   ArrayList<Building> buildings;
   RecyclerView.LayoutManager groupsLayoutManager;
   com.wang.avi.AVLoadingIndicatorView avi;
-  GoogleApiClient mGoogleApiClient;
-  Location mLastLocation;
-
 
   @Nullable
   @Override
@@ -56,63 +45,25 @@ public class BuildingsNearest extends BuildingsFragment implements
     groupsLayoutManager = new LinearLayoutManager(this.getActivity());
     nearestBuildingListview.setLayoutManager(groupsLayoutManager);
     askLocationPermission();
-    getCurrentLocation();
 
     return view;
   }
 
-  public void getCurrentLocation(){
-// Create an instance of GoogleAPIClient.
-    if (mGoogleApiClient == null) {
-      mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-          .addConnectionCallbacks(this)
-          .addOnConnectionFailedListener(this)
-          .addApi(LocationServices.API)
-          .build();
-    }
-  }
-
-  public void onStart() {
-    mGoogleApiClient.connect();
-    super.onStart();
-  }
-
-  public void onStop() {
-    mGoogleApiClient.disconnect();
-    super.onStop();
-  }
-
-  public void askLocationPermission(){
-    int MyVersion = Build.VERSION.SDK_INT;
-    if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
-      if (!checkIfAlreadyhavePermission()) {
-        requestForSpecificPermission();
-      }
-    }
-
-  }
-
-  private boolean checkIfAlreadyhavePermission() {
-    int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.GET_ACCOUNTS);
-    if (result == PackageManager.PERMISSION_GRANTED) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  private void requestForSpecificPermission() {
-    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-  }
 
   public void fetchData(double lat, double lng) {
     avi.show();
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
+    final RequestParams params = new RequestParams();
+    params.put("lat", lat);
+    params.put("lng", lng);
+
+
     UnificiencyClient client = new NodeAPIClient();
 
+
     client.addHeader("Authorization", "Bearer " + authToken);
-    client.get("buildings/nearest?lat="+lat+"&lng="+lng, null, new JsonHttpResponseHandler() {
+    client.get("buildings/nearest", params, new JsonHttpResponseHandler() {
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
         Log.e("status", statusCode + "" );
         Log.e("e", e.toString());
@@ -159,14 +110,13 @@ public class BuildingsNearest extends BuildingsFragment implements
         } finally {
           avi.hide();
         }
-
       }
     });
-
   }
 
   @Override
   public void onConnected(@Nullable Bundle bundle) {
+    super.onConnected(bundle);
     try {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
           mGoogleApiClient);
@@ -183,19 +133,9 @@ public class BuildingsNearest extends BuildingsFragment implements
 
         fetchData(myLat, myLng);
 
-
       }
     } catch (SecurityException e){
     }
   }
 
-  @Override
-  public void onConnectionSuspended(int i) {
-
-  }
-
-  @Override
-  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-  }
 }

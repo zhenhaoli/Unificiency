@@ -2,14 +2,12 @@ package lmu.de.unificiencyandroid.components.buildings;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,50 +22,47 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import lmu.de.unificiencyandroid.R;
 
-public class BuildingsMap extends BuildingsFragment implements
+public class BuildingsMap extends BuildingsBase implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   Location mLastLocation;
   MapView mMapView;
-  GoogleApiClient mGoogleApiClient;
   private GoogleMap googleMap;
 
   @Override
   public void onConnected(@Nullable Bundle bundle) {
+    super.onConnected(bundle);
     try {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
               mGoogleApiClient);
-      if(mLastLocation != null) {
-        Log.d("loc obj", mLastLocation.toString());
+
+      double myLat = 48.1504788, myLng = 11.5778267;
+
+      if(mLastLocation!=null){
+        myLat = mLastLocation.getLatitude();
+        myLng = mLastLocation.getLongitude();
       }
+
+
+      LatLng myPos = new LatLng(myLat, myLng);
+
+      // For zooming automatically to the location of the marker
+      CameraPosition cameraPosition = new CameraPosition.Builder().target(myPos).zoom(15).build();
+      googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     } catch (SecurityException e){
     }
-  }
-
-  @Override
-  public void onConnectionSuspended(int i) {
-
-  }
-
-  @Override
-  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater,container,savedInstanceState);
     View rootView = inflater.inflate(R.layout.buildings_map, container, false);
+
+    askLocationPermission();
+
     mMapView = (MapView) rootView.findViewById(R.id.mapView);
     mMapView.onCreate(savedInstanceState);
-
-    if (mGoogleApiClient == null) {
-      mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-              .addConnectionCallbacks(this)
-              .addOnConnectionFailedListener(this)
-              .addApi(LocationServices.API)
-              .build();
-    }
 
     mMapView.onResume(); // needed to get the map to display immediately
 
@@ -81,7 +76,6 @@ public class BuildingsMap extends BuildingsFragment implements
       @Override
       public void onMapReady(GoogleMap mMap) {
         googleMap = mMap;
-        double myLat = 50, myLng = 10;
 
         // For showing a move to my location button
         try {
@@ -90,17 +84,6 @@ public class BuildingsMap extends BuildingsFragment implements
         } catch (SecurityException e) {
           Log.e("permission not got", e.toString());
         }
-
-        if(mLastLocation!=null){
-          myLat = mLastLocation.getLatitude();
-          myLng = mLastLocation.getLongitude();
-        }
-
-        // For dropping a marker at a point on the Map
-        LatLng myPos = new LatLng(myLat, myLng);
-        googleMap.addMarker(new MarkerOptions().position(myPos).title("Marker Title").snippet("Marker Description"));
-
-        Log.d("buildings value", buildings.toString());
 
         //TODO: make custom icon
         for(Building building : buildings){
@@ -111,9 +94,7 @@ public class BuildingsMap extends BuildingsFragment implements
                   .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
 
-        // For zooming automatically to the location of the marker
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(myPos).zoom(15).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
       }
     });
 
@@ -142,16 +123,6 @@ public class BuildingsMap extends BuildingsFragment implements
   public void onLowMemory() {
     super.onLowMemory();
     mMapView.onLowMemory();
-  }
-
-  public void onStart() {
-    mGoogleApiClient.connect();
-    super.onStart();
-  }
-
-  public void onStop() {
-    mGoogleApiClient.disconnect();
-    super.onStop();
   }
 
 }

@@ -5,13 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.components.groups.Group;
 
 public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.ViewHolder> {
     private List<Group> mDataset;

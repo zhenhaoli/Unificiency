@@ -29,6 +29,13 @@ public class Building {
   Bitmap img;
   List<Room> rooms;
 
+  public Building(String address, String city, Double lat, Double lng) {
+    this.address = address;
+    this.city = city;
+    this.lat = lat;
+    this.lng = lng;
+  }
+
   @Override
   public String toString() {
     if(distanceText == null || durationText == null){

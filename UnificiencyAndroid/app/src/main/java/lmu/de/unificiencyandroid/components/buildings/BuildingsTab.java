@@ -25,20 +25,15 @@ public class BuildingsTab extends Fragment {
         /**
          *Inflate tab_layout and setup Views.
          */
-        View x =  inflater.inflate(R.layout.buildings_tab,null);
-        tabLayout = (TabLayout) x.findViewById(R.id.buildings_tab);
-        viewPager = (ViewPager) x.findViewById(R.id.buildings_viewpager);
+        View view =  inflater.inflate(R.layout.buildings_tab,null);
+        tabLayout = (TabLayout) view.findViewById(R.id.buildings_tab);
+        viewPager = (ViewPager) view.findViewById(R.id.buildings_viewpager);
 
         /**
          *Set an Apater for the View Pager
          */
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
-        /**
-         * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
-         * Maybe a Support Library Bug .
-         */
 
         tabLayout.post(new Runnable() {
             @Override
@@ -47,7 +42,7 @@ public class BuildingsTab extends Fragment {
             }
         });
 
-        return x;
+        return view;
 
     }
 
@@ -74,9 +69,7 @@ public class BuildingsTab extends Fragment {
 
         @Override
         public int getCount() {
-
             return int_items;
-
         }
 
         /**

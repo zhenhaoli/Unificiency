@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.groups.models;
+package lmu.de.unificiencyandroid.components.groups;
 
 import java.util.List;
 

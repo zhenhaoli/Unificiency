@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
+import lmu.de.unificiencyandroid.components.groups.Group;
 
 public class Account extends Fragment {
 

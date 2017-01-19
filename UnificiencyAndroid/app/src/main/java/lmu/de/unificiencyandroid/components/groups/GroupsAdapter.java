@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.groups.adapters;
+package lmu.de.unificiencyandroid.components.groups;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,6 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.GroupDetails;
-import lmu.de.unificiencyandroid.components.groups.models.Group;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
   /*extras : groups_details_groupname_extra*/
