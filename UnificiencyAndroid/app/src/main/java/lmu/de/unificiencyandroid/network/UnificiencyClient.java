@@ -29,6 +29,17 @@ public abstract class UnificiencyClient {
     client.post(getAbsoluteUrl(url), params, responseHandler);
   }
 
+  public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    Log.d("PUT", getAbsoluteUrl(url) +  "?" + ((params != null) ? ("?" +  params.toString()) : ' '));
+    client.put(getAbsoluteUrl(url), params, responseHandler);
+  }
+
+  public void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    Log.d("DELETE", getAbsoluteUrl(url) +  "?" + ((params != null) ? ("?" +  params.toString()) : ' '));
+    client.put(getAbsoluteUrl(url), params, responseHandler);
+  }
+  
+
   protected String getAbsoluteUrl(String relativeUrl) {
     return BASE_URL + relativeUrl;
   }
