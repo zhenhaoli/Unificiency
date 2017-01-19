@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.notes;
+package lmu.de.unificiencyandroid.components.groups;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +13,13 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.notes.NotesFavorite;
 
-public class NotesTab extends Fragment {
+public class GroupsTab  extends Fragment {
 
   public static PagerSlidingTabStrip tabLayout;
   public static ViewPager viewPager;
-  public static int int_items = 10 ;
+  public static int int_items = 2 ;
 
   @Nullable
   @Override
@@ -33,7 +34,7 @@ public class NotesTab extends Fragment {
     /**
      *Set an Apater for the View Pager
      */
-    viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager()));
+    viewPager.setAdapter(new GroupsTab.MyAdapter(getChildFragmentManager()));
 
     tabLayout.setViewPager(viewPager);
 
@@ -56,17 +57,8 @@ public class NotesTab extends Fragment {
     public Fragment getItem(int position)
     {
       switch (position){
-        case 0 : return new NotesPublic();
-        case 1 : return new NotesFavorite();
-        case 2 :
-        case 3 :
-        case 4 :
-        case 5 :
-        case 6 :
-        case 7 :
-        case 8 :
-        case 9:
-          return new NotesPublic();
+        case 0 : return new GroupsFragment();
+        case 1 : return new GroupsMyFragment();
       }
       return null;
     }
@@ -87,25 +79,9 @@ public class NotesTab extends Fragment {
 
       switch (position){
         case 0 :
-          return "Öffentlich";
+          return "Lerngruppen";
         case 1 :
-          return "Favoriten";
-        case 2:
-          return "MSP Praktikum";
-        case 3 :
-          return "Verteilte Systeme";
-        case 4 :
-          return "Lernen";
-        case 5 :
-          return "Chillen";
-        case 6 :
-          return "Essen";
-        case 7 :
-          return "Python";
-        case 8 :
-          return "Java";
-        case 9:
-          return "iOS";
+          return "Meine Gruppen";
       }
       return null;
     }

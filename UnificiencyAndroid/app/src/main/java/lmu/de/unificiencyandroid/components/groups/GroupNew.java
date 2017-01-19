@@ -29,7 +29,7 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class NewGroup extends AppCompatActivity {
+public class GroupNew extends AppCompatActivity {
 
   private Button createButton;
   private TextInputLayout topic;
@@ -44,7 +44,7 @@ public class NewGroup extends AppCompatActivity {
     String name = this.name.getEditText().getText().toString();
     String description = this.description.getEditText().getText().toString();
     String password = this.password.getEditText().getText().toString();
-  String topic =  this.topic.getEditText().getText().toString();
+    String topic =  this.topic.getEditText().getText().toString();
 
     if(this.nameValidator.validate(name) && this.descriptionValidator.validate(description)){
 
@@ -79,12 +79,12 @@ public class NewGroup extends AppCompatActivity {
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
           String errMsg = null;
           try {
-             errMsg = errorResponse.getString("message");
+            errMsg = errorResponse.getString("message");
           } catch (Exception e) {
             Log.e("json err", e.toString());
           }
           SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(NewGroup.this, new Style(), Style.TYPE_STANDARD)
+          SuperActivityToast.create(GroupNew.this, new Style(), Style.TYPE_STANDARD)
               .setText(errMsg)
               .setDuration(Style.DURATION_MEDIUM)
               .setFrame(Style.FRAME_KITKAT)

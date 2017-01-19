@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.components.account.Account;
 import lmu.de.unificiencyandroid.components.buildings.BuildingsTab;
-import lmu.de.unificiencyandroid.components.groups.GroupsFragment;
+import lmu.de.unificiencyandroid.components.groups.GroupsTab;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.components.notes.NotesTab;
 import lmu.de.unificiencyandroid.components.setting.Setting;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
           }
           case R.id.nav_item_groups: {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView,new GroupsFragment()).commit();
+            fragmentTransaction.replace(R.id.containerView,new GroupsTab()).commit();
             getSupportActionBar().setTitle(getString(R.string.nav_item_groups));
             break;
           }

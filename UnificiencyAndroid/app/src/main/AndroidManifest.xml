@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
         <activity android:name=".components.login.RegisterActivity" />
-        <activity android:name=".components.groups.NewGroup" />
+        <activity android:name=".components.groups.GroupNew" />
         <activity android:name=".components.buildings.BuildingDetails" />
 
         <!--
