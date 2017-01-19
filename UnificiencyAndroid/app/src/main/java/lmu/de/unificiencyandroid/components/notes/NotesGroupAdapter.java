@@ -14,7 +14,7 @@ import lmu.de.unificiencyandroid.components.groups.Group;
 
 public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.ViewHolder> {
     private List<Group> mDataset;
-    private MyItemClickListener mItemClickListener;
+    private NoteClickListener mItemClickListener;
 
 
     // Provide a reference to the views for each data item
@@ -26,9 +26,9 @@ public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.Vi
         public TextView groupName;
         public TextView groupDescription;
         public View layout;
-        private MyItemClickListener mListener;
+        private NoteClickListener mListener;
 
-        public ViewHolder(View v,MyItemClickListener listener) {
+        public ViewHolder(View v,NoteClickListener listener) {
             super(v);
             layout = v;
             groupName = (TextView) v.findViewById(R.id.notes_group_name);
@@ -73,7 +73,7 @@ public class NotesGroupAdapter extends RecyclerView.Adapter<NotesGroupAdapter.Vi
         ViewHolder vh = new ViewHolder(v,mItemClickListener);
         return vh;
     }
-    public void setOnItemClickListener(MyItemClickListener listener){
+    public void setOnItemClickListener(NoteClickListener listener){
         this.mItemClickListener = listener;
     }
 

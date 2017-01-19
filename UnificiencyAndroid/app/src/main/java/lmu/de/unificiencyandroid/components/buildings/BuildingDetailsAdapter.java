@@ -71,11 +71,11 @@ public class BuildingDetailsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.buildingdetails_list_item, null);
+                    convertView = mInflater.inflate(R.layout.building_details_list_item, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.buildingdetails_listitem);
                     break;
                 case TYPE_SEPARATOR:
-                    convertView = mInflater.inflate(R.layout.buildingdetails_list_header, null);
+                    convertView = mInflater.inflate(R.layout.building_details_list_header, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                     break;
             }

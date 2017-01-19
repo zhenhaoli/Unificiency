@@ -1,26 +1,22 @@
 package lmu.de.unificiencyandroid.components.notes;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.buildings.BuildingDetails;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
   private List<Note> mDataset;
   private Boolean favorite_flag= Boolean.FALSE;
-  private MyItemClickListener mItemClickListener;
+  private NoteClickListener mItemClickListener;
 
 
   // Provide a reference to the views for each data item
@@ -29,14 +25,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
   public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
     // each data item is just a string in this case
 
-    private MyItemClickListener mListener;
+    private NoteClickListener mListener;
 
     public TextView tvCourse;
     public TextView tvTitel;
     public ImageView img;
     public View layout;
 
-    public ViewHolder(View v, MyItemClickListener listener) {
+    public ViewHolder(View v, NoteClickListener listener) {
       super(v);
       layout = v;
       tvCourse = (TextView) v.findViewById(R.id.note_course);
@@ -85,7 +81,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     return vh;
   }
 
-  public void setOnItemClickListener(MyItemClickListener listener){
+  public void setOnItemClickListener(NoteClickListener listener){
     this.mItemClickListener = listener;
   }
 

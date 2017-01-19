@@ -340,7 +340,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     /** View setup **/
-    setContentView(R.layout.activity_group_details);
+    setContentView(R.layout.group_details);
 
     ButterKnife.bind(this);
 

@@ -19,7 +19,7 @@ import lmu.de.unificiencyandroid.R;
 
 import static android.widget.LinearLayout.VERTICAL;
 
-public class NotesFromSingleGroup extends AppCompatActivity implements MyItemClickListener{
+public class NotesFromSingleGroup extends AppCompatActivity implements NoteClickListener {
 
     private TextView notes_singleGroup_name;
     private RecyclerView mRecyclerView;

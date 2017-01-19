@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 
-public class NotesPublic extends Fragment implements MyItemClickListener {
+public class NotesPublic extends Fragment implements NoteClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;

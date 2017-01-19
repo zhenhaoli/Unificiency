@@ -26,7 +26,7 @@ public class SettingNotesAdapter extends ArrayAdapter {
 
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.settingnote_list_item, null);
+        View view = inflater.inflate(R.layout.setting_note_list_item, null);
 
         TextView note_course=(TextView) view.findViewById(R.id.settingnote_course);
         note_course.setText(note.getCourse());

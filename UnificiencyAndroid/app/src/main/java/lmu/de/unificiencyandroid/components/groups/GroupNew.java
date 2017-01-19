@@ -135,7 +135,7 @@ public class GroupNew extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_new_group);
+    setContentView(R.layout.group_new);
     setupToolbar();
     setupViewReferences();
 

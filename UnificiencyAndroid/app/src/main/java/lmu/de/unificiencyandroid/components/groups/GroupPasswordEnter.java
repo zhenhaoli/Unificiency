@@ -20,7 +20,7 @@ public class GroupPasswordEnter extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.fragment_enter_group_password, null);
+        final View view = inflater.inflate(R.layout.group_password_enter, null);
         builder.setView(view);
         builder.setMessage(R.string.groups_details_password_title)
                 .setTitle(R.string.groups_details_password_message);

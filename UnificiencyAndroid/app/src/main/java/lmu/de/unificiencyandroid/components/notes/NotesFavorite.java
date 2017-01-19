@@ -19,7 +19,7 @@ import lmu.de.unificiencyandroid.R;
 
 import static java.lang.Boolean.TRUE;
 
-public class NotesFavorite extends Fragment implements MyItemClickListener{
+public class NotesFavorite extends Fragment implements NoteClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;

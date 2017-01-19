@@ -41,7 +41,7 @@ public class NoteDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_details);
+        setContentView(R.layout.note_details);
         setupToolbar();
         setupViewReferences();
 

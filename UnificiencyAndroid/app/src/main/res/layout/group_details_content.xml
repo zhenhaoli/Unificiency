@@ -11,6 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="lmu.de.unificiencyandroid.components.groups.GroupDetails"
-    tools:showIn="@layout/activity_group_details">
+    tools:showIn="@layout/group_details">
 
 </RelativeLayout>

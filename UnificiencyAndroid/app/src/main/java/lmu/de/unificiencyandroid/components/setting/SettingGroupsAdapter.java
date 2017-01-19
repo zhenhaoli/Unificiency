@@ -27,7 +27,7 @@ public class SettingGroupsAdapter extends ArrayAdapter {
 
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.settinggroup_list_item, null);
+        View view = inflater.inflate(R.layout.setting_group_list_item, null);
 
         TextView group_name=(TextView) view.findViewById(R.id.settinggroup_name);
         group_name.setText(group.getName());

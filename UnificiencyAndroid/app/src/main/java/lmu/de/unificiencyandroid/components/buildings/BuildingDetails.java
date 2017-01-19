@@ -50,7 +50,7 @@ public class BuildingDetails extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_buildung_details);
+    setContentView(R.layout.building_details);
     setUpViewReferences();
     backBtn.setOnClickListener(new View.OnClickListener() {
       @Override
