@@ -80,7 +80,7 @@ function Building() {
 
               res.json(buildings);
 
-              //pushResultStatusToClient();
+              pushResultStatusToClient();
 
             });
         }
