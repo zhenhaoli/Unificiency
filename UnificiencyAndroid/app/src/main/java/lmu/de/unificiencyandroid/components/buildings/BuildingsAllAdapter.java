@@ -38,26 +38,27 @@ public class BuildingsAllAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             grid = inflater.inflate(R.layout.building_listview_item, null);
-            //TextView textView = (TextView) grid.findViewById(R.id.txitem);
+        } else {
+            grid = convertView;
+        }
             ImageView imageView = (ImageView)grid.findViewById(R.id.imgitem);
             //textView.setText(buildings.get(position).toString());
             ColorGenerator generator = ColorGenerator.MATERIAL;
             String address = buildings.get(position).address;
             TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
-                .fontSize(42)
+                .fontSize(40)
                 .bold()
                 .toUpperCase()
                 .endConfig()
@@ -65,9 +66,7 @@ public class BuildingsAllAdapter extends BaseAdapter {
 
             imageView.setImageDrawable(drawable);
             //imageView.setImageResource(R.drawable.o67str);
-        } else {
-            grid = convertView;
-        }
+
 
         return grid;
     }
