@@ -56,9 +56,10 @@ function Building() {
               }
 
               var distances = response.body.rows[0].elements;
-              console.log(distances)
+
 
               buildings.forEach( (building, i) => {
+                if(!distances[i].distance) console.log(distances);
                 building.distanceText = distances[i].distance.text;
                 building.durationText = distances[i].duration.text;
                 building.distance = distances[i].distance.value;
@@ -71,14 +72,14 @@ function Building() {
 
               setTimeout(function () {
                 return res.json(buildings)
-              },5000);
+              },1000);
 
               pushResultStatusToClient();
 
 
             });
         }
-
+        getDistranceFromAPI('walking');
         //getDistranceFromAPI('transit'); //this api requires key but is better for real time usage since student will use public transits ...
 
       })
@@ -96,7 +97,7 @@ function pushResultStatusToClient() {
     .send({
       "to": "/topics/news",
       "data": {
-        "message": "GET Buildings nearest finished!",
+        "message": "This msg is pushed from server: no DB changes detected.  In the upcoming future, i will only appear when changes occured",
       },
       "notification": {"body": "Hello, we loaded our db and found no changes. In the upcoming future, i will only appear when changes occured"}
     })

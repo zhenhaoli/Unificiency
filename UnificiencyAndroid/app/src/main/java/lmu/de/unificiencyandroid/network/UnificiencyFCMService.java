@@ -22,6 +22,7 @@ public class UnificiencyFCMService extends FirebaseMessagingService {
     // Check if message contains a data payload.
     if (remoteMessage.getData().size() > 0) {
       Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+      sendMessageToActivity(remoteMessage.getData().toString());
     }
 
     // Check if message contains a notification payload.

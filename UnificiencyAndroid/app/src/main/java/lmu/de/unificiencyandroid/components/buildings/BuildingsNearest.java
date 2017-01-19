@@ -39,7 +39,25 @@ public class BuildingsNearest extends BuildingsBase {
   ArrayList<Building> buildings;
   RecyclerView.LayoutManager groupsLayoutManager;
   com.wang.avi.AVLoadingIndicatorView avi;
-  BroadcastReceiver mMessageReceiver;
+  BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      // Get extra data included in the Intent
+      String message = intent.getStringExtra("Status");
+
+      if(message!=null) {
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
+            .setText(message)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+      }
+
+    }
+  };;
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,26 +71,8 @@ public class BuildingsNearest extends BuildingsBase {
     nearestBuildingListview.setLayoutManager(groupsLayoutManager);
     askLocationPermission();
 
-    LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
+    LocalBroadcastManager.getInstance(getContext()).registerReceiver(
         mMessageReceiver, new IntentFilter("ServerUpdates"));
-
-    mMessageReceiver = new BroadcastReceiver() {
-      @Override
-      public void onReceive(Context context, Intent intent) {
-        // Get extra data included in the Intent
-        String message = intent.getStringExtra("Status");
-
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-            .setText(message)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
-      }
-    };
 
     return view;
   }
@@ -164,6 +164,12 @@ public class BuildingsNearest extends BuildingsBase {
       }
     } catch (SecurityException e){
     }
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
   }
 
 }
