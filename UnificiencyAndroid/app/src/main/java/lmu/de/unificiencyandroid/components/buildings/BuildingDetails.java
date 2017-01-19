@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class BuildingDetails extends AppCompatActivity {
   public void setUpViewReferences(){
     backBtn = (ImageView) findViewById(R.id.buildings_details_backButton);
     section_listview = (ListView) findViewById(R.id.section_listview);
-    hero = (TextView) findViewById(R.id.groups_details_hero);
+    hero = (TextView) findViewById(R.id.building_details_name);
   }
 
   public void setData(Intent intent){
@@ -58,14 +59,18 @@ public class BuildingDetails extends AppCompatActivity {
         onBack(v);
       }
     });
-    Intent intent=getIntent();
+    Intent intent = getIntent();
     setData(intent);
-    String clickedBuilding = intent.getStringExtra("address");
+    String address = intent.getStringExtra("address");
 
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    final RequestParams params = new RequestParams();
+    params.put("address", address);
+
     UnificiencyClient client = new NodeAPIClient();
     client.addHeader("Authorization", "Bearer " + authToken);
-    client.get("rooms?address="+clickedBuilding, null, new JsonHttpResponseHandler() {
+    client.get("rooms", params, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         // If the response is JSONObject instead of expected JSONArray

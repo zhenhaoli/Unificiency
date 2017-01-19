@@ -29,7 +29,7 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 
 public class RegisterActivity extends AuthActivity {
   //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
-  String[] majors ={"Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik"};
+  String[] majors ={"Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
 
   @BindView(R.id.register)
   Button createAccountButton;
@@ -93,7 +93,6 @@ public class RegisterActivity extends AuthActivity {
     if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm) && validateNickname(nickname)) {
       doPost(username, nickname, password, major);
     }
-
   }
 
   private void doPost(String username, String nickname, String password, String major) {
@@ -129,7 +128,6 @@ public class RegisterActivity extends AuthActivity {
             returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
             setResult(Activity.RESULT_OK,returnToLoginIntent);
             finish();
-
           }
 
           @Override
@@ -145,7 +143,6 @@ public class RegisterActivity extends AuthActivity {
           @Override
           public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             super.onFailure(statusCode, headers, responseString, throwable);
-            String failedLogin = "Dieses Email wird bereits verwendet, bitte ein anderes angeben!";
             SuperActivityToast.cancelAllSuperToasts();
             SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
                 .setText(responseString)
@@ -156,8 +153,6 @@ public class RegisterActivity extends AuthActivity {
                 .show();
           }
         });
-
-
       }
 
       @Override
@@ -201,9 +196,6 @@ public class RegisterActivity extends AuthActivity {
             .show();
       }
     });
-
-
-
 
   }
 

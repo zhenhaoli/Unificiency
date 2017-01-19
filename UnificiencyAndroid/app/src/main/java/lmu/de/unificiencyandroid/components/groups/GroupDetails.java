@@ -38,7 +38,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   Group group;
   Boolean isMemberInGroup;
 
-  @BindView(R.id.groups_details_hero)
+  @BindView(R.id.group_details_name)
   TextView groupName;
 
   @BindView(R.id.group_details_member)
