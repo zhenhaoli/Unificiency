@@ -1,15 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:drawableLeft="@drawable/building_black"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical" >
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp">
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@color/grey_300" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="3.5dp"
+        android:background="@drawable/dot"/>
+</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/buildingdetails_remaining_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="noch 1h"
+            android:layout_marginLeft="16dp" />
+        <TextView
         android:id="@+id/buildingdetails_listitem"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FF000000" />
+            android:textSize="16sp"
+            android:padding="25dp"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>

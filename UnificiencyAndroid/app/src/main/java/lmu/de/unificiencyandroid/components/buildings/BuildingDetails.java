@@ -90,12 +90,10 @@ public class BuildingDetails extends AppCompatActivity {
 
           buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this);
 
-          buildingDetailsAdapter.addSectionHeaderItem("Jetzt Frei");
           for (Room room : rooms_availabe) {
             if(room.getAvailable()) buildingDetailsAdapter.addItem(room.toString());
           }
 
-          buildingDetailsAdapter.addSectionHeaderItem("Bald Frei");
           for (Room room : rooms_taken) {
             if(!room.getAvailable()) buildingDetailsAdapter.addItem(room.toString());
           }
