@@ -59,7 +59,10 @@ function Building() {
 
 
               buildings.forEach( (building, i) => {
-                if(!distances[i].distance) console.log(distances);
+                if(!distances[i].distance) {
+                  getDistranceFromAPI('walking');
+                  return;
+                }
                 building.distanceText = distances[i].distance.text;
                 building.durationText = distances[i].duration.text;
                 building.distance = distances[i].distance.value;
