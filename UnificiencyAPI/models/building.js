@@ -60,7 +60,7 @@ function Building() {
 
               buildings.forEach( (building, i) => {
                 if(!distances[i].distance) {
-                  return res.json({message: "Distance API fehlgeschlagen. Bitte später erneuert versuchen"})
+                  return res.send({message: "Distance API fehlgeschlagen. Bitte später erneuert versuchen"})
                 }
                 building.distanceText = distances[i].distance.text;
                 building.durationText = distances[i].duration.text;
@@ -73,7 +73,7 @@ function Building() {
               });
 
               return res.json(buildings)
-              
+
               //pushResultStatusToClient();
 
             });
