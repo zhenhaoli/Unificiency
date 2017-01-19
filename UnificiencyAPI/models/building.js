@@ -58,21 +58,26 @@ function Building() {
               var distances = response.body.rows[0].elements;
 
 
-              buildings.forEach( (building, i) => {
+              for(let i = 0; i<buildings.length; i++){
+                let building = buildings[i];
+
                 if(!distances[i].distance) {
-                  return res.send({message: "Distance API fehlgeschlagen. Bitte später erneuert versuchen"})
+                  break;
                 }
+
                 building.distanceText = distances[i].distance.text;
                 building.durationText = distances[i].duration.text;
                 building.distance = distances[i].distance.value;
                 building.duration = distances[i].duration.value;
-              });
+              }
 
-              buildings.sort(function (a, b) {
-                return a.distance - b.distance;
-              });
+              if(!distances[i].distance) {
+                buildings.sort(function (a, b) {
+                  return a.distance - b.distance;
+                });
+              }
 
-              return res.json(buildings)
+              res.json(buildings);
 
               //pushResultStatusToClient();
 
