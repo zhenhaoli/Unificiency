@@ -4,7 +4,7 @@
     android:id="@+id/activity_setting_groups"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lmu.de.unificiencyandroid.components.setting.SettingGroups">
+    tools:context="lmu.de.unificiencyandroid.components.settings.SettingsGroups">
 
     <TextView
         android:id="@+id/settinggroup_meingroup"
