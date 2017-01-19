@@ -41,7 +41,7 @@ public class NotesPublic extends Fragment implements NoteClickListener {
    );
 
     public void onAddNote(View view) {
-        Intent intent= new Intent(getContext(), NewNote.class);
+        Intent intent= new Intent(getContext(), NoteNew.class);
         startActivity(intent);
     }
 

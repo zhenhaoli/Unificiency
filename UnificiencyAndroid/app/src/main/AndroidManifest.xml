@@ -61,7 +61,7 @@
         <activity android:name=".components.notes.NotesFromSingleGroup"/>
         <activity android:name=".components.setting.SettingGroups"/>
         <activity android:name=".components.setting.SettingNotes"/>
-        <activity android:name=".components.notes.NewNote"/>
+        <activity android:name=".components.notes.NoteNew"/>
 
         <service android:name=".network.FCMInstanceIDService">
             <intent-filter>

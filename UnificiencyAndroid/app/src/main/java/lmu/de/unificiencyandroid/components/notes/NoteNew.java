@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import lmu.de.unificiencyandroid.R;
 
-public class NewNote extends AppCompatActivity {
+public class NoteNew extends AppCompatActivity {
 
     private Button createButton;
     private TextInputLayout topic;

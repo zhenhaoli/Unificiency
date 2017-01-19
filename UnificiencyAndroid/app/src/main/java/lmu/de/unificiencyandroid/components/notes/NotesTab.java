@@ -6,109 +6,152 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.groups.Group;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class NotesTab extends Fragment {
 
-  public static PagerSlidingTabStrip tabLayout;
-  public static ViewPager viewPager;
-  public static int int_items = 10 ;
+  static PagerSlidingTabStrip tabLayout;
+  static ViewPager viewPager;
+
+  List<Group> myGroups;
+  static int int_items = 10 ;
+
+  com.wang.avi.AVLoadingIndicatorView avi;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    /**
-     *Inflate tab_layout and setup Views.
-     */
-    View x =  inflater.inflate(R.layout.notes_tab,null);
-    tabLayout = (PagerSlidingTabStrip) x.findViewById(R.id.notes_tab);
-    viewPager = (ViewPager) x.findViewById(R.id.notes_viewpager);
+    View view =  inflater.inflate(R.layout.notes_tab,null);
+    avi = (com.wang.avi.AVLoadingIndicatorView)view.findViewById(R.id.avi);
 
-    /**
-     *Set an Apater for the View Pager
-     */
-    viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager()));
+    getTabsForMyGroups(view);
 
-    tabLayout.setViewPager(viewPager);
 
-    return x;
+    return view;
 
   }
 
   class MyAdapter extends FragmentPagerAdapter {
 
-    public MyAdapter(FragmentManager fm) {
+    List<Group> myGroups;
+
+    public MyAdapter(FragmentManager fm, List<Group> myGroups) {
+
       super(fm);
+      this.myGroups = myGroups;
     }
 
-    /**
-     * Return fragment with respect to Position .
-     */
-
-    //TODO: Make dynamic based on groups of users load from db
     @Override
     public Fragment getItem(int position)
     {
-      switch (position){
-        case 0 : return new NotesPublic();
-        case 1 : return new NotesFavorite();
-        case 2 :
-        case 3 :
-        case 4 :
-        case 5 :
-        case 6 :
-        case 7 :
-        case 8 :
-        case 9:
-          return new NotesPublic();
+
+      if(position <= myGroups.size() && position >= 0){
+        switch (position) {
+          case 0:
+            return new NotesPublic();
+          case 1:
+            return new NotesFavorite();
+          default: {
+            NotesOfGroup notesOfGroup =  new NotesOfGroup();
+            Bundle bundle = new Bundle();
+            bundle.putInt("groupId", myGroups.get(position).getId());
+            notesOfGroup.setArguments(bundle);
+            return notesOfGroup;
+          }
+        }
+
       }
       return null;
     }
 
     @Override
     public int getCount() {
-
       return int_items;
-
     }
-
-    /**
-     * This method returns the title of the tab according to the position.
-     */
 
     @Override
     public CharSequence getPageTitle(int position) {
-
-      switch (position){
-        case 0 :
-          return "Öffentlich";
-        case 1 :
-          return "Favoriten";
-        case 2:
-          return "MSP Praktikum";
-        case 3 :
-          return "Verteilte Systeme";
-        case 4 :
-          return "Lernen";
-        case 5 :
-          return "Chillen";
-        case 6 :
-          return "Essen";
-        case 7 :
-          return "Python";
-        case 8 :
-          return "Java";
-        case 9:
-          return "iOS";
+      if(position <= myGroups.size() && position >= 0) {
+        switch (position) {
+          case 0:
+            return "Öffentlich";
+          case 1:
+            return "Favoriten";
+          default:
+            return myGroups.get(position).getName();
+        }
       }
       return null;
     }
+  }
+
+  public void getTabsForMyGroups(final View view){
+    avi.show();
+    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+
+    final RequestParams params = new RequestParams();
+    params.put("isMember", true);
+
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.get("groups/lmu", params, new JsonHttpResponseHandler() {
+
+      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
+        Log.e("status", statusCode + "" );
+        Log.e("e", e.toString());
+      }
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
+
+        try {
+          Log.d("Groups", groups.length()+"");
+
+          List<Group> groupsFromServer = new ArrayList<>();
+          for(int i=0; i<groups.length(); i++){
+            Integer id = groups.getJSONObject(i).getInt("id");
+            String name = groups.getJSONObject(i).getString("name");
+            String topic = groups.getJSONObject(i).getString("topic_area");
+            groupsFromServer.add(new Group(id, name, topic, null, null, null));
+          }
+
+          myGroups = groupsFromServer;
+
+          tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.notes_tab);
+          viewPager = (ViewPager) view.findViewById(R.id.notes_viewpager);
+
+          viewPager.setAdapter(new NotesTab.MyAdapter(getChildFragmentManager(), myGroups));
+          tabLayout.setViewPager(viewPager);
+
+        } catch (Exception e) {
+          Log.e("NotesTab", e.toString());
+
+        } finally {
+          avi.hide();
+        }
+
+      }
+    });
+
   }
 
 }

@@ -19,13 +19,14 @@ import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 
-public class NotesOfMyGroups extends Fragment implements NoteClickListener {
+public class NotesOfGroup extends Fragment implements NoteClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
     private NotesGroupAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private NoteDividerItemDecoration mDividerItemDecoration;
+
 
     //fake data
    public static ArrayList<String> GroupMember =new ArrayList<String>(){{
@@ -42,8 +43,8 @@ public class NotesOfMyGroups extends Fragment implements NoteClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.notes_public, null);
-        ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.notes_public, null);
+        ButterKnife.bind(this, view);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -58,7 +59,7 @@ public class NotesOfMyGroups extends Fragment implements NoteClickListener {
         mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(),(new LinearLayoutManager(this.getContext())).getOrientation());
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
-        return v;
+        return view;
     }
     public void onItemClick(View view, int position) {
         Group group=(Group) GroupNotes.get(position);

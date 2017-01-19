@@ -60,8 +60,7 @@ function Building() {
 
               buildings.forEach( (building, i) => {
                 if(!distances[i].distance) {
-                  getDistranceFromAPI('walking');
-                  return;
+                  return res.json({message: "Distance API fehlgeschlagen. Bitte später erneuert versuchen"})
                 }
                 building.distanceText = distances[i].distance.text;
                 building.durationText = distances[i].duration.text;
