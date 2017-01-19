@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.setting;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.ListView;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.notes.NotesPublic;
 
-public class SettingNotes extends AppCompatActivity {
+public class SettingsNotes extends AppCompatActivity {
 
     ListView listView;
 
@@ -17,7 +17,7 @@ public class SettingNotes extends AppCompatActivity {
         setContentView(R.layout.setting_notes);
 
         listView=(ListView) findViewById(R.id.settingnote_list);
-        SettingNotesAdapter adapter= new SettingNotesAdapter(this, android.R.layout.simple_list_item_1, NotesPublic.publicNotes);
+        SettingsNotesAdapter adapter= new SettingsNotesAdapter(this, android.R.layout.simple_list_item_1, NotesPublic.publicNotes);
         listView.setAdapter(adapter);
     }
 }

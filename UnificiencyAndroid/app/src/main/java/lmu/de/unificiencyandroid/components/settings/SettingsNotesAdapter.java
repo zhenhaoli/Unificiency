@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.setting;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.notes.Note;
 
-public class SettingNotesAdapter extends ArrayAdapter {
+public class SettingsNotesAdapter extends ArrayAdapter {
 
-    public SettingNotesAdapter(Context context, int textViewResourceId,
+    public SettingsNotesAdapter(Context context, int textViewResourceId,
                                 List<Note> notes) {
         super(context, textViewResourceId, notes);
     }

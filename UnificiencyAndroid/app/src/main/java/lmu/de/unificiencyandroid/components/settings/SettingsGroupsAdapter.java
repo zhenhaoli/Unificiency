@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.setting;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,10 +13,10 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 
 
-public class SettingGroupsAdapter extends ArrayAdapter {
+public class SettingsGroupsAdapter extends ArrayAdapter {
 
-    public SettingGroupsAdapter(Context context, int textViewResourceId,
-                                List<Group> groups) {
+    public SettingsGroupsAdapter(Context context, int textViewResourceId,
+                                 List<Group> groups) {
         super(context, textViewResourceId, groups);
     }
 

@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.setting;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import lmu.de.unificiencyandroid.R;
 
-public class Setting extends Fragment {
+public class Settings extends Fragment {
 
     Button groupManagement, notesManagement;
     Button save,exit;
@@ -36,14 +36,14 @@ public class Setting extends Fragment {
 
         groupManagement.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent settingGroups=new Intent(getActivity(),SettingGroups.class);
+                Intent settingGroups=new Intent(getActivity(),SettingsGroups.class);
                 startActivity(settingGroups);
 
             }
         });
         notesManagement.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent settingNotes=new Intent(getActivity(),SettingNotes.class);
+                Intent settingNotes=new Intent(getActivity(),SettingsNotes.class);
                 startActivity(settingNotes);
 
             }

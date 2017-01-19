@@ -59,8 +59,8 @@
 
         <activity android:name=".components.notes.NoteDetails"/>
         <activity android:name=".components.notes.NotesFromSingleGroup"/>
-        <activity android:name=".components.setting.SettingGroups"/>
-        <activity android:name=".components.setting.SettingNotes"/>
+        <activity android:name=".components.settings.SettingsGroups"/>
+        <activity android:name=".components.settings.SettingsNotes"/>
         <activity android:name=".components.notes.NoteNew"/>
 
         <service android:name=".network.FCMInstanceIDService">

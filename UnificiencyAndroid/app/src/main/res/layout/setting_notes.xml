@@ -4,7 +4,7 @@
     android:id="@+id/activity_setting_notes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lmu.de.unificiencyandroid.components.setting.SettingNotes">
+    tools:context="lmu.de.unificiencyandroid.components.settings.SettingsNotes">
 
     <TextView
         android:id="@+id/settingnote_meinnote"
