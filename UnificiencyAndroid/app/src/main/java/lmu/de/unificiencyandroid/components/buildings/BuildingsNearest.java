@@ -98,7 +98,7 @@ public class BuildingsNearest extends BuildingsBase {
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
         String err = "Fehler beim Server, bitte später nochmal versuchen";
-        if(errorResponse!=null){
+        if(errorResponse!=null && errorResponse.toString()!= null){
           err = errorResponse.toString();
         }
 
