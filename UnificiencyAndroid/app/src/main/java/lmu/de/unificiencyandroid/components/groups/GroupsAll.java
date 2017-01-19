@@ -23,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -80,19 +79,11 @@ public class GroupsAll extends Fragment {
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
-
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
-            //String description = groups.getJSONObject(i).getString("description");
-            //JSONArray members = groups.getJSONObject(i).getJSONArray("members");
-            // List<String> memberNames = new ArrayList<String>();
-            //for(int j = 0; j<members.length(); j++){
-            //  memberNames.add(members.getJSONObject(j).getString("username"));
-            // }
-
             groupsFromServer.add(new Group(id, name, topic, null, null, null));
           }
-          Collections.reverse(groupsFromServer);
+
           if(groupsAdapter == null) {
             groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer, new GroupsAdapter.OnGroupItemClickListener() {
               @Override
@@ -187,6 +178,10 @@ public class GroupsAll extends Fragment {
     }
   }//onActivityResult
 
-
+  @Override
+  public void onResume() {
+    super.onResume();
+    bindGroupData();
+  }
 
 }

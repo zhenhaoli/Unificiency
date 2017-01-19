@@ -18,9 +18,9 @@ import android.view.ViewGroup;
 import com.github.johnpersano.supertoasts.library.Style;
 import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +55,12 @@ public class GroupsJoined extends Fragment {
     avi.show();
     String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
 
+    final RequestParams params = new RequestParams();
+    params.put("isMember", true);
+
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
-    client.get("groups/lmu/", null, new JsonHttpResponseHandler() {
+    client.get("groups/lmu", params, new JsonHttpResponseHandler() {
 
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
         Log.e("status", statusCode + "" );
@@ -73,21 +76,11 @@ public class GroupsJoined extends Fragment {
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
-
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
-            //String description = groups.getJSONObject(i).getString("description");
-            //JSONArray members = groups.getJSONObject(i).getJSONArray("members");
-            // List<String> memberNames = new ArrayList<String>();
-            //for(int j = 0; j<members.length(); j++){
-            //  memberNames.add(members.getJSONObject(j).getString("username"));
-            // }
-
             groupsFromServer.add(new Group(id, name, topic, null, null, null));
           }
-          //Collections.reverse(groupsFromServer);
 
-          //TODO: Load groups by user
           if(groupsAdapter == null) {
             groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer, new GroupsAdapter.OnGroupItemClickListener() {
               @Override
@@ -182,6 +175,9 @@ public class GroupsJoined extends Fragment {
     }
   }//onActivityResult
 
-
-
+  @Override
+  public void onResume() {
+    super.onResume();
+    bindGroupData();
+  }
 }
