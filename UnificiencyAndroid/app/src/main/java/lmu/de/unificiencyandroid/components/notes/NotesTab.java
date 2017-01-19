@@ -33,7 +33,6 @@ public class NotesTab extends Fragment {
   static ViewPager viewPager;
 
   List<Group> myGroups;
-  static int int_items = 10 ;
 
   com.wang.avi.AVLoadingIndicatorView avi;
 
@@ -85,7 +84,7 @@ public class NotesTab extends Fragment {
 
     @Override
     public int getCount() {
-      return int_items;
+      return myGroups.size();
     }
 
     @Override
