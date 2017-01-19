@@ -72,12 +72,9 @@ function Building() {
                 return a.distance - b.distance;
               });
 
-              setTimeout(function () {
-                return res.json(buildings)
-              },1000);
-
-              pushResultStatusToClient();
-
+              return res.json(buildings)
+              
+              //pushResultStatusToClient();
 
             });
         }
