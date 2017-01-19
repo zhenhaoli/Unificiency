@@ -56,6 +56,7 @@ function Building() {
               }
 
               var distances = response.body.rows[0].elements;
+              console.log(distances)
 
               buildings.forEach( (building, i) => {
                 building.distanceText = distances[i].distance.text;
@@ -65,22 +66,43 @@ function Building() {
               });
 
               buildings.sort(function (a, b) {
-                return a.duration - b.duration;
+                return a.distance - b.distance;
               });
 
               setTimeout(function () {
                 return res.json(buildings)
               },5000);
 
+              pushResultStatusToClient();
+
 
             });
         }
 
-        getDistranceFromAPI('transit'); //this api requires key but is better for real time usage since student will use public transits ...
+        //getDistranceFromAPI('transit'); //this api requires key but is better for real time usage since student will use public transits ...
 
       })
     });
   }
+}
+
+function pushResultStatusToClient() {
+  unirest
+    .post('https://fcm.googleapis.com/fcm/send')
+    .headers({
+      "Content-Type": "application/json",
+      "Authorization": "key=AAAAntf0k9g:APA91bHcmbj33OnjcIDGLUpTYX_RJ9oq45AQQn8KUsLCv3mdM4tp3yYHVVS1ZsKGmRTjMEkmN_x1SjEJ0SXrtqCy1Lkb0oCd0aI-qapW7TCTVos_STk0MyPRWlQIA-8Wc0CPdY0ghGMA"
+    })
+    .send({
+      "to": "/topics/news",
+      "data": {
+        "message": "GET Buildings nearest finished!",
+      },
+      "notification": {"body": "Hello, we loaded our db and found no changes. In the upcoming future, i will only appear when changes occured"}
+    })
+    .end(function (response) {
+
+    })
 }
 
 module.exports = new Building();

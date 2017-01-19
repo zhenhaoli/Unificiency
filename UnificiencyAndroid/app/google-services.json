@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "682227962840",
+    "firebase_url": "https://unificiencyandroid.firebaseio.com",
+    "project_id": "unificiencyandroid",
+    "storage_bucket": "unificiencyandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682227962840:android:96737780ec1ef641",
+        "android_client_info": {
+          "package_name": "lmu.de.unificiencyandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682227962840-ak00kpi7c61b6pv58tk5mtb3q8k04m95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lmu.de.unificiencyandroid",
+            "certificate_hash": "376153E712DC02EC2D2E315C034B4B7ED5E7B45F"
+          }
+        },
+        {
+          "client_id": "682227962840-v678oeko6oqsbeadb16r47f5eofo0oe1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyjNiQP9MlYAAahHKM1AOZEqer-JnE8fg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682227962840-v678oeko6oqsbeadb16r47f5eofo0oe1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
