@@ -1,8 +1,13 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,7 +39,7 @@ public class BuildingsNearest extends BuildingsBase {
   ArrayList<Building> buildings;
   RecyclerView.LayoutManager groupsLayoutManager;
   com.wang.avi.AVLoadingIndicatorView avi;
-
+  BroadcastReceiver mMessageReceiver;
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +52,27 @@ public class BuildingsNearest extends BuildingsBase {
     groupsLayoutManager = new LinearLayoutManager(this.getActivity());
     nearestBuildingListview.setLayoutManager(groupsLayoutManager);
     askLocationPermission();
+
+    LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
+        mMessageReceiver, new IntentFilter("ServerUpdates"));
+
+    mMessageReceiver = new BroadcastReceiver() {
+      @Override
+      public void onReceive(Context context, Intent intent) {
+        // Get extra data included in the Intent
+        String message = intent.getStringExtra("Status");
+
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
+            .setText(message)
+            .setDuration(Style.DURATION_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+
+      }
+    };
 
     return view;
   }
