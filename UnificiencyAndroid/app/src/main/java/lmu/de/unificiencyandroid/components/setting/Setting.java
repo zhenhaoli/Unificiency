@@ -28,6 +28,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.GroupNew;
+import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -38,7 +39,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class Setting extends Fragment {
 
-    Button groupManagement, notesManagement;
     Button save,exit;
 
     TextInputLayout nickName_editor, majorName_editor,text_email;
@@ -134,8 +134,6 @@ public class Setting extends Fragment {
 
         View view =  inflater.inflate(R.layout.setting,null);
 
-        groupManagement = (Button) view.findViewById(R.id.groups_management);
-        notesManagement = (Button) view.findViewById(R.id.notes_management);
         save = (Button) view.findViewById(R.id.save_setting);
         exit = (Button) view.findViewById(R.id.exit_setting);
 
@@ -147,22 +145,6 @@ public class Setting extends Fragment {
         getUserInfo();
 
 
-
-
-        groupManagement.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent settingGroups=new Intent(getActivity(),SettingGroups.class);
-                startActivity(settingGroups);
-
-            }
-        });
-        notesManagement.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent settingNotes=new Intent(getActivity(),SettingNotes.class);
-                startActivity(settingNotes);
-
-            }
-        });
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setUserInfo();
@@ -170,10 +152,10 @@ public class Setting extends Fragment {
         });
         exit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getActivity().finish();
+                Intent intent=new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
             }
         });
-
 
         return view;
 
