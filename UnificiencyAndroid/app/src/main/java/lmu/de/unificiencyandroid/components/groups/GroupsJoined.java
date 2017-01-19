@@ -58,10 +58,7 @@ public class GroupsJoined extends Fragment {
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
     client.get("groups/lmu/", null, new JsonHttpResponseHandler() {
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-      }
+
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
         Log.e("status", statusCode + "" );
         Log.e("e", e.toString());
@@ -69,7 +66,7 @@ public class GroupsJoined extends Fragment {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
-        // Pull out the first event on the public timeline
+
         try {
           Log.d("Groups", groups.length()+"");
 

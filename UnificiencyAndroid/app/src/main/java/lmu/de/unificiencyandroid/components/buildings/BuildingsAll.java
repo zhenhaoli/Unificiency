@@ -25,7 +25,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class BuildingsAll extends BuildingsBase {
 
-  View x;
+  View view;
   GridView all_building_listview;
   com.wang.avi.AVLoadingIndicatorView avi;
 
@@ -34,9 +34,9 @@ public class BuildingsAll extends BuildingsBase {
   public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    x =  inflater.inflate(R.layout.buildings_all,null);
+    view =  inflater.inflate(R.layout.buildings_all,null);
 
-    this.avi = (com.wang.avi.AVLoadingIndicatorView)x.findViewById(R.id.avi);
+    this.avi = (com.wang.avi.AVLoadingIndicatorView) view.findViewById(R.id.avi);
     avi.show();
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
@@ -64,9 +64,9 @@ public class BuildingsAll extends BuildingsBase {
             buildingsFromServer.add(new Building(address, city, lat, lng, null, null, null, null, null, null));
           }
 
-          all_building_listview = (GridView) x.findViewById(R.id.all_building_listview);
+          all_building_listview = (GridView) view.findViewById(R.id.all_building_listview);
 
-          BuildingsAdapter adapter= new BuildingsAdapter(getContext(), buildingsFromServer);
+          BuildingsAllAdapter adapter= new BuildingsAllAdapter(getContext(), buildingsFromServer);
           all_building_listview.setAdapter(adapter);
 
           all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -92,7 +92,7 @@ public class BuildingsAll extends BuildingsBase {
       }
     });
 
-    return x;
+    return view;
   }
 
 }

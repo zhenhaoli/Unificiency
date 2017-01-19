@@ -14,16 +14,16 @@ import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
 
-public class BuildingsAdapter extends BaseAdapter {
+public class BuildingsAllAdapter extends BaseAdapter {
 
     List<Building> buildings;
     private Context mContext;
 
-    public BuildingsAdapter(Context context,
-                            List<Building> buildings) {
+    public BuildingsAllAdapter(Context context,
+                               List<Building> buildings) {
         super();
         this.buildings = buildings;
-        this.mContext =context;
+        this.mContext = context;
     }
 
     @Override
@@ -44,14 +44,11 @@ public class BuildingsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Building building = (Building) getItem(position);
         View grid;
         LayoutInflater inflater = (LayoutInflater) mContext
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-
-            grid = new View(mContext);
             grid = inflater.inflate(R.layout.building_listview_item, null);
             //TextView textView = (TextView) grid.findViewById(R.id.txitem);
             ImageView imageView = (ImageView)grid.findViewById(R.id.imgitem);
@@ -69,7 +66,7 @@ public class BuildingsAdapter extends BaseAdapter {
             imageView.setImageDrawable(drawable);
             //imageView.setImageResource(R.drawable.o67str);
         } else {
-            grid = (View) convertView;
+            grid = convertView;
         }
 
         return grid;

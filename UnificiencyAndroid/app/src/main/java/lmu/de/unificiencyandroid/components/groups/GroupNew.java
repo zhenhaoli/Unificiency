@@ -36,6 +36,7 @@ public class GroupNew extends AppCompatActivity {
   private TextInputLayout description;
   private TextInputLayout name;
   private TextInputLayout password;
+
   private InputValidation nameValidator;
   private InputValidation descriptionValidator;
 
@@ -66,7 +67,6 @@ public class GroupNew extends AppCompatActivity {
       client.post("groups/", params, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          // If the response is JSONObject instead of expected JSONArray
           Log.d("res new group", response.toString());
 
           Intent intent = new Intent();

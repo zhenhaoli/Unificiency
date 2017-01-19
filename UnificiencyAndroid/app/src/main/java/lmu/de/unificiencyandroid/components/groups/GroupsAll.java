@@ -85,10 +85,10 @@ public class GroupsAll extends Fragment {
             String topic = groups.getJSONObject(i).getString("topic_area");
             //String description = groups.getJSONObject(i).getString("description");
             //JSONArray members = groups.getJSONObject(i).getJSONArray("members");
-           // List<String> memberNames = new ArrayList<String>();
+            // List<String> memberNames = new ArrayList<String>();
             //for(int j = 0; j<members.length(); j++){
             //  memberNames.add(members.getJSONObject(j).getString("username"));
-           // }
+            // }
 
             groupsFromServer.add(new Group(id, name, topic, null, null, null));
           }
@@ -182,7 +182,7 @@ public class GroupsAll extends Fragment {
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        //Write your code if there's no result
+        Log.d("groups", "user canceled group creation");
       }
     }
   }//onActivityResult

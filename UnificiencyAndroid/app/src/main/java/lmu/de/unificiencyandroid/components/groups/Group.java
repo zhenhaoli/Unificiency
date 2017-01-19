@@ -17,7 +17,6 @@ public class Group {
   private List<String> members;
   private Boolean hasPassword;
 
-  /* second constructer with password already filled in. Maybe lombok provides a better alternative*/
   public Group(String name, String description, List<String> members) {
     this.name = name;
     this.description = description;
