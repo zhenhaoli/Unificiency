@@ -57,11 +57,12 @@ function Building() {
 
               var distances = response.body.rows[0].elements;
 
-
+              var failed = false;
               for(let i = 0; i<buildings.length; i++){
                 let building = buildings[i];
 
                 if(!distances[i].distance) {
+                  failed = true;
                   break;
                 }
 
@@ -71,7 +72,7 @@ function Building() {
                 building.duration = distances[i].duration.value;
               }
 
-              if(!distances[i].distance) {
+              if(!failed) {
                 buildings.sort(function (a, b) {
                   return a.distance - b.distance;
                 });
