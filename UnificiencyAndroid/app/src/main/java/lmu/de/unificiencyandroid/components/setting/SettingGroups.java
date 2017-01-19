@@ -14,7 +14,7 @@ public class SettingGroups extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_groups);
+        setContentView(R.layout.setting_groups);
 
         listView=(ListView) findViewById(R.id.settinggroup_list);
         SettingGroupsAdapter adapter= new SettingGroupsAdapter(this, android.R.layout.simple_list_item_1, NotesOfMyGroups.GroupNotes);

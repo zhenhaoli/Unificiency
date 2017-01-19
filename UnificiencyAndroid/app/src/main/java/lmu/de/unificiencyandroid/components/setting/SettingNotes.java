@@ -14,7 +14,7 @@ public class SettingNotes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_notes);
+        setContentView(R.layout.setting_notes);
 
         listView=(ListView) findViewById(R.id.settingnote_list);
         SettingNotesAdapter adapter= new SettingNotesAdapter(this, android.R.layout.simple_list_item_1, NotesPublic.publicNotes);

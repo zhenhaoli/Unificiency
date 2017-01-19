@@ -210,7 +210,7 @@ public class RegisterActivity extends AuthActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_register);
+    setContentView(R.layout.user_register);
 
     ButterKnife.bind(this);
 

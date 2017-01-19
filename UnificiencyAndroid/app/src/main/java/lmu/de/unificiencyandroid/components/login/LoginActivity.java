@@ -167,7 +167,7 @@ public class LoginActivity extends AuthActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
+    setContentView(R.layout.user_login);
     ButterKnife.bind(this);
 
     //TODO: remove this in prd
