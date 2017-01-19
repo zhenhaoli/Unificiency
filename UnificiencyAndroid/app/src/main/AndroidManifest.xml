@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lmu.de.unificiencyandroid">
+          package="lmu.de.unificiencyandroid">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -18,19 +18,19 @@
         android:theme="@style/AppTheme">
         <activity android:name=".components.login.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".components.groups.GroupDetails"
             android:label="@string/title_activity_group_details"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".components.login.RegisterActivity" />
-        <activity android:name=".components.groups.GroupNew" />
-        <activity android:name=".components.buildings.BuildingDetails" />
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".components.login.RegisterActivity"/>
+        <activity android:name=".components.groups.GroupNew"/>
+        <activity android:name=".components.buildings.BuildingDetails"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -42,13 +42,27 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
 
-        <activity android:name=".components.notes.NoteDetails" />
-        <activity android:name=".components.notes.NotesFromSingleGroup" />
-        <activity android:name=".components.setting.SettingGroups" />
-        <activity android:name=".components.setting.SettingNotes" />
-        <activity android:name=".components.notes.NewNote"></activity>
+        <activity android:name=".components.notes.NoteDetails"/>
+        <activity android:name=".components.notes.NotesFromSingleGroup"/>
+        <activity android:name=".components.setting.SettingGroups"/>
+        <activity android:name=".components.setting.SettingNotes"/>
+        <activity android:name=".components.notes.NewNote"/>
+
+        <service android:name=".network.FCMInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".network.UnificiencyFCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
