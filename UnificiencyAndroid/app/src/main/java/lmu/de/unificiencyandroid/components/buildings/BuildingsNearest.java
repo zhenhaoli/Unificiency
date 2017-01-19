@@ -102,14 +102,7 @@ public class BuildingsNearest extends BuildingsBase {
           err = errorResponse.toString();
         }
 
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-            .setText(err)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
+        Log.e("ERROR NEAREST", err);
       }
 
       @Override
