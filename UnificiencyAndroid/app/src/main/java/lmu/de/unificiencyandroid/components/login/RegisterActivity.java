@@ -15,7 +15,6 @@ import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import butterknife.BindView;
@@ -23,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 
@@ -125,47 +123,15 @@ public class RegisterActivity extends AuthActivity {
         // If the response is JSONObject instead of expected JSONArray
         Log.d("res", response.toString());
 
-        UnificiencyClient client = new NodeAPIClient();
-        client.post("users/register", params, new JsonHttpResponseHandler() {
+        usernameWrapper.setErrorEnabled(false);
+        passwordWrapper.setErrorEnabled(false);
+        passwordConfirmWrapper.setErrorEnabled(false);
 
-          @Override
-          public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            // If the response is JSONObject instead of expected JSONArray
-            Log.d("res", response.toString());
+        Intent returnToLoginIntent = new Intent();
+        returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
+        setResult(Activity.RESULT_OK,returnToLoginIntent);
+        finish();
 
-            usernameWrapper.setErrorEnabled(false);
-            passwordWrapper.setErrorEnabled(false);
-            passwordConfirmWrapper.setErrorEnabled(false);
-
-            Intent returnToLoginIntent = new Intent();
-            returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
-            setResult(Activity.RESULT_OK,returnToLoginIntent);
-            finish();
-          }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-          }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-          }
-
-          @Override
-          public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            super.onFailure(statusCode, headers, responseString, throwable);
-            SuperActivityToast.cancelAllSuperToasts();
-            SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-                .setText(responseString)
-                .setDuration(Style.DURATION_LONG)
-                .setFrame(Style.FRAME_KITKAT)
-                .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-                .setAnimations(Style.ANIMATIONS_SCALE)
-                .show();
-          }
-        });
       }
 
       @Override

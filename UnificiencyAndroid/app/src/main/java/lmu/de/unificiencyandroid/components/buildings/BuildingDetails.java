@@ -24,7 +24,6 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class BuildingDetails extends AppCompatActivity {
 
@@ -57,13 +56,11 @@ public class BuildingDetails extends AppCompatActivity {
 
     name.setText(address);
 
-    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
-
     final RequestParams params = new RequestParams();
     params.put("address", address);
 
     UnificiencyClient client = new NodeAPIClient();
-    client.addHeader("Authorization", "Bearer " + authToken);
+
     client.get("rooms", params, new JsonHttpResponseHandler() {
 
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){

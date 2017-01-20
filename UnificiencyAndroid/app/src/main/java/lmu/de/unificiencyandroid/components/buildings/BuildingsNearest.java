@@ -31,7 +31,6 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class BuildingsNearest extends BuildingsBase {
 
@@ -81,17 +80,13 @@ public class BuildingsNearest extends BuildingsBase {
 
   public void fetchData(double lat, double lng) {
     avi.show();
-    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
     params.put("lat", lat);
     params.put("lng", lng);
 
-
     UnificiencyClient client = new NodeAPIClient();
 
-
-    client.addHeader("Authorization", "Bearer " + authToken);
     client.get("buildings/nearest", params, new JsonHttpResponseHandler() {
 
       @Override

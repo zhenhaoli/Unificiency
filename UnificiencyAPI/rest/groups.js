@@ -11,7 +11,7 @@ module.exports = {
       secret: config.secret
     });
 
-    app.use('/groups', jwtCheck);
+    //app.use('/groups', jwtCheck);
 
     app.get('/groups', function(req, res) {
 

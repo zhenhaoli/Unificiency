@@ -21,7 +21,6 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class BuildingsAll extends BuildingsBase {
 
@@ -43,10 +42,9 @@ public class BuildingsAll extends BuildingsBase {
 
   public void loadData() {
     avi.show();
-    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     UnificiencyClient client = new NodeAPIClient();
-    client.addHeader("Authorization", "Bearer " + authToken);
+
     client.get("buildings", null, new JsonHttpResponseHandler() {
 
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
