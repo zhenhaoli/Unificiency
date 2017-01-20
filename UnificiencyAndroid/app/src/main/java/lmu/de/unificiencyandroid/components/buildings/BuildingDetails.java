@@ -14,6 +14,8 @@ import org.joda.time.LocalTime;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -96,6 +98,11 @@ public class BuildingDetails extends AppCompatActivity {
             }
 
           }
+          Collections.sort(BuildingDetails.this.rooms, new Comparator<Room>() {
+            public int compare(Room r1, Room r2) {
+              return r1.getState().compareTo(r2.getState());
+            }
+          });
 
           buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, BuildingDetails.this.rooms);
           section_listview.setAdapter(buildingDetailsAdapter);

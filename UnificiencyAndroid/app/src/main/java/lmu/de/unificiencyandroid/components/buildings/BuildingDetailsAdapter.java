@@ -80,6 +80,9 @@ public class BuildingDetailsAdapter extends BaseAdapter {
             case LONG_WAITING:
                 holder.dot.setBackgroundResource(R.drawable.dot_taken);
                 break;
+            case TAKEN:
+                holder.dot.setBackgroundResource(R.drawable.dot_taken);
+                break;
         }
         holder.untilFree.setText(room.availabilityString());
         holder.textView.setText(room.toString());

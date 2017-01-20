@@ -34,6 +34,21 @@ public class Room {
     evalState();
   }
 
+  public void evalState(){
+    long untilFreeMinutes = untilFreeMinutes();
+    boolean freeFromNow = freeFromNowOn();
+    if(freeFromNow) {
+      state = State.NOW_FREE;
+    }
+    else if(untilFreeMinutes > 0 && untilFreeMinutes <= 30) {
+      state = State.SOON_FREE;
+    } else if (untilFreeMinutes > 0 && untilFreeMinutes >= 30 && untilFreeMinutes <= 60) {
+      state = State.LONG_WAITING;
+    } else {
+      state = State.TAKEN;
+    }
+  }
+
   @Override
   public String toString() {
     return "[" + level + "]  " + name;
@@ -46,6 +61,7 @@ public class Room {
   }
 
   public String availabilityString() {
+    evalState();
     String message;
     switch (state) {
       case NOW_FREE:
@@ -64,20 +80,7 @@ public class Room {
 
   }
 
-  public void evalState(){
-    long untilFreeMinutes = untilFreeMinutes();
-    boolean freeFromNow = freeFromNowOn();
-    if(freeFromNow) {
-      state = State.NOW_FREE;
-    }
-    else if(untilFreeMinutes > 0 && untilFreeMinutes <= 30) {
-      state = State.SOON_FREE;
-    } else if (untilFreeMinutes > 0 && untilFreeMinutes >= 30 && untilFreeMinutes <= 60) {
-      state = State.LONG_WAITING;
-    } else {
-      state = State.TAKEN;
-    }
-  }
+
 
   public Boolean freeFromNowOn() {
     Interval interval = new Interval(this.freeFrom.toDateTimeToday(), this.freeUntil.toDateTimeToday());
