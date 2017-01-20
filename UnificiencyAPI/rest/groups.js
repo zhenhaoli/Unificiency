@@ -14,10 +14,35 @@ module.exports = {
     app.use('/groups', jwtCheck);
 
     app.get('/groups', function(req, res) {
+
+      unirest
+        .get(config.pythonAPI + 'groups/lmu/')
+        .headers({
+          'Authorization': req.body.pythonToken
+        })
+        .end(function (response) {
+          res.json(response)
+        });
+
+    });
+
+    app.post('/groups', function(req, res) {
       return group.getAll(req, res);
     });
 
-    app.get('/groups', function(req, res) {
+    app.get('/groups/:id', function(req, res) {
+      return group.getAll(req, res);
+    });
+
+    app.post ('/groups/:id/join', function(req, res) {
+      return group.getAll(req, res);
+    });
+
+    app.get('/groups/:id/join', function(req, res) {
+      return group.getAll(req, res);
+    });
+
+    app.put('/groups/:id', function(req, res) {
       return group.getAll(req, res);
     });
 
