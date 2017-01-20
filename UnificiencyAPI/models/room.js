@@ -27,11 +27,11 @@ where bp.address = ?
 
         rooms.forEach( (g,i) => {
 
-          g.freeFromHour = hours[i% (hours.length)];
-          g.freeFromMinutes = minutes[i% (minutes.length)];
+          g.freeFromHour = hours[(hours.length)%i];
+          g.freeFromMinutes = minutes[ (minutes.length) %i];
 
-          g.freeToHour = g.freeFromHour +  freeHours[i% (freeHours.length)];
-          g.freeToMinutes = g.freeFromMinutes + freeMinutes[i% (freeMinutes.length)];
+          g.freeToHour = g.freeFromHour +  freeHours[ (freeHours.length) %i];
+          g.freeToMinutes = g.freeFromMinutes + freeMinutes[ (freeMinutes.length) %i];
 
           if(g.freeToHour>=24) g.freeToHour = 23;
 
