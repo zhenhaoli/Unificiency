@@ -51,7 +51,7 @@ function Building() {
 
         res.json(buildings);
         pushResultStatusToClient();
-        
+
         function getDistanceInM(source, target) {
           var R = 6371000; // Radius of the earth in m
           var dLat = deg2rad(source.lat - target.lat);  // deg2rad below

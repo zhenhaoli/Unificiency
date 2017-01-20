@@ -16,13 +16,9 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import java.util.Random;
-
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
@@ -85,7 +81,7 @@ public class BuildingDetails extends AppCompatActivity {
             String name = rooms.getJSONObject(i).getString("name");
             String level = rooms.getJSONObject(i).getString("level");
             String address = rooms.getJSONObject(i).getString("address");
-            Boolean available = rooms.getJSONObject(i).getBoolean("available");
+            
             LocalTime from_ = new LocalTime(10,15);
             LocalTime to_ = new LocalTime(12,15);
             LocalTime from = new LocalTime(15,30);
