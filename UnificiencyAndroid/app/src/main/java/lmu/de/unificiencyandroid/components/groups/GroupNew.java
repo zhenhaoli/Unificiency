@@ -53,7 +53,7 @@ public class GroupNew extends AppCompatActivity {
 
       final RequestParams params = new RequestParams();
       params.put("topic_area", topic);
-      params.put("title", name);
+      params.put("name", name);
       params.put("description", description);
       if(password!=null || password.length()>1) {
         params.put("password", password);
