@@ -20,14 +20,20 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingsMap extends BuildingsBase implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-  Location mLastLocation;
+  static final String TAG = BuildingsMap.class.getName();
+
+  @BindView(R.id.mapView)
   MapView mMapView;
-  private GoogleMap googleMap;
+  Location mLastLocation;
+  GoogleMap googleMap;
 
   @Override
   public void onConnected(@Nullable Bundle bundle) {
@@ -42,8 +48,7 @@ public class BuildingsMap extends BuildingsBase implements
         myLat = mLastLocation.getLatitude();
         myLng = mLastLocation.getLongitude();
       }
-
-
+      
       LatLng myPos = new LatLng(myLat, myLng);
 
       // For zooming automatically to the location of the marker
@@ -51,17 +56,21 @@ public class BuildingsMap extends BuildingsBase implements
       googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     } catch (SecurityException e){
+      Log.e(TAG, e.toString());
+      Message.fail(getContext(), e.toString());
     }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater,container,savedInstanceState);
-    View rootView = inflater.inflate(R.layout.buildings_map, container, false);
+
+    View view = inflater.inflate(R.layout.buildings_map, container, false);
+
+    ButterKnife.bind(this, view);
 
     askLocationPermission();
 
-    mMapView = (MapView) rootView.findViewById(R.id.mapView);
     mMapView.onCreate(savedInstanceState);
 
     mMapView.onResume(); // needed to get the map to display immediately
@@ -69,7 +78,7 @@ public class BuildingsMap extends BuildingsBase implements
     try {
       MapsInitializer.initialize(getActivity().getApplicationContext());
     } catch (Exception e) {
-      e.printStackTrace();
+      Log.e(TAG, e.toString());
     }
 
     mMapView.getMapAsync(new OnMapReadyCallback() {
@@ -85,7 +94,6 @@ public class BuildingsMap extends BuildingsBase implements
           Log.e("permission not got", e.toString());
         }
 
-        //TODO: make custom icon
         for(Building building : buildings){
           googleMap.addMarker(new MarkerOptions().position(
                   new LatLng(building.getLat(), building.getLng()))
@@ -94,11 +102,10 @@ public class BuildingsMap extends BuildingsBase implements
                   .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
 
-
       }
     });
 
-    return rootView;
+    return view;
   }
 
   @Override

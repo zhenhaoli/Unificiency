@@ -2,9 +2,6 @@ package lmu.de.unificiencyandroid.components.buildings;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,15 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.utils.Message;
 
 public abstract class BuildingsBase extends Fragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
+
+  static final String TAG = BuildingsBase.class.getName();
 
   GoogleApiClient mGoogleApiClient;
   Location mLastLocation;
 
   List<Building> buildings = new ArrayList<Building>();
-
 
   public void askLocationPermission(){
     int MyVersion = Build.VERSION.SDK_INT;
@@ -48,16 +47,11 @@ public abstract class BuildingsBase extends Fragment implements
         requestForSpecificPermission();
       }
     }
-
   }
 
   private boolean checkIfAlreadyhavePermission() {
     int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-    if (result == PackageManager.PERMISSION_GRANTED) {
-      return true;
-    } else {
-      return false;
-    }
+    return (result == PackageManager.PERMISSION_GRANTED);
   }
 
   private void requestForSpecificPermission() {
@@ -85,32 +79,19 @@ public abstract class BuildingsBase extends Fragment implements
   }
 
   @Override
-  public void onConnected(@Nullable Bundle bundle) {
-
-  }
+  public void onConnected(@Nullable Bundle bundle) {}
 
   @Override
-  public void onConnectionSuspended(int i) {
-
-  }
+  public void onConnectionSuspended(int i) {}
 
   @Override
-  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-  }
-
+  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
   @Nullable
   @Override
   public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     setUpLocationServices();
-    //just to fake buildings, it useless
-    Resources res = this.getResources();
-    Bitmap imga17str = ((BitmapDrawable) res.getDrawable(R.drawable.a17str)).getBitmap();
-    Bitmap imga7astr = ((BitmapDrawable) res.getDrawable(R.drawable.a7astr)).getBitmap();
-    Bitmap imgo67str = ((BitmapDrawable) res.getDrawable(R.drawable.o67str)).getBitmap();
-    Bitmap imgg1str = ((BitmapDrawable) res.getDrawable(R.drawable.g1str)).getBitmap();
 
     InputStream is = getResources().openRawResource(R.raw.buildings);
 
@@ -126,7 +107,8 @@ public abstract class BuildingsBase extends Fragment implements
         buildings.add(new Building(address, city, lat, lng));
       }
     } catch (Exception e){
-      Log.e("failed to parse csv", e.toString());
+      Log.e(TAG, e.toString());
+      Message.fail(getContext(), e.toString());
     }
     return null;
   }
