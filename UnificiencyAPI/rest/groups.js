@@ -21,6 +21,7 @@ module.exports = {
           'Authorization': req.body.pythonToken
         })
         .end(function (response) {
+          console.log(response)
           res.json(response)
         });
 
