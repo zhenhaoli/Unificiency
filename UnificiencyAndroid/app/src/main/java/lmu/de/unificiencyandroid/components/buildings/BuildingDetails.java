@@ -115,5 +115,5 @@ public class BuildingDetails extends AppCompatActivity {
     });
 
   }
-  
+
 }

@@ -51,7 +51,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     String name = group.getName();
     String topic = group.getTopic();
     holder.groupNameTextView.setText(name);
-    holder.groupTopicTextView.setText("[" + topic + "]");
+    holder.groupTopicTextView.setText("#" + topic);
     //make colored circle with text
     ColorGenerator generator = ColorGenerator.MATERIAL;
     int color = generator.getColor(name);
