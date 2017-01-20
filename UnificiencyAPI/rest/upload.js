@@ -20,7 +20,8 @@ module.exports = {
       // every time a file has been uploaded successfully,
       // rename it to it's orignal name
       form.on('file', function(field, file) {
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
+        var name = file.path.split("\\");
+        fs.rename(file.path, path.join(form.uploadDir, name[name.length-1]+'-'+file.name));
       });
 
       // log any errors that occur
