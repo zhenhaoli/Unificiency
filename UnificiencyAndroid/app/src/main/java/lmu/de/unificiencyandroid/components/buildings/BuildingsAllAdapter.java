@@ -58,7 +58,7 @@ public class BuildingsAllAdapter extends BaseAdapter {
             String address = buildings.get(position).address;
             TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
-                .fontSize(40)
+                .fontSize(38)
                 .bold()
                 .toUpperCase()
                 .endConfig()

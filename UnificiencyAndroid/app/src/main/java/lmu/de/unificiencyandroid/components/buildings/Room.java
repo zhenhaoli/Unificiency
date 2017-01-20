@@ -44,7 +44,7 @@ public class Room {
     }
     else if(untilFreeMinutes > 0 && untilFreeMinutes <= 30) {
       state = State.SOON_FREE;
-    } else if (untilFreeMinutes > 0 && untilFreeMinutes >= 35 && untilFreeMinutes <= 60) {
+    } else if (untilFreeMinutes > 0 && untilFreeMinutes > 30 && untilFreeMinutes <= 70) {
       state = State.LONG_WAITING;
     } else {
       state = State.TAKEN;
@@ -58,7 +58,7 @@ public class Room {
 
   @Override
   public String toString() {
-    return name + " (für " + interval + "mins)";
+    return "["+level+"] " + name;
   }
 
   public long untilFreeMinutes(){
@@ -75,10 +75,10 @@ public class Room {
         message = "noch " + freeForMinutes() + "mins frei";
         break;
       case SOON_FREE: case LONG_WAITING:
-        message = "in " + untilFreeMinutes() +" für " + interval + " frei";
+        message = "in " + untilFreeMinutes() +" mins für " + interval + "mins frei";
         break;
       case TAKEN:
-        message = "nicht mehr frei" ;
+        message = "nicht mehr frei";
         break;
       default:
         message = "Keine Informationen";

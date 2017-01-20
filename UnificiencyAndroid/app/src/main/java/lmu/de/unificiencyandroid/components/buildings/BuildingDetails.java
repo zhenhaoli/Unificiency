@@ -97,8 +97,15 @@ public class BuildingDetails extends AppCompatActivity {
               return r1.getState().compareTo(r2.getState());
             }
           });
-
-          buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, BuildingDetails.this.rooms);
+          ArrayList<Room> newRooms = new ArrayList<Room>();
+          for(Room r: BuildingDetails.this.rooms){
+            if(!(r.getState() == Room.State.TAKEN)){
+              newRooms.add(r);
+            }
+          }
+          newRooms.add(new Room("U139", "EG", "Schönleutnerstr. 8", new LocalTime(20,0), new LocalTime(21,30)));
+          newRooms.add(new Room("U139", "EG", "Schönleutnerstr. 8", new LocalTime(20,35), new LocalTime(21,30)));
+          buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, newRooms);
           section_listview.setAdapter(buildingDetailsAdapter);
 
         } catch (Exception e) {

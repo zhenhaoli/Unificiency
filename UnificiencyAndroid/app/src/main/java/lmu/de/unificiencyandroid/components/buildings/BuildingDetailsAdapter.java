@@ -78,7 +78,7 @@ public class BuildingDetailsAdapter extends BaseAdapter {
                 holder.dot.setBackgroundResource(R.drawable.dot_soon_free);
                 break;
             case LONG_WAITING:
-                holder.dot.setBackgroundResource(R.drawable.dot_taken);
+                holder.dot.setBackgroundResource(R.drawable.dot_long_waiting);
                 break;
             case TAKEN:
                 holder.dot.setBackgroundResource(R.drawable.dot_taken);

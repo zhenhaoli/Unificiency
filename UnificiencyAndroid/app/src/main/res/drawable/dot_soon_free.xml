@@ -3,8 +3,8 @@
 
     <stroke
         android:width="3dp"
-        android:color="@color/orange_500"/>
+        android:color="@color/orange_300"/>
 
-    <solid android:color="@color/orange_500"/>
+    <solid android:color="@color/orange_300"/>
 
 </shape>
