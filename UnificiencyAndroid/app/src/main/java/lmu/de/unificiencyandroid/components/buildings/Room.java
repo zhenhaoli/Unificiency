@@ -18,6 +18,7 @@ public class Room {
   private LocalTime freeFrom;
   private LocalTime freeUntil;
   private Boolean available;
+  private Long interval;
 
   public enum State {
     NOW_FREE, SOON_FREE, LONG_WAITING, TAKEN
@@ -31,6 +32,7 @@ public class Room {
     this.address = address;
     this.freeFrom = freeFrom;
     this.freeUntil = freeUntil;
+    this.interval = Math.abs(TimeUnit.MILLISECONDS.toMinutes(freeFrom.getMillisOfDay() - freeUntil.getMillisOfDay()));
     evalState();
   }
 
@@ -49,9 +51,14 @@ public class Room {
     }
   }
 
+  public State getState(){
+    evalState();
+    return state;
+  }
+
   @Override
   public String toString() {
-    return "[" + level + "]  " + name;
+    return name + " (für " + interval + "mins)";
   }
 
   public long untilFreeMinutes(){
@@ -68,7 +75,7 @@ public class Room {
         message = "noch " + freeForMinutes() + "mins frei";
         break;
       case SOON_FREE: case LONG_WAITING:
-        message = "in " + untilFreeMinutes() + "frei";
+        message = "in " + untilFreeMinutes() +" für " + interval + " frei";
         break;
       case TAKEN:
         message = "nicht mehr frei" ;
@@ -79,8 +86,6 @@ public class Room {
       return message;
 
   }
-
-
 
   public Boolean freeFromNowOn() {
     Interval interval = new Interval(this.freeFrom.toDateTimeToday(), this.freeUntil.toDateTimeToday());
