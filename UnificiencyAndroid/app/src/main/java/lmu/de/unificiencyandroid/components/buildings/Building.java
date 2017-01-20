@@ -36,17 +36,5 @@ public class Building {
     this.lng = lng;
   }
 
-  @Override
-  public String toString() {
-    if(distanceText == null || durationText == null){
-      return address+"\n"+city;
-    }
-  return address +"\n" +
-      city +"\n" +
-      "Distanz: " + distanceText +"\n" +
-      "Dauer: " + durationText
-      ;
-  }
-
 }
 

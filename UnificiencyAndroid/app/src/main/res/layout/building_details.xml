@@ -37,7 +37,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/section_listview"
+        android:id="@+id/building_rooms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/text_details"

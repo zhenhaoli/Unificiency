@@ -24,9 +24,11 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingDetails extends AppCompatActivity {
 
+  private static final String TAG = BuildingDetails.class.getName();
 
   ArrayList<Room> rooms = new ArrayList<Room>();
 
@@ -38,8 +40,8 @@ public class BuildingDetails extends AppCompatActivity {
   @BindView(R.id.building_details_name)
   TextView name;
 
-  @BindView(R.id.section_listview)
-  ListView section_listview;
+  @BindView(R.id.building_rooms)
+  ListView roomsListView;
 
   @OnClick(R.id.buildings_details_backButton)
   void goBack() {
@@ -64,15 +66,14 @@ public class BuildingDetails extends AppCompatActivity {
     client.get("rooms", params, new JsonHttpResponseHandler() {
 
       public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
+        Log.e(TAG, statusCode + "" );
+        Log.e(TAG, e.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray rooms) {
-        // Pull out the first event on the public timeline
         try {
-          Log.d("rooms", rooms.length()+"");
+          Log.d(TAG, rooms.length()+ " rooms got");
 
           for(int i=0; i<rooms.length(); i++){
             String name = rooms.getJSONObject(i).getString("name");
@@ -84,33 +85,35 @@ public class BuildingDetails extends AppCompatActivity {
             Integer fromMinute = rooms.getJSONObject(i).getInt("freeFromMinutes");
             Integer toMinute = rooms.getJSONObject(i).getInt("freeToMinutes");
 
-            LocalTime from = new LocalTime(fromHour,fromMinute);
-            LocalTime to = new LocalTime(toHour,toMinute);
-            BuildingDetails.this.rooms.add(new Room(name, level, address,from,to));
-
+            LocalTime from = new LocalTime(fromHour, fromMinute);
+            LocalTime to = new LocalTime(toHour, toMinute);
+            BuildingDetails.this.rooms.add(new Room(name, level, address, from, to));
           }
+
           Collections.sort(BuildingDetails.this.rooms, new Comparator<Room>() {
             public int compare(Room r1, Room r2) {
               int comp = r1.getState().compareTo(r2.getState());
               return  comp == 0 ? r1.freeForMinutes().compareTo(r2.freeForMinutes()) : comp;
             }
           });
+
           ArrayList<Room> newRooms = new ArrayList<Room>();
           for(Room r: BuildingDetails.this.rooms){
             if(!(r.getState() == Room.State.TAKEN)){
               newRooms.add(r);
             }
           }
+
           buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, newRooms);
-          section_listview.setAdapter(buildingDetailsAdapter);
+          roomsListView.setAdapter(buildingDetailsAdapter);
 
         } catch (Exception e) {
-          Log.e("BuildingDetails", e.toString());
+          Log.e(TAG, e.toString());
+          Message.success(BuildingDetails.this, e.toString());
         }
 
       }
     });
 
   }
-
 }
