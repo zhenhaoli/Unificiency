@@ -5,8 +5,8 @@ function Room() {
   var hours = [6, 8, 10, 12, 14, 16, 18, 20];
   var minutes = [0, 15, 30, 45];
 
-  var freeHours = [0, 1, 2, 3, 4];
-  var freeMinutes = [7];
+  var freeHours = [0, 1, 2];
+  var freeMinutes = [1,2,3,4,5,8,9];
 
   this.getByBuildingPartAdrress = function(req, res) {
 
