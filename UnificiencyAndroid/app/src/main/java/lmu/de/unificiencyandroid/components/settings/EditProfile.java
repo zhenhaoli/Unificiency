@@ -100,6 +100,7 @@ public class EditProfile extends AppCompatActivity {
                             .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
                             .setAnimations(Style.ANIMATIONS_SCALE)
                             .show();
+                    finish();
 
                 } catch (Exception e) {
                     Log.e("modifyUserInfo", "success");
