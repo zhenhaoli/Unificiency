@@ -28,7 +28,7 @@ import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingDetails extends AppCompatActivity {
 
-  private static final String TAG = BuildingDetails.class.getName();
+  static final String TAG = BuildingDetails.class.getName();
 
   ArrayList<Room> rooms = new ArrayList<Room>();
 

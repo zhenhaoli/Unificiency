@@ -13,28 +13,37 @@ import android.widget.GridView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingsAll extends BuildingsBase {
 
-  View view;
-  GridView all_building_listview;
+  static final String TAG = BuildingsAll.class.getName();
+
+  @BindView(R.id.avi)
   com.wang.avi.AVLoadingIndicatorView avi;
+
+  @BindView(R.id.all_building_listview)
+  GridView all_building_listview;
+
   @Nullable
   @Override
   public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    view =  inflater.inflate(R.layout.buildings_all,null);
+    View view = inflater.inflate(R.layout.buildings_all,null);
 
-    avi = (com.wang.avi.AVLoadingIndicatorView) view.findViewById(R.id.avi);
+    ButterKnife.bind(this, view);
 
     loadData();
     return view;
@@ -47,29 +56,31 @@ public class BuildingsAll extends BuildingsBase {
 
     client.get("buildings", null, new JsonHttpResponseHandler() {
 
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        Log.e(TAG, errorResponse.toString());
+        Message.fail(getContext(), errorResponse.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
-        // Pull out the first event on the public timeline
         try {
-          Log.d("buildings", buildings.length()+"");
+          Log.d(TAG, buildings.length()+" buildings got");
 
           List<Building> buildingsFromServer = new ArrayList<>();
           for(int i=0; i<buildings.length(); i++){
+
             String address = buildings.getJSONObject(i).getString("address");
             String city = buildings.getJSONObject(i).getString("city");
             Double lat = buildings.getJSONObject(i).getDouble("lat");
             Double lng = buildings.getJSONObject(i).getDouble("lng");
-            buildingsFromServer.add(new Building(address, city, lat, lng, null, null, null, null, null, null));
+
+            buildingsFromServer.add(new Building(address, city, lat, lng));
           }
 
-          all_building_listview = (GridView) view.findViewById(R.id.all_building_listview);
-
           BuildingsAllAdapter adapter= new BuildingsAllAdapter(getContext(), buildingsFromServer);
+
           all_building_listview.setAdapter(adapter);
 
           all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -79,15 +90,19 @@ public class BuildingsAll extends BuildingsBase {
             {
 
               Building building=(Building) all_building_listview.getItemAtPosition(position);
+
               Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
               buildungDetails.putExtra("address", building.getAddress());
               buildungDetails.putExtra("city", building.getCity());
+
               startActivity(buildungDetails);
+
             }
           });
 
         } catch (Exception e) {
-          Log.e("BuildingAll", e.toString());
+          Log.e(TAG, e.toString());
+          Message.fail(getContext(), e.toString());
         } finally {
           avi.hide();
         }
