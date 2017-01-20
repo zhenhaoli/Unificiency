@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -29,10 +26,14 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 
 public class GroupsAll extends Fragment {
+
+  static final String TAG = GroupsAll.class.getName();
+
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
   RecyclerView.LayoutManager groupsLayoutManager;
@@ -40,10 +41,6 @@ public class GroupsAll extends Fragment {
   AppBarLayout groupsAppBar;
   FloatingActionButton addNewGroupBtn;
   com.wang.avi.AVLoadingIndicatorView avi;
-
-  public GroupsAll() {
-    // Required empty public constructor
-  }
 
   public void setupViewReferences(View view){
     this.groupsScrollview = (NestedScrollView) view.findViewById(R.id.groups_nested_scroll_view);
@@ -68,7 +65,7 @@ public class GroupsAll extends Fragment {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
         try {
-          Log.d("Groups", groups.length()+"");
+          Log.d(TAG, groups.length()+" groups got");
 
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
@@ -94,12 +91,11 @@ public class GroupsAll extends Fragment {
           groupsRecyclerView.setAdapter(groupsAdapter);
 
         } catch (Exception e) {
-          Log.e("GroupAll", e.toString());
+          Log.e(TAG, e.toString());
 
         } finally {
           avi.hide();
         }
-
       }
     });
 
@@ -155,19 +151,12 @@ public class GroupsAll extends Fragment {
 
         if (extras != null) {
           createdGroupMsg = extras.getString("createGroupSuccess");
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-              .setText(createdGroupMsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
+          Message.success(getContext(), createdGroupMsg);
         }
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Log.d("groups", "user canceled group creation");
+        Log.d(TAG, "user canceled group creation");
       }
     }
   }//onActivityResult

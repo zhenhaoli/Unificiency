@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ public class ActivityThatStartsCamera  extends Fragment {
       askCameraPermission();
     }
 
-    Log.d("Taking pic", "test");
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
       startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -58,11 +56,7 @@ public class ActivityThatStartsCamera  extends Fragment {
 
   private boolean alreadyhavePermission() {
     int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
-    if (result == PackageManager.PERMISSION_GRANTED) {
-      return true;
-    } else {
-      return false;
-    }
+    return(result == PackageManager.PERMISSION_GRANTED);
   }
 
   private void requestForSpecificPermission() {

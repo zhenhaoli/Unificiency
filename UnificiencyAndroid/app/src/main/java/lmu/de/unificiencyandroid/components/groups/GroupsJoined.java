@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -29,9 +26,13 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupsJoined extends Fragment {
+
+  static final String TAG = GroupsAll.class.getName();
+
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
   RecyclerView.LayoutManager groupsLayoutManager;
@@ -39,10 +40,6 @@ public class GroupsJoined extends Fragment {
   AppBarLayout groupsAppBar;
   FloatingActionButton addNewGroupBtn;
   com.wang.avi.AVLoadingIndicatorView avi;
-
-  public GroupsJoined() {
-    // Required empty public constructor
-  }
 
   public void setupViewReferences(View view){
     this.groupsScrollview = (NestedScrollView) view.findViewById(R.id.groups_nested_scroll_view);
@@ -61,11 +58,6 @@ public class GroupsJoined extends Fragment {
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
     client.get("groups/lmu", params, new JsonHttpResponseHandler() {
-
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
-      }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
@@ -97,12 +89,11 @@ public class GroupsJoined extends Fragment {
           groupsRecyclerView.setAdapter(groupsAdapter);
 
         } catch (Exception e) {
-          Log.e("GroupAll", e.toString());
+          Log.e(TAG, e.toString());
 
         } finally {
           avi.hide();
         }
-
       }
     });
 
@@ -158,19 +149,12 @@ public class GroupsJoined extends Fragment {
 
         if (extras != null) {
           createdGroupMsg = extras.getString("createGroupSuccess");
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-              .setText(createdGroupMsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
+          Message.success(getContext(), createdGroupMsg);
         }
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        //Write your code if there's no result
+        Log.d(TAG, "user canceled group creation");
       }
     }
   }//onActivityResult

@@ -11,8 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -29,9 +27,12 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupDetails extends AppCompatActivity implements GroupPasswordEnterListener {
+
+  static final String TAG = GroupDetails.class.getName();
 
   @BindView(R.id.group_details_name)
   TextView groupName;
@@ -56,74 +57,22 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   Boolean isMemberInGroup;
 
   @OnClick(R.id.groups_details_join)
-  void joinGroup() {
-    Boolean groupHasPassword = group.getHasPassword();
-
-    if(groupHasPassword) {
+  public void tryToJoinGroup() {
+    if(group.getHasPassword()) {
       GroupPasswordEnter enterPwDialog = new GroupPasswordEnter();
       enterPwDialog.show(getSupportFragmentManager(), "enter_password");
-
-    } else {
-
-      String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
-
-      UnificiencyClient client = new PythonAPIClient();
-      client.addHeader("Authorization", authToken);
-      client.post("groups/" + group.getId() + "/join/", null, new JsonHttpResponseHandler() {
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          // If the response is JSONObject instead of expected JSONArray
-          String resMessage = null;
-          try {
-            resMessage = response.getString("message");
-
-          } catch (Exception e) {
-            Log.e("jsonerr", e.toString());
-          }
-
-          String[] msg = resMessage.split("\\s+");
-          String res = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
-
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-              .setText(res)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
-
-          fetchGroupDetails(group.getId());
-
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-          Log.e("groupdetailserr", errorResponse.toString());
-          String errmsg = null;
-          try {
-            errmsg = errorResponse.getString("message");
-          } catch (Exception e) {
-
-          }
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-              .setText(errmsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
-
-        }
-
-      });
-
+      return;
     }
+    joinGroup(null);
+  }
+
+  @Override
+  public void onPwEntered(String password) {
+    joinGroup(password);
   }
 
   @OnClick(R.id.groups_details_leave)
-  void leaveGroup() {
+  public void leaveGroup() {
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
     UnificiencyClient client = new PythonAPIClient();
@@ -131,26 +80,79 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
     client.post("groups/" + group.getId() + "/leave/", null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-        String resMessage = null;
+        String res = null;
         try {
-          resMessage = response.getString("message");
-
+          res = response.getString("message");
         } catch (Exception e) {
-          Log.e("jsonerr", e.toString());
+          Log.e(TAG, e.toString());
         }
 
-        String[] msg = resMessage.split("\\s+");
-        String res = "Gruppe " + msg[msg.length - 1] + " erfolgreich verlassen";
+        String[] msg = res.split("\\s+");
+        String message = "Gruppe " + msg[msg.length - 1] + " erfolgreich verlassen";
 
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(res)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
+        Message.success(GroupDetails.this, message);
+
+        fetchGroupDetails(group.getId());
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Log.e(TAG, errorResponse.toString());
+        String errmsg = null;
+        try {
+          errmsg = errorResponse.getString("message");
+        } catch (Exception e) {
+          Log.e(TAG, e.toString());
+        }
+        Message.fail(GroupDetails.this, errmsg);
+      }
+
+    });
+  }
+
+  @OnClick(R.id.groups_details_backButton)
+  public void goBack() {
+    onBackPressed();
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.group_details);
+    ButterKnife.bind(this);
+
+    Integer groupId = getIntent().getIntExtra("groupId", 0);
+    fetchGroupDetails(groupId);
+  }
+
+  public void joinGroup(String password){
+    RequestParams params = null;
+
+    if(password!= null){
+      params = new RequestParams();
+      params.put("password", password);
+      params.setUseJsonStreamer(true);
+    }
+    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
+
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.post("groups/" + group.getId() + "/join/", params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+        String res = null;
+        try {
+          res = response.getString("message");
+
+        } catch (Exception e) {
+          Log.e(TAG, e.toString());
+        }
+
+        String[] msg = res.split("\\s+");
+        String message = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
+
+        Message.success(GroupDetails.this, message);
 
         fetchGroupDetails(group.getId());
 
@@ -158,45 +160,31 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("groupdetailserr", errorResponse.toString());
+        Log.e(TAG, errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-
+          Log.e(TAG, e.toString());
         }
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(errmsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
+        Message.fail(GroupDetails.this, errmsg);
       }
 
     });
   }
 
-
-  @OnClick(R.id.groups_details_backButton)
-  void goBack() {
-    onBackPressed();
-  }
-
-
   public Group fetchGroupDetails(final Integer groupId){
-    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
+    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
     UnificiencyClient client = new PythonAPIClient();
+
     client.addHeader("Authorization", authToken);
-    client.get("groups/"+groupId, null, new JsonHttpResponseHandler() {
+    client.get("groups/" + groupId, null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject groupJSON) {
         String topic = null;
-        String name= null;
-        String description= null;
+        String name = null;
+        String description = null;
         Boolean hasPassword = null;
         Boolean isMember = null;
         List<String> memberNames = new ArrayList<String>();
@@ -207,12 +195,12 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
           hasPassword = groupJSON.getBoolean("protected");
           JSONArray membersJSON = groupJSON.getJSONArray("members");
           isMember = groupJSON.getBoolean("im_a_member");
-          memberNames = new ArrayList<String>();
           for(int j = 0; j<membersJSON.length(); j++){
             memberNames.add(membersJSON.getJSONObject(j).getString("username"));
           }
         } catch (Exception e){
-          Log.e("jsonerr", e.toString());
+          Log.e(TAG, e.toString());
+          Message.fail(GroupDetails.this, e.toString());
         }
 
         isMemberInGroup = isMember;
@@ -222,33 +210,23 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         ColorGenerator generator = ColorGenerator.MATERIAL;
         groupName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.lmugreen, null));
         bindGroupData();
-
       }
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("groupdetailserr", errorResponse.toString());
+        Log.e(TAG, errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-
+          Log.e(TAG, e.toString());
         }
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(errmsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
+        Message.fail(GroupDetails.this, errmsg);
       }
 
     });
     return group;
   }
-
 
   public void bindGroupData() {
     if(isMemberInGroup) {
@@ -265,86 +243,4 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
     this.memberList.setAdapter(this.adapter);
   }
 
-  @Override
-  public void onPwEntered(String pw) {
-    Log.i("Password retrievied: ", pw);
-    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
-
-    Log.d("gd Token in sharedPref", authToken);
-
-    final RequestParams params = new RequestParams();
-
-    params.put("password", pw);
-    params.setUseJsonStreamer(true);
-    UnificiencyClient client = new PythonAPIClient();
-    client.addHeader("Authorization", authToken);
-    client.post("groups/" + group.getId() + "/join/", params, new JsonHttpResponseHandler() {
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-        String resMessage = null;
-        try {
-          resMessage = response.getString("message");
-
-        } catch (Exception e) {
-          Log.e("jsonerr", e.toString());
-        }
-
-        String[] msg = resMessage.split("\\s+");
-        String res = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
-
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(res)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
-        fetchGroupDetails(group.getId());
-
-      }
-
-      @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("groupdetailserr", errorResponse.toString());
-        String errmsg = null;
-        try {
-          errmsg = errorResponse.getString("message");
-        } catch (Exception e) {
-
-        }
-
-        if(errmsg.contains("protected")){
-          // errmsg = "Password falsch oder nicht eingegeben, bitte nochmal versuchen!";
-        }
-
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(GroupDetails.this, new Style(), Style.TYPE_STANDARD)
-            .setText(errmsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
-
-      }
-
-    });
-  }
-
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    /** View setup **/
-    setContentView(R.layout.group_details);
-
-    ButterKnife.bind(this);
-
-    /** Data handling **/
-    Integer groupId = getIntent().getIntExtra("groupId", 0);
-    fetchGroupDetails(groupId);
-  }
 }

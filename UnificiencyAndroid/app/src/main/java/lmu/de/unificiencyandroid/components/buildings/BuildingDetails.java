@@ -70,7 +70,7 @@ public class BuildingDetails extends AppCompatActivity {
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
         Log.e(TAG, errorResponse.toString());
-        Message.fail(getApplicationContext(), errorResponse.toString());
+        Message.fail(BuildingDetails.this, errorResponse.toString());
       }
 
       @Override

@@ -17,7 +17,7 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolderGroups> {
-  /*extras : groups_details_groupname_extra*/
+
   private LayoutInflater layoutInflater;
   private List<Group> data;
 
@@ -25,7 +25,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     void onGroupClick(Group group);
   }
   private final OnGroupItemClickListener listener;
-
 
   public GroupsAdapter(Context context, List<Group> groups, OnGroupItemClickListener listener) {
     this.layoutInflater = LayoutInflater.from(context);
@@ -46,7 +45,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
   @Override
   public void onBindViewHolder(ViewHolderGroups holder, int position) {
-    //filling data in
     Group group = this.data.get(position);
     String name = group.getName();
     String topic = group.getTopic();

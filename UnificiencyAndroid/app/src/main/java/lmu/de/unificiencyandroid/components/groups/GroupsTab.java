@@ -18,26 +18,20 @@ public class GroupsTab  extends Fragment {
 
   public static PagerSlidingTabStrip tabLayout;
   public static ViewPager viewPager;
-  public static int int_items = 2 ;
+  public static int tabs = 2 ;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    /**
-     *Inflate tab_layout and setup Views.
-     */
-    View x =  inflater.inflate(R.layout.notes_tab,null);
-    tabLayout = (PagerSlidingTabStrip) x.findViewById(R.id.notes_tab);
-    viewPager = (ViewPager) x.findViewById(R.id.notes_viewpager);
-
-    /**
-     *Set an Apater for the View Pager
-     */
+    View view =  inflater.inflate(R.layout.notes_tab,null);
+    
+    tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.notes_tab);
+    viewPager = (ViewPager) view.findViewById(R.id.notes_viewpager);
+    
     viewPager.setAdapter(new GroupsTab.MyAdapter(getChildFragmentManager()));
-
     tabLayout.setViewPager(viewPager);
 
-    return x;
+    return view;
 
   }
 
@@ -46,12 +40,7 @@ public class GroupsTab  extends Fragment {
     public MyAdapter(FragmentManager fm) {
       super(fm);
     }
-
-    /**
-     * Return fragment with respect to Position .
-     */
-
-    //TODO: Make dynamic based on groups of users load from db
+    
     @Override
     public Fragment getItem(int position)
     {
@@ -64,15 +53,9 @@ public class GroupsTab  extends Fragment {
 
     @Override
     public int getCount() {
-
-      return int_items;
-
+      return tabs;
     }
-
-    /**
-     * This method returns the title of the tab according to the position.
-     */
-
+    
     @Override
     public CharSequence getPageTitle(int position) {
 
