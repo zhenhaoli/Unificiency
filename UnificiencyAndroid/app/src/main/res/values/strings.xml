@@ -64,10 +64,12 @@
     <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe sehen.</string>
 
 
-    <!-- Settings -->
+    <!-- Settings and Eidt -->
     <string name="setting_hint">Hier können Sie Ihr Nickname and Studiengang verändern und speichern.</string>
-
-
+    <string name="edit_hint">Hier können Sie Ihr Profile editieren und speichern. Durch Drucken des Bilds können Sie Ihr ProfileBild ändern.</string>
+    <string name="toolbar_edit_profile">Profile editieren</string>
+    <string name="save">Speichern</string>
+    <string name="exit">Abmeldung</string>
 
 
 </resources>

@@ -23,13 +23,16 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
+import static java.security.AccessController.getContext;
+
 public class Settings extends Fragment {
 
-  Button groupManagement, notesManagement;
+//  Button groupManagement, notesManagement;
   Button save,exit;
 
   TextInputEditText nickName_editor, majorName_editor,text_email;
@@ -124,8 +127,6 @@ public class Settings extends Fragment {
 
     View view =  inflater.inflate(R.layout.setting,null);
 
-    groupManagement = (Button) view.findViewById(R.id.groups_management);
-    notesManagement = (Button) view.findViewById(R.id.notes_management);
     save = (Button) view.findViewById(R.id.save_setting);
     exit = (Button) view.findViewById(R.id.exit_setting);
 
@@ -133,10 +134,11 @@ public class Settings extends Fragment {
     majorName_editor= (TextInputEditText) view.findViewById(R.id.text_major);
     text_email= (TextInputEditText) view.findViewById(R.id.text_email);
 
-    List<String> userInfo=null;
     getUserInfo();
 
-
+/*
+    groupManagement = (Button) view.findViewById(R.id.groups_management);
+    notesManagement = (Button) view.findViewById(R.id.notes_management);
     groupManagement.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Intent settingGroups=new Intent(getActivity(),SettingsGroups.class);
@@ -150,7 +152,7 @@ public class Settings extends Fragment {
         startActivity(settingNotes);
 
       }
-    });
+    }); */
     save.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         setUserInfo();
@@ -158,7 +160,8 @@ public class Settings extends Fragment {
     });
     exit.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        getActivity().finish();
+        Intent intent= new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
       }
     });
 
