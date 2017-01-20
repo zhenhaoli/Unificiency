@@ -22,7 +22,7 @@ module.exports = {
         })
         .end(function (response) {
           console.log(response.body)
-          res.json(response)
+          res.json(response.body)
         });
 
     });
