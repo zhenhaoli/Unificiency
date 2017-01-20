@@ -150,7 +150,7 @@ public class BuildingsNearest extends BuildingsBase {
           BuildingsNearestAdapter adapter = new BuildingsNearestAdapter(getContext(), buildingsFromServer);
           nearestBuildings.setAdapter(adapter);
           nearestBuildings.addOnItemTouchListener(
-              new RecyclerItemClickListener(getContext(), nearestBuildings ,new RecyclerItemClickListener.OnItemClickListener() {
+              new BuildingClickListener(getContext(), nearestBuildings ,new BuildingClickListener.OnItemClickListener() {
 
                 @Override public void onItemClick(View view, int position) {
                   Building building = buildingsFromServer.get(position);

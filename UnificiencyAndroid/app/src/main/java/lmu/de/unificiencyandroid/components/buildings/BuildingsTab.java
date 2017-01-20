@@ -12,33 +12,31 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 
 public class BuildingsTab extends Fragment {
 
-  public static PagerSlidingTabStrip tabLayout;
-  public static ViewPager viewPager;
-  public static int int_items = 3 ;
+  @BindView(R.id.buildings_tab)
+  PagerSlidingTabStrip tabLayout;
+
+  @BindView(R.id.buildings_viewpager)
+  ViewPager viewPager;
+
+  int tabs = 3 ;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    /**
-     *Inflate tab_layout and setup Views.
-     */
+
     View view =  inflater.inflate(R.layout.buildings_tab,null);
-    tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.buildings_tab);
-    viewPager = (ViewPager) view.findViewById(R.id.buildings_viewpager);
+    ButterKnife.bind(this, view);
 
-    /**
-     *Set an Apater for the View Pager
-     */
     viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
-
     tabLayout.setViewPager(viewPager);
 
     return view;
-
   }
 
   class MyAdapter extends FragmentPagerAdapter{
@@ -46,10 +44,6 @@ public class BuildingsTab extends Fragment {
     public MyAdapter(FragmentManager fm) {
       super(fm);
     }
-
-    /**
-     * Return fragment with respect to Position .
-     */
 
     @Override
     public Fragment getItem(int position)
@@ -64,12 +58,8 @@ public class BuildingsTab extends Fragment {
 
     @Override
     public int getCount() {
-      return int_items;
+      return tabs;
     }
-
-    /**
-     * This method returns the title of the tab according to the position.
-     */
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -85,5 +75,4 @@ public class BuildingsTab extends Fragment {
       return null;
     }
   }
-
 }
