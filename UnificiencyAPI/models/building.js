@@ -50,7 +50,7 @@ function Building() {
         });
 
         res.json(buildings);
-        pushResultStatusToClient();
+       // pushResultStatusToClient();
 
         function getDistanceInM(source, target) {
           var R = 6371000; // Radius of the earth in m
