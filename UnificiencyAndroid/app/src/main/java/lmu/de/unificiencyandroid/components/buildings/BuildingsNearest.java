@@ -106,6 +106,21 @@ public class BuildingsNearest extends BuildingsBase {
       }
 
       @Override
+      public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+        super.onFailure(statusCode, headers, responseString, throwable);
+
+        SuperActivityToast.cancelAllSuperToasts();
+        SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
+            .setText(responseString)
+            .setDuration(Style.DURATION_VERY_LONG)
+            .setFrame(Style.FRAME_KITKAT)
+            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+            .setAnimations(Style.ANIMATIONS_SCALE)
+            .show();
+
+      }
+
+      @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
         // Pull out the first event on the public timeline
         try {

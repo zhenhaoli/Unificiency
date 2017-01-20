@@ -28,7 +28,6 @@ public class BuildingsAll extends BuildingsBase {
   View view;
   GridView all_building_listview;
   com.wang.avi.AVLoadingIndicatorView avi;
-
   @Nullable
   @Override
   public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +35,13 @@ public class BuildingsAll extends BuildingsBase {
 
     view =  inflater.inflate(R.layout.buildings_all,null);
 
-    this.avi = (com.wang.avi.AVLoadingIndicatorView) view.findViewById(R.id.avi);
+    avi = (com.wang.avi.AVLoadingIndicatorView) view.findViewById(R.id.avi);
+
+    loadData();
+    return view;
+  }
+
+  public void loadData() {
     avi.show();
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
@@ -88,11 +93,8 @@ public class BuildingsAll extends BuildingsBase {
         } finally {
           avi.hide();
         }
-
       }
     });
-
-    return view;
   }
 
 }

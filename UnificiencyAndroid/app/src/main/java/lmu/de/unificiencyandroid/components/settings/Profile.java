@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.account;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +17,7 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 
-public class Account extends Fragment {
+public class Profile extends Fragment {
 
 
     TextView name_Account, email_Account, major_Account;
@@ -67,7 +67,7 @@ public class Account extends Fragment {
             new Group(6, "Group_Name_6", "REST","description",  GroupMember, false)
         );
 
-        AccountAdapter adapter= new AccountAdapter(getContext(), android.R.layout.simple_list_item_1, groups);
+        ProfileAdapter adapter= new ProfileAdapter(getContext(), android.R.layout.simple_list_item_1, groups);
         listView.setAdapter(adapter);
 
 
