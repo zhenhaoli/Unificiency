@@ -63,6 +63,10 @@ function Building() {
 
                 if(!distances[i].distance) {
                   failed = true;
+                  building.distanceText = "API Calls to Google exceeded";
+                  building.durationText = "API Calls to Google exceeded";
+                  building.distance = -1;
+                  building.duration = -1;
                   break;
                 }
 
@@ -80,7 +84,7 @@ function Building() {
 
               res.json(buildings);
 
-              pushResultStatusToClient();
+              //pushResultStatusToClient();
 
             });
         }
