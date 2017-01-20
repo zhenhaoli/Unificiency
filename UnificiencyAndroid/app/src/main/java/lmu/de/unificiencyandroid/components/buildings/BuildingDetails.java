@@ -86,7 +86,7 @@ public class BuildingDetails extends AppCompatActivity {
             Integer toHour = rooms.getJSONObject(i).getInt("freeToHour");
             Integer fromMinute = rooms.getJSONObject(i).getInt("freeFromMinutes");
             Integer toMinute = rooms.getJSONObject(i).getInt("freeToMinutes");
-            
+
             LocalTime from = new LocalTime(fromHour,fromMinute);
             LocalTime to = new LocalTime(toHour,toMinute);
             BuildingDetails.this.rooms.add(new Room(name, level, address,from,to));

@@ -9,7 +9,7 @@ module.exports = {
       secret: config.secret
     });
 
-    app.use('/rooms', jwtCheck);
+   // app.use('/rooms', jwtCheck);
 
     app.get('/rooms', function(req, res) {
       return rooms.getByBuildingPartAdrress(req, res);

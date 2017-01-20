@@ -6,7 +6,7 @@ function Room() {
   var minutes = [0, 15, 30, 45];
 
   var freeHours = [0, 1, 2, 3, 4];
-  var freeMinutes = [15, 30, 45];
+  var freeMinutes = [7];
 
   this.getByBuildingPartAdrress = function(req, res) {
 
