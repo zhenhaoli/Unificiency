@@ -97,9 +97,8 @@ public class Profile extends Fragment {
         });
 
   //      listView=(ListView) view.findViewById(R.id.group_list_account);
-
- //       name_Account.setText("ostdong");
- //       email_Account.setText("ostdong@gmail.com");
+  //       name_Account.setText("ostdong");
+  //       email_Account.setText("ostdong@gmail.com");
   //      major_Account.setText("informatik");
 
         stars_nummber.setText("18");
