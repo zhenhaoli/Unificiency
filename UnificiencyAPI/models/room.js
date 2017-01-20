@@ -17,16 +17,16 @@ on f.buildingPart = bp.code
 join building b 
 on bp.buildingCode = b.code
 where bp.address = ?
-`, [req.query.address], function(err, groups) {
+`, [req.query.address], function(err, rooms) {
 
-        groups.forEach( (g,i) => {
+        rooms.forEach( (g,i) => {
 
           if (i % 5) g.available = false;
           else  g.available = true;
           return g;
         })
 
-      res.json(groups);
+      res.json(rooms);
 
     });
     con.release();
