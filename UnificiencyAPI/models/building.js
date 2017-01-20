@@ -36,7 +36,7 @@ function Building() {
             lat: building.lat,
             lng: building.lng
           };
-          building.distance = getDistanceInM(source, targetLocation);
+          building.distance = getDistanceInM(sourceLocation, targetLocation);
 
           building.distanceText = "Not available";
           building.durationText = "Not available";
