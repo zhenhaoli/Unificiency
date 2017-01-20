@@ -1,5 +1,6 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
@@ -67,8 +69,12 @@ public class BuildingsMap extends BuildingsBase implements
           googleMap.setMyLocationEnabled(true);
 
         } catch (SecurityException e) {
-          Log.e("permission not got", e.toString());
+          Log.e(TAG, e.toString());
         }
+   
+        // For zooming automatically to the location of the marker
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(48.1550023,11.5835939)).zoom(15).build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         for(Building building : buildings){
           googleMap.addMarker(new MarkerOptions().position(
@@ -78,6 +84,16 @@ public class BuildingsMap extends BuildingsBase implements
               .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
 
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+          public void onInfoWindowClick(Marker marker) {
+
+            Intent buildungDetails = new Intent(getActivity(),BuildingDetails.class);
+            buildungDetails.putExtra("address", marker.getTitle());
+            buildungDetails.putExtra("city", marker.getSnippet());
+
+            startActivity(buildungDetails);
+          }
+        });
       }
     });
 
@@ -100,9 +116,9 @@ public class BuildingsMap extends BuildingsBase implements
 
       LatLng myPos = new LatLng(myLat, myLng);
 
-      // For zooming automatically to the location of the marker
-      CameraPosition cameraPosition = new CameraPosition.Builder().target(myPos).zoom(15).build();
-      googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+      Log.d(TAG, myPos.toString());
+
+
 
     } catch (SecurityException e){
       Log.e(TAG, e.toString());
