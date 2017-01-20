@@ -40,6 +40,33 @@ public abstract class BuildingsBase extends Fragment implements
 
   List<Building> buildings = new ArrayList<Building>();
 
+
+  @Nullable
+  @Override
+  public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+    setUpLocationServices();
+
+    InputStream is = getResources().openRawResource(R.raw.buildings);
+
+    Reader in = new InputStreamReader(is);
+    try {
+      Iterable<CSVRecord> records = CSVFormat.newFormat(';').withQuote('"').withHeader().parse(in);
+
+      for (CSVRecord record : records) {
+        String address = record.get("address");
+        Double lat = Double.parseDouble(record.get("lat"));
+        Double lng = Double.parseDouble(record.get("lng"));
+        String city = record.get("city");
+        buildings.add(new Building(address, city, lat, lng));
+      }
+    } catch (Exception e){
+      Log.e(TAG, e.toString());
+      Message.fail(getContext(), e.toString());
+    }
+    return null;
+  }
+
   public void askLocationPermission(){
     int MyVersion = Build.VERSION.SDK_INT;
     if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -87,30 +114,5 @@ public abstract class BuildingsBase extends Fragment implements
   @Override
   public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
-  @Nullable
-  @Override
-  public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-    setUpLocationServices();
-
-    InputStream is = getResources().openRawResource(R.raw.buildings);
-
-    Reader in = new InputStreamReader(is);
-    try {
-      Iterable<CSVRecord> records = CSVFormat.newFormat(';').withQuote('"').withHeader().parse(in);
-
-      for (CSVRecord record : records) {
-        String address = record.get("address");
-        Double lat = Double.parseDouble(record.get("lat"));
-        Double lng = Double.parseDouble(record.get("lng"));
-        String city = record.get("city");
-        buildings.add(new Building(address, city, lat, lng));
-      }
-    } catch (Exception e){
-      Log.e(TAG, e.toString());
-      Message.fail(getContext(), e.toString());
-    }
-    return null;
-  }
 }
 

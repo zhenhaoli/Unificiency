@@ -76,6 +76,32 @@ public class BuildingsNearest extends BuildingsBase {
     return view;
   }
 
+  @Override
+  public void onConnected(@Nullable Bundle bundle) {
+    super.onConnected(bundle);
+    try {
+      mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+          mGoogleApiClient);
+      if(mLastLocation != null) {
+        Log.d(TAG, mLastLocation.toString());
+
+        //LMU Info Bau
+        double myLat = 48.1493226;
+        double myLng = 11.5918366;
+        if(mLastLocation!=null){
+          myLat = mLastLocation.getLatitude();
+          myLng = mLastLocation.getLongitude();
+        }
+
+        fetchData(myLat, myLng);
+
+      }
+    } catch (SecurityException e){
+      Log.e(TAG, e.toString());
+      Message.fail(getContext(), e.toString());
+    }
+  }
+
   public void fetchData(double lat, double lng) {
     avi.show();
 
@@ -150,32 +176,6 @@ public class BuildingsNearest extends BuildingsBase {
         }
       }
     });
-  }
-
-  @Override
-  public void onConnected(@Nullable Bundle bundle) {
-    super.onConnected(bundle);
-    try {
-      mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-          mGoogleApiClient);
-      if(mLastLocation != null) {
-        Log.d(TAG, mLastLocation.toString());
-
-        //LMU Info Bau
-        double myLat = 48.1493226;
-        double myLng = 11.5918366;
-        if(mLastLocation!=null){
-          myLat = mLastLocation.getLatitude();
-          myLng = mLastLocation.getLongitude();
-        }
-
-        fetchData(myLat, myLng);
-
-      }
-    } catch (SecurityException e){
-      Log.e(TAG, e.toString());
-      Message.fail(getContext(), e.toString());
-    }
   }
 
   @Override

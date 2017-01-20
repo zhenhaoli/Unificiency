@@ -37,6 +37,54 @@ public class BuildingsMap extends BuildingsBase implements
   GoogleMap googleMap;
 
   @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater,container,savedInstanceState);
+
+    View view = inflater.inflate(R.layout.buildings_map, container, false);
+
+    ButterKnife.bind(this, view);
+
+    askLocationPermission();
+
+    mMapView.onCreate(savedInstanceState);
+
+    mMapView.onResume(); // needed to get the map to display immediately
+
+    try {
+      MapsInitializer.initialize(getActivity().getApplicationContext());
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
+      Message.fail(getContext(), e.toString());
+    }
+
+    mMapView.getMapAsync(new OnMapReadyCallback() {
+      @Override
+      public void onMapReady(GoogleMap mMap) {
+        googleMap = mMap;
+
+        // For showing a move to my location button
+        try {
+          googleMap.setMyLocationEnabled(true);
+
+        } catch (SecurityException e) {
+          Log.e("permission not got", e.toString());
+        }
+
+        for(Building building : buildings){
+          googleMap.addMarker(new MarkerOptions().position(
+              new LatLng(building.getLat(), building.getLng()))
+              .title(building.getAddress())
+              .snippet(building.getCity())
+              .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        }
+
+      }
+    });
+
+    return view;
+  }
+
+  @Override
   public void onConnected(@Nullable Bundle bundle) {
     super.onConnected(bundle);
     try {
@@ -60,53 +108,6 @@ public class BuildingsMap extends BuildingsBase implements
       Log.e(TAG, e.toString());
       Message.fail(getContext(), e.toString());
     }
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    super.onCreateView(inflater,container,savedInstanceState);
-
-    View view = inflater.inflate(R.layout.buildings_map, container, false);
-
-    ButterKnife.bind(this, view);
-
-    askLocationPermission();
-
-    mMapView.onCreate(savedInstanceState);
-
-    mMapView.onResume(); // needed to get the map to display immediately
-
-    try {
-      MapsInitializer.initialize(getActivity().getApplicationContext());
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-    }
-
-    mMapView.getMapAsync(new OnMapReadyCallback() {
-      @Override
-      public void onMapReady(GoogleMap mMap) {
-        googleMap = mMap;
-
-        // For showing a move to my location button
-        try {
-          googleMap.setMyLocationEnabled(true);
-
-        } catch (SecurityException e) {
-          Log.e("permission not got", e.toString());
-        }
-
-        for(Building building : buildings){
-          googleMap.addMarker(new MarkerOptions().position(
-                  new LatLng(building.getLat(), building.getLng()))
-                  .title(building.getAddress())
-                  .snippet(building.getCity())
-                  .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        }
-
-      }
-    });
-
-    return view;
   }
 
   @Override

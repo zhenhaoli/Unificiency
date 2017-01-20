@@ -34,7 +34,7 @@ public class BuildingsAll extends BuildingsBase {
   com.wang.avi.AVLoadingIndicatorView avi;
 
   @BindView(R.id.all_building_listview)
-  GridView all_building_listview;
+  GridView allBuildings;
 
   @Nullable
   @Override
@@ -81,15 +81,15 @@ public class BuildingsAll extends BuildingsBase {
 
           BuildingsAllAdapter adapter= new BuildingsAllAdapter(getContext(), buildingsFromServer);
 
-          all_building_listview.setAdapter(adapter);
+          allBuildings.setAdapter(adapter);
 
-          all_building_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+          allBuildings.setOnItemClickListener(new AdapterView.OnItemClickListener()
           {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
 
-              Building building=(Building) all_building_listview.getItemAtPosition(position);
+              Building building=(Building) allBuildings.getItemAtPosition(position);
 
               Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
               buildungDetails.putExtra("address", building.getAddress());

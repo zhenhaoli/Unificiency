@@ -12,6 +12,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.joda.time.LocalTime;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,9 +66,11 @@ public class BuildingDetails extends AppCompatActivity {
 
     client.get("rooms", params, new JsonHttpResponseHandler() {
 
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e(TAG, statusCode + "" );
-        Log.e(TAG, e.toString());
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        Log.e(TAG, errorResponse.toString());
+        Message.fail(getApplicationContext(), errorResponse.toString());
       }
 
       @Override
