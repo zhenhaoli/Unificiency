@@ -16,7 +16,7 @@ android:gravity="center_vertical" >
         android:background="@color/grey_300" />
 
     <View
-        android:id="@+id/view1"
+        android:id="@+id/building_details_dot"
         android:layout_width="17dp"
         android:layout_height="17dp"
         android:layout_centerVertical="true"
