@@ -30,7 +30,7 @@ exports.DistanceMatrixAPI = "https://maps.googleapis.com/maps/api/distancematrix
 // jwt secret
 exports.secret = 'p9Bv<3Eid9%$i01';
 
-
+exports.pythonAPI = 'http://romue404.pythonanywhere.com/api/';
 
 
 

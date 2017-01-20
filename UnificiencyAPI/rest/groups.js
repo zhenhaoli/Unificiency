@@ -17,5 +17,9 @@ module.exports = {
       return group.getAll(req, res);
     });
 
+    app.get('/groups', function(req, res) {
+      return group.getAll(req, res);
+    });
+
   }
 };

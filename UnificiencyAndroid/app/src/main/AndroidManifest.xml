@@ -83,7 +83,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".components.settings.EditProfile"></activity>
+        <activity android:name=".components.settings.ProfileEdit"></activity>
     </application>
 
 </manifest>

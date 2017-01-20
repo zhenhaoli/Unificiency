@@ -88,7 +88,7 @@ public class Profile extends Fragment {
 
     edit_btn.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
-        Intent intent= new Intent(getContext(), EditProfile.class);
+        Intent intent= new Intent(getContext(), ProfileEdit.class);
         startActivityForResult(intent, 1);
       }
     });

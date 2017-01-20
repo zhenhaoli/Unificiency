@@ -2,7 +2,7 @@ var connection = require('../db/connection');
 
 function Room() {
 
-  var hours = [6, 8, 10, 12, 14, 16, 18, 20];
+  var hours = [6, 8, 10, 12, 14, 16, 18, 20, 22];
   var minutes = [0, 15, 30, 45];
 
   var freeHours = [0, 1, 2];
@@ -32,6 +32,9 @@ where bp.address = ?
 
           g.freeToHour = g.freeFromHour +  freeHours[i% (freeHours.length)];
           g.freeToMinutes = g.freeFromMinutes + freeMinutes[i% (freeMinutes.length)];
+
+          if(g.freeToHour>=24) g.freeToHour = 23;
+
           return g;
         })
 

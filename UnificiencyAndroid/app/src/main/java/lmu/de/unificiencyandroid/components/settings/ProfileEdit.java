@@ -26,7 +26,7 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-public class EditProfile extends AppCompatActivity {
+public class ProfileEdit extends AppCompatActivity {
 
   Button save;
 
