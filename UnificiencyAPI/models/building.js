@@ -45,14 +45,12 @@ function Building() {
             })
             .end(function (response) {
               if(!response  || !response.body){
-                getDistranceFromAPI('walking');
-                return;
+                return res.status(503).send("API Calls to Google exceeded");
               }
 
               //if we we used up our API limit we use the unlimited mode aka walking
               if(response.body.error_message){
-                getDistranceFromAPI('walking');
-                return;
+                return res.status(503).send("API Calls to Google exceeded");
               }
 
               var distances = response.body.rows[0].elements;
