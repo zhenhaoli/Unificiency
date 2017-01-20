@@ -42,9 +42,9 @@ public class Room {
     if(freeFromNow) {
       state = State.NOW_FREE;
     }
-    else if(untilFreeMinutes > 0 && untilFreeMinutes <= 30) {
+    else if(untilFreeMinutes > 0 && untilFreeMinutes <= 35) {
       state = State.SOON_FREE;
-    } else if (untilFreeMinutes > 0 && untilFreeMinutes > 30 && untilFreeMinutes <= 70) {
+    } else if (untilFreeMinutes > 0 && untilFreeMinutes > 35 && untilFreeMinutes <= 70) {
       state = State.LONG_WAITING;
     } else {
       state = State.TAKEN;
@@ -72,10 +72,10 @@ public class Room {
     String message;
     switch (state) {
       case NOW_FREE:
-        message = "noch " + freeForMinutes() + "mins frei";
+        message = "noch " + freeForMinutes() + " mins frei";
         break;
       case SOON_FREE: case LONG_WAITING:
-        message = "in " + untilFreeMinutes() +" mins für " + interval + "mins frei";
+        message = "in " + untilFreeMinutes() +" mins für " + interval + " mins frei";
         break;
       case TAKEN:
         message = "nicht mehr frei";

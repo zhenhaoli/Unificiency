@@ -94,7 +94,8 @@ public class BuildingDetails extends AppCompatActivity {
           }
           Collections.sort(BuildingDetails.this.rooms, new Comparator<Room>() {
             public int compare(Room r1, Room r2) {
-              return r1.getState().compareTo(r2.getState());
+              int comp = r1.getState().compareTo(r2.getState());
+              return  comp == 0 ? r1.freeForMinutes().compareTo(r2.freeForMinutes()) : comp;
             }
           });
           ArrayList<Room> newRooms = new ArrayList<Room>();
@@ -103,8 +104,6 @@ public class BuildingDetails extends AppCompatActivity {
               newRooms.add(r);
             }
           }
-          newRooms.add(new Room("U139", "EG", "Schönleutnerstr. 8", new LocalTime(20,0), new LocalTime(21,30)));
-          newRooms.add(new Room("U139", "EG", "Schönleutnerstr. 8", new LocalTime(20,35), new LocalTime(21,30)));
           buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, newRooms);
           section_listview.setAdapter(buildingDetailsAdapter);
 
@@ -116,22 +115,5 @@ public class BuildingDetails extends AppCompatActivity {
     });
 
   }
-
-
-  /*public void setListViewHeightBasedOnChildren(ListView listView) {
-    if (buildingDetailsAdapter == null) {
-      // pre-condition
-      return;
-    }
-
-    int totalHeight =0;
-    for (int i = 0; i < buildingDetailsAdapter.getCount(); i++) {
-      View listItem = buildingDetailsAdapter.getView(i, null, listView);
-      listItem.measure(0, 0);
-      totalHeight += listItem.getMeasuredHeight();
-    }
-    ViewGroup.LayoutParams params = listView.getLayoutParams();
-    params.height = totalHeight + (listView.getDividerHeight() * (buildingDetailsAdapter.getCount() - 1));
-    listView.setLayoutParams(params);
-  }*/
+  
 }
