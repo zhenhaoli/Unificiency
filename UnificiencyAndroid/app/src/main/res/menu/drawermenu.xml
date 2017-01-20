@@ -19,6 +19,10 @@
         <item android:title="@string/nav_item_setting"
             android:id="@+id/nav_item_setting"
             android:icon="@drawable/settings"/>
+
+        <item android:title="Bild und Kamera"
+              android:id="@+id/nav_item_camera"
+              android:icon="@drawable/logout"/>
         
         <item android:title="@string/nav_item_logout"
             android:id="@+id/nav_item_logout"

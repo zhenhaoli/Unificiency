@@ -52,7 +52,7 @@ public abstract class BuildingsBase extends Fragment implements
   }
 
   private boolean checkIfAlreadyhavePermission() {
-    int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.GET_ACCOUNTS);
+    int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
     if (result == PackageManager.PERMISSION_GRANTED) {
       return true;
     } else {

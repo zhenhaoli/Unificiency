@@ -61,6 +61,7 @@ public class RegisterActivity extends AuthActivity {
           .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
           .setAnimations(Style.ANIMATIONS_SCALE)
           .show();
+      return;
     }
 
     hideKeyboard();
