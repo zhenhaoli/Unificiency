@@ -62,7 +62,7 @@ public class GroupNew extends AppCompatActivity {
 
 
       UnificiencyClient client = new PythonAPIClient();
-      String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+      String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
       client.addHeader("Authorization", authToken);
       client.post("groups/", params, new JsonHttpResponseHandler() {
         @Override

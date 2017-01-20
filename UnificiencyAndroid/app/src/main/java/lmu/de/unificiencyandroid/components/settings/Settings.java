@@ -38,7 +38,7 @@ public class Settings extends Fragment {
   TextInputEditText nickName_editor, majorName_editor,text_email;
 
   public void getUserInfo() {
-    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
 
@@ -78,7 +78,7 @@ public class Settings extends Fragment {
     String majorName = this.majorName_editor.getText().toString();
     String email = this.text_email.getText().toString();
 
-    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
     params.put("username",nickName);

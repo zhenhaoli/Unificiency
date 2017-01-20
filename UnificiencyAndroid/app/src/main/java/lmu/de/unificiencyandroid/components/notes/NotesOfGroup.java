@@ -53,7 +53,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
 
       avi.show();
 
-      String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+      String authToken =  SharedPref.getDefaults("authToken", getContext());
 
       UnificiencyClient client = new PythonAPIClient();
       client.addHeader("Authorization", authToken);

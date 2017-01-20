@@ -103,7 +103,7 @@ public class NotesTab extends Fragment {
 
   public void getTabsForMyGroups(final View view){
     avi.show();
-    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
     params.put("isMember", true);

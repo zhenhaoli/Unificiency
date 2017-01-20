@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import com.github.johnpersano.supertoasts.library.Style;
 import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +27,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.network.NodeAPIClient;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
@@ -55,27 +54,19 @@ public class GroupsAll extends Fragment {
 
   public void bindGroupData(){
     avi.show();
-    String authTokenPython =  SharedPref.getDefaults("authTokenPython", getContext());
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
-    final RequestParams params = new RequestParams();
-    params.put("pythonToken", authTokenPython);
-    params.setUseJsonStreamer(true);
-    UnificiencyClient client = new NodeAPIClient();
-    client.addHeader("Authorization", "Bearer " + authToken);
-    client.get("groups", params, new JsonHttpResponseHandler() {
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+
+    client.get("groups/lmu/", null, new JsonHttpResponseHandler() {
       @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-      }
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
-        // Pull out the first event on the public timeline
         try {
           Log.d("Groups", groups.length()+"");
 

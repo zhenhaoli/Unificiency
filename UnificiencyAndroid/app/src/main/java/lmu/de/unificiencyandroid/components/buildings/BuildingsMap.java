@@ -71,7 +71,7 @@ public class BuildingsMap extends BuildingsBase implements
         } catch (SecurityException e) {
           Log.e(TAG, e.toString());
         }
-   
+
         // For zooming automatically to the location of the marker
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(48.1550023,11.5835939)).zoom(15).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

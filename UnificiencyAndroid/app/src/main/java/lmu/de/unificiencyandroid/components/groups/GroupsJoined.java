@@ -53,7 +53,7 @@ public class GroupsJoined extends Fragment {
 
   public void bindGroupData(){
     avi.show();
-    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
     params.put("isMember", true);

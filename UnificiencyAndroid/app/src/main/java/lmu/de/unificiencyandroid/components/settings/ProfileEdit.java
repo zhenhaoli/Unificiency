@@ -33,7 +33,7 @@ public class ProfileEdit extends AppCompatActivity {
   TextInputEditText nickName_editor, majorName_editor,text_email;
 
   public void getUserInfo() {
-    String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     final RequestParams params = new RequestParams();
 
@@ -75,7 +75,7 @@ public class ProfileEdit extends AppCompatActivity {
     String majorName = this.majorName_editor.getText().toString();
     String email = this.text_email.getText().toString();
 
-    String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     final RequestParams params = new RequestParams();
     params.put("username",nickName);

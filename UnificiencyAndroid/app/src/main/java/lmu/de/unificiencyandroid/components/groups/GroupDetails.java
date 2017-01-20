@@ -33,11 +33,6 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupDetails extends AppCompatActivity implements GroupPasswordEnterListener {
 
-  /*extras : groups_details_groupname_extra*/
-  GroupMemberAdapter adapter;
-  Group group;
-  Boolean isMemberInGroup;
-
   @BindView(R.id.group_details_name)
   TextView groupName;
 
@@ -56,6 +51,10 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   @BindView(R.id.groups_details_backButton)
   ImageView toolbar;
 
+  GroupMemberAdapter adapter;
+  Group group;
+  Boolean isMemberInGroup;
+
   @OnClick(R.id.groups_details_join)
   void joinGroup() {
     Boolean groupHasPassword = group.getHasPassword();
@@ -66,7 +65,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
     } else {
 
-      String authToken = SharedPref.getDefaults("authTokenPython", getApplicationContext());
+      String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
       UnificiencyClient client = new PythonAPIClient();
       client.addHeader("Authorization", authToken);
@@ -125,7 +124,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
   @OnClick(R.id.groups_details_leave)
   void leaveGroup() {
-    String authToken = SharedPref.getDefaults("authTokenPython", getApplicationContext());
+    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
@@ -188,7 +187,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
 
   public Group fetchGroupDetails(final Integer groupId){
-    String authToken =  SharedPref.getDefaults("authTokenPython", getApplicationContext());
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
@@ -269,7 +268,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   @Override
   public void onPwEntered(String pw) {
     Log.i("Password retrievied: ", pw);
-    String authToken = SharedPref.getDefaults("authTokenPython", getApplicationContext());
+    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
     Log.d("gd Token in sharedPref", authToken);
 

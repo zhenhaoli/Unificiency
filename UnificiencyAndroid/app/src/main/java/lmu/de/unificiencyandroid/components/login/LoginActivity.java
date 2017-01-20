@@ -94,7 +94,7 @@ public class LoginActivity extends AuthActivity {
             Log.e("JSON EER", e.toString());
           }
 
-          SharedPref.setDefaults("authTokenPython", tokenPython, getApplicationContext());
+          SharedPref.setDefaults("authToken", tokenPython, getApplicationContext());
 
           usernameWrapper.setErrorEnabled(false);
           passwordWrapper.setErrorEnabled(false);

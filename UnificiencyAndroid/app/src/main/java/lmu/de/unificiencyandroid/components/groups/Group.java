@@ -23,11 +23,4 @@ public class Group {
     this.members = members;
   }
 
-
-  @Override
-  public String toString() {
-    return "[" + topic + id.toString() +"]  " + name;
-  }
-
-
 }

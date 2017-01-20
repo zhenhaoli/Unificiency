@@ -37,7 +37,7 @@ public class Profile extends Fragment {
   //   ListView listView;
 
   public void getUserInfo() {
-    String authToken =  SharedPref.getDefaults("authTokenPython", getContext());
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     final RequestParams params = new RequestParams();
 
