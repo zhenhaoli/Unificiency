@@ -75,7 +75,7 @@ public class Room {
         message = "noch " + freeForMinutes() + "mins frei";
         break;
       case SOON_FREE: case LONG_WAITING:
-        message = "in " + untilFreeMinutes() + "frei";
+        message = "in " + untilFreeMinutes() +" für " + interval + " frei";
         break;
       case TAKEN:
         message = "nicht mehr frei" ;
