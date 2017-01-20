@@ -19,7 +19,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lmu.de.unificiencyandroid.components.account.Account;
 import lmu.de.unificiencyandroid.components.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.components.groups.GroupsTab;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
@@ -99,13 +98,6 @@ public class MainActivity extends AppCompatActivity{
             break;
           }
 
-          case R.id.nav_item_account: {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView,new Account()).commit();
-            getSupportActionBar().setTitle(getString(R.string.nav_item_account));
-            break;
-          }
-
           case R.id.nav_item_logout: {
             Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
@@ -134,7 +126,6 @@ public class MainActivity extends AppCompatActivity{
 
   }
 
-
   @Override
   public void onBackPressed() {
     new AlertDialog.Builder(this)
@@ -148,6 +139,5 @@ public class MainActivity extends AppCompatActivity{
         .setNegativeButton("Abbrechen", null)
         .show();
   }
-
 
 }

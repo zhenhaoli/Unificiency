@@ -57,11 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="100dp"
-                style="@style/AVLoadingIndicatorView.Large"
                 app:indicatorName="BallClipRotatePulseIndicator"
-                app:indicatorColor="@color/green_500"
-                />
-
+                app:indicatorColor="@color/green_500"/>
 
             <android.support.v7.widget.RecyclerView
 

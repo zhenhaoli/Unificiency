@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.GroupsAll;
-import lmu.de.unificiencyandroid.components.groups.GroupsJoined;
 
 public class SettingsTab extends Fragment {
 
@@ -53,7 +51,7 @@ public class SettingsTab extends Fragment {
     public Fragment getItem(int position)
     {
       switch (position){
-        case 0 : return new Settings();
+        case 0 : return new Profile();
         case 1 : return new Settings();
       }
       return null;

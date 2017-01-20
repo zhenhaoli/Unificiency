@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.account;
+package lmu.de.unificiencyandroid.components.settings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,9 +13,9 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 
 
-public class AccountAdapter extends ArrayAdapter {
+public class ProfileAdapter extends ArrayAdapter {
 
-    public AccountAdapter(Context context, int textViewResourceId,
+    public ProfileAdapter(Context context, int textViewResourceId,
                           List<Group> groups) {
         super(context, textViewResourceId, groups);
     }
