@@ -2,7 +2,7 @@ var connection = require('../db/connection');
 
 function Room() {
 
-  var hours = [6, 8, 10, 12, 14, 16, 18, 20, 22];
+  var hours = [6, 8, 10, 12, 14, 16, 18, 20];
   var minutes = [0, 15, 30, 45];
 
   var freeHours = [0, 1, 2, 3, 4];
