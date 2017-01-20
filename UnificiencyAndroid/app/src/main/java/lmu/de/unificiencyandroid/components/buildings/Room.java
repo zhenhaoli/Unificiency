@@ -58,7 +58,7 @@ public class Room {
 
   @Override
   public String toString() {
-    return "[" + level + "]  " + name + " (für " + interval + "mins)";
+    return name + " (für " + interval + "mins)";
   }
 
   public long untilFreeMinutes(){
