@@ -70,6 +70,9 @@
     <string name="toolbar_edit_profile">Profile editieren</string>
     <string name="save">Speichern</string>
     <string name="exit">Abmeldung</string>
+    <string name="dialog_exit">Unificieny beenden?</string>
+    <string name="yes">Ja</string>
+    <string name="cancel">Abbrechen</string>
 
 
 </resources>

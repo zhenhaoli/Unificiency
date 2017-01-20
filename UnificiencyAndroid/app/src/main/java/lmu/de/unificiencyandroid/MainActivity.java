@@ -45,29 +45,19 @@ public class MainActivity extends AppCompatActivity{
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    JodaTimeAndroid.init(this);
+    
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    JodaTimeAndroid.init(this);
+
     Log.d("fcm token", FirebaseInstanceId.getInstance().getToken());
     FirebaseMessaging.getInstance().subscribeToTopic("news");
 
-    /**
-     * To set our Toolbar Title depending on the current fragment
-     */
     setSupportActionBar(mActionBarToolbar);
-
-    /**
-     * Lets inflate the very first fragment
-     * Here , we are inflating the TabFragment as the first Fragment
-     */
 
     mFragmentManager = getSupportFragmentManager();
     mFragmentTransaction = mFragmentManager.beginTransaction();
     mFragmentTransaction.replace(R.id.containerView,new BuildingsTab()).commit();
-
-    /**
-     * Setup click events on the Navigation View Items.
-     */
 
     mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
       @Override
@@ -105,7 +95,7 @@ public class MainActivity extends AppCompatActivity{
           case R.id.nav_item_camera: {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.containerView,new ActivityThatStartsCamera()).commit();
-            getSupportActionBar().setTitle(getString(R.string.nav_item_setting));
+            getSupportActionBar().setTitle("Camera Test");
             break;
           }
 
@@ -123,16 +113,10 @@ public class MainActivity extends AppCompatActivity{
 
     });
 
-    /**
-     * Setup Drawer Toggle of the Toolbar
-     */
-
-    android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-    ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, toolbar,R.string.app_name,
+    ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, mActionBarToolbar, R.string.app_name,
         R.string.app_name);
 
     mDrawerLayout.addDrawerListener(mDrawerToggle);
-
     mDrawerToggle.syncState();
 
   }
@@ -140,15 +124,14 @@ public class MainActivity extends AppCompatActivity{
   @Override
   public void onBackPressed() {
     new AlertDialog.Builder(this)
-        .setMessage("Unificieny beenden?")
+        .setMessage(getString(R.string.dialog_exit))
         .setCancelable(false)
-        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int id) {
             MainActivity.this.finish();
           }
         })
-        .setNegativeButton("Abbrechen", null)
+        .setNegativeButton(getString(R.string.cancel), null)
         .show();
   }
-
 }
