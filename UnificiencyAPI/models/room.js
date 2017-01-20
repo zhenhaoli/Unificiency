@@ -2,6 +2,12 @@ var connection = require('../db/connection');
 
 function Room() {
 
+  var hours = [6, 8, 10, 12, 14, 16, 18, 20, 22];
+  var minutes = [0, 15, 30, 45];
+
+  var freeHours = [0, 1, 2, 3, 4];
+  var freeMinutes = [15, 30, 45];
+
   this.getByBuildingPartAdrress = function(req, res) {
 
     connection.acquire(function(err, con) {
@@ -21,17 +27,20 @@ where bp.address = ?
 
         rooms.forEach( (g,i) => {
 
-          if (i % 5) g.available = false;
-          else  g.available = true;
+          g.freeFromHour = hours[i% (hours.length)];
+          g.freeFromMinutes = minutes[i% (minutes.length)];
+
+          g.freeToHour = g.freeFromHour +  freeHours[i% (freeHours.length)];
+          g.freeToMinutes = g.freeFromMinutes + freeMinutes[i% (freeMinutes.length)];
           return g;
         })
 
-      res.json(rooms);
+        res.json(rooms);
 
+      });
+      con.release();
     });
-    con.release();
-  });
-};
+  };
 
 }
 
