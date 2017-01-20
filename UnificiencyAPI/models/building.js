@@ -56,7 +56,7 @@ function Building() {
           var dLng = deg2rad(source.lng - target.lng);
           var a =
               Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+              Math.cos(deg2rad(target.lat)) * Math.cos(deg2rad(source.lat)) *
               Math.sin(dLng / 2) * Math.sin(dLng / 2)
             ;
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
