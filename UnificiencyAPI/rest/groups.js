@@ -14,7 +14,7 @@ module.exports = {
     app.use('/groups', jwtCheck);
 
     app.get('/groups', function(req, res) {
-
+      console.log(req.body.pythonToken)
       unirest
         .get(config.pythonAPI + 'groups/lmu/')
         .headers({
