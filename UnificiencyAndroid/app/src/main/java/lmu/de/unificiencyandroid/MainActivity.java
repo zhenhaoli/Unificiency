@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.components.buildings.BuildingsTab;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    JodaTimeAndroid.init(this);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     Log.d("fcm token", FirebaseInstanceId.getInstance().getToken());

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.joda.time.LocalTime;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import java.util.Random;
+
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
@@ -27,8 +31,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 public class BuildingDetails extends AppCompatActivity {
 
 
-  List<Room> rooms_taken = new ArrayList<Room>();
-  List<Room> rooms_availabe= new ArrayList<Room>();
+  ArrayList<Room> rooms = new ArrayList<Room>();
 
   BuildingDetailsAdapter buildingDetailsAdapter;
 
@@ -81,23 +84,20 @@ public class BuildingDetails extends AppCompatActivity {
             String level = rooms.getJSONObject(i).getString("level");
             String address = rooms.getJSONObject(i).getString("address");
             Boolean available = rooms.getJSONObject(i).getBoolean("available");
-            if(!available) {
-              rooms_taken.add(new Room(name, level, address, available));
-            } else {
-              rooms_availabe.add(new Room(name, level, address, available));
+            LocalTime from_ = new LocalTime(10,15);
+            LocalTime to_ = new LocalTime(12,15);
+            LocalTime from = new LocalTime(15,30);
+            LocalTime to = new LocalTime(17,30);
+            if(i%2 == 0){
+              BuildingDetails.this.rooms.add(new Room(name, level, address,from_,to_));
             }
+            else {
+              BuildingDetails.this.rooms.add(new Room(name, level, address,from,to));
+            }
+
           }
 
-          buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this);
-
-          for (Room room : rooms_availabe) {
-            if(room.getAvailable()) buildingDetailsAdapter.addItem(room.toString());
-          }
-
-          for (Room room : rooms_taken) {
-            if(!room.getAvailable()) buildingDetailsAdapter.addItem(room.toString());
-          }
-
+          buildingDetailsAdapter = new BuildingDetailsAdapter(BuildingDetails.this, BuildingDetails.this.rooms);
           section_listview.setAdapter(buildingDetailsAdapter);
 
         } catch (Exception e) {
