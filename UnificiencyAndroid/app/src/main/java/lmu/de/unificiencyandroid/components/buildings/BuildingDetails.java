@@ -89,12 +89,17 @@ public class BuildingDetails extends AppCompatActivity {
             LocalTime from_ = new LocalTime(10,15);
             LocalTime to_ = new LocalTime(12,15);
             LocalTime from = new LocalTime(15,30);
-            LocalTime to = new LocalTime(17,30);
+            LocalTime to = new LocalTime(19,30);
+            LocalTime from__ = new LocalTime(18,10);
+            LocalTime to__ = new LocalTime(20,30);
             if(i%2 == 0){
               BuildingDetails.this.rooms.add(new Room(name, level, address,from_,to_));
             }
-            else {
+            else if(i%5 == 0) {
               BuildingDetails.this.rooms.add(new Room(name, level, address,from,to));
+            }
+            else {
+              BuildingDetails.this.rooms.add(new Room(name, level, address,from__,to__));
             }
 
           }

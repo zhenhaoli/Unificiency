@@ -42,7 +42,7 @@ public class Room {
     }
     else if(untilFreeMinutes > 0 && untilFreeMinutes <= 30) {
       state = State.SOON_FREE;
-    } else if (untilFreeMinutes > 0 && untilFreeMinutes >= 30 && untilFreeMinutes <= 60) {
+    } else if (untilFreeMinutes > 0 && untilFreeMinutes >= 35 && untilFreeMinutes <= 60) {
       state = State.LONG_WAITING;
     } else {
       state = State.TAKEN;
