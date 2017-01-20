@@ -51,6 +51,18 @@ public class RegisterActivity extends AuthActivity {
 
   @OnClick(R.id.register)
   void register() {
+
+    if(!isNetworkAvailable()){
+      SuperActivityToast.cancelAllSuperToasts();
+      SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
+          .setText("Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!")
+          .setDuration(Style.DURATION_LONG)
+          .setFrame(Style.FRAME_KITKAT)
+          .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
+          .setAnimations(Style.ANIMATIONS_SCALE)
+          .show();
+    }
+
     hideKeyboard();
 
     String username = usernameWrapper.getEditText().getText().toString();
