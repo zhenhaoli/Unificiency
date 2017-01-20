@@ -32,6 +32,7 @@ public class BuildingsMap extends BuildingsBase implements
 
   @BindView(R.id.mapView)
   MapView mMapView;
+
   Location mLastLocation;
   GoogleMap googleMap;
 
@@ -48,7 +49,7 @@ public class BuildingsMap extends BuildingsBase implements
         myLat = mLastLocation.getLatitude();
         myLng = mLastLocation.getLongitude();
       }
-      
+
       LatLng myPos = new LatLng(myLat, myLng);
 
       // For zooming automatically to the location of the marker
