@@ -9,30 +9,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.orhanobut.logger.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
+import butterknife.OnItemClick;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.network.NodeAPIClient;
-import lmu.de.unificiencyandroid.network.UnificiencyClient;
-import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingsAll extends BuildingsBase {
 
-  @BindView(R.id.avi)
-  com.wang.avi.AVLoadingIndicatorView avi;
-
   @BindView(R.id.all_building_listview)
   GridView allBuildings;
+
+  @OnItemClick(R.id.all_building_listview)
+  public void onBuildingClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+  {
+    Building building = (Building) allBuildings.getItemAtPosition(position);
+    Intent buildungDetails = new Intent(getActivity(),BuildingDetails.class);
+    buildungDetails.putExtra("address", building.getAddress());
+    buildungDetails.putExtra("city", building.getCity());
+
+    startActivity(buildungDetails);
+  }
 
   @Nullable
   @Override
@@ -42,69 +38,11 @@ public class BuildingsAll extends BuildingsBase {
     View view = inflater.inflate(R.layout.buildings_all,null);
     ButterKnife.bind(this, view);
 
-    loadData();
+    BuildingsAllAdapter adapter= new BuildingsAllAdapter(getContext(), buildings);
+
+    allBuildings.setAdapter(adapter);
+
     return view;
-  }
-
-  public void loadData() {
-    avi.show();
-
-    UnificiencyClient client = new NodeAPIClient();
-
-    client.get("buildings", null, new JsonHttpResponseHandler() {
-
-      @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        super.onFailure(statusCode, headers, throwable, errorResponse);
-        Logger.e(errorResponse.toString());
-        Message.fail(getContext(), errorResponse.toString());
-      }
-
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
-        try {
-          Logger.d(buildings.length() +" buildings got");
-
-          List<Building> buildingsFromServer = new ArrayList<>();
-          for(int i=0; i<buildings.length(); i++){
-
-            String address = buildings.getJSONObject(i).getString("address");
-            String city = buildings.getJSONObject(i).getString("city");
-            Double lat = buildings.getJSONObject(i).getDouble("lat");
-            Double lng = buildings.getJSONObject(i).getDouble("lng");
-
-            buildingsFromServer.add(new Building(address, city, lat, lng));
-          }
-
-          BuildingsAllAdapter adapter= new BuildingsAllAdapter(getContext(), buildingsFromServer);
-
-          allBuildings.setAdapter(adapter);
-
-          allBuildings.setOnItemClickListener(new AdapterView.OnItemClickListener()
-          {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-            {
-
-              Building building=(Building) allBuildings.getItemAtPosition(position);
-
-              Intent buildungDetails=new Intent(getActivity(),BuildingDetails.class);
-              buildungDetails.putExtra("address", building.getAddress());
-              buildungDetails.putExtra("city", building.getCity());
-
-              startActivity(buildungDetails);
-
-            }
-          });
-
-        } catch (Exception e) {
-          Logger.e(e, "Exception");
-          Message.fail(getContext(), e.toString());
-        } finally {
-          avi.hide();
-        }
-      }
-    });
   }
 
 }
