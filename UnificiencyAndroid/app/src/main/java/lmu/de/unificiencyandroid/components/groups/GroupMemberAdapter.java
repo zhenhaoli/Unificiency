@@ -17,6 +17,7 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 
 public class GroupMemberAdapter extends ArrayAdapter<String> {
+
   public GroupMemberAdapter(Context context, List<String> members) {
     super(context, 0, members);
   }

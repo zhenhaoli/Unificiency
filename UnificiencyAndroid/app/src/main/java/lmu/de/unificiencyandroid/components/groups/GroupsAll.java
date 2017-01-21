@@ -9,12 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,10 +29,10 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
+import static com.orhanobut.logger.Logger.e;
+
 
 public class GroupsAll extends Fragment {
-
-  static final String TAG = GroupsAll.class.getName();
 
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
@@ -60,14 +60,14 @@ public class GroupsAll extends Fragment {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         Message.fail(getContext(), errorResponse.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
         try {
-          Log.d(TAG, groups.length()+" groups got");
+          Logger.d(groups.length() + " groups got");
 
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
@@ -93,7 +93,7 @@ public class GroupsAll extends Fragment {
           groupsRecyclerView.setAdapter(groupsAdapter);
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          e(e, "Exception");
 
         } finally {
           avi.hide();
@@ -111,15 +111,16 @@ public class GroupsAll extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
+
     View view = inflater.inflate(R.layout.groups, container, false);
     groupsRecyclerView = (RecyclerView) view.findViewById(R.id.groups_recycler_view);
-    //fix scrolling issues when inside a nestedScrollView
+
     groupsRecyclerView.setNestedScrollingEnabled(false);
-    // use a linear layout manager
+
     groupsLayoutManager = new LinearLayoutManager(this.getActivity());
     groupsRecyclerView.setLayoutManager(groupsLayoutManager);
     setupViewReferences(view);
+
     this.groupsScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
       @Override
       public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
@@ -129,13 +130,14 @@ public class GroupsAll extends Fragment {
         }
       }
     });
+
     this.addNewGroupBtn.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         onAddGroup(view);
       }
     });
     this.groupsRecyclerView.setVerticalScrollBarEnabled(true);
-    //bind to data
+
     bindGroupData();
     return view;
   }
@@ -158,7 +160,7 @@ public class GroupsAll extends Fragment {
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Log.d(TAG, "user canceled group creation");
+        Logger.d("User canceled group creation");
       }
     }
   }//onActivityResult

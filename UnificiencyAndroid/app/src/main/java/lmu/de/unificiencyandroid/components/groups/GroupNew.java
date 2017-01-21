@@ -7,13 +7,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -31,8 +31,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupNew extends AppCompatActivity {
-
-  static final String TAG = GroupNew.class.getName();
 
   @BindView(R.id.groups_new_group_create)
   Button createButton;
@@ -77,7 +75,7 @@ public class GroupNew extends AppCompatActivity {
       client.post("groups/", params, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          Log.d(TAG, response.toString());
+          Logger.json(response.toString());
 
           Intent intent = new Intent();
           intent.putExtra("createGroupSuccess", "Gruppe erfolgreich erstellt!");
@@ -91,7 +89,7 @@ public class GroupNew extends AppCompatActivity {
           try {
             errMsg = errorResponse.getString("message");
           } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e, "Exception");
           }
 
           Message.fail(GroupNew.this, errMsg);

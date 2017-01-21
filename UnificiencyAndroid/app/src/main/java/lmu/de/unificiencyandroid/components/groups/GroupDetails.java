@@ -3,7 +3,6 @@ package lmu.de.unificiencyandroid.components.groups;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,8 +31,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupDetails extends AppCompatActivity implements GroupPasswordEnterListener {
-
-  static final String TAG = GroupDetails.class.getName();
 
   @BindView(R.id.group_details_name)
   TextView groupName;
@@ -84,7 +82,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         try {
           res = response.getString("message");
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
 
         String[] msg = res.split("\\s+");
@@ -97,12 +95,12 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
         Message.fail(GroupDetails.this, errmsg);
       }
@@ -146,7 +144,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
           res = response.getString("message");
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
 
         String[] msg = res.split("\\s+");
@@ -160,12 +158,12 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
         Message.fail(GroupDetails.this, errmsg);
       }
@@ -199,7 +197,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
             memberNames.add(membersJSON.getJSONObject(j).getString("username"));
           }
         } catch (Exception e){
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
           Message.fail(GroupDetails.this, e.toString());
         }
 
@@ -214,16 +212,15 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
         Message.fail(GroupDetails.this, errmsg);
       }
-
     });
     return group;
   }

@@ -9,13 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,8 +31,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupsJoined extends Fragment {
-
-  static final String TAG = GroupsJoined.class.getName();
 
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
@@ -63,7 +61,7 @@ public class GroupsJoined extends Fragment {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         Message.fail(getContext(), errorResponse.toString());
       }
 
@@ -71,7 +69,7 @@ public class GroupsJoined extends Fragment {
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
 
         try {
-          Log.d(TAG, groups.length() + " my groups got");
+          Logger.d(groups.length() + " my groups got");
 
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){
@@ -97,7 +95,7 @@ public class GroupsJoined extends Fragment {
           groupsRecyclerView.setAdapter(groupsAdapter);
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
 
         } finally {
           avi.hide();
@@ -162,7 +160,7 @@ public class GroupsJoined extends Fragment {
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Log.d(TAG, "user canceled group creation");
+        Logger.d("user canceled group creation");
       }
     }
   }//onActivityResult
