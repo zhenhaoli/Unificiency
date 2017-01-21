@@ -1,70 +1,120 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONObject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
+import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class NoteNew extends AppCompatActivity {
 
-    private Button createButton;
-    private TextInputLayout topic;
-    private TextInputLayout content;
-    private TextInputLayout name;
-    private TextInputLayout password;
+  @BindView(R.id.my_toolbar_note)
+  Toolbar toolbar;
 
-    public void setupViewReferences() {
-        this.createButton = (Button) findViewById(R.id.notes_new_note_create);
-        this.topic = (TextInputLayout) findViewById(R.id.notes_new_new_topic);
-        this.name = (TextInputLayout) findViewById(R.id.notes_new_note_name);
-        this.password = (TextInputLayout) findViewById(R.id.notes_new_note_password);
-        this.content = (TextInputLayout) findViewById(R.id.notes_new_note_content);
-    }
+  @BindView(R.id.notes_new_new_topic)
+  TextInputLayout topic;
 
-    public void setupToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_note);
-        toolbar.setTitle(R.string.notes_new_note_title);
-        setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-    }
+  @BindView(R.id.notes_new_note_name)
+  TextInputLayout name;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.note_new);
-        setupViewReferences();
-        setupToolbar();
+  @BindView(R.id.notes_new_note_content)
+  TextInputLayout content;
 
-        this.name.getEditText().setText("Notizname ");
-        this.content.getEditText().setText("Notizinhalt");
-        this.password.getEditText().setText("123456");
+  @BindView(R.id.notes_new_note_create)
+  Button createButton;
 
-        this.createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+  @OnClick(R.id.notes_new_note_create)
+  public void uploadNote(){
 
-            }
-        });
-    }
-    /* restore back button functionality*/
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home: {
-                onBackPressed();
-                return true;
-            }
-            default:{return super.onOptionsItemSelected(item);}
+    //TODO: read from form field!!
+    Integer groupId = 0;
 
+    String name = this.name.getEditText().getText().toString();
+    String content = this.content.getEditText().getText().toString();
+    String topic =  this.topic.getEditText().getText().toString();
+
+    final RequestParams params = new RequestParams();
+    params.put("topic", topic);
+    params.put("name", name);
+    params.put("content", content);
+    params.setUseJsonStreamer(true);
+
+    UnificiencyClient client = new PythonAPIClient();
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    client.addHeader("Authorization", authToken);
+    client.post("notes/" + groupId, params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Logger.json(response.toString());
+
+        Intent intent = new Intent();
+        intent.putExtra("success", "Note erfolgreich erstellt!");
+        setResult(Activity.RESULT_OK,intent);
+        finish();
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        String errMsg = null;
+        try {
+          errMsg = errorResponse.getString("message");
+        } catch (Exception e) {
+          Logger.e(e, "Exception");
         }
+
+        Message.fail(NoteNew.this, errMsg);
+      }
+    });
+  }
+
+
+  public void setupToolbar(){
+    toolbar.setTitle(R.string.notes_new_note_title);
+    setSupportActionBar(toolbar);
+    ActionBar ab = getSupportActionBar();
+    ab.setHomeButtonEnabled(true);
+    ab.setDisplayHomeAsUpEnabled(true);
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.note_new);
+    ButterKnife.bind(this);
+    setupToolbar();
+  }
+  /* restore back button functionality*/
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()){
+      case android.R.id.home: {
+        onBackPressed();
+        return true;
+      }
+      default:{return super.onOptionsItemSelected(item);}
+
     }
+  }
 
 }
