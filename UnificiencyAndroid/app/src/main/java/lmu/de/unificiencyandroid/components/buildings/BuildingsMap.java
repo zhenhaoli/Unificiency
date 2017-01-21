@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.utils.Message;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 public class BuildingsMap extends BuildingsBase implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -70,7 +67,7 @@ public class BuildingsMap extends BuildingsBase implements
           googleMap.setMyLocationEnabled(true);
 
         } catch (SecurityException e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
         }
 
         // For zooming automatically to the location of the marker
