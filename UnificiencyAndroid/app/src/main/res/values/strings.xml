@@ -32,16 +32,17 @@
     <string name="groups_details_join">Beitreten</string>
     <string name="groups_details_leave">Verlassen</string>
     <string name="groups_details_modify">Info Bearbeiten</string>
+
     <!-- Group Details -->
     <string name="groups_details_password_message">Passwort eingeben</string>
     <string name="groups_details_password_title">Diese Gruppe verlangt ein Passwort</string>
     <string name="groups_details_password_default">Hier Passwort eingeben</string>
     <string name="groups_details_password_send">Senden</string>
     <string name="groups_details_password_cancel">Abbrechen</string>
+    <string name="groups_details_groupname_extra">groups_details_groupname</string>
     <string name="title_activity_group_details">GroupDetails</string>
     <string name="title_activity_maps">Map</string>
-    <!-- Groups Fragment Extras -->
-    <string name="groups_details_groupname_extra">groups_details_groupname</string>
+
     <!--  Group -->
     <string name="groups_new_group_title">Neue Gruppe erstellen</string>
     <string name="groups_new_group_create">Erstellen</string>
@@ -64,20 +65,25 @@
     <string name="notes_new_note_name">Notizenname eingeben</string>
     <string name="notes_new_note_content">Notizinhalt eingeben</string>
     <string name="notes_new_note_password">Passwort eingeben (optional)</string>
-    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe sehen.</string>
-
+    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen.</string>
+    <string name="notes_edit_note_information">Hier können Sie diese Notiz bearbeiten.</string>
 
     <!-- Settings and Eidt -->
     <string name="setting_hint">Hier können Sie Ihr Nickname and Studiengang verändern und speichern.</string>
     <string name="edit_hint">Hier können Sie Ihr Profile editieren und speichern. Durch Drucken des Bilds können Sie Ihr ProfileBild ändern.</string>
     <string name="toolbar_edit_profile">Profile editieren</string>
-    <string name="save">Speichern</string>
     <string name="exit">Abmeldung</string>
     <string name="dialog_exit">Unificieny beenden?</string>
-    <string name="yes">Ja</string>
-    <string name="cancel">Abbrechen</string>
+
 
     <!-- Server Feedback -->
     <string name="server_error">Fehler beim Server, bitte später nochmal versuchen</string>
+
+    <!-- General -->
+    <string name="save">Speichern</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="remove">Löschen</string>
+    <string name="yes">Ja</string>
+    <string name="cancel">Abbrechen</string>
 
 </resources>

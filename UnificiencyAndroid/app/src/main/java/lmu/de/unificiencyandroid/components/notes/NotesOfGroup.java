@@ -1,5 +1,6 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 import static java.lang.Boolean.TRUE;
@@ -65,12 +67,13 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
 
             List<Note> notesFromServer = new ArrayList<>();
             for(int i=0; i<notesOfGroup.length(); i++){
+              Integer id = notesOfGroup.getJSONObject(i).getInt("id");
               String topic = notesOfGroup.getJSONObject(i).getString("topic");
               String name = notesOfGroup.getJSONObject(i).getString("name");
               String content = notesOfGroup.getJSONObject(i).getString("content");
               String createdBy = notesOfGroup.getJSONObject(i).getJSONObject("creator").getString("username");
 
-              notesFromServer.add(new Note(topic, name, content, createdBy, null));
+              notesFromServer.add(new Note(id, topic, name, content, createdBy, null));
             }
 
             notes = notesFromServer;
@@ -103,12 +106,33 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   }
 
   public void onItemClick(View view, int position) {
-    Note note= notes.get(position);
-    Intent notesDetails=new Intent(getActivity(),NoteDetails.class);
+    Note note = notes.get(position);
+
+    Intent notesDetails=new Intent(getActivity(), NoteDetails.class);
+    notesDetails.putExtra("noteId", note.getNoteID());
     notesDetails.putExtra("course", note.getTopic());
     notesDetails.putExtra("title", note.getTitle());
     notesDetails.putExtra("content", note.getContent());
     notesDetails.putExtra("creator", note.getCreatedBy());
-    startActivity(notesDetails);
+
+    startActivityForResult(notesDetails, 1);
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    if (requestCode == 1) {
+      if(resultCode == Activity.RESULT_OK){
+
+        Bundle extras = data.getExtras();
+        String message;
+
+        if (extras != null) {
+          message = extras.getString("success");
+          Message.success(getContext(), message);
+        }
+
+      }
+    }
   }
 }

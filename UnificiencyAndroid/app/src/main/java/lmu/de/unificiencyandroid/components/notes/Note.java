@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Note {
+  private Integer noteID;
   private String topic;
   private String title;
   private String content;

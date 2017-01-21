@@ -31,12 +31,12 @@ public class NotesPublic extends Fragment implements NoteClickListener {
 
 
    public static List<Note> publicNotes = Arrays.asList(
-          new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
-          new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),
-          new Note("IV", "GPS", "Outdoor Positioning", "Jin", 12),
-          new Note("MMu2", "REST", "CRUD with HTTP", "Zhen", 3),
-          new Note("itsec", "REST", "CRUD with HTTP", "Zhen", 5),
-          new Note("itjur", "REST", "CRUD with HTTP", "Zhen", 9)
+          new Note(1, "MSP", "REST", "CRUD with HTTP", "Zhen", 8),
+          new Note(2, "MMN", "Bluetooth", "Connectivity", "Rob",6),
+          new Note(3, "IV", "GPS", "Outdoor Positioning", "Jin", 12),
+          new Note(4, "MMu2", "REST", "CRUD with HTTP", "Zhen", 3),
+          new Note(5, "itsec", "REST", "CRUD with HTTP", "Zhen", 5),
+          new Note(6, "itjur", "REST", "CRUD with HTTP", "Zhen", 9)
    );
 
     public void onAddNote(View view) {

@@ -63,9 +63,28 @@
                 android:id="@+id/note_detail_content"
                 android:layout_below="@id/note_detail_rating"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:background="@color/cyan_100"
                 android:textSize="20sp" />
+
+            <Button
+                android:theme="@style/DangerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete"
+                android:text="@string/remove"
+                android:background="@color/red_400"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit"
+                android:text="@string/edit"
+                android:background="@color/green_400"
+                android:layout_above="@id/delete"/>
+
+
         </RelativeLayout>
 
 </LinearLayout>

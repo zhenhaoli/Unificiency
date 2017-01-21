@@ -28,11 +28,11 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
     private NoteDividerItemDecoration mDividerItemDecoration;
 
     List<Note> favoriteNotes = Arrays.asList(
-            new Note("Favorite_Note1", "Bluetooth", "Connectivity", "Rob", 6),
-            new Note("Favorite_Note3", "GPS", "Outdoor Positioning", "Jin", 12),
-            new Note("Favorite_Note4", "REST", "CRUD with HTTP", "Zhen", 3),
-            new Note("Favorite_Note2", "REST", "CRUD with HTTP", "Zhen", 5),
-            new Note("Favorite_Note5", "REST", "CRUD with HTTP", "Zhen", 9)
+            new Note(1, "Favorite_Note1", "Bluetooth", "Connectivity", "Rob", 6),
+            new Note(2, "Favorite_Note3", "GPS", "Outdoor Positioning", "Jin", 12),
+            new Note(3, "Favorite_Note4", "REST", "CRUD with HTTP", "Zhen", 3),
+            new Note(4, "Favorite_Note2", "REST", "CRUD with HTTP", "Zhen", 5),
+            new Note(5, "Favorite_Note5", "REST", "CRUD with HTTP", "Zhen", 9)
     );
 
     @Nullable
