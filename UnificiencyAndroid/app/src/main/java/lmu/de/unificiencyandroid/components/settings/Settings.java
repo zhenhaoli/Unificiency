@@ -5,30 +5,24 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
-
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
-
-import static java.security.AccessController.getContext;
 
 public class Settings extends Fragment {
 
@@ -93,16 +87,8 @@ public class Settings extends Fragment {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // Pull out the first event on the public timeline
         try {
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-              .setText(response.toString())
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
+          Message.success(getContext(), response.toString());
 
         } catch (Exception e) {
           Log.e("modifyUserInfo", "success");

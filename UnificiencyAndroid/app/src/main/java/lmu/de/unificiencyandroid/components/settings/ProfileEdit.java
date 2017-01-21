@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -24,6 +21,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class ProfileEdit extends AppCompatActivity {
@@ -54,9 +52,6 @@ public class ProfileEdit extends AppCompatActivity {
           majorName_editor.setText(majorName);
           text_email.setText(email);
 
-
-
-
         } catch (Exception e) {
           Log.e("getUserInfo", e.toString());
         }
@@ -64,7 +59,6 @@ public class ProfileEdit extends AppCompatActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, String errmsg, Throwable throwable) {
         Log.e("getUserInfo", errmsg);
-
       }
     });
   }
@@ -90,7 +84,6 @@ public class ProfileEdit extends AppCompatActivity {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // Pull out the first event on the public timeline
         try {
 
           Intent intent = new Intent();
@@ -111,15 +104,7 @@ public class ProfileEdit extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(getApplicationContext(), new Style(), Style.TYPE_STANDARD)
-            .setText(errmsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
+        Message.fail(ProfileEdit.this, errmsg);
       }
     });
   }
@@ -138,14 +123,11 @@ public class ProfileEdit extends AppCompatActivity {
 
     getUserInfo();
 
-
     save.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         setUserInfo();
       }
     });
-
-
 
   }
 
@@ -167,7 +149,6 @@ public class ProfileEdit extends AppCompatActivity {
         return true;
       }
       default:{return super.onOptionsItemSelected(item);}
-
     }
   }
 }

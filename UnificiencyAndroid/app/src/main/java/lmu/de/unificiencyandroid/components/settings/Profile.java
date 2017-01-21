@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -24,6 +21,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class Profile extends Fragment {
@@ -33,8 +31,6 @@ public class Profile extends Fragment {
   TextView stars_nummber, notes_nummber;
   RoundImageView roundImageView;
   FloatingActionButton edit_btn;
-
-  //   ListView listView;
 
   public void getUserInfo() {
     String authToken =  SharedPref.getDefaults("authToken", getContext());
@@ -57,7 +53,6 @@ public class Profile extends Fragment {
           name_Account.setText(nickName);
           major_Account.setText(majorName);
           email_Account.setText(email);
-
 
         } catch (Exception e) {
           Log.e("getUserInfo", e.toString());
@@ -93,37 +88,11 @@ public class Profile extends Fragment {
       }
     });
 
-    //      listView=(ListView) view.findViewById(R.id.group_list_account);
-    //       name_Account.setText("ostdong");
-    //       email_Account.setText("ostdong@gmail.com");
-    //      major_Account.setText("informatik");
-
     stars_nummber.setText("18");
     notes_nummber.setText("6");
 
     getUserInfo();
 
-    //fake data
-  /*      ArrayList<String> GroupMember =new ArrayList<String>(){{
-            add("Zhenhao");
-            add("Robert");
-            add("Jindong");
-        }};
-
-
-        List<Group> groups = Arrays.asList(
-            new Group(1,"Group_Name_1", "MSP", "description", GroupMember, false),
-            new Group(2, "Group_Name_2", "GPS", "description", GroupMember,false),
-            new Group(3, "Group_Name_3", "REST","description",  GroupMember, false),
-            new Group(4, "Group_Name_4", "MSP","description",  GroupMember, false),
-            new Group(5, "Group_Name_5", "GPS", "description", GroupMember,false),
-            new Group(6, "Group_Name_6", "REST","description",  GroupMember, false)
-        );
-
-        ProfileAdapter adapter= new ProfileAdapter(getContext(), android.R.layout.simple_list_item_1, groups);
-        listView.setAdapter(adapter);
-
-*/
     return view;
   }
 
@@ -134,27 +103,18 @@ public class Profile extends Fragment {
       if(resultCode == Activity.RESULT_OK){
 
         Bundle extras = data.getExtras();
-        String registeredMsg;
+        String message;
 
         getUserInfo();
 
         if (extras != null) {
-          registeredMsg = extras.getString("saveSuccess");
-          SuperActivityToast.cancelAllSuperToasts();
-          SuperActivityToast.create(getContext(), new Style(), Style.TYPE_STANDARD)
-              .setText(registeredMsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
-
-
+          message = extras.getString("saveSuccess");
+          Message.success(getContext(), message);
         }
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        //Write your code if there's no result
+        Log.d("", "user canceled editing profile");
       }
     }
   }//onActivityResult

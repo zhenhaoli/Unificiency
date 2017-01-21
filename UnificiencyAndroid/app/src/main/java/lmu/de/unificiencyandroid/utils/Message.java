@@ -33,6 +33,4 @@ public final class Message {
         .setAnimations(Style.ANIMATIONS_SCALE)
         .show();
   }
-
-
 }
