@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -26,7 +26,6 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class Settings extends Fragment {
 
-//  Button groupManagement, notesManagement;
   Button save,exit;
 
   TextInputEditText nickName_editor, majorName_editor,text_email;
@@ -53,14 +52,13 @@ public class Settings extends Fragment {
           majorName_editor.setText(majorName);
           text_email.setText(email);
 
-
         } catch (Exception e) {
-          Log.e("getUserInfo", e.toString());
+          Logger.e(e, "Exception");
         }
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, String errmsg, Throwable throwable) {
-        Log.e("getUserInfo", errmsg);
+        Logger.e(errmsg);
 
       }
     });
@@ -91,18 +89,19 @@ public class Settings extends Fragment {
           Message.success(getContext(), response.toString());
 
         } catch (Exception e) {
-          Log.e("modifyUserInfo", "success");
+          Logger.e(e, "Exception");
         }
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("modifyUserInfo", errorResponse.toString());
+        Logger.e(errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-
+          Logger.e(e, "Exception");
         }
+        Message.fail(getContext(), errmsg);
       }
     });
   }
@@ -122,23 +121,6 @@ public class Settings extends Fragment {
 
     getUserInfo();
 
-/*
-    groupManagement = (Button) view.findViewById(R.id.groups_management);
-    notesManagement = (Button) view.findViewById(R.id.notes_management);
-    groupManagement.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        Intent settingGroups=new Intent(getActivity(),SettingsGroups.class);
-        startActivity(settingGroups);
-
-      }
-    });
-    notesManagement.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        Intent settingNotes=new Intent(getActivity(),SettingsNotes.class);
-        startActivity(settingNotes);
-
-      }
-    }); */
     save.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         setUserInfo();
@@ -150,7 +132,6 @@ public class Settings extends Fragment {
         startActivity(intent);
       }
     });
-
 
     return view;
 

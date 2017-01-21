@@ -18,27 +18,20 @@ public class SettingsTab extends Fragment {
 
   public static PagerSlidingTabStrip tabLayout;
   public static ViewPager viewPager;
-  public static int int_items = 2 ;
+  public static int tabs = 2 ;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    /**
-     *Inflate tab_layout and setup Views.
-     */
     View view =  inflater.inflate(R.layout.settings_tab,null);
     tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.settings_tab);
     viewPager = (ViewPager) view.findViewById(R.id.settings_viewpager);
 
-    /**
-     *Set an Apater for the View Pager
-     */
     viewPager.setAdapter(new SettingsTab.MyAdapter(getChildFragmentManager()));
 
     tabLayout.setViewPager(viewPager);
 
     return view;
-
   }
 
   class MyAdapter extends FragmentPagerAdapter {
@@ -59,14 +52,8 @@ public class SettingsTab extends Fragment {
 
     @Override
     public int getCount() {
-
-      return int_items;
-
+      return tabs;
     }
-
-    /**
-     * This method returns the title of the tab according to the position.
-     */
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -80,5 +67,4 @@ public class SettingsTab extends Fragment {
       return null;
     }
   }
-
 }

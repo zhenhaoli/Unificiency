@@ -7,13 +7,13 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -53,12 +53,12 @@ public class ProfileEdit extends AppCompatActivity {
           text_email.setText(email);
 
         } catch (Exception e) {
-          Log.e("getUserInfo", e.toString());
+          Logger.e(e, "Exception");
         }
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, String errmsg, Throwable throwable) {
-        Log.e("getUserInfo", errmsg);
+        Logger.e(errmsg);
       }
     });
   }
@@ -92,17 +92,16 @@ public class ProfileEdit extends AppCompatActivity {
           finish();
 
         } catch (Exception e) {
-          Log.e("modifyUserInfo", "success");
+          Logger.e(e, "Exception");
         }
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.e("modifyUserInfo", errorResponse.toString());
         String errmsg = null;
         try {
           errmsg = errorResponse.getString("message");
         } catch (Exception e) {
-
+          Logger.e(e, "Exception");
         }
         Message.fail(ProfileEdit.this, errmsg);
       }

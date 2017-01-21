@@ -12,9 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by ostdong on 20/01/2017.
- */
 
 public class RoundImageView extends ImageView {
 
@@ -31,7 +28,6 @@ public class RoundImageView extends ImageView {
     public RoundImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         paint = new Paint();
-
     }
 
     @Override

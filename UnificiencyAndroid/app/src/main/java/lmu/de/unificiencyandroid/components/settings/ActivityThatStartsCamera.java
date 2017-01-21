@@ -51,7 +51,6 @@ public class ActivityThatStartsCamera  extends Fragment {
         requestForSpecificPermission();
       }
     }
-
   }
 
   private boolean alreadyhavePermission() {
@@ -62,11 +61,6 @@ public class ActivityThatStartsCamera  extends Fragment {
   private void requestForSpecificPermission() {
     requestPermissions(new String[]{Manifest.permission.CAMERA}, 0);
   }
-
-
-
-
-
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {

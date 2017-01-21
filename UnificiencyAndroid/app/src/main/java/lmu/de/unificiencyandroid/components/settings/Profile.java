@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -25,8 +25,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class Profile extends Fragment {
-
-
   TextView name_Account, email_Account, major_Account;
   TextView stars_nummber, notes_nummber;
   RoundImageView roundImageView;
@@ -55,13 +53,12 @@ public class Profile extends Fragment {
           email_Account.setText(email);
 
         } catch (Exception e) {
-          Log.e("getUserInfo", e.toString());
+          Logger.e(e, "Exception");
         }
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, String errmsg, Throwable throwable) {
-        Log.e("getUserInfo", errmsg);
-
+        Logger.e(errmsg);
       }
     });
   }
@@ -114,7 +111,7 @@ public class Profile extends Fragment {
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Log.d("", "user canceled editing profile");
+        Logger.d("user canceled editing profile");
       }
     }
   }//onActivityResult
