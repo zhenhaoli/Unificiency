@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,10 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,13 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class NotesTab extends Fragment {
 
-  static PagerSlidingTabStrip tabLayout;
-  static ViewPager viewPager;
+  PagerSlidingTabStrip tabLayout;
+  ViewPager viewPager;
 
   List<Group> myGroups;
 
@@ -112,16 +114,18 @@ public class NotesTab extends Fragment {
     client.addHeader("Authorization", authToken);
     client.get("groups/lmu", params, new JsonHttpResponseHandler() {
 
-      public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-        Log.e("status", statusCode + "" );
-        Log.e("e", e.toString());
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        Logger.json(errorResponse.toString());
+        Message.fail(getContext(), errorResponse.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
 
         try {
-          Log.d("Groups", groups.length()+"");
+          Logger.d("Initialized tabs with group names");
 
           List<Group> groupsFromServer = new ArrayList<>();
 
@@ -143,13 +147,14 @@ public class NotesTab extends Fragment {
           tabLayout.setViewPager(viewPager);
 
         } catch (Exception e) {
-          Log.e("NotesTab", e.toString());
+          Logger.e(e, "Exception");
 
         } finally {
           avi.hide();
         }
 
       }
+
     });
 
   }

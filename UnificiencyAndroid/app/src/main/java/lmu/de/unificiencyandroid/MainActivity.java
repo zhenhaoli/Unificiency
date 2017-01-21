@@ -11,11 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.orhanobut.logger.Logger;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
     ButterKnife.bind(this);
     JodaTimeAndroid.init(this);
 
-    Log.d("fcm token", FirebaseInstanceId.getInstance().getToken());
+    Logger.i(FirebaseInstanceId.getInstance().getToken());
     FirebaseMessaging.getInstance().subscribeToTopic("news");
 
     setSupportActionBar(mActionBarToolbar);

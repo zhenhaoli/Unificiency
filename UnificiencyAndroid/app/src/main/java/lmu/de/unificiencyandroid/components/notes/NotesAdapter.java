@@ -18,12 +18,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
   private Boolean favorite_flag= Boolean.FALSE;
   private NoteClickListener mItemClickListener;
 
-
-  // Provide a reference to the views for each data item
-  // Complex data items may need more than one components per item, and
-  // you provide access to all the views for a data item in a components holder
   public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
-    // each data item is just a string in this case
 
     private NoteClickListener mListener;
 
@@ -32,15 +27,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public ImageView img;
     public View layout;
 
-    public ViewHolder(View v, NoteClickListener listener) {
-      super(v);
-      layout = v;
-      tvCourse = (TextView) v.findViewById(R.id.note_course);
-      tvTitel = (TextView) v.findViewById(R.id.note_title);
-      img=(ImageView) v.findViewById(R.id.icon);
+    public ViewHolder(View view, NoteClickListener listener) {
+      super(view);
+      layout = view;
+      tvCourse = (TextView) view.findViewById(R.id.note_course);
+      tvTitel = (TextView) view.findViewById(R.id.note_title);
+      img=(ImageView) view.findViewById(R.id.icon);
 
       this.mListener = listener;
-      v.setOnClickListener(this);
+      view.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -49,8 +44,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
       }
     }
   }
-
-
 
   public void add(int position, Note item) {
     mDataset.add(position, item);
@@ -62,21 +55,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     notifyItemRemoved(position);
   }
 
-  // Provide a suitable constructor (depends on the kind of dataset)
   public NotesAdapter(List<Note> myDataset) {
     mDataset = myDataset;
   }
 
-  // Create new views (invoked by the layout manager)
   @Override
   public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                  int viewType) {
-    // create a new components
     LayoutInflater inflater = LayoutInflater.from(
         parent.getContext());
     View v =
         inflater.inflate(R.layout.notes_list_item, parent, false);
-    // set the components's size, margins, paddings and layout parameters
     ViewHolder vh = new ViewHolder(v, mItemClickListener);
     return vh;
   }
@@ -85,18 +74,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     this.mItemClickListener = listener;
   }
 
-  // Replace the contents of a components (invoked by the layout manager)
   @Override
   public void onBindViewHolder(ViewHolder holder, final int position) {
-    // - get element from your dataset at this position
-    // - replace the contents of the components with that element
     final Note note = mDataset.get(position);
     holder.tvCourse.setText(note.getTopic());
     holder.tvTitel.setText(note.getTitle());
     if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.favorite_note);
   }
 
-  // Return the size of your dataset (invoked by the layout manager)
   @Override
   public int getItemCount() {
     return mDataset.size();

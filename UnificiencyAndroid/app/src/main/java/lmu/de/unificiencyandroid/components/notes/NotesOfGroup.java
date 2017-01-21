@@ -6,12 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 
@@ -41,7 +41,6 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   NoteDividerItemDecoration mDividerItemDecoration;
   List<Note> notes;
 
-
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,16 +57,11 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
       UnificiencyClient client = new PythonAPIClient();
       client.addHeader("Authorization", authToken);
       client.get("notes/" + groupId, null, new JsonHttpResponseHandler() {
-        public void onFailure(int statusCode, byte[] errorResponse, Throwable e){
-          Log.e("status", statusCode + "" );
-          Log.e("e", e.toString());
-        }
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray notesOfGroup) {
-          // Pull out the first event on the public timeline
           try {
-            Log.d("notes in group", notesOfGroup.length()+"");
+            Logger.d(notesOfGroup.length() + " notes in group got");
 
             List<Note> notesFromServer = new ArrayList<>();
             for(int i=0; i<notesOfGroup.length(); i++){
@@ -95,7 +89,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
             mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
           } catch (Exception e) {
-            Log.e("NotesOfGroup", e.toString());
+            Logger.e(e, "Exception");
 
           } finally {
             avi.hide();

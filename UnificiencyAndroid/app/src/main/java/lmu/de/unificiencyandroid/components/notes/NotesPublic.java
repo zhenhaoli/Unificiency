@@ -30,7 +30,6 @@ public class NotesPublic extends Fragment implements NoteClickListener {
     private NoteDividerItemDecoration mDividerItemDecoration;
 
 
-
    public static List<Note> publicNotes = Arrays.asList(
           new Note("MSP", "REST", "CRUD with HTTP", "Zhen", 8),
           new Note("MMN", "Bluetooth", "Connectivity", "Rob",6),

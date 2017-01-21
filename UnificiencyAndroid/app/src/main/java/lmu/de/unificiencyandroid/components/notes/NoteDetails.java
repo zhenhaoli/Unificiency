@@ -19,7 +19,6 @@ public class NoteDetails extends AppCompatActivity {
     public TextView note_detail_content;
     public TextView note_detail_rating;
 
-
     public void setupToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_noteDetials);
         toolbar.setTitle(R.string.note_detail);

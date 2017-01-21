@@ -35,7 +35,6 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
             new Note("Favorite_Note5", "REST", "CRUD with HTTP", "Zhen", 9)
     );
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
