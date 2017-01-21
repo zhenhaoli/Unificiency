@@ -86,7 +86,7 @@ public class LoginActivity extends AuthActivity {
           }
 
           SharedPref.setDefaults("authToken", authToken, getApplicationContext());
-
+          Logger.i("authToken :" + authToken);
           usernameWrapper.setErrorEnabled(false);
           passwordWrapper.setErrorEnabled(false);
 

@@ -37,7 +37,7 @@ public abstract class UnificiencyClient {
     Logger.i("DELETE " + getAbsoluteUrl(url)  + ((params != null) ? ("?" +  params.toString()) : ' '));
     client.put(getAbsoluteUrl(url), params, responseHandler);
   }
-  
+
   protected String getAbsoluteUrl(String relativeUrl) {
     return BASE_URL + relativeUrl;
   }

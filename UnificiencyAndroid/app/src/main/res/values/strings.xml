@@ -42,7 +42,7 @@
     <string name="title_activity_maps">Map</string>
     <!-- Groups Fragment Extras -->
     <string name="groups_details_groupname_extra">groups_details_groupname</string>
-    <!-- New Group -->
+    <!--  Group -->
     <string name="groups_new_group_title">Neue Gruppe erstellen</string>
     <string name="groups_new_group_create">Erstellen</string>
     <string name="groups_new_group_information">Hier können Sie eine neue Lerngruppe erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe beitreten.</string>
@@ -53,6 +53,8 @@
     <string name="groups_new_group_error_name">mindestens 3 Zeichen eingeben bitte!</string>
     <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen eingeben</string>
     <string name="groups_new_group_error_create">Ihre Eingaben sind fehlerhaft</string>
+    <string name="groups_edit_group_save">Speichern</string>
+    <string name="groups_edit_group_information">Hier können Sie die Beschreibung und Zweck der Gruppe anpassen.</string>
 
     <!-- Notes -->
     <string name="notes_new_note_title">Neue Notiz erstellen</string>

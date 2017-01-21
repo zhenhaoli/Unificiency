@@ -117,6 +117,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   @OnClick(R.id.groups_details_modify)
   public void editGroupInformation(){
     Intent intent= new Intent(this, GroupEdit.class);
+    intent.putExtra("groupId", group.getId());
     startActivityForResult(intent, 1);
   }
 
@@ -241,9 +242,11 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
     if(isMemberInGroup) {
       leaveButton.setVisibility(View.VISIBLE);
       joinButton.setVisibility(View.INVISIBLE);
+      modifyButton.setVisibility(View.VISIBLE);
     } else {
       joinButton.setVisibility(View.VISIBLE);
       leaveButton.setVisibility(View.INVISIBLE);
+      modifyButton.setVisibility(View.INVISIBLE);
     }
 
     this.groupName.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
@@ -261,11 +264,9 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         Bundle extras = data.getExtras();
         String editedGroupMsg;
 
-
-
         if (extras != null) {
           fetchGroupDetails(extras.getInt("groupId"));
-          editedGroupMsg = extras.getString("editGroupSuccess");
+          editedGroupMsg = extras.getString("saveSuccess");
           Message.success(this, editedGroupMsg);
         }
 
