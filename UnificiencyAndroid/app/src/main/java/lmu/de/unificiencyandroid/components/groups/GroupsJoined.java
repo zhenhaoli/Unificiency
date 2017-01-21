@@ -18,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class GroupsJoined extends Fragment {
 
-  static final String TAG = GroupsAll.class.getName();
+  static final String TAG = GroupsJoined.class.getName();
 
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
@@ -60,10 +61,17 @@ public class GroupsJoined extends Fragment {
     client.get("groups/lmu", params, new JsonHttpResponseHandler() {
 
       @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers, throwable, errorResponse);
+        Log.e(TAG, errorResponse.toString());
+        Message.fail(getContext(), errorResponse.toString());
+      }
+
+      @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
 
         try {
-          Log.d("Groups", groups.length()+"");
+          Log.d(TAG, groups.length() + " my groups got");
 
           List<Group> groupsFromServer = new ArrayList<>();
           for(int i=0; i<groups.length(); i++){

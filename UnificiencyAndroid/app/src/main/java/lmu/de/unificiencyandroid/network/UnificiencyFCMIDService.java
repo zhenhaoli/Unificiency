@@ -8,7 +8,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import static com.google.android.gms.internal.zzs.TAG;
 
 
-public class FCMInstanceIDService extends FirebaseInstanceIdService {
+public class UnificiencyFCMIDService extends FirebaseInstanceIdService {
   @Override
   public void onTokenRefresh() {
     // Get updated InstanceID token.

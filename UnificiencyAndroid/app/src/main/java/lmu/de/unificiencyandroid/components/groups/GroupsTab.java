@@ -12,27 +12,31 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 
 public class GroupsTab  extends Fragment {
 
-  public static PagerSlidingTabStrip tabLayout;
-  public static ViewPager viewPager;
-  public static int tabs = 2 ;
+  @BindView(R.id.groups_tab)
+  PagerSlidingTabStrip tabLayout;
+
+  @BindView(R.id.groups_viewpager)
+  ViewPager viewPager;
+
+  int tabs = 2 ;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view =  inflater.inflate(R.layout.notes_tab,null);
-    
-    tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.notes_tab);
-    viewPager = (ViewPager) view.findViewById(R.id.notes_viewpager);
+    View view = inflater.inflate(R.layout.groups_tab, null);
+
+    ButterKnife.bind(this, view);
     
     viewPager.setAdapter(new GroupsTab.MyAdapter(getChildFragmentManager()));
     tabLayout.setViewPager(viewPager);
 
     return view;
-
   }
 
   class MyAdapter extends FragmentPagerAdapter {

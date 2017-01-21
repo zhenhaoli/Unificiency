@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -22,9 +19,12 @@ import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class LoginActivity extends AuthActivity {
+
+  static final String TAG = LoginActivity.class.getName();
 
   @BindView(R.id.usernameWrapper)
   TextInputLayout usernameWrapper;
@@ -42,14 +42,7 @@ public class LoginActivity extends AuthActivity {
   void login() {
 
     if(!isNetworkAvailable()){
-      SuperActivityToast.cancelAllSuperToasts();
-      SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
-          .setText("Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!")
-          .setDuration(Style.DURATION_LONG)
-          .setFrame(Style.FRAME_KITKAT)
-          .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-          .setAnimations(Style.ANIMATIONS_SCALE)
-          .show();
+      Message.fail(LoginActivity.this, "Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!");
       return;
     }
 
@@ -85,16 +78,16 @@ public class LoginActivity extends AuthActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-          Log.d("res python", response.toString());
+          Log.d(TAG, response.toString());
 
-          String tokenPython = null;
+          String authToken = null;
           try {
-            tokenPython = response.getString("token");
+            authToken = response.getString("token");
           } catch (Exception e) {
-            Log.e("JSON EER", e.toString());
+            Log.e(TAG, e.toString());
           }
 
-          SharedPref.setDefaults("authToken", tokenPython, getApplicationContext());
+          SharedPref.setDefaults("authToken", authToken, getApplicationContext());
 
           usernameWrapper.setErrorEnabled(false);
           passwordWrapper.setErrorEnabled(false);
@@ -102,7 +95,6 @@ public class LoginActivity extends AuthActivity {
           Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
           startActivity(loginIntent);
           finish();
-
         }
 
         @Override
@@ -111,17 +103,9 @@ public class LoginActivity extends AuthActivity {
           if(errMsg.contains("user")||errMsg.contains("password")){
             errMsg = "Email oder Passwort falsch!";
           }
-          SuperActivityToast.create(LoginActivity.this, new Style(), Style.TYPE_STANDARD)
-              .setText(errMsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
+          Message.fail(LoginActivity.this, errMsg);
         }
       });
-
-
     }
   }
 
@@ -148,18 +132,12 @@ public class LoginActivity extends AuthActivity {
 
         if (extras != null) {
           registeredMsg = extras.getString("registerSuccess");
-          SuperActivityToast.create(this, new Style(), Style.TYPE_STANDARD)
-              .setText(registeredMsg)
-              .setDuration(Style.DURATION_LONG)
-              .setFrame(Style.FRAME_KITKAT)
-              .setColor(ResourcesCompat.getColor(getResources(), R.color.green_400, null))
-              .setAnimations(Style.ANIMATIONS_SCALE)
-              .show();
+          Message.success(LoginActivity.this, registeredMsg);
         }
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        //Write your code if there's no result
+        Log.d(TAG, "user canceled registeration");
       }
     }
   }//onActivityResult

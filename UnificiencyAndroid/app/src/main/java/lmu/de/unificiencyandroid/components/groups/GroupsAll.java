@@ -60,6 +60,8 @@ public class GroupsAll extends Fragment {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
+        Log.e(TAG, errorResponse.toString());
+        Message.fail(getContext(), errorResponse.toString());
       }
 
       @Override

@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import com.github.johnpersano.supertoasts.library.Style;
-import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -24,8 +21,13 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.Message;
 
 public class RegisterActivity extends AuthActivity {
+
+  static final String TAG = RegisterActivity.class.getName();
+
+
   //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
   String[] majors ={"Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
 
@@ -51,14 +53,7 @@ public class RegisterActivity extends AuthActivity {
   void register() {
 
     if(!isNetworkAvailable()){
-      SuperActivityToast.cancelAllSuperToasts();
-      SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-          .setText("Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!")
-          .setDuration(Style.DURATION_LONG)
-          .setFrame(Style.FRAME_KITKAT)
-          .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-          .setAnimations(Style.ANIMATIONS_SCALE)
-          .show();
+      Message.fail(RegisterActivity.this, "Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!");
       return;
     }
 
@@ -107,6 +102,7 @@ public class RegisterActivity extends AuthActivity {
   }
 
   private void doPost(String username, String nickname, String password, String major) {
+
     final RequestParams params = new RequestParams();
     params.put("email", username);
     params.put("username", nickname);
@@ -115,13 +111,11 @@ public class RegisterActivity extends AuthActivity {
     params.put("university_id", 1);
     params.setUseJsonStreamer(true);
 
-
     UnificiencyClient pythonClient = new PythonAPIClient();
     pythonClient.post("users/", params, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // If the response is JSONObject instead of expected JSONArray
-        Log.d("res", response.toString());
+        Log.d(TAG, response.toString());
 
         usernameWrapper.setErrorEnabled(false);
         passwordWrapper.setErrorEnabled(false);
@@ -131,33 +125,12 @@ public class RegisterActivity extends AuthActivity {
         returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
         setResult(Activity.RESULT_OK,returnToLoginIntent);
         finish();
-
-      }
-
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, String responseString) {
-        super.onSuccess(statusCode, headers, responseString);
-        Log.d("res str", responseString.toString());
-      }
-
-      @Override
-      public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
-        Log.e("res err str", responseString.toString());
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-            .setText(responseString)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
       }
 
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e("res err js", errorResponse.toString());
+        Log.e(TAG, errorResponse.toString());
 
         String failMsg = errorResponse.toString();
         if(failMsg.contains("username")){
@@ -165,14 +138,8 @@ public class RegisterActivity extends AuthActivity {
         } else if(failMsg.contains("email")){
           failMsg = "Dieses Email wird bereits verwendet, bitte ein anderes eingeben!";
         }
-        SuperActivityToast.cancelAllSuperToasts();
-        SuperActivityToast.create(RegisterActivity.this, new Style(), Style.TYPE_STANDARD)
-            .setText(failMsg)
-            .setDuration(Style.DURATION_LONG)
-            .setFrame(Style.FRAME_KITKAT)
-            .setColor(ResourcesCompat.getColor(getResources(), R.color.red_400, null))
-            .setAnimations(Style.ANIMATIONS_SCALE)
-            .show();
+
+        Message.fail(RegisterActivity.this, failMsg);
       }
     });
 
@@ -198,7 +165,6 @@ public class RegisterActivity extends AuthActivity {
     passwordWrapper.getEditText().setText("123456");
     passwordConfirmWrapper.getEditText().setText("123456");
     nicknameWrapper.getEditText().setText("MSPPraktikant");
-
   }
 
   @Override
