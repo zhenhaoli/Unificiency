@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -24,9 +24,6 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 
 public class RegisterActivity extends AuthActivity {
-
-  static final String TAG = RegisterActivity.class.getName();
-
 
   //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
   String[] majors ={"Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
@@ -115,7 +112,7 @@ public class RegisterActivity extends AuthActivity {
     pythonClient.post("users/", params, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        Log.d(TAG, response.toString());
+        Logger.json(response.toString());
 
         usernameWrapper.setErrorEnabled(false);
         passwordWrapper.setErrorEnabled(false);
@@ -130,7 +127,7 @@ public class RegisterActivity extends AuthActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
 
         String failMsg = errorResponse.toString();
         if(failMsg.contains("username")){
@@ -138,7 +135,6 @@ public class RegisterActivity extends AuthActivity {
         } else if(failMsg.contains("email")){
           failMsg = "Dieses Email wird bereits verwendet, bitte ein anderes eingeben!";
         }
-
         Message.fail(RegisterActivity.this, failMsg);
       }
     });

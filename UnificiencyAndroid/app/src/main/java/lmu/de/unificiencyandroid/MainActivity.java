@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
     ButterKnife.bind(this);
     JodaTimeAndroid.init(this);
 
-    Logger.i(FirebaseInstanceId.getInstance().getToken());
+    Logger.i("Firebase Token: " + FirebaseInstanceId.getInstance().getToken());
     FirebaseMessaging.getInstance().subscribeToTopic("news");
 
     setSupportActionBar(mActionBarToolbar);

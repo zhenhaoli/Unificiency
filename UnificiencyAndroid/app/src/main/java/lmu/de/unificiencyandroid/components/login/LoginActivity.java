@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -23,8 +23,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class LoginActivity extends AuthActivity {
-
-  static final String TAG = LoginActivity.class.getName();
 
   @BindView(R.id.usernameWrapper)
   TextInputLayout usernameWrapper;
@@ -78,13 +76,13 @@ public class LoginActivity extends AuthActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-          Log.d(TAG, response.toString());
+          Logger.json(response.toString());
 
           String authToken = null;
           try {
             authToken = response.getString("token");
           } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e, "Exception");
           }
 
           SharedPref.setDefaults("authToken", authToken, getApplicationContext());
@@ -118,7 +116,6 @@ public class LoginActivity extends AuthActivity {
     //TODO: remove this in prd
     usernameWrapper.getEditText().setText("testuser88@lmu.de");
     passwordWrapper.getEditText().setText("123456");
-
   }
 
   @Override
@@ -137,7 +134,7 @@ public class LoginActivity extends AuthActivity {
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Log.d(TAG, "user canceled registeration");
+        Logger.d("User canceled registeration");
       }
     }
   }//onActivityResult
