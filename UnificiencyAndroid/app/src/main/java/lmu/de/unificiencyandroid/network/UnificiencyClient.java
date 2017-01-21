@@ -19,26 +19,25 @@ public abstract class UnificiencyClient {
   }
 
   public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Logger.i("GET " + getAbsoluteUrl(url) +  ((params != null) ? ("?" +  params.toString()) : ' '));
+    Logger.i("GET " + getAbsoluteUrl(url) + ((params != null) ? ("?" +  params.toString()) : ' '));
     client.get(getAbsoluteUrl(url), params, responseHandler);
   }
 
   public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Logger.i("POST " + getAbsoluteUrl(url) +  "?" + ((params != null) ? ("?" +  params.toString()) : ' '));
+    Logger.i("POST " + getAbsoluteUrl(url) + ((params != null) ? ("?" +  params.toString()) : ' '));
     client.post(getAbsoluteUrl(url), params, responseHandler);
   }
 
   public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Logger.i("PUT " + getAbsoluteUrl(url) +  "?" + ((params != null) ? ("?" +  params.toString()) : ' '));
+    Logger.i("PUT " + getAbsoluteUrl(url)  + ((params != null) ? ("?" +  params.toString()) : ' '));
     client.put(getAbsoluteUrl(url), params, responseHandler);
   }
 
   public void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    Logger.i("DELETE " + getAbsoluteUrl(url) +  "?" + ((params != null) ? ("?" +  params.toString()) : ' '));
+    Logger.i("DELETE " + getAbsoluteUrl(url)  + ((params != null) ? ("?" +  params.toString()) : ' '));
     client.put(getAbsoluteUrl(url), params, responseHandler);
   }
-
-
+  
   protected String getAbsoluteUrl(String relativeUrl) {
     return BASE_URL + relativeUrl;
   }

@@ -28,7 +28,7 @@
             android:text="@string/edit_hint"
             android:layout_marginBottom="12dp"/>
 
-        <lmu.de.unificiencyandroid.components.settings.RoundImageView
+        <lmu.de.unificiencyandroid.custome.RoundImageView
             android:id="@+id/Edit_roundImageView"
             android:layout_width="150dp"
             android:layout_height="150dp"

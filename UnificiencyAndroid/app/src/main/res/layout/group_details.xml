@@ -88,7 +88,17 @@
             android:id="@+id/groups_details_leave"
             android:text="@string/groups_details_leave"
             android:visibility="invisible"
+            android:background="@color/red_400"
             android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/groups_details_modify"
+            android:text="@string/groups_details_modify"
+            android:background="@color/green_400"
+            android:visibility="invisible"
+            android:layout_above="@id/groups_details_leave"/>
     </RelativeLayout>
 
 </LinearLayout>

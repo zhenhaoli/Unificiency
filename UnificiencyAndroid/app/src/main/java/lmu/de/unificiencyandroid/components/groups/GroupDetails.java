@@ -1,5 +1,7 @@
 package lmu.de.unificiencyandroid.components.groups;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,9 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
   @BindView(R.id.groups_details_leave)
   Button leaveButton;
+
+  @BindView(R.id.groups_details_modify)
+  Button modifyButton;
 
   @BindView(R.id.groups_details_backButton)
   ImageView toolbar;
@@ -106,6 +111,13 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
       }
 
     });
+  }
+
+
+  @OnClick(R.id.groups_details_modify)
+  public void editGroupInformation(){
+    Intent intent= new Intent(this, GroupEdit.class);
+    startActivityForResult(intent, 1);
   }
 
   @OnClick(R.id.groups_details_backButton)
@@ -239,5 +251,29 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
     this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
     this.memberList.setAdapter(this.adapter);
   }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    if (requestCode == 1) {
+      if(resultCode == Activity.RESULT_OK){
+
+        Bundle extras = data.getExtras();
+        String editedGroupMsg;
+
+
+
+        if (extras != null) {
+          fetchGroupDetails(extras.getInt("groupId"));
+          editedGroupMsg = extras.getString("editGroupSuccess");
+          Message.success(this, editedGroupMsg);
+        }
+
+      }
+      if (resultCode == Activity.RESULT_CANCELED) {
+        Logger.d("User canceled group edit");
+      }
+    }
+  }//onActivityResult
 
 }

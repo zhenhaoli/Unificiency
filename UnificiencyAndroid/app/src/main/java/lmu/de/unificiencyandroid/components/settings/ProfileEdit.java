@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,6 +16,9 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -26,9 +28,25 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class ProfileEdit extends AppCompatActivity {
 
+  @BindView(R.id.save_edit)
   Button save;
 
-  TextInputEditText nickName_editor, majorName_editor,text_email;
+  @BindView(R.id.edit_nickname)
+  TextInputEditText nicknameEditText;
+
+  @BindView(R.id.edit_email)
+  TextInputEditText emailEditText;
+
+  @BindView(R.id.edit_major)
+  TextInputEditText majorEditText;
+
+  @BindView(R.id.toolbar_edit_profile)
+  Toolbar toolbar;
+
+  @OnClick(R.id.save_edit)
+  public void save(){
+    setUserInfo();
+  }
 
   public void getUserInfo() {
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
@@ -48,9 +66,9 @@ public class ProfileEdit extends AppCompatActivity {
           String majorName = response.getString("major");
           String email = response.getString("email");
 
-          nickName_editor.setText(nickName);
-          majorName_editor.setText(majorName);
-          text_email.setText(email);
+          nicknameEditText.setText(nickName);
+          majorEditText.setText(majorName);
+          emailEditText.setText(email);
 
         } catch (Exception e) {
           Logger.e(e, "Exception");
@@ -65,9 +83,9 @@ public class ProfileEdit extends AppCompatActivity {
 
   public void setUserInfo() {
 
-    String nickName = this.nickName_editor.getText().toString();
-    String majorName = this.majorName_editor.getText().toString();
-    String email = this.text_email.getText().toString();
+    String nickName = nicknameEditText.getText().toString();
+    String majorName = majorEditText.getText().toString();
+    String email = emailEditText.getText().toString();
 
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -111,27 +129,15 @@ public class ProfileEdit extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_edit_profile);
+
+    setContentView(R.layout.settings_profile_edit);
+    ButterKnife.bind(this);
+
     setupToolbar();
-
-    save = (Button) findViewById(R.id.save_edit);
-
-    nickName_editor= (TextInputEditText) findViewById(R.id.edit_nickname);
-    majorName_editor= (TextInputEditText) findViewById(R.id.edit_major);
-    text_email= (TextInputEditText) findViewById(R.id.edit_email);
-
     getUserInfo();
-
-    save.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        setUserInfo();
-      }
-    });
-
   }
 
   public void setupToolbar(){
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit_profile);
     toolbar.setTitle(R.string.toolbar_edit_profile);
     setSupportActionBar(toolbar);
     ActionBar ab = getSupportActionBar();
@@ -139,7 +145,6 @@ public class ProfileEdit extends AppCompatActivity {
     ab.setDisplayHomeAsUpEnabled(true);
   }
 
-  /* restore back button functionality*/
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()){

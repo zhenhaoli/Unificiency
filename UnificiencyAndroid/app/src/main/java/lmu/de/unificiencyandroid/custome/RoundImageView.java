@@ -1,4 +1,4 @@
-package lmu.de.unificiencyandroid.components.settings;
+package lmu.de.unificiencyandroid.custome;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +11,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
 
 public class RoundImageView extends ImageView {
 

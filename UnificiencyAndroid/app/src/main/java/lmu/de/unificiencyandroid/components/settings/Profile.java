@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -67,7 +68,7 @@ public class Profile extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    View view =  inflater.inflate(R.layout.account,null);
+    View view =  inflater.inflate(R.layout.settings_profile,null);
 
     name_Account= (TextView) view.findViewById(R.id.name_account);
     email_Account= (TextView) view.findViewById(R.id.email_account);
