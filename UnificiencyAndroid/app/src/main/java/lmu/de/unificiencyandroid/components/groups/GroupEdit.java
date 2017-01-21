@@ -140,7 +140,7 @@ public class GroupEdit extends AppCompatActivity {
   }
 
   public void setupToolbar(){
-    toolbar.setTitle(R.string.toolbar_edit_profile);
+    toolbar.setTitle(R.string.toolbar_edit_group);
     setSupportActionBar(toolbar);
     ActionBar ab = getSupportActionBar();
     ab.setHomeButtonEnabled(true);
