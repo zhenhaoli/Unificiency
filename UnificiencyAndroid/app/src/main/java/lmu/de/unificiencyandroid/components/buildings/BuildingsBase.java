@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.orhanobut.logger.Logger;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -30,16 +30,15 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.utils.Message;
 
+import static com.google.android.gms.internal.zzs.TAG;
+
 public abstract class BuildingsBase extends Fragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
-
-  static final String TAG = BuildingsBase.class.getName();
 
   GoogleApiClient mGoogleApiClient;
   Location mLastLocation;
 
   List<Building> buildings = new ArrayList<Building>();
-
 
   @Nullable
   @Override
@@ -61,7 +60,7 @@ public abstract class BuildingsBase extends Fragment implements
         buildings.add(new Building(address, city, lat, lng));
       }
     } catch (Exception e){
-      Log.e(TAG, e.toString());
+      Logger.e(e, "Exception");
       Message.fail(getContext(), e.toString());
     }
     return null;

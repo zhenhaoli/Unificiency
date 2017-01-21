@@ -3,7 +3,6 @@ package lmu.de.unificiencyandroid.components.buildings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,8 +28,6 @@ import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingsAll extends BuildingsBase {
 
-  static final String TAG = BuildingsAll.class.getName();
-
   @BindView(R.id.avi)
   com.wang.avi.AVLoadingIndicatorView avi;
 
@@ -42,7 +40,6 @@ public class BuildingsAll extends BuildingsBase {
     super.onCreateView(inflater, container, savedInstanceState);
 
     View view = inflater.inflate(R.layout.buildings_all,null);
-
     ButterKnife.bind(this, view);
 
     loadData();
@@ -59,14 +56,14 @@ public class BuildingsAll extends BuildingsBase {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         Message.fail(getContext(), errorResponse.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
         try {
-          Log.d(TAG, buildings.length()+" buildings got");
+          Logger.d(buildings.length() +" buildings got");
 
           List<Building> buildingsFromServer = new ArrayList<>();
           for(int i=0; i<buildings.length(); i++){
@@ -101,7 +98,7 @@ public class BuildingsAll extends BuildingsBase {
           });
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
           Message.fail(getContext(), e.toString());
         } finally {
           avi.hide();

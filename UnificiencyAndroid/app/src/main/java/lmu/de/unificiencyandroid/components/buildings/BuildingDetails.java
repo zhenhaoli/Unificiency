@@ -2,13 +2,13 @@ package lmu.de.unificiencyandroid.components.buildings;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.joda.time.LocalTime;
 import org.json.JSONArray;
@@ -28,8 +28,6 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 
 public class BuildingDetails extends AppCompatActivity {
-
-  static final String TAG = BuildingDetails.class.getName();
 
   ArrayList<Room> rooms = new ArrayList<Room>();
 
@@ -69,14 +67,14 @@ public class BuildingDetails extends AppCompatActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
         Message.fail(BuildingDetails.this, errorResponse.toString());
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray rooms) {
         try {
-          Log.d(TAG, rooms.length()+ " rooms got");
+          Logger.d(rooms.length() + " rooms got");
 
           for(int i=0; i<rooms.length(); i++){
             String name = rooms.getJSONObject(i).getString("name");
@@ -111,8 +109,8 @@ public class BuildingDetails extends AppCompatActivity {
           roomsListView.setAdapter(buildingDetailsAdapter);
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
-          Message.success(BuildingDetails.this, e.toString());
+          Logger.e(e, "Exception");
+          Message.fail(BuildingDetails.this, e.toString());
         }
 
       }

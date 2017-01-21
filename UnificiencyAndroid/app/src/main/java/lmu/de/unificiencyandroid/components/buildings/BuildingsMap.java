@@ -21,16 +21,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.utils.Message;
 
+import static com.google.android.gms.internal.zzs.TAG;
+
 public class BuildingsMap extends BuildingsBase implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-  static final String TAG = BuildingsMap.class.getName();
 
   @BindView(R.id.mapView)
   MapView mMapView;
@@ -55,7 +56,7 @@ public class BuildingsMap extends BuildingsBase implements
     try {
       MapsInitializer.initialize(getActivity().getApplicationContext());
     } catch (Exception e) {
-      Log.e(TAG, e.toString());
+      Logger.e(e, "Exception");
       Message.fail(getContext(), e.toString());
     }
 
@@ -116,12 +117,10 @@ public class BuildingsMap extends BuildingsBase implements
 
       LatLng myPos = new LatLng(myLat, myLng);
 
-      Log.d(TAG, myPos.toString());
-
-
+      Logger.d(myPos.toString());
 
     } catch (SecurityException e){
-      Log.e(TAG, e.toString());
+      Logger.e(e, "Exception");
       Message.fail(getContext(), e.toString());
     }
   }

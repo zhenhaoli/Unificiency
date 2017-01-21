@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,9 +33,9 @@ import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 
-public class BuildingsNearest extends BuildingsBase {
+import static com.google.android.gms.internal.zzs.TAG;
 
-  static final String TAG = BuildingsNearest.class.getName();
+public class BuildingsNearest extends BuildingsBase {
 
   ArrayList<Building> buildings;
 
@@ -83,7 +84,7 @@ public class BuildingsNearest extends BuildingsBase {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
           mGoogleApiClient);
       if(mLastLocation != null) {
-        Log.d(TAG, mLastLocation.toString());
+        Logger.d(mLastLocation.toString());
 
         //LMU Info Bau
         double myLat = 48.1493226;
@@ -116,7 +117,7 @@ public class BuildingsNearest extends BuildingsBase {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
-        Log.e(TAG, errorResponse.toString());
+        Logger.e(errorResponse.toString());
 
         String err = getString(R.string.server_error);
         if(errorResponse!=null && errorResponse.toString()!= null){
@@ -128,14 +129,14 @@ public class BuildingsNearest extends BuildingsBase {
       @Override
       public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         super.onFailure(statusCode, headers, responseString, throwable);
-        Log.e(TAG, responseString);
+        Logger.e(responseString);
         Message.fail(getContext(), responseString);
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray buildings) {
         try {
-          Log.d(TAG, buildings.length()+ " buildings got");
+          Logger.d(buildings.length()+ " buildings got");
 
           final List<Building> buildingsFromServer = new ArrayList<>();
           for(int i=0; i<buildings.length(); i++){
@@ -169,7 +170,7 @@ public class BuildingsNearest extends BuildingsBase {
           );
 
         } catch (Exception e) {
-          Log.e(TAG, e.toString());
+          Logger.e(e, "Exception");
           Message.fail(getContext(), e.toString());
         } finally {
           avi.hide();
