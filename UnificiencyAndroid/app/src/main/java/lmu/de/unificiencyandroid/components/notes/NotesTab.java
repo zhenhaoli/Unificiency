@@ -129,13 +129,14 @@ public class NotesTab extends Fragment {
 
           List<Group> groupsFromServer = new ArrayList<>();
 
-          groupsFromServer.add(new Group("Öffentlich", null, null));
-          groupsFromServer.add(new Group("Favoriten", null, null));
+          groupsFromServer.add(new Group(null,"Öffentlich", null ,null,null,false));
+          groupsFromServer.add(new Group(null,"Favoriten", null, null,null, false));
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
-            groupsFromServer.add(new Group(id, name, topic, null, null, null));
+            Boolean hasPassword = groups.getJSONObject(i).getBoolean("protected");
+            groupsFromServer.add(new Group(id, name, topic, null, null, hasPassword));
           }
 
           myGroups = groupsFromServer;

@@ -61,7 +61,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
   @OnClick(R.id.groups_details_join)
   public void tryToJoinGroup() {
-    if(group.getHasPassword()) {
+    if(group.isHasPassword()) {
       GroupPasswordEnter enterPwDialog = new GroupPasswordEnter();
       enterPwDialog.show(getSupportFragmentManager(), "enter_password");
       return;

@@ -2,6 +2,7 @@ package lmu.de.unificiencyandroid.components.groups;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,9 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     String name = group.getName();
     String topic = group.getTopic();
     holder.groupNameTextView.setText(name);
+    if(group.isHasPassword()){
+     holder.groupNameTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_https_blue_grey_500_18dp, 0);
+    }
     holder.groupTopicTextView.setText("#" + topic);
     //make colored circle with text
     ColorGenerator generator = ColorGenerator.MATERIAL;

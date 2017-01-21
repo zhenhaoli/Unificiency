@@ -15,12 +15,13 @@ public class Group {
   private String topic;
   private String description;
   private List<String> members;
-  private Boolean hasPassword;
+  private boolean hasPassword;
 
-  public Group(String name, String description, List<String> members) {
+  public Group(Integer id, String name, String topic, boolean hasPassword) {
+    this.id = id;
     this.name = name;
-    this.description = description;
-    this.members = members;
+    this.hasPassword = hasPassword;
+    this.topic = topic;
   }
 
 }
