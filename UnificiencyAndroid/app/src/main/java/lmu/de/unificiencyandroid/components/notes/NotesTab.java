@@ -73,6 +73,7 @@ public class NotesTab extends Fragment {
             NotesOfGroup notesOfGroup =  new NotesOfGroup();
             Bundle bundle = new Bundle();
             bundle.putInt("groupId", myGroups.get(position).getId());
+            bundle.putString("name", myGroups.get(position).getName());
             notesOfGroup.setArguments(bundle);
             return notesOfGroup;
           }
