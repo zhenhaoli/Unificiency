@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -93,6 +94,9 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         String[] msg = res.split("\\s+");
         String message = "Gruppe " + msg[msg.length - 1] + " erfolgreich verlassen";
 
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("group" + group.getId());
+        Logger.i("Unsubscribed from " + "group" + group.getId());
+
         Message.success(GroupDetails.this, message);
 
         fetchGroupDetails(group.getId());
@@ -162,6 +166,9 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
         String[] msg = res.split("\\s+");
         String message = "Gruppe " + msg[msg.length - 1] + " erfolgreich beigetreten";
+
+        FirebaseMessaging.getInstance().subscribeToTopic("group" + group.getId());
+        Logger.i("Subscribed to " + "group" + group.getId());
 
         Message.success(GroupDetails.this, message);
 
