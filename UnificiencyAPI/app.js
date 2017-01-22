@@ -17,12 +17,14 @@ var buildings = require('./rest/buildings');
 var groups = require('./rest/groups');
 var rooms = require('./rest/rooms');
 var upload = require('./rest/upload');
+var notes = require('./rest/notes');
 
 users.setRoutes(app);
 buildings.setRoutes(app);
 groups.setRoutes(app);
 rooms.setRoutes(app);
 upload.setRoutes(app);
+notes.setRoutes(app);
 
 app.use(function(err, req, res, next) {
   if (err.name === 'StatusError') {

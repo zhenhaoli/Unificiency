@@ -15,6 +15,9 @@ module.exports = {
 
     app.get('/groups', function(req, res) {
 
+      var authToken = req.get('Authorization');
+      console.log(authToken)
+
       unirest
         .get(config.pythonAPI + 'groups/lmu/')
         .headers({
@@ -27,24 +30,17 @@ module.exports = {
 
     });
 
-    app.post('/groups', function(req, res) {
-      return group.getAll(req, res);
+
+    app.post('/groups/:id/join', function(req, res) {
+      // notify group members new user joined
     });
 
-    app.get('/groups/:id', function(req, res) {
-      return group.getAll(req, res);
-    });
-
-    app.post ('/groups/:id/join', function(req, res) {
-      return group.getAll(req, res);
-    });
-
-    app.get('/groups/:id/join', function(req, res) {
-      return group.getAll(req, res);
+    app.post('/groups/:id/leave', function(req, res) {
+      // notify group members member named xx left
     });
 
     app.put('/groups/:id', function(req, res) {
-      return group.getAll(req, res);
+      // notify group members user xx changed group info
     });
 
   }
