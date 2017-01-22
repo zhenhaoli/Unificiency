@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="lmu.de.unificiencyandroid">
+    package="lmu.de.unificiencyandroid">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <uses-feature android:name="android.hardware.location.gps" />
-    <uses-feature android:name="android.hardware.camera"
-                  android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +51,7 @@
         <activity android:name=".components.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -55,36 +59,30 @@
             android:name=".components.groups.GroupDetails"
             android:label="@string/title_activity_group_details"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".MainActivity" />
-
         <activity android:name=".components.login.RegisterActivity" />
-
         <activity android:name=".components.buildings.BuildingDetails" />
-
         <activity android:name=".components.groups.GroupNew" />
         <activity android:name=".components.groups.GroupEdit" />
-
         <activity android:name=".components.notes.NoteDetails" />
         <activity android:name=".components.notes.NoteNew" />
         <activity android:name=".components.notes.NoteEdit" />
-
         <activity android:name=".components.settings.SettingsGroups" />
         <activity android:name=".components.settings.SettingsNotes" />
-        <activity android:name=".components.settings.ProfileEdit"></activity>
+        <activity android:name=".components.settings.ProfileEdit" />
 
         <service android:name=".network.UnificiencyFCMIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".network.UnificiencyFCMService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".components.settings.ChoosePhoto"></activity>
     </application>
 
 </manifest>

@@ -2,12 +2,19 @@ package lmu.de.unificiencyandroid.components.settings;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,20 +23,31 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
+import static lmu.de.unificiencyandroid.components.settings.ActivityThatStartsCamera.REQUEST_IMAGE_CAPTURE;
+
 public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.save_edit)
   Button save;
+
+  @BindView(R.id.Edit_roundImageView)
+  RoundImageView edit_roundImageView;
 
   @BindView(R.id.edit_nickname)
   TextInputEditText nicknameEditText;
@@ -42,6 +60,9 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
+
+  private String sdPath;
+  private String picPath;
 
   @OnClick(R.id.save_edit)
   public void save(){
@@ -135,6 +156,27 @@ public class ProfileEdit extends AppCompatActivity {
 
     setupToolbar();
     getUserInfo();
+
+    changePhoto();
+  }
+
+  public void changePhoto(){
+    sdPath = Environment.getExternalStorageDirectory().getPath();
+    picPath = sdPath + "/" + "temp.png";
+
+    edit_roundImageView.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+     //   Intent intent = new Intent();
+    //    intent.putExtra("saveSuccess", "Speicherung erfolgreich");
+      //  startActivity(intent);
+
+
+    /*    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }*/
+      }
+    });
   }
 
   public void setupToolbar(){
@@ -155,4 +197,15 @@ public class ProfileEdit extends AppCompatActivity {
       default:{return super.onOptionsItemSelected(item);}
     }
   }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+      Bundle extras = data.getExtras();
+      Bitmap imageBitmap = (Bitmap) extras.get("data");
+      edit_roundImageView.setImageBitmap(imageBitmap);
+    }
+  }
+
+
 }

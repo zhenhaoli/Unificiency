@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import lmu.de.unificiencyandroid.R;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ActivityThatStartsCamera  extends Fragment {
+public class ActivityThatStartsCamera extends Fragment {
 
   static final int REQUEST_IMAGE_CAPTURE = 1;
 
