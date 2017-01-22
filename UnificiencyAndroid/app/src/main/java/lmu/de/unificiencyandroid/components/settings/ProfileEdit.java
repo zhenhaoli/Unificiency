@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -60,9 +61,6 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
-
-  private String sdPath;
-  private String picPath;
 
   @OnClick(R.id.save_edit)
   public void save(){
@@ -158,23 +156,26 @@ public class ProfileEdit extends AppCompatActivity {
     getUserInfo();
 
     changePhoto();
+    resetphoto();
   }
 
+  public void resetphoto(){
+
+    Intent intent = getIntent();
+    Bundle bundle = intent.getExtras();
+    if (bundle != null && bundle.containsKey("data")){
+      Bitmap imageBitmap = (Bitmap) bundle.get("data");
+      edit_roundImageView.setImageBitmap(imageBitmap);
+    }
+  }
+
+
   public void changePhoto(){
-    sdPath = Environment.getExternalStorageDirectory().getPath();
-    picPath = sdPath + "/" + "temp.png";
 
     edit_roundImageView.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
-     //   Intent intent = new Intent();
-    //    intent.putExtra("saveSuccess", "Speicherung erfolgreich");
-      //  startActivity(intent);
-
-
-    /*    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
-          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }*/
+        Intent intent = new Intent(getApplicationContext(),ChoosePhoto.class);
+        startActivity(intent);
       }
     });
   }
@@ -197,15 +198,5 @@ public class ProfileEdit extends AppCompatActivity {
       default:{return super.onOptionsItemSelected(item);}
     }
   }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-      Bundle extras = data.getExtras();
-      Bitmap imageBitmap = (Bitmap) extras.get("data");
-      edit_roundImageView.setImageBitmap(imageBitmap);
-    }
-  }
-
 
 }

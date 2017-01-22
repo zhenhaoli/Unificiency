@@ -76,6 +76,7 @@
     <string name="toolbar_edit_note">Notiz editieren</string>
     <string name="toolbar_edit_group">Gruppe editieren</string>
     <string name="exit">Abmeldung</string>
+    <string name="camera_album">Kamera oder Galerie auswählen</string>
     <string name="dialog_exit">Unificieny beenden?</string>
 
 

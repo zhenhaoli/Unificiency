@@ -63,7 +63,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
     getNotesOfGroup();
 
     groupName = bundle.getString("name");
-    //Toast.makeText(getContext(), groupName+groupId, Toast.LENGTH_LONG).show();
+
     this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Intent intent= new Intent(getContext(), NoteNew.class);
