@@ -59,7 +59,7 @@ public class GroupEdit extends AppCompatActivity {
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
-    client.put("groups/" + groupId + "/update/", params, new JsonHttpResponseHandler() {
+    client.put("groups/" + groupId + "/", params, new JsonHttpResponseHandler() {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
