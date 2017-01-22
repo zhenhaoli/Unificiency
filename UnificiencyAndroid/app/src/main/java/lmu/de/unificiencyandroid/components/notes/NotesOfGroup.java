@@ -42,78 +42,78 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   RecyclerView.LayoutManager mLayoutManager;
   NoteDividerItemDecoration mDividerItemDecoration;
   List<Note> notes;
+  Integer groupId;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.notes, null);
     ButterKnife.bind(this, view);
+
     Bundle bundle = this.getArguments();
-    if (bundle != null) {
-      Integer groupId = bundle.getInt("groupId", -1);
+    groupId = bundle.getInt("groupId", -1);
 
-      avi.show();
+    getNotesOfGroup();
 
-      String authToken =  SharedPref.getDefaults("authToken", getContext());
+    return view;
+  }
 
-      UnificiencyClient client = new PythonAPIClient();
-      client.addHeader("Authorization", authToken);
-      client.get("groups/" + groupId + "/notes/", null, new JsonHttpResponseHandler() {
+  public void getNotesOfGroup() {
+    avi.show();
 
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONArray notesOfGroup) {
-          try {
-            Logger.d(notesOfGroup.length() + " notes in group got");
+    String authToken =  SharedPref.getDefaults("authToken", getContext());
 
-            List<Note> notesFromServer = new ArrayList<>();
-            for(int i=0; i<notesOfGroup.length(); i++){
-              Integer id = notesOfGroup.getJSONObject(i).getInt("id");
-              String topic = notesOfGroup.getJSONObject(i).getString("topic");
-              String name = notesOfGroup.getJSONObject(i).getString("name");
-              String content = notesOfGroup.getJSONObject(i).getString("content");
-              String createdBy = notesOfGroup.getJSONObject(i).getJSONObject("creator").getString("username");
+    UnificiencyClient client = new PythonAPIClient();
+    client.addHeader("Authorization", authToken);
+    client.get("groups/" + groupId + "/notes/", null, new JsonHttpResponseHandler() {
 
-              notesFromServer.add(new Note(id, topic, name, content, createdBy, null));
-            }
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray notesOfGroup) {
+        try {
+          Logger.d(notesOfGroup.length() + " notes in group got");
 
-            notes = notesFromServer;
-            // use a linear layout manager
-            mLayoutManager = new LinearLayoutManager(getContext());
-            mRecyclerView.setLayoutManager(mLayoutManager);
+          List<Note> notesFromServer = new ArrayList<>();
+          for(int i=0; i<notesOfGroup.length(); i++){
+            Integer id = notesOfGroup.getJSONObject(i).getInt("id");
+            String topic = notesOfGroup.getJSONObject(i).getString("topic");
+            String name = notesOfGroup.getJSONObject(i).getString("name");
+            String content = notesOfGroup.getJSONObject(i).getString("content");
+            String createdBy = notesOfGroup.getJSONObject(i).getJSONObject("creator").getString("username");
 
-            // specify an adapter
-            mAdapter = new NotesAdapter(notes);
-            mAdapter.setFavoriteFalg(TRUE);
-            mAdapter.setOnItemClickListener(NotesOfGroup.this);
-            mRecyclerView.setAdapter(mAdapter);
-
-            // specify an itemDecoration
-            mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(NotesOfGroup.this.getContext())).getOrientation());
-            mRecyclerView.addItemDecoration(mDividerItemDecoration);
-
-          } catch (Exception e) {
-            Logger.e(e, "Exception");
-
-          } finally {
-            avi.hide();
+            notesFromServer.add(new Note(id, topic, name, content, createdBy, null));
           }
 
-        }
-      });
+          notes = notesFromServer;
+          // use a linear layout manager
+          mLayoutManager = new LinearLayoutManager(getContext());
+          mRecyclerView.setLayoutManager(mLayoutManager);
 
-    }
-    return view;
+          // specify an adapter
+          mAdapter = new NotesAdapter(notes);
+          mAdapter.setFavoriteFalg(TRUE);
+          mAdapter.setOnItemClickListener(NotesOfGroup.this);
+          mRecyclerView.setAdapter(mAdapter);
+
+          // specify an itemDecoration
+          mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(NotesOfGroup.this.getContext())).getOrientation());
+          mRecyclerView.addItemDecoration(mDividerItemDecoration);
+
+        } catch (Exception e) {
+          Logger.e(e, "Exception");
+
+        } finally {
+          avi.hide();
+        }
+
+      }
+    });
   }
 
   public void onItemClick(View view, int position) {
     Note note = notes.get(position);
 
     Intent notesDetails=new Intent(getActivity(), NoteDetails.class);
-    notesDetails.putExtra("noteId", note.getNoteID());
-    notesDetails.putExtra("course", note.getTopic());
-    notesDetails.putExtra("title", note.getTitle());
-    notesDetails.putExtra("content", note.getContent());
-    notesDetails.putExtra("creator", note.getCreatedBy());
+    notesDetails.putExtra("noteId", note.getNoteId());
 
     startActivityForResult(notesDetails, 1);
   }
@@ -133,6 +133,11 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
         }
 
       }
+      if (resultCode == Activity.RESULT_CANCELED) {
+        Logger.d("User back from note details");
+      }
     }
-  }
+    getNotesOfGroup();
+
+  }//onActivityResult
 }

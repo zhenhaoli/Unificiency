@@ -52,20 +52,15 @@ public class NoteDetails extends AppCompatActivity {
   @BindView(R.id.delete)
   Button deleteNote;
 
+  Note note;
+
   @OnClick(R.id.edit)
   public void editNote(){
-    
-    Bundle bundle = getIntent().getExtras();
 
-    //TODO: send id only
-    Intent editNote = new Intent(this, NoteEdit.class);
-    editNote.putExtra("noteId", bundle.getString("noteId"));
-    editNote.putExtra("topic", bundle.getString("course"));
-    editNote.putExtra("name", bundle.getString("title"));
-    editNote.putExtra("content", bundle.getString("content"));
-    editNote.putExtra("creator", bundle.getString("creator"));
+    Intent intent = new Intent(this, NoteEdit.class);
+    intent.putExtra("noteId", note.getNoteId());
 
-    startActivityForResult(editNote, 1);
+    startActivityForResult(intent, 1);
   }
 
   @OnClick(R.id.delete)
@@ -112,12 +107,7 @@ public class NoteDetails extends AppCompatActivity {
 
     setupToolbar();
 
-    Intent intent = getIntent();
-    noteTopic.setText("Vorlesung: "+intent.getStringExtra("course"));
-    noteTitle.setText("Titel: "+intent.getStringExtra("title"));
-    noteCreator.setText("Ersteller: "+intent.getStringExtra("creator"));
-    noteRating.setText("Rank: "+intent.getStringExtra("rating"));
-    noteContent.setText("Content: \n"+intent.getStringExtra("content"));
+    getNoteById(getIntent().getIntExtra("noteId", -1));
   }
 
   public void setupToolbar(){
@@ -143,6 +133,8 @@ public class NoteDetails extends AppCompatActivity {
           String name = noteJSON.getString("name");
           String content = noteJSON.getString("content");
           String createdBy = noteJSON.getJSONObject("creator").getString("username");
+
+          note = new Note(id, topic,name, content, createdBy, null);
 
           noteTopic.setText("Vorlesung: " + topic);
           noteTitle.setText("Titel: " + name);
@@ -182,14 +174,14 @@ public class NoteDetails extends AppCompatActivity {
 
         //TODO: get id from note, need backend for this
         if (extras != null) {
-          getNoteById(extras.getInt("noteid"));
+          getNoteById(extras.getInt("noteId"));
           message = extras.getString("saveSuccess");
           Message.success(this, message);
         }
 
       }
       if (resultCode == Activity.RESULT_CANCELED) {
-        Logger.d("user canceled editing profile");
+        Logger.d("user canceled editing note");
       }
     }
   }//onActivityResult

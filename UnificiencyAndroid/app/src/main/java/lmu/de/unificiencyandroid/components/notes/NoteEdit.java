@@ -43,6 +43,8 @@ public class NoteEdit extends AppCompatActivity {
   @BindView(R.id.save)
   Button save;
 
+  Note note;
+
   @OnClick(R.id.save)
   public void updateNote() {
 
@@ -50,8 +52,7 @@ public class NoteEdit extends AppCompatActivity {
     String name = nameTextInput.getEditText().getText().toString();
     String content = contentTextInput.getEditText().getText().toString();
 
-    final Integer groupId = getIntent().getExtras().getInt("groupId");
-    final Integer noteId = getIntent().getExtras().getInt("noteId");
+    Integer noteId = note.getNoteId();
 
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -64,7 +65,7 @@ public class NoteEdit extends AppCompatActivity {
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
-    client.put("notes/" + noteId, params, new JsonHttpResponseHandler() {
+    client.put("notes/" + noteId + "/", params, new JsonHttpResponseHandler() {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -72,7 +73,7 @@ public class NoteEdit extends AppCompatActivity {
 
           Intent intent = new Intent();
           intent.putExtra("saveSuccess", "Speicherung erfolgreich");
-          intent.putExtra("noteId", noteId);
+          intent.putExtra("noteId", note.getNoteId());
           setResult(Activity.RESULT_OK, intent);
           finish();
 
@@ -109,10 +110,51 @@ public class NoteEdit extends AppCompatActivity {
     ButterKnife.bind(this);
     setupToolbar();
 
-    Bundle extra = getIntent().getExtras();
-    topicTextInput.getEditText().setText(extra.getString("topic"));
-    nameTextInput.getEditText().setText(extra.getString("name"));
-    contentTextInput.getEditText().setText(extra.getString("content"));
+    getNoteById(getIntent().getIntExtra("noteId", -1));
+
+  }
+
+  public void getNoteById(Integer noteId) {
+    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
+    UnificiencyClient client = new PythonAPIClient();
+
+    client.addHeader("Authorization", authToken);
+    client.get("notes/" + noteId, null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject noteJSON) {
+
+        try {
+          Integer id = noteJSON.getInt("id");
+          String topic = noteJSON.getString("topic");
+          String name = noteJSON.getString("name");
+          String content = noteJSON.getString("content");
+          String createdBy = noteJSON.getJSONObject("creator").getString("username");
+
+          note = new Note(id, topic,name, content, createdBy, null);
+
+          topicTextInput.getEditText().setText(topic);
+          nameTextInput.getEditText().setText(name);
+          contentTextInput.getEditText().setText(content);
+
+        } catch (Exception e){
+          Logger.e(e, "Exception");
+          Message.fail(NoteEdit.this, e.toString());
+        }
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Logger.e(errorResponse.toString());
+        String errmsg = null;
+        try {
+          errmsg = errorResponse.getString("message");
+        } catch (Exception e) {
+          Logger.e(e, "Exception");
+        }
+        Message.fail(NoteEdit.this, errmsg);
+      }
+    });
+
   }
 
   public void setupToolbar() {
