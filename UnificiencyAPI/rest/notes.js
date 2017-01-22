@@ -43,7 +43,7 @@ module.exports = {
           .headers({ 'Authorization': authToken })
           .end(function (response) {
             var groupName = response.body.name;
-            notifyGroupMembersAboutUpdatedNote(groupName)
+            notifyGroupMembersAboutUpdatedNote(groupName);
           })
       }
 
@@ -52,7 +52,7 @@ module.exports = {
 
         unirest
           .post(config.firebaseAPI)
-          .headers(config.firebaseAPIKeyI)
+          .headers(config.firebaseAPIKey)
           .send({
             "to": "/topics/group" + req.body.groupId,
             "data": {
