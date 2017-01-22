@@ -95,7 +95,7 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
         String message = "Gruppe " + msg[msg.length - 1] + " erfolgreich verlassen";
 
         FirebaseMessaging.getInstance().unsubscribeFromTopic("group" + group.getId());
-        Logger.i("Unsubscribed from " + "group" + group.getId());
+        Logger.i("Unsubscribed from a" + "group" + group.getId());
 
         Message.success(GroupDetails.this, message);
 
