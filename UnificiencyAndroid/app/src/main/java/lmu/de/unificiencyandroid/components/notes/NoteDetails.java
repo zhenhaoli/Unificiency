@@ -59,6 +59,7 @@ public class NoteDetails extends AppCompatActivity {
 
     Intent intent = new Intent(this, NoteEdit.class);
     intent.putExtra("noteId", note.getNoteId());
+    intent.putExtra("groupId", getIntent().getExtras().getInt("groupId"));
 
     startActivityForResult(intent, 1);
   }
@@ -126,7 +127,7 @@ public class NoteDetails extends AppCompatActivity {
     client.get("notes/" + noteId, null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject noteJSON) {
-
+        Logger.json(noteJSON.toString());
         try {
           Integer id = noteJSON.getInt("id");
           String topic = noteJSON.getString("topic");

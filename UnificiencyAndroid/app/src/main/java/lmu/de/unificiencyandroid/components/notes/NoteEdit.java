@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -53,6 +54,7 @@ public class NoteEdit extends AppCompatActivity {
     String content = contentTextInput.getEditText().getText().toString();
 
     Integer noteId = note.getNoteId();
+    Integer groupId = getIntent().getExtras().getInt("groupId");
 
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -60,9 +62,10 @@ public class NoteEdit extends AppCompatActivity {
     params.put("topic", topic);
     params.put("name", name);
     params.put("content", content);
+    params.put("groupId", groupId);
     params.setUseJsonStreamer(true);
 
-    UnificiencyClient client = new PythonAPIClient();
+    UnificiencyClient client = new NodeAPIClient();
 
     client.addHeader("Authorization", authToken);
     client.put("notes/" + noteId + "/", params, new JsonHttpResponseHandler() {

@@ -129,8 +129,9 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   public void onItemClick(View view, int position) {
     Note note = notes.get(position);
 
-    Intent notesDetails=new Intent(getActivity(), NoteDetails.class);
+    Intent notesDetails = new Intent(getActivity(), NoteDetails.class);
     notesDetails.putExtra("noteId", note.getNoteId());
+    notesDetails.putExtra("groupId", groupId);
 
     startActivityForResult(notesDetails, 1);
   }
