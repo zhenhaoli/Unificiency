@@ -63,7 +63,7 @@ public class NoteNew extends AppCompatActivity {
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     client.addHeader("Authorization", authToken);
-    client.post("notes/" + groupId, params, new JsonHttpResponseHandler() {
+    client.post("groups/" + groupId + "/notes/", params, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         Logger.json(response.toString());

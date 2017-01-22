@@ -58,7 +58,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
 
       UnificiencyClient client = new PythonAPIClient();
       client.addHeader("Authorization", authToken);
-      client.get("notes/" + groupId, null, new JsonHttpResponseHandler() {
+      client.get("groups/" + groupId + "/notes/", null, new JsonHttpResponseHandler() {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray notesOfGroup) {

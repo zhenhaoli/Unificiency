@@ -64,7 +64,7 @@ public class NoteEdit extends AppCompatActivity {
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
-    client.put("notes/" + groupId, params, new JsonHttpResponseHandler() {
+    client.put("notes/" + noteId, params, new JsonHttpResponseHandler() {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
