@@ -21,11 +21,26 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/notes_new_note_information"
             android:layout_marginBottom="12dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notes_new_goupsName_spinner"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+           <Spinner
+            android:id="@+id/groupsName_spinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

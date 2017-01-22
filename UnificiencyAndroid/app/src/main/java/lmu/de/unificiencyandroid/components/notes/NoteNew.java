@@ -8,23 +8,38 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.groups.Group;
+import lmu.de.unificiencyandroid.components.groups.GroupsAdapter;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+
+import static android.R.attr.addPrintersActivity;
+import static android.R.attr.duration;
+import static android.R.attr.id;
+import static java.security.AccessController.getContext;
 
 public class NoteNew extends AppCompatActivity {
 
@@ -42,6 +57,9 @@ public class NoteNew extends AppCompatActivity {
 
   @BindView(R.id.notes_new_note_create)
   Button createButton;
+
+  @BindView(R.id.groupsName_spinner)
+  Spinner groupNameSpinner;
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
@@ -88,7 +106,6 @@ public class NoteNew extends AppCompatActivity {
     });
   }
 
-
   public void setupToolbar(){
     toolbar.setTitle(R.string.notes_new_note_title);
     setSupportActionBar(toolbar);
@@ -103,7 +120,59 @@ public class NoteNew extends AppCompatActivity {
     setContentView(R.layout.note_new);
     ButterKnife.bind(this);
     setupToolbar();
+    chooseGroupName();
   }
+
+  public void chooseGroupName() {
+
+    final RequestParams params = new RequestParams();
+    params.put("isMember", true);
+
+    UnificiencyClient client = new PythonAPIClient();
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    client.addHeader("Authorization", authToken);
+    client.get("groups/LMU", params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONArray groups) {
+
+        Logger.d(groups.length() + " groups got");
+
+        ArrayList groupsNames= new ArrayList();
+
+        try {
+          for(int i=0; i<groups.length(); i++){
+           groupsNames.add(groups.getJSONObject(i).getString("name"));
+          }
+        }catch (Exception e) {
+          Logger.e(e, "Exception");
+        }
+
+      //  Toast toast = Toast.makeText(getApplicationContext(), String.valueOf(groups.length()), Toast.LENGTH_LONG);
+      //  toast.show();
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(getApplicationContext(), android.R.layout.test_list_item, groupsNames);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        groupNameSpinner.setAdapter(adapter);
+      }
+
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        String errMsg = null;
+        try {
+          errMsg = errorResponse.getString("message");
+        } catch (Exception e) {
+          Logger.e(e, "Exception");
+        }
+        Message.fail(NoteNew.this, errMsg);
+      }
+    });
+
+
+
+  }
+
   /* restore back button functionality*/
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

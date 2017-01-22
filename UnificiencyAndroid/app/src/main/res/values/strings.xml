@@ -59,6 +59,7 @@
 
     <!-- Notes -->
     <string name="notes_new_note_title">Neue Notiz erstellen</string>
+    <string name="notes_new_goupsName_spinner">Gruppname auswälhen:</string>
     <string name="note_detail">Notizdetail</string>
     <string name="notes_new_note_topic">Topic eingeben</string>
     <string name="notes_new_note_create">Erstellen</string>
