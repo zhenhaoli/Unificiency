@@ -22,7 +22,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,10 @@ public class NoteNew extends AppCompatActivity {
 
   @BindView(R.id.groupsName_spinner)
   Spinner groupNameSpinner;
+
+  ArrayList<String> groupsNames= new ArrayList();
+  Map<String , Integer> groupsNamesMap = new HashMap<String , Integer>();
+
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
@@ -138,23 +144,21 @@ public class NoteNew extends AppCompatActivity {
 
         Logger.d(groups.length() + " groups got");
 
-        ArrayList groupsNames= new ArrayList();
-
         try {
           for(int i=0; i<groups.length(); i++){
-           groupsNames.add(groups.getJSONObject(i).getString("name"));
+            String name=groups.getJSONObject(i).getString("name");
+            groupsNames.add(name);
+            groupsNamesMap.put(name,i);
           }
         }catch (Exception e) {
           Logger.e(e, "Exception");
         }
 
-      //  Toast toast = Toast.makeText(getApplicationContext(), String.valueOf(groups.length()), Toast.LENGTH_LONG);
-      //  toast.show();
         ArrayAdapter<String> adapter= new ArrayAdapter<String>(getApplicationContext(), android.R.layout.test_list_item, groupsNames);
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         groupNameSpinner.setAdapter(adapter);
+
+        setDfaultGroupName();
       }
 
       @Override
@@ -168,9 +172,15 @@ public class NoteNew extends AppCompatActivity {
         Message.fail(NoteNew.this, errMsg);
       }
     });
+  }
 
-
-
+  public void setDfaultGroupName() {
+    Intent intent =getIntent();
+    String default_groupName=intent.getStringExtra("groupname");
+    if(default_groupName!=""&&default_groupName!=null){
+      int index=groupsNamesMap.get(default_groupName);
+      groupNameSpinner.setSelection(index);
+    }
   }
 
   /* restore back button functionality*/

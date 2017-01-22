@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
@@ -38,11 +40,15 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   @BindView(R.id.avi)
   com.wang.avi.AVLoadingIndicatorView avi;
 
+  @BindView(R.id.notes_floating_button)
+  FloatingActionButton addNewNoteBtn;
+
   NotesAdapter mAdapter;
   RecyclerView.LayoutManager mLayoutManager;
   NoteDividerItemDecoration mDividerItemDecoration;
   List<Note> notes;
   Integer groupId;
+  String groupName;
 
   @Nullable
   @Override
@@ -53,7 +59,18 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
     Bundle bundle = this.getArguments();
     groupId = bundle.getInt("groupId", -1);
 
+
     getNotesOfGroup();
+
+    groupName = bundle.getString("name");
+    //Toast.makeText(getContext(), groupName+groupId, Toast.LENGTH_LONG).show();
+    this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+        Intent intent= new Intent(getContext(), NoteNew.class);
+        intent.putExtra("groupname",groupName);
+        startActivity(intent);
+      }
+    });
 
     return view;
   }

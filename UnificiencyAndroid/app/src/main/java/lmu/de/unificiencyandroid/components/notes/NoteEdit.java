@@ -180,4 +180,5 @@ public class NoteEdit extends AppCompatActivity {
       }
     }
   }
+
 }

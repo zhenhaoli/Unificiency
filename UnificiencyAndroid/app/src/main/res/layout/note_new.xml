@@ -33,13 +33,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/notes_new_goupsName_spinner"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
+                android:textStyle="bold" />
 
            <Spinner
             android:id="@+id/groupsName_spinner"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:dropDownWidth="500dp"
+               style="@style/spinner_style"
+               />
 
 
         <android.support.design.widget.TextInputLayout

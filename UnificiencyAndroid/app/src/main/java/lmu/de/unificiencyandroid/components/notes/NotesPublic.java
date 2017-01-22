@@ -39,11 +39,6 @@ public class NotesPublic extends Fragment implements NoteClickListener {
           new Note(6, "itjur", "REST", "CRUD with HTTP", "Zhen", 9)
    );
 
-    public void onAddNote(View view) {
-        Intent intent= new Intent(getContext(), NoteNew.class);
-        startActivity(intent);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +47,8 @@ public class NotesPublic extends Fragment implements NoteClickListener {
 
       this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
           public void onClick(View view) {
-              onAddNote(view);
+              Intent intent= new Intent(getContext(), NoteNew.class);
+              startActivity(intent);
           }
       });
 
