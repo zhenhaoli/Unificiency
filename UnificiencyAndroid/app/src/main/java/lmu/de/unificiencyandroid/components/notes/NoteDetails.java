@@ -77,7 +77,7 @@ public class NoteDetails extends AppCompatActivity {
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     client.addHeader("Authorization", authToken);
-    client.delete("notes/" + noteId, null, new JsonHttpResponseHandler() {
+    client.delete("notes/" + noteId + "/", null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         Logger.json(response.toString());
