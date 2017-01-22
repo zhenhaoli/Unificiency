@@ -32,6 +32,13 @@ exports.secret = 'p9Bv<3Eid9%$i01';
 
 exports.pythonAPI = 'http://romue404.pythonanywhere.com/api/';
 
+exports.firebaseAPI = 'https://fcm.googleapis.com/fcm/send';
+
+exports.firebaseAPIKey = {
+  "Content-Type": "application/json",
+  "Authorization": "key=AAAAntf0k9g:APA91bHcmbj33OnjcIDGLUpTYX_RJ9oq45AQQn8KUsLCv3mdM4tp3yYHVVS1ZsKGmRTjMEkmN_x1SjEJ0SXrtqCy1Lkb0oCd0aI-qapW7TCTVos_STk0MyPRWlQIA-8Wc0CPdY0ghGMA"
+}
+
 
 
 

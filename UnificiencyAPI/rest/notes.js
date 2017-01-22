@@ -6,22 +6,15 @@ var unirest = require('unirest');
 module.exports = {
   setRoutes: function(app) {
 
-
     app.post('/groups/:groupId/notes/', function(req, res) {
-      var groupId = req.params.groupId;
-      conole.log('group id: ' + groupId);
-
       var authToken = req.get('Authorization');
-      console.log('token: ' + authToken);
+      var groupId = req.params.groupId;
 
       unirest
         .post(config.pythonAPI + 'groups/' + groupId + 'notes/')
-        .headers({
-          'Authorization': req.query.pythonToken
-        })
+        .headers({ 'Authorization': authToken })
         .send(req.body)
         .end(function (response) {
-          console.log(response.body);
           res.json(response.body)
         });
 
@@ -33,41 +26,33 @@ module.exports = {
 
       unirest
         .put(config.pythonAPI + 'notes/' + noteId + '/')
-        .headers({
-          'Authorization': authToken
-        })
+        .headers({ 'Authorization': authToken })
         .send(req.body)
         .end(processResponse);
 
       function processResponse(response) {
-        res.send(response);
         if(response.statusCode === 200){
           getGroupName();
         }
+        res.send(response);
       }
 
       function getGroupName() {
         unirest
           .get(config.pythonAPI + 'groups/' + req.body.groupId)
-          .headers({
-            'Authorization': authToken
-          })
+          .headers({ 'Authorization': authToken })
           .end(function (response) {
-            console.log(response.body)
             var groupName = response.body.name;
             notifyGroupMembersAboutUpdatedNote(groupName)
           })
       }
 
       function notifyGroupMembersAboutUpdatedNote(group) {
-        var message = "Note " + req.body.name +  " in your group " + group + " was updated";
+        var message = "Note #" + req.body.name +  "# in your group @" + group + "@ was updated";
 
         unirest
-          .post('https://fcm.googleapis.com/fcm/send')
-          .headers({
-            "Content-Type": "application/json",
-            "Authorization": "key=AAAAntf0k9g:APA91bHcmbj33OnjcIDGLUpTYX_RJ9oq45AQQn8KUsLCv3mdM4tp3yYHVVS1ZsKGmRTjMEkmN_x1SjEJ0SXrtqCy1Lkb0oCd0aI-qapW7TCTVos_STk0MyPRWlQIA-8Wc0CPdY0ghGMA"
-          })
+          .post(config.firebaseAPI)
+          .headers(config.firebaseAPIKeyI)
           .send({
             "to": "/topics/group" + req.body.groupId,
             "data": {

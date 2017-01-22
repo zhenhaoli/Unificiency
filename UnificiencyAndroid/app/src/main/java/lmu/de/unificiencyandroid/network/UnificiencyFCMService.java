@@ -16,7 +16,7 @@ public class UnificiencyFCMService extends FirebaseMessagingService {
 
     if (remoteMessage.getData().size() > 0) {
       Logger.d("Message data payload: " + remoteMessage.getData());
-      sendMessageToActivity(remoteMessage.getData().toString());
+      broadcastMessage(remoteMessage.getData().toString());
     }
 
     if (remoteMessage.getNotification() != null) {
@@ -25,9 +25,9 @@ public class UnificiencyFCMService extends FirebaseMessagingService {
 
   }
 
-  private void sendMessageToActivity(String msg) {
+  private void broadcastMessage(String message) {
     Intent intent = new Intent("ServerUpdates");
-    intent.putExtra("Status", msg);
+    intent.putExtra("Message", message);
     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
   }
 
