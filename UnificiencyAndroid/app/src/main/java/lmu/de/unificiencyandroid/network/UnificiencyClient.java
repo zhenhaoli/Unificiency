@@ -35,7 +35,7 @@ public abstract class UnificiencyClient {
 
   public void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
     Logger.i("DELETE " + getAbsoluteUrl(url)  + ((params != null) ? ("?" +  params.toString()) : ' '));
-    client.put(getAbsoluteUrl(url), params, responseHandler);
+    client.delete(getAbsoluteUrl(url), params, responseHandler);
   }
 
   protected String getAbsoluteUrl(String relativeUrl) {
