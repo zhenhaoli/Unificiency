@@ -3,6 +3,7 @@ package lmu.de.unificiencyandroid.components.notes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,8 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
 
     @BindView(R.id.notes_public_recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.notes_floating_button)
+    FloatingActionButton addNewNoteBtn;
     private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private NoteDividerItemDecoration mDividerItemDecoration;
@@ -55,6 +58,12 @@ public class NotesFavorite extends Fragment implements NoteClickListener {
         mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(this.getContext())).getOrientation());
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
+        this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent= new Intent(getContext(), NoteNew.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
     public void onItemClick(View view, int position) {
