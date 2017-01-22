@@ -48,10 +48,14 @@ public class Profile extends Fragment {
           String nickName = response.getString("username");
           String majorName = response.getString("major");
           String email = response.getString("email");
+          Integer groupsCount = response.getInt("groups_count");
+          Integer notesCount = response.getInt("notes_count");
 
           name_Account.setText(nickName);
           major_Account.setText(majorName);
           email_Account.setText(email);
+          stars_nummber.setText(groupsCount.toString());
+          notes_nummber.setText(notesCount.toString());
 
         } catch (Exception e) {
           Logger.e(e, "Exception");
@@ -86,8 +90,7 @@ public class Profile extends Fragment {
       }
     });
 
-    stars_nummber.setText("18");
-    notes_nummber.setText("6");
+
 
     getUserInfo();
 
