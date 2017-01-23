@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.widget.EditText;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
@@ -21,6 +23,7 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 public class LoginActivity extends AuthActivity {
 
@@ -30,14 +33,30 @@ public class LoginActivity extends AuthActivity {
   @BindView(R.id.passwordWrapper)
   TextInputLayout passwordWrapper;
 
+  @BindView(R.id.username)
+  EditText usernameEditText;
+
+  @BindView(R.id.password)
+  EditText passwordEditText;
+
+  @OnTextChanged(R.id.username)
+  public void validateUsername(){
+    Validate.email(usernameWrapper, this);
+  }
+
+  @OnTextChanged(R.id.password)
+  public void validatePassword(){
+    Validate.password(passwordWrapper, this);
+  }
+
   @OnClick(R.id.register)
-  void register() {
+  public void register() {
     Intent register_Intent= new Intent(LoginActivity.this, RegisterActivity.class);
     startActivityForResult(register_Intent, 1);
   }
 
   @OnClick(R.id.login)
-  void login() {
+  public void login() {
 
     if(!isNetworkAvailable()){
       Message.fail(LoginActivity.this, "Keine Internet Verbindung! Bitte stelle sicher, das Gerät mit dem Internet zu verbinden!");
@@ -49,22 +68,9 @@ public class LoginActivity extends AuthActivity {
     String username = usernameWrapper.getEditText().getText().toString();
     String password = passwordWrapper.getEditText().getText().toString();
 
-    usernameWrapper.setError(null);
-    usernameWrapper.setErrorEnabled(false);
-    passwordWrapper.setError(null);
-    passwordWrapper.setErrorEnabled(false);
-
-    if(!validateEmail(username)){
-      usernameWrapper.setError(getString(R.string.validation_email));
-    }
-    if(!validatePassword(password)){
-      passwordWrapper.setError(getString(R.string.validation_password));
-    }
-
-    boolean validInput = (validateEmail(username)&&validatePassword(password));
+    boolean validInput = (Validate.email(usernameWrapper, this)&&Validate.password(passwordWrapper, this));
 
     if(validInput) {
-
 
       final RequestParams params = new RequestParams();
       params.put("email", username);
