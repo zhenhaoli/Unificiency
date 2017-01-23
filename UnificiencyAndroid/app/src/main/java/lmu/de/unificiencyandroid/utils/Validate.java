@@ -24,6 +24,15 @@ public final class Validate {
     return validEmail;
   }
 
+  public static Boolean requiredMinLength(TextInputLayout textInputLayout, Integer minLength, String errorMessage){
+    String input = (textInputLayout.getEditText().getText().toString());
+    boolean validPassword =  !TextUtils.isEmpty(input) && input.length() > minLength;
+
+    updateUI(textInputLayout, validPassword, errorMessage);
+
+    return validPassword;
+  }
+
   public static Boolean password(TextInputLayout textInputLayout, Context context) {
     String input = (textInputLayout.getEditText().getText().toString());
     boolean validPassword =  !TextUtils.isEmpty(input) && input.length() > 5;

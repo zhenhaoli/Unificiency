@@ -19,12 +19,14 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 
 public class GroupEdit extends AppCompatActivity {
@@ -41,8 +43,18 @@ public class GroupEdit extends AppCompatActivity {
   @BindView(R.id.my_toolbar)
   Toolbar toolbar;
 
+  @OnTextChanged(R.id.desc)
+  public void validateGroupDescription(){
+    Validate.requiredMinLength(descriptionTextInput, 9, getString(R.string.groups_new_group_error_description));
+  }
+
   @OnClick(R.id.save_edit)
   public void setGroupInfo() {
+    boolean groupDescOk = Validate.requiredMinLength(descriptionTextInput, 9, getString(R.string.groups_new_group_error_description));
+    if(!groupDescOk) {
+      Message.fail(GroupEdit.this, getString(R.string.invalid_input));
+      return;
+    }
 
     String topic = topicTextInput.getEditText().getText().toString();
     String description = descriptionTextInput.getEditText().getText().toString();

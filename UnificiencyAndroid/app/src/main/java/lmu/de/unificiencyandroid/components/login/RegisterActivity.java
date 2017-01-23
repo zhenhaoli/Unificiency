@@ -102,6 +102,8 @@ public class RegisterActivity extends AuthActivity {
 
     if(emailOk && passwordOk && passwordsOk && nicknameOk) {
       doPost(username, nickname, password, major);
+    } else {
+      Message.fail(RegisterActivity.this, getString(R.string.invalid_input));
     }
   }
 

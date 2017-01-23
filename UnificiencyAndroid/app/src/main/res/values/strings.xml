@@ -52,9 +52,8 @@
     <string name="groups_new_group_topic">Topic eingeben</string>
     <string name="groups_new_group_description">Gruppenbeschreibung eingeben</string>
     <string name="groups_new_group_password">Passwort eingeben (optional)</string>
-    <string name="groups_new_group_error_name">mindestens 3 Zeichen eingeben bitte!</string>
-    <string name="groups_new_group_error_description">min. 12, max. 40 Zeichen eingeben</string>
-    <string name="groups_new_group_error_create">Ihre Eingaben sind fehlerhaft</string>
+    <string name="groups_new_group_error_name">Bitte mindestens 3 Zeichen eingeben!</string>
+    <string name="groups_new_group_error_description">Bitte mindestens 10 Zeichen eingeben!</string>
     <string name="groups_edit_group_save">Speichern</string>
     <string name="groups_edit_group_information">Hier können Sie die Beschreibung und Zweck der Gruppe anpassen.</string>
 
@@ -90,5 +89,6 @@
     <string name="remove">Löschen</string>
     <string name="yes">Ja</string>
     <string name="cancel">Abbrechen</string>
+    <string name="invalid_input">Ihre Eingaben sind fehlerhaft</string>
 
 </resources>

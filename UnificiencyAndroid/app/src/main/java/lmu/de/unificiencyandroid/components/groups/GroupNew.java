@@ -3,6 +3,7 @@ package lmu.de.unificiencyandroid.components.groups;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,15 +21,15 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.InputValidation.InputValidation;
-import lmu.de.unificiencyandroid.InputValidation.ValidateGroupDescription;
-import lmu.de.unificiencyandroid.InputValidation.ValidateGroupName;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 public class GroupNew extends AppCompatActivity {
 
@@ -39,25 +40,45 @@ public class GroupNew extends AppCompatActivity {
   TextInputLayout topic;
 
   @BindView(R.id.groups_new_group_description)
-  TextInputLayout description;
+  TextInputLayout inputLayoutDesc;
 
   @BindView(R.id.groups_new_group_name)
-  TextInputLayout name;
+  TextInputLayout inputLayoutName;
 
   @BindView(R.id.groups_new_group_password)
   TextInputLayout password;
+
+  @BindView(R.id.name)
+  TextInputEditText nameEditText;
+
+  @BindView(R.id.desc)
+  TextInputEditText descEditText;
+
+  @OnTextChanged(R.id.name)
+  public void validateGroupName(){
+    Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
+  }
+
+  @OnTextChanged(R.id.desc)
+  public void validateGroupDescription(){
+    Validate.requiredMinLength(inputLayoutDesc, 9, getString(R.string.groups_new_group_error_description));
+  }
+
 
   InputValidation nameValidator;
   InputValidation descriptionValidator;
 
   @OnClick(R.id.groups_new_group_create)
   public void onCreateGroup() {
-    String name = this.name.getEditText().getText().toString();
-    String description = this.description.getEditText().getText().toString();
+    String name = this.inputLayoutName.getEditText().getText().toString();
+    String description = this.inputLayoutDesc.getEditText().getText().toString();
     String password = this.password.getEditText().getText().toString();
     String topic =  this.topic.getEditText().getText().toString();
 
-    if(this.nameValidator.validate(name) && this.descriptionValidator.validate(description)){
+    boolean groupNameOk = Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
+    boolean groupDescOk = Validate.requiredMinLength(inputLayoutDesc, 9, getString(R.string.groups_new_group_error_description));
+
+    if(groupNameOk && groupDescOk){
 
       final RequestParams params = new RequestParams();
       params.put("topic_area", topic);
@@ -97,7 +118,7 @@ public class GroupNew extends AppCompatActivity {
       });
 
     } else {
-      Message.fail(GroupNew.this, getString(R.string.groups_new_group_error_create));
+      Message.fail(GroupNew.this, getString(R.string.invalid_input));
     }
   }
 
@@ -109,23 +130,15 @@ public class GroupNew extends AppCompatActivity {
     setupToolbar();
 
     //TODO: remove this in prd
-    this.name.getEditText().setText("My Cool Group 1");
-    this.description.getEditText().setText("A very long long long description to pass this validation");
+    this.inputLayoutName.getEditText().setText("My Crew <3");
+    this.inputLayoutDesc.getEditText().setText("A very long long long inputLayoutDesc to pass this validation");
 
-    setupFormValidation();
     this.createButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         onCreateGroup();
       }
     });
-  }
-
-  public void setupFormValidation(){
-    this.nameValidator = new ValidateGroupName(this.name,getString(R.string.groups_new_group_error_name));
-    this.descriptionValidator = new ValidateGroupDescription(this.description,getString(R.string.groups_new_group_error_description));
-    this.name.getEditText().addTextChangedListener(nameValidator);
-    this.description.getEditText().addTextChangedListener(descriptionValidator);
   }
 
   public void setupToolbar(){
