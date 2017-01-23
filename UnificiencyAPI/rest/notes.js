@@ -11,16 +11,16 @@ module.exports = {
       var groupId = req.params.groupId;
 
       unirest
-        .post(config.pythonAPI + 'groups/' + groupId + 'notes/')
+        .post(config.pythonAPI + 'groups/' + groupId + '/notes/')
         .headers({ 'Authorization': authToken })
         .send(req.body)
         .end(processResponse);
 
       function processResponse(response) {
-        if(response.statusCode === 200){
+        if(response.statusCode === 201){
           getGroupName();
         }
-        res.send(response);
+        res.send(response.body);
       }
 
       function getGroupName() {
@@ -65,7 +65,7 @@ module.exports = {
         if(response.statusCode === 200){
           getGroupName();
         }
-        res.send(response);
+        res.send(response.body);
       }
 
       function getGroupName() {

@@ -28,6 +28,7 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -72,14 +73,11 @@ public class NoteNew extends AppCompatActivity {
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
-
-    //TODO: read from form field!!
     Integer groupId = 0;
     String defaultGroupName = getIntent().getStringExtra("groupname");
     if(!TextUtils.isEmpty(defaultGroupName)){
       groupId = groupsNamesIdMap.get(defaultGroupName);
     }
-
 
     String name = this.name.getEditText().getText().toString();
     String content = this.content.getEditText().getText().toString();
@@ -91,7 +89,7 @@ public class NoteNew extends AppCompatActivity {
     params.put("content", content);
     params.setUseJsonStreamer(true);
 
-    UnificiencyClient client = new PythonAPIClient();
+    UnificiencyClient client = new NodeAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     client.addHeader("Authorization", authToken);
