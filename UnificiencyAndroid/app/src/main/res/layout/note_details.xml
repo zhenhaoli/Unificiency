@@ -84,6 +84,16 @@
                 android:background="@color/green_400"
                 android:layout_above="@id/delete"/>
 
+            <ToggleButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fav"
+                android:text="@string/fav"
+                android:textOff="@string/fav"
+                android:textOn="@string/unfav"
+                android:background="@color/deep_orange_200"
+                android:layout_above="@id/edit"/>
+
 
         </RelativeLayout>
 

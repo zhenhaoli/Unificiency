@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
@@ -52,6 +53,9 @@ public class NoteDetails extends AppCompatActivity {
   @BindView(R.id.delete)
   Button deleteNote;
 
+  @BindView(R.id.fav)
+  ToggleButton favNote;
+
   Note note;
 
   @OnClick(R.id.edit)
@@ -64,9 +68,41 @@ public class NoteDetails extends AppCompatActivity {
     startActivityForResult(intent, 1);
   }
 
+  @OnClick(R.id.fav)
+  public void facNote(){
+    if(favNote.isChecked()){
+
+      Integer noteId = getIntent().getIntExtra("noteId", -1);
+
+      UnificiencyClient client = new PythonAPIClient();
+      String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+      client.addHeader("Authorization", authToken);
+      client.post("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+          favNote.setBackgroundColor(getResources().getColor(R.color.yellow_600));
+          Message.success(NoteDetails.this, "Added Note " + note.getTitle() + " to favorites");
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+          String errMsg = null;
+          try {
+            errMsg = errorResponse.getString("message");
+          } catch (Exception e) {
+            Logger.e(e, "Exception");
+          }
+          Message.fail(NoteDetails.this, errMsg);
+        }
+      });
+      
+    } else {
+      favNote.setBackgroundColor(getResources().getColor(R.color.dark_purple_200));
+    }
+  }
+
   @OnClick(R.id.delete)
   public void deleteNote(){
-    //complete
     Integer noteId = getIntent().getIntExtra("noteId", -1);
 
     UnificiencyClient client = new PythonAPIClient();
@@ -76,8 +112,6 @@ public class NoteDetails extends AppCompatActivity {
     client.delete("notes/" + noteId + "/", null, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        Logger.json(response.toString());
-
         Intent intent = new Intent();
         intent.putExtra("success", "Note erfolgreich gelöscht!");
         setResult(Activity.RESULT_OK,intent);
@@ -92,7 +126,6 @@ public class NoteDetails extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
-
         Message.fail(NoteDetails.this, errMsg);
       }
     });
@@ -118,7 +151,7 @@ public class NoteDetails extends AppCompatActivity {
     ab.setHomeButtonEnabled(true);
     ab.setDisplayHomeAsUpEnabled(true);
   }
-  
+
   public void getNoteById(Integer noteId) {
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
     UnificiencyClient client = new PythonAPIClient();
@@ -186,8 +219,8 @@ public class NoteDetails extends AppCompatActivity {
       }
     }
   }//onActivityResult
-  
-  
+
+
   /* restore back button functionality*/
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

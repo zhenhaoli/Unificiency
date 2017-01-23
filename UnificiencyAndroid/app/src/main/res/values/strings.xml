@@ -88,6 +88,8 @@
     <!-- General -->
     <string name="save">Speichern</string>
     <string name="edit">Bearbeiten</string>
+    <string name="fav">Favorisieren</string>
+    <string name="unfav">Nicht mehr Mögen</string>
     <string name="remove">Löschen</string>
     <string name="yes">Ja</string>
     <string name="cancel">Abbrechen</string>
