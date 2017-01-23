@@ -27,6 +27,7 @@
             android:id="@+id/camera"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:backgroundTint="@color/lmugreen"
             android:background="@drawable/camera" />
         <Button
             android:padding="20dp"
@@ -34,6 +35,7 @@
             android:id="@+id/album"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:backgroundTint="@color/lmugreen"
             android:background="@drawable/album" />
     </LinearLayout>
 

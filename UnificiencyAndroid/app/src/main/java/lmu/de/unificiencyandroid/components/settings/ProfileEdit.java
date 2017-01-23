@@ -2,13 +2,18 @@ package lmu.de.unificiencyandroid.components.settings;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import lmu.de.unificiencyandroid.Manifest;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -61,6 +67,11 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
+
+  String[] filePathColumn;
+  Uri selectedImage;
+
+  final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=2;
 
   @OnClick(R.id.save_edit)
   public void save(){
@@ -166,6 +177,44 @@ public class ProfileEdit extends AppCompatActivity {
     if (bundle != null && bundle.containsKey("data")){
       Bitmap imageBitmap = (Bitmap) bundle.get("data");
       edit_roundImageView.setImageBitmap(imageBitmap);
+    }
+
+    if (intent.getData() != null){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+          ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                  WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        }
+        selectedImage = intent.getData();
+        String[] filePathColumn_temp = { MediaStore.Images.Media.DATA };
+        filePathColumn=filePathColumn_temp;
+        Cursor cursor = getContentResolver().query(selectedImage,
+        filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        edit_roundImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
+      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        // Permission Granted
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        edit_roundImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+      } else {
+        // Permission Denied
+      }
     }
   }
 

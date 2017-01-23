@@ -7,9 +7,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.groups.Group;
 import lmu.de.unificiencyandroid.components.groups.GroupsAdapter;
+import lmu.de.unificiencyandroid.components.settings.ChoosePhoto;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -41,6 +45,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 import static android.R.attr.addPrintersActivity;
 import static android.R.attr.duration;
 import static android.R.attr.id;
+import static android.R.attr.visible;
 import static java.security.AccessController.getContext;
 
 public class NoteNew extends AppCompatActivity {
@@ -60,12 +65,24 @@ public class NoteNew extends AppCompatActivity {
   @BindView(R.id.notes_new_note_create)
   Button createButton;
 
+  @BindView(R.id.photo_new_note)
+  Button addPhoto;
+
   @BindView(R.id.groupsName_spinner)
   Spinner groupNameSpinner;
+
+  @BindView(R.id.note_photo)
+  LinearLayout note_photo;
 
   ArrayList<String> groupsNames= new ArrayList();
   Map<String , Integer> groupsNamesMap = new HashMap<String , Integer>();
 
+  @OnClick(R.id.photo_new_note)
+  public void addPhoto(){
+    note_photo.setVisibility(View.VISIBLE);
+    //Intent intent = new Intent(getApplicationContext(),ChoosePhoto.class);
+    //startActivity(intent);
+  }
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
