@@ -87,6 +87,7 @@ public class NoteNew extends AppCompatActivity {
     params.put("topic", topic);
     params.put("name", name);
     params.put("content", content);
+    params.put("groupId", groupId);
     params.setUseJsonStreamer(true);
 
     UnificiencyClient client = new NodeAPIClient();

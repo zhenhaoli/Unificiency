@@ -18,24 +18,37 @@ module.exports = {
 
       function processResponse(response) {
         if(response.statusCode === 201){
-          getGroupName();
+          var message = {};
+          getGroupName(message);
         }
         res.send(response.body);
       }
 
-      function getGroupName() {
+      function getGroupName(message) {
         unirest
           .get(config.pythonAPI + 'groups/' + req.body.groupId)
           .headers({ 'Authorization': authToken })
           .end(function (response) {
-            var groupName = response.body.name;
-            notifyGroupMembersAboutUpdatedNote(groupName);
+            message.group = response.body.name;
+            getUserName(message);
+
           })
       }
 
-      function notifyGroupMembersAboutUpdatedNote(group) {
-        var message = "Note #" + req.body.name +  "# in your group @" + group + "@ was created";
+      function getUserName(message) {
+        unirest
+          .get(config.pythonAPI + 'users/')
+          .headers({ 'Authorization': authToken })
+          .end(function (response) {
+            message.username = response.body.username;
+            notifyGroupMembersAboutNewNote(message);
+          })
+      }
 
+      function notifyGroupMembersAboutNewNote(content) {
+        var message = content.username + " posted a new note #" + req.body.name +  "# in your group @" + content.group;
+
+        console.log(message)
         unirest
           .post(config.firebaseAPI)
           .headers(config.firebaseAPIKey)
@@ -63,23 +76,35 @@ module.exports = {
 
       function processResponse(response) {
         if(response.statusCode === 200){
-          getGroupName();
+          var message = {};
+          getGroupName(message);
         }
         res.send(response.body);
       }
 
-      function getGroupName() {
+      function getGroupName(message) {
         unirest
           .get(config.pythonAPI + 'groups/' + req.body.groupId)
           .headers({ 'Authorization': authToken })
           .end(function (response) {
-            var groupName = response.body.name;
-            notifyGroupMembersAboutUpdatedNote(groupName);
+            message.group = response.body.name;
+            getUserName(message);
+
           })
       }
 
-      function notifyGroupMembersAboutUpdatedNote(group) {
-        var message = "Note #" + req.body.name +  "# in your group @" + group + "@ was updated";
+      function getUserName(message) {
+        unirest
+          .get(config.pythonAPI + 'users/')
+          .headers({ 'Authorization': authToken })
+          .end(function (response) {
+            message.username = response.body.username;
+            notifyGroupMembersAboutUpdatedNote(message);
+          })
+      }
+
+      function notifyGroupMembersAboutUpdatedNote(content) {
+        var message = content.username + " updated the note #" + req.body.name +  "# in your group @" + content.group;
 
         unirest
           .post(config.firebaseAPI)
