@@ -70,18 +70,18 @@ public class NoteDetails extends AppCompatActivity {
 
   @OnClick(R.id.fav)
   public void facNote(){
+    Integer noteId = getIntent().getIntExtra("noteId", -1);
+    UnificiencyClient client = new PythonAPIClient();
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+    client.addHeader("Authorization", authToken);
+
     if(favNote.isChecked()){
 
-      Integer noteId = getIntent().getIntExtra("noteId", -1);
-
-      UnificiencyClient client = new PythonAPIClient();
-      String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
-      client.addHeader("Authorization", authToken);
       client.post("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
           favNote.setBackgroundColor(getResources().getColor(R.color.yellow_600));
-          Message.success(NoteDetails.this, "Added Note " + note.getTitle() + " to favorites");
+          Message.success(NoteDetails.this, "Note " + note.getTitle() + " zum favorites hinzugefügt");
         }
 
         @Override
@@ -95,8 +95,28 @@ public class NoteDetails extends AppCompatActivity {
           Message.fail(NoteDetails.this, errMsg);
         }
       });
-      
+
     } else {
+      //TODO: wait for backend to del fav
+      client.delete("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+          favNote.setBackgroundColor(getResources().getColor(R.color.yellow_600));
+          Message.success(NoteDetails.this, "Note " + note.getTitle() + " von favorites gelöscht");
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+          String errMsg = null;
+          try {
+            errMsg = errorResponse.getString("message");
+          } catch (Exception e) {
+            Logger.e(e, "Exception");
+          }
+          Message.fail(NoteDetails.this, errMsg);
+        }
+      });
+
       favNote.setBackgroundColor(getResources().getColor(R.color.dark_purple_200));
     }
   }
