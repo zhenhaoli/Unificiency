@@ -7,14 +7,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -23,30 +18,20 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.util.TextUtils;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.groups.Group;
-import lmu.de.unificiencyandroid.components.groups.GroupsAdapter;
-import lmu.de.unificiencyandroid.components.settings.ChoosePhoto;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
-
-import static android.R.attr.addPrintersActivity;
-import static android.R.attr.duration;
-import static android.R.attr.id;
-import static android.R.attr.visible;
-import static java.security.AccessController.getContext;
 
 public class NoteNew extends AppCompatActivity {
 
@@ -65,24 +50,24 @@ public class NoteNew extends AppCompatActivity {
   @BindView(R.id.notes_new_note_create)
   Button createButton;
 
-  @BindView(R.id.photo_new_note)
-  Button addPhoto;
+  @BindView(R.id.spinner)
+  fr.ganfra.materialspinner.MaterialSpinner spinner;
 
-  @BindView(R.id.groupsName_spinner)
-  Spinner groupNameSpinner;
+  //@BindView(R.id.photo_new_note)
+  //Button addPhoto;
 
-  @BindView(R.id.note_photo)
-  LinearLayout note_photo;
+ // @BindView(R.id.note_photo)
+ // LinearLayout note_photo;
 
   ArrayList<String> groupsNames= new ArrayList();
   Map<String , Integer> groupsNamesMap = new HashMap<String , Integer>();
 
-  @OnClick(R.id.photo_new_note)
-  public void addPhoto(){
-    note_photo.setVisibility(View.VISIBLE);
+  //@OnClick(R.id.photo_new_note)
+  //public void addPhoto(){
+    //note_photo.setVisibility(View.VISIBLE);
     //Intent intent = new Intent(getApplicationContext(),ChoosePhoto.class);
     //startActivity(intent);
-  }
+ // }
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
@@ -171,9 +156,9 @@ public class NoteNew extends AppCompatActivity {
           Logger.e(e, "Exception");
         }
 
-        ArrayAdapter<String> adapter= new ArrayAdapter<String>(getApplicationContext(), android.R.layout.test_list_item, groupsNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(NoteNew.this, android.R.layout.simple_spinner_item, groupsNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        groupNameSpinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         setDfaultGroupName();
       }
@@ -192,11 +177,11 @@ public class NoteNew extends AppCompatActivity {
   }
 
   public void setDfaultGroupName() {
-    Intent intent =getIntent();
-    String default_groupName=intent.getStringExtra("groupname");
-    if(default_groupName!=""&&default_groupName!=null){
-      int index=groupsNamesMap.get(default_groupName);
-      groupNameSpinner.setSelection(index);
+    Intent intent = getIntent();
+    String defaultGroupName = intent.getStringExtra("groupname");
+    if(!TextUtils.isEmpty(defaultGroupName)){
+      int index = groupsNamesMap.get(defaultGroupName);
+      spinner.setSelection(index);
     }
   }
 

@@ -38,22 +38,16 @@
             android:text="@string/notes_new_note_information"
             android:layout_marginBottom="12dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notes_new_goupsName_spinner"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-           <Spinner
-            android:id="@+id/groupsName_spinner"
-            android:layout_width="200dp"
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spinner"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-               android:padding="10dp"
-               android:dropDownWidth="500dp"
-               style="@style/spinner_style"
-               />
-
+            app:ms_multiline="false"
+            app:ms_enableFloatingLabel="true"
+            app:ms_enableErrorLabel="false"
+            app:ms_floatingLabelText="Notiz für die Gruppe"
+            app:ms_alignLabels="false"
+           />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

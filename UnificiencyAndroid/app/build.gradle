@@ -61,6 +61,9 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'net.danlew:android.joda:2.9.5.1'
     compile 'com.orhanobut:logger:1.15'
+    compile ('com.github.ganfra:material-spinner:1.1.1'){
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     provided 'org.projectlombok:lombok:1.12.6'
