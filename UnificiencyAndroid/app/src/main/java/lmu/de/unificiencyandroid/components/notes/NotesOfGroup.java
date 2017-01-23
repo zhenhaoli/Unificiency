@@ -54,6 +54,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   RecyclerView.LayoutManager mLayoutManager;
   NoteDividerItemDecoration mDividerItemDecoration;
   List<Note> notes;
+  String mode;
   Integer groupId;
   String groupName;
 
@@ -66,7 +67,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
     Bundle bundle = this.getArguments();
     groupId = bundle.getInt("groupId", -1);
     groupName = bundle.getString("name");
-
+    mode = bundle.getString("mode");
     getNotesOfGroup();
 
     return view;
@@ -75,11 +76,19 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   public void getNotesOfGroup() {
     avi.show();
 
+    String url = "";
+
+    if(mode.equals("fav")) {
+      url = "users/notes?favorites=true";
+    } else {
+        url = "groups/" + groupId + "/notes/";
+    }
+
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
-    client.get("groups/" + groupId + "/notes/", null, new JsonHttpResponseHandler() {
+    client.get(url, null, new JsonHttpResponseHandler() {
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray notesOfGroup) {

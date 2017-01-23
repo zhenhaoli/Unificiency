@@ -65,13 +65,19 @@ public class NotesTab extends Fragment {
 
       if(position <=  getCount() && position >= 0){
         switch (position) {
-          case 0:
-            return new NotesFavorite();
+          case 0: {
+            NotesOfGroup notesOfGroup =  new NotesOfGroup();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode", "fav");
+            notesOfGroup.setArguments(bundle);
+            return notesOfGroup;
+          }
           case 1:
             return new NotesPublic();
           default: {
             NotesOfGroup notesOfGroup =  new NotesOfGroup();
             Bundle bundle = new Bundle();
+            bundle.putString("mode", "group");
             bundle.putInt("groupId", myGroups.get(position).getId());
             bundle.putString("name", myGroups.get(position).getName());
             notesOfGroup.setArguments(bundle);
