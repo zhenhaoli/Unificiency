@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
@@ -23,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -43,6 +43,13 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
   @BindView(R.id.notes_floating_button)
   FloatingActionButton addNewNoteBtn;
 
+  @OnClick(R.id.notes_floating_button)
+  public void startNewNoteForm(){
+    Intent intent = new Intent(getContext(), NoteNew.class);
+    intent.putExtra("groupname", groupName);
+    startActivityForResult(intent, 1);
+  }
+
   NotesAdapter mAdapter;
   RecyclerView.LayoutManager mLayoutManager;
   NoteDividerItemDecoration mDividerItemDecoration;
@@ -58,19 +65,9 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
 
     Bundle bundle = this.getArguments();
     groupId = bundle.getInt("groupId", -1);
-
-
-    getNotesOfGroup();
-
     groupName = bundle.getString("name");
 
-    this.addNewNoteBtn.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View view) {
-        Intent intent= new Intent(getContext(), NoteNew.class);
-        intent.putExtra("groupname",groupName);
-        startActivity(intent);
-      }
-    });
+    getNotesOfGroup();
 
     return view;
   }
