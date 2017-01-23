@@ -61,6 +61,7 @@
             android:label="@string/title_activity_group_details"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".components.Chat" />
         <activity android:name=".components.login.RegisterActivity" />
         <activity android:name=".components.buildings.BuildingDetails" />
         <activity android:name=".components.groups.GroupNew" />

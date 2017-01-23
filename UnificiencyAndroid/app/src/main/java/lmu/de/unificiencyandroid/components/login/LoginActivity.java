@@ -19,6 +19,7 @@ import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.components.Chat;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -47,6 +48,12 @@ public class LoginActivity extends AuthActivity {
   @OnTextChanged(R.id.password)
   public void validatePassword(){
     Validate.password(passwordWrapper, this);
+  }
+
+
+  @OnClick(R.id.chat)
+  public void chat() {
+    startActivity(new Intent(this, Chat.class));
   }
 
   @OnClick(R.id.register)
