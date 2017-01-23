@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
-import lmu.de.unificiencyandroid.InputValidation.InputValidation;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -63,10 +62,6 @@ public class GroupNew extends AppCompatActivity {
   public void validateGroupDescription(){
     Validate.requiredMinLength(inputLayoutDesc, 9, getString(R.string.groups_new_group_error_description));
   }
-
-
-  InputValidation nameValidator;
-  InputValidation descriptionValidator;
 
   @OnClick(R.id.groups_new_group_create)
   public void onCreateGroup() {

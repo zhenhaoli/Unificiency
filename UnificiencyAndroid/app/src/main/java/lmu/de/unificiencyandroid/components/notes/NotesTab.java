@@ -35,6 +35,7 @@ public class NotesTab extends Fragment {
   ViewPager viewPager;
 
   List<Group> myGroups;
+  Group publicGroup;
 
   com.wang.avi.AVLoadingIndicatorView avi;
 
@@ -62,7 +63,6 @@ public class NotesTab extends Fragment {
     @Override
     public Fragment getItem(int position)
     {
-
       if(position <=  getCount() && position >= 0){
         switch (position) {
           case 0: {
@@ -72,8 +72,6 @@ public class NotesTab extends Fragment {
             notesOfGroup.setArguments(bundle);
             return notesOfGroup;
           }
-          case 1:
-            return new NotesPublic();
           default: {
             NotesOfGroup notesOfGroup =  new NotesOfGroup();
             Bundle bundle = new Bundle();
@@ -84,7 +82,6 @@ public class NotesTab extends Fragment {
             return notesOfGroup;
           }
         }
-
       }
       return null;
     }
@@ -136,17 +133,22 @@ public class NotesTab extends Fragment {
 
           List<Group> groupsFromServer = new ArrayList<>();
 
-          groupsFromServer.add(new Group(null,"Öffentlich", null ,null,null,false));
-          groupsFromServer.add(new Group(null,"Favoriten", null, null,null, false));
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
             Boolean hasPassword = groups.getJSONObject(i).getBoolean("protected");
-            groupsFromServer.add(new Group(id, name, topic, null, null, hasPassword));
+
+            if(!"public". equals (name)){
+              groupsFromServer.add(new Group(id, name, topic, null, null, hasPassword));
+            } else {
+              publicGroup = new Group(id, name, topic, null, null, hasPassword);
+            }
           }
 
           myGroups = groupsFromServer;
+          myGroups.add(0, publicGroup);
+          myGroups.add(0, new Group());
 
           tabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.notes_tab);
           viewPager = (ViewPager) view.findViewById(R.id.notes_viewpager);
@@ -160,7 +162,6 @@ public class NotesTab extends Fragment {
         } finally {
           avi.hide();
         }
-
       }
 
     });

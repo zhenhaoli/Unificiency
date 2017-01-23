@@ -75,7 +75,8 @@ public class GroupsAll extends Fragment {
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
             boolean hasPassword = groups.getJSONObject(i).getBoolean("protected");
-            groupsFromServer.add(new Group(id, name, topic, hasPassword));
+            if(!name.equals("public"))
+              groupsFromServer.add(new Group(id, name, topic, hasPassword));
           }
 
           if(groupsAdapter == null) {

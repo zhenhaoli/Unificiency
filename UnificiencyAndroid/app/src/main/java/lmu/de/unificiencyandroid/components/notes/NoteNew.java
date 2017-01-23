@@ -75,6 +75,9 @@ public class NoteNew extends AppCompatActivity {
   public void uploadNote(){
     Integer groupId = 0;
     String defaultGroupName = getIntent().getStringExtra("groupname");
+    if(defaultGroupName == null || defaultGroupName.equals("public")){
+      defaultGroupName = "Öffentlich";
+    }
     if(!TextUtils.isEmpty(defaultGroupName)){
       groupId = groupsNamesIdMap.get(defaultGroupName);
     }
@@ -155,6 +158,10 @@ public class NoteNew extends AppCompatActivity {
           for(int i=0; i<groups.length(); i++){
             Integer id = groups.getJSONObject(i).getInt("id");
             String name = groups.getJSONObject(i).getString("name");
+
+            if(name.equals("public"))
+              name = "Öffentlich";
+
             groupsNames.add(name);
             groupsNamesMap.put(name,i);
             groupsNamesIdMap.put(name, id);
@@ -167,7 +174,7 @@ public class NoteNew extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        setDfaultGroupName();
+        setDefaultGroupNameToSpinner();
       }
 
       @Override
@@ -183,8 +190,17 @@ public class NoteNew extends AppCompatActivity {
     });
   }
 
-  public void setDfaultGroupName() {
+  public void setDefaultGroupNameToSpinner() {
     String defaultGroupName = getIntent().getStringExtra("groupname");
+
+    if(defaultGroupName == null) {
+      spinner.setSelection(0);
+      return;
+    }
+
+    if(defaultGroupName.equals("public")){
+      defaultGroupName = "Öffentlich";
+    }
     if(!TextUtils.isEmpty(defaultGroupName)){
       int index = groupsNamesMap.get(defaultGroupName);
       spinner.setSelection(index);

@@ -164,10 +164,10 @@ public class RegisterActivity extends AuthActivity {
 
     //TODO remove this in prd
 
-    usernameWrapper.getEditText().setText("Unificiency2016@LMU.de");
+    usernameWrapper.getEditText().setText("Unificiency2017@LMU.de");
     passwordWrapper.getEditText().setText("123456");
     passwordConfirmWrapper.getEditText().setText("123456");
-    nicknameWrapper.getEditText().setText("MSP Experte");
+    nicknameWrapper.getEditText().setText("Praktikant bei MSP");
 
   }
 

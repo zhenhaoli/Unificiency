@@ -8,20 +8,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -29,16 +25,10 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
-import lmu.de.unificiencyandroid.Manifest;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -46,9 +36,9 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-import static lmu.de.unificiencyandroid.components.settings.ActivityThatStartsCamera.REQUEST_IMAGE_CAPTURE;
-
 public class ProfileEdit extends AppCompatActivity {
+
+  static final int REQUEST_IMAGE_CAPTURE = 1;
 
   @BindView(R.id.save_edit)
   Button save;

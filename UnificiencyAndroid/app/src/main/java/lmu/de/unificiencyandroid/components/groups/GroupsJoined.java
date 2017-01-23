@@ -77,8 +77,10 @@ public class GroupsJoined extends Fragment {
             String name = groups.getJSONObject(i).getString("name");
             String topic = groups.getJSONObject(i).getString("topic_area");
             boolean hasPassword = groups.getJSONObject(i).getBoolean("protected");
+            if(!name.equals("public"))
             groupsFromServer.add(new Group(id, name, topic, null, null, hasPassword));
           }
+
 
           if(groupsAdapter == null) {
             groupsAdapter = new GroupsAdapter(getActivity(), groupsFromServer, new GroupsAdapter.OnGroupItemClickListener() {
