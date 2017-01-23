@@ -60,7 +60,8 @@ public class NoteNew extends AppCompatActivity {
  // LinearLayout note_photo;
 
   ArrayList<String> groupsNames= new ArrayList();
-  Map<String , Integer> groupsNamesMap = new HashMap<String , Integer>();
+  Map<String , Integer> groupsNamesMap = new HashMap<>();
+  Map<String , Integer> groupsNamesIdMap = new HashMap<>();
 
   //@OnClick(R.id.photo_new_note)
   //public void addPhoto(){
@@ -74,6 +75,11 @@ public class NoteNew extends AppCompatActivity {
 
     //TODO: read from form field!!
     Integer groupId = 0;
+    String defaultGroupName = getIntent().getStringExtra("groupname");
+    if(!TextUtils.isEmpty(defaultGroupName)){
+      groupId = groupsNamesIdMap.get(defaultGroupName);
+    }
+
 
     String name = this.name.getEditText().getText().toString();
     String content = this.content.getEditText().getText().toString();
@@ -148,9 +154,11 @@ public class NoteNew extends AppCompatActivity {
 
         try {
           for(int i=0; i<groups.length(); i++){
-            String name=groups.getJSONObject(i).getString("name");
+            Integer id = groups.getJSONObject(i).getInt("id");
+            String name = groups.getJSONObject(i).getString("name");
             groupsNames.add(name);
             groupsNamesMap.put(name,i);
+            groupsNamesIdMap.put(name, id);
           }
         }catch (Exception e) {
           Logger.e(e, "Exception");
@@ -177,8 +185,7 @@ public class NoteNew extends AppCompatActivity {
   }
 
   public void setDfaultGroupName() {
-    Intent intent = getIntent();
-    String defaultGroupName = intent.getStringExtra("groupname");
+    String defaultGroupName = getIntent().getStringExtra("groupname");
     if(!TextUtils.isEmpty(defaultGroupName)){
       int index = groupsNamesMap.get(defaultGroupName);
       spinner.setSelection(index);
