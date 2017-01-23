@@ -51,7 +51,7 @@ public class LoginActivity extends AuthActivity {
 
   @OnClick(R.id.register)
   public void register() {
-    Intent register_Intent= new Intent(LoginActivity.this, RegisterActivity.class);
+    Intent register_Intent = new Intent(LoginActivity.this, RegisterActivity.class);
     startActivityForResult(register_Intent, 1);
   }
 

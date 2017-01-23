@@ -17,11 +17,13 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 public class RegisterActivity extends AuthActivity {
 
@@ -46,6 +48,29 @@ public class RegisterActivity extends AuthActivity {
   @BindView(R.id.majorWrapper)
   TextInputLayout majorWrapper;
 
+  @BindView(R.id.major)
+  AutoCompleteTextView actv;
+
+  @OnTextChanged(R.id.username)
+  public void validateUsername(){
+    Validate.email(usernameWrapper, this);
+  }
+
+  @OnTextChanged(R.id.nickname)
+  public void validateNickname(){
+    Validate.required(nicknameWrapper, getString(R.string.validation_nickname));
+  }
+
+  @OnTextChanged(R.id.password)
+  public void validatePassword(){
+    Validate.password(passwordWrapper, this);
+  }
+
+  @OnTextChanged(R.id.passwordConfirm)
+  public void validatePasswordConfirm(){
+    Validate.password(passwordConfirmWrapper, this);
+  }
+
   @OnClick(R.id.register)
   void register() {
 
@@ -62,38 +87,20 @@ public class RegisterActivity extends AuthActivity {
     String passwordConfirm = passwordConfirmWrapper.getEditText().getText().toString();
     String major = majorWrapper.getEditText().getText().toString();
 
-    usernameWrapper.setError(null);
-    usernameWrapper.setErrorEnabled(false);
-    nicknameWrapper.setError(null);
-    nicknameWrapper.setErrorEnabled(false);
-    passwordWrapper.setError(null);
-    passwordWrapper.setErrorEnabled(false);
-    passwordConfirmWrapper.setError(null);
-    passwordConfirmWrapper.setErrorEnabled(false);
-    majorWrapper.setError(null);
-    majorWrapper.setErrorEnabled(false);
+    boolean emailOk = Validate.email(usernameWrapper, this);
+    boolean passwordOk = Validate.password(passwordWrapper, this);
+    boolean passwordsOk = passwordsEqual(password, passwordConfirm);
+    boolean nicknameOk =  Validate.required(nicknameWrapper, getString(R.string.validation_nickname));
 
-    if(!validateEmail(username)){
-      usernameWrapper.setError(getString(R.string.validation_email));
-    }
-
-    if(passwordsEqual(password, passwordConfirm)) {
-      if (!validatePassword(password)) {
-        passwordWrapper.setError(getString(R.string.validation_password));
-      }
-
-      if (!validatePassword(passwordConfirm)) {
-        passwordConfirmWrapper.setError(getString(R.string.validation_password));
-      }
-    } else {
+    if(!passwordsOk) {
       passwordWrapper.setError(getString(R.string.validation_passwords_equal));
     }
 
-    if(!validateNickname(nickname)){
+    if(!nicknameOk){
       nicknameWrapper.setError(getString(R.string.validation_nickname));
     }
 
-    if(validateEmail(username)&&validatePassword(password)&&passwordsEqual(password, passwordConfirm) && validateNickname(nickname)) {
+    if(emailOk && passwordOk && passwordsOk && nicknameOk) {
       doPost(username, nickname, password, major);
     }
   }
@@ -148,19 +155,18 @@ public class RegisterActivity extends AuthActivity {
 
     ButterKnife.bind(this);
 
-    /** auto complete major input based on defined list */
     ArrayAdapter<String> adapter = new ArrayAdapter<String>
         (this,android.R.layout.select_dialog_item,majors);
-    //Getting the instance of AutoCompleteTextView
-    AutoCompleteTextView actv= (AutoCompleteTextView)findViewById(R.id.major);
-    actv.setThreshold(1);//will start working from first character
-    actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+    actv.setThreshold(1);
+    actv.setAdapter(adapter);
 
     //TODO remove this in prd
-    usernameWrapper.getEditText().setText("NewUser@LMU.de");
+
+    usernameWrapper.getEditText().setText("Unificiency2016@LMU.de");
     passwordWrapper.getEditText().setText("123456");
     passwordConfirmWrapper.getEditText().setText("123456");
-    nicknameWrapper.getEditText().setText("MSPPraktikant");
+    nicknameWrapper.getEditText().setText("MSP Experte");
+
   }
 
   @Override
