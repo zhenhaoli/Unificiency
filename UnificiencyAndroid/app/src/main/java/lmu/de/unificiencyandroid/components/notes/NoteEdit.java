@@ -75,7 +75,7 @@ public class NoteEdit extends AppCompatActivity {
         try {
 
           Intent intent = new Intent();
-          intent.putExtra("saveSuccess", "Speicherung erfolgreich");
+          intent.putExtra("saveSuccess", "Speichern erfolgreich");
           intent.putExtra("noteId", note.getNoteId());
           setResult(Activity.RESULT_OK, intent);
           finish();

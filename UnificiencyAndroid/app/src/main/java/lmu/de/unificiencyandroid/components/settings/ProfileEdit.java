@@ -125,7 +125,7 @@ public class ProfileEdit extends AppCompatActivity {
         try {
 
           Intent intent = new Intent();
-          intent.putExtra("saveSuccess", "Speicherung erfolgreich");
+          intent.putExtra("saveSuccess", "Speichern erfolgreich");
           setResult(Activity.RESULT_OK,intent);
           finish();
 

@@ -78,7 +78,7 @@ public class GroupEdit extends AppCompatActivity {
         try {
 
           Intent intent = new Intent();
-          intent.putExtra("saveSuccess", "Speicherung erfolgreich");
+          intent.putExtra("saveSuccess", "Speichern erfolgreich");
           intent.putExtra("groupId", groupId);
           setResult(Activity.RESULT_OK,intent);
           finish();
