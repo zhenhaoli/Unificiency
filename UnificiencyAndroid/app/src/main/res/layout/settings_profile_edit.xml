@@ -38,14 +38,16 @@
             android:layout_marginRight="10dp"
             />
 
-        <lmu.de.unificiencyandroid.custome.RoundImageView
-            android:id="@+id/Edit_roundImageView"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/msp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            />
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

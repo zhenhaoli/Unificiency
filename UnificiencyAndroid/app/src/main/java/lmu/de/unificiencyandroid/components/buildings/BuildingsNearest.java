@@ -32,8 +32,6 @@ import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 
-import static com.google.android.gms.internal.zzs.TAG;
-
 public class BuildingsNearest extends BuildingsBase {
 
   ArrayList<Building> buildings;
@@ -79,6 +77,10 @@ public class BuildingsNearest extends BuildingsBase {
   @Override
   public void onConnected(@Nullable Bundle bundle) {
     super.onConnected(bundle);
+    getLocation();
+  }
+
+  public void getLocation(){
     try {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
           mGoogleApiClient);

@@ -2,26 +2,15 @@ package lmu.de.unificiencyandroid.components.settings;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.SyncStateContract;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import android.widget.ImageView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -31,18 +20,12 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
-import lmu.de.unificiencyandroid.Manifest;
+import de.hdodenhof.circleimageview.CircleImageView;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
@@ -53,8 +36,8 @@ public class ProfileEdit extends AppCompatActivity {
   @BindView(R.id.save_edit)
   Button save;
 
-  @BindView(R.id.Edit_roundImageView)
-  RoundImageView edit_roundImageView;
+  @BindView(R.id.profile_image)
+  CircleImageView profileImage;
 
   @BindView(R.id.camera_album)
   ImageView camera_album;
@@ -199,7 +182,7 @@ public class ProfileEdit extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-    edit_roundImageView.setImageBitmap(bitmap);
+    profileImage.setImageBitmap(bitmap);
     // TODO do something with the bitmap
     }
 
