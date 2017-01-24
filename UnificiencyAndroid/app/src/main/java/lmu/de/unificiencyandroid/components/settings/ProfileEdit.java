@@ -20,6 +20,11 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +58,8 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
+
+  Bitmap profileBitmap;
 
   String[] filePathColumn;
   Uri selectedImage;
@@ -124,12 +131,11 @@ public class ProfileEdit extends AppCompatActivity {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         try {
-
-          Intent intent = new Intent();
-          intent.putExtra("saveSuccess", "Speicherung erfolgreich");
-          setResult(Activity.RESULT_OK,intent);
-          finish();
-
+          if(profileBitmap != null) {
+            setUserProfileImage();
+          } else {
+            backToProfileAfterSuccess();
+          }
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
@@ -145,6 +151,52 @@ public class ProfileEdit extends AppCompatActivity {
         Message.fail(ProfileEdit.this, errmsg);
       }
     });
+
+  }
+
+  public void setUserProfileImage(){
+
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    final RequestParams params = new RequestParams();
+
+    File profilePic = bitmapToFile(profileBitmap);
+    Logger.d("Profile Pic File: " + profilePic);
+    try {
+      params.put("file", profilePic);
+    } catch(FileNotFoundException e) {
+      Logger.e(e, "File not found: ");
+    }
+
+    UnificiencyClient client = new PythonAPIClient();
+
+    client.addHeader("Authorization", authToken);
+    client.post("users/images/", params, new JsonHttpResponseHandler() {
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Logger.json(response.toString());
+        backToProfileAfterSuccess();
+      }
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Logger.e(errorResponse.toString());
+        String errmsg = null;
+        try {
+          errmsg = errorResponse.getString("message");
+        } catch (Exception e) {
+          Logger.e(e, "Exception");
+        }
+        Message.fail(ProfileEdit.this, errmsg);
+      }
+    });
+  }
+
+  public void backToProfileAfterSuccess(){
+    Intent intent = new Intent();
+    intent.putExtra("saveSuccess", "Speicherung erfolgreich");
+    setResult(Activity.RESULT_OK,intent);
+    finish();
   }
 
   @Override
@@ -181,9 +233,28 @@ public class ProfileEdit extends AppCompatActivity {
   }
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-    profileImage.setImageBitmap(bitmap);
-    // TODO do something with the bitmap
+    profileBitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+    profileImage.setImageBitmap(profileBitmap);
+  }
+
+  private File bitmapToFile(Bitmap bitmap){
+    try {
+      File f = new File(this.getCacheDir(), "profile.png");
+      f.createNewFile();
+
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+      byte[] bitmapdata = bos.toByteArray();
+
+      FileOutputStream fos = new FileOutputStream(f);
+      fos.write(bitmapdata);
+      fos.flush();
+      fos.close();
+      return f;
+    } catch (Exception e){
+      Logger.e(e, "Exception during Bitmap to File: ");
+      return null;
     }
+  }
 
 }
