@@ -3,6 +3,7 @@ package lmu.de.unificiencyandroid.components.settings;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mvc.imagepicker.ImagePicker;
@@ -98,6 +100,8 @@ public class ProfileEdit extends AppCompatActivity {
           majorEditText.setText(majorName);
           emailEditText.setText(email);
 
+          getProfilePicture();
+
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
@@ -105,6 +109,29 @@ public class ProfileEdit extends AppCompatActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, String errmsg, Throwable throwable) {
         Logger.e(errmsg);
+      }
+    });
+  }
+
+  public void getProfilePicture() {
+    String authToken = SharedPref.getDefaults("authToken", this);
+
+    final RequestParams params = new RequestParams();
+
+    UnificiencyClient client = new PythonAPIClient();
+
+    client.addHeader("Authorization", authToken);
+    client.get("users/images/", params, new FileAsyncHttpResponseHandler(this) {
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+        Logger.e(throwable.toString());
+        Message.fail(ProfileEdit.this, throwable.toString());
+      }
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, File file) {
+        Logger.d(file.toString());
+        profileImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
       }
     });
   }
