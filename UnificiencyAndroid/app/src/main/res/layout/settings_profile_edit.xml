@@ -26,14 +26,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_hint"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="5dp"/>
+
+        <ImageView
+            android:id="@+id/camera_album"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:backgroundTint="@color/lmugreen"
+            android:background="@drawable/camera"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            />
 
         <lmu.de.unificiencyandroid.custome.RoundImageView
             android:id="@+id/Edit_roundImageView"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/msp"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
             />
 

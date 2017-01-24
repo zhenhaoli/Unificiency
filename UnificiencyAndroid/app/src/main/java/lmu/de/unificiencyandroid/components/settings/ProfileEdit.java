@@ -8,27 +8,39 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mvc.imagepicker.ImagePicker;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import lmu.de.unificiencyandroid.Manifest;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.custome.RoundImageView;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -38,13 +50,14 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class ProfileEdit extends AppCompatActivity {
 
-  static final int REQUEST_IMAGE_CAPTURE = 1;
-
   @BindView(R.id.save_edit)
   Button save;
 
   @BindView(R.id.Edit_roundImageView)
   RoundImageView edit_roundImageView;
+
+  @BindView(R.id.camera_album)
+  ImageView camera_album;
 
   @BindView(R.id.edit_nickname)
   TextInputEditText nicknameEditText;
@@ -66,6 +79,11 @@ public class ProfileEdit extends AppCompatActivity {
   @OnClick(R.id.save_edit)
   public void save(){
     setUserInfo();
+  }
+
+  @OnClick(R.id.camera_album)
+  public void camera_album(){
+    ImagePicker.pickImage(this, "Select your image:");
   }
 
   public void getUserInfo() {
@@ -125,7 +143,7 @@ public class ProfileEdit extends AppCompatActivity {
         try {
 
           Intent intent = new Intent();
-          intent.putExtra("saveSuccess", "Speichern erfolgreich");
+          intent.putExtra("saveSuccess", "Speicherung erfolgreich");
           setResult(Activity.RESULT_OK,intent);
           finish();
 
@@ -156,68 +174,9 @@ public class ProfileEdit extends AppCompatActivity {
     setupToolbar();
     getUserInfo();
 
-    changePhoto();
-    resetphoto();
+    ImagePicker.setMinQuality(600, 600);
   }
 
-  public void resetphoto(){
-
-    Intent intent = getIntent();
-    Bundle bundle = intent.getExtras();
-    if (bundle != null && bundle.containsKey("data")){
-      Bitmap imageBitmap = (Bitmap) bundle.get("data");
-      edit_roundImageView.setImageBitmap(imageBitmap);
-    }
-
-    if (intent.getData() != null){
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-          ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                  WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-        }
-        selectedImage = intent.getData();
-        String[] filePathColumn_temp = { MediaStore.Images.Media.DATA };
-        filePathColumn=filePathColumn_temp;
-        Cursor cursor = getContentResolver().query(selectedImage,
-        filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        edit_roundImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-    }
-  }
-
-  @Override
-  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-    if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        // Permission Granted
-        Cursor cursor = getContentResolver().query(selectedImage,
-                filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        edit_roundImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-      } else {
-        // Permission Denied
-      }
-    }
-  }
-
-
-  public void changePhoto(){
-
-    edit_roundImageView.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View view) {
-        Intent intent = new Intent(getApplicationContext(),ChoosePhoto.class);
-        startActivity(intent);
-      }
-    });
-  }
 
   public void setupToolbar(){
     toolbar.setTitle(R.string.toolbar_edit_profile);
@@ -237,5 +196,11 @@ public class ProfileEdit extends AppCompatActivity {
       default:{return super.onOptionsItemSelected(item);}
     }
   }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+    edit_roundImageView.setImageBitmap(bitmap);
+    // TODO do something with the bitmap
+    }
 
 }

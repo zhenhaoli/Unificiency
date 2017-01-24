@@ -2,17 +2,22 @@ package lmu.de.unificiencyandroid.components.notes;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mvc.imagepicker.ImagePicker;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
@@ -54,22 +59,24 @@ public class NoteNew extends AppCompatActivity {
   @BindView(R.id.spinner)
   fr.ganfra.materialspinner.MaterialSpinner spinner;
 
-  //@BindView(R.id.photo_new_note)
-  //Button addPhoto;
+  @BindView(R.id.photo_new_note)
+  Button addPhoto;
 
- // @BindView(R.id.note_photo)
- // LinearLayout note_photo;
+  @BindView(R.id.note_photo)
+  LinearLayout note_photo_layout;
+
+  @BindView(R.id.note_Image)
+  ImageView note_Image;
 
   ArrayList<String> groupsNames= new ArrayList();
   Map<String , Integer> groupsNamesMap = new HashMap<>();
   Map<String , Integer> groupsNamesIdMap = new HashMap<>();
 
-  //@OnClick(R.id.photo_new_note)
-  //public void addPhoto(){
-    //note_photo.setVisibility(View.VISIBLE);
-    //Intent intent = new Intent(getApplicationContext(),ChoosePhoto.class);
-    //startActivity(intent);
- // }
+  @OnClick(R.id.photo_new_note)
+  public void addPhoto(){
+    note_photo_layout.setVisibility(View.VISIBLE);
+    ImagePicker.pickImage(this, "Select your image:");
+  }
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
@@ -137,6 +144,7 @@ public class NoteNew extends AppCompatActivity {
     ButterKnife.bind(this);
     setupToolbar();
     chooseGroupName();
+    ImagePicker.setMinQuality(600, 600);
   }
 
   public void chooseGroupName() {
@@ -205,6 +213,13 @@ public class NoteNew extends AppCompatActivity {
       int index = groupsNamesMap.get(defaultGroupName);
       spinner.setSelection(index);
     }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+    note_Image.setImageBitmap(bitmap);
+    // TODO do something with the bitmap
   }
 
   /* restore back button functionality*/
