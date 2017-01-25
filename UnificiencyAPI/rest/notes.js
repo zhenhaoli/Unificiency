@@ -98,7 +98,6 @@ module.exports = {
 
       function notifyGroupMembersAboutUpdatedNote(content) {
         var message = content.username + " updated the note #" + req.body.name +  " in your group @" + content.group;
-          console.log(groupId)
         unirest
           .post(config.firebaseAPI)
           .headers(config.firebaseAPIKey)

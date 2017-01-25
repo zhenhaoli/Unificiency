@@ -74,6 +74,8 @@ public class NoteEdit extends AppCompatActivity {
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         try {
 
+          Logger.json(response.toString());
+
           Intent intent = new Intent();
           intent.putExtra("saveSuccess", "Speichern erfolgreich");
           intent.putExtra("noteId", note.getNoteId());
