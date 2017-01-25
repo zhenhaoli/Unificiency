@@ -23,6 +23,8 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +35,9 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
@@ -68,6 +70,8 @@ public class NoteNew extends AppCompatActivity {
   @BindView(R.id.note_Image)
   ImageView note_Image;
 
+  Bitmap noteImage;
+
   ArrayList<String> groupsNames= new ArrayList();
   Map<String , Integer> groupsNamesMap = new HashMap<>();
   Map<String , Integer> groupsNamesIdMap = new HashMap<>();
@@ -80,15 +84,8 @@ public class NoteNew extends AppCompatActivity {
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
-    Integer groupId = 0;
-    String defaultGroupName = getIntent().getStringExtra("groupname");
-    if(defaultGroupName == null || defaultGroupName.equals("public")){
-      defaultGroupName = "Öffentlich";
-    }
-    if(!TextUtils.isEmpty(defaultGroupName)){
-      groupId = groupsNamesIdMap.get(defaultGroupName);
-    }
-
+    Integer groupId = groupsNamesIdMap.get(spinner.getSelectedItem());
+    
     String name = this.name.getEditText().getText().toString();
     String content = this.content.getEditText().getText().toString();
     String topic =  this.topic.getEditText().getText().toString();
@@ -98,9 +95,18 @@ public class NoteNew extends AppCompatActivity {
     params.put("name", name);
     params.put("content", content);
     params.put("groupId", groupId);
-    params.setUseJsonStreamer(true);
 
-    UnificiencyClient client = new NodeAPIClient();
+    if(noteImage != null){
+      File noteImageFile = ImageUtils.bitmapToFile(this, noteImage);
+      Logger.d("Note Image File: " + noteImageFile);
+      try {
+        params.put("file", noteImageFile);
+      } catch(FileNotFoundException e) {
+        Logger.e(e, "File not found: ");
+      }
+    }
+
+    UnificiencyClient client = new PythonAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     client.addHeader("Authorization", authToken);
@@ -173,6 +179,7 @@ public class NoteNew extends AppCompatActivity {
             groupsNames.add(name);
             groupsNamesMap.put(name,i);
             groupsNamesIdMap.put(name, id);
+            Logger.i(groupsNamesIdMap.toString());
           }
         }catch (Exception e) {
           Logger.e(e, "Exception");
@@ -217,8 +224,8 @@ public class NoteNew extends AppCompatActivity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-    note_Image.setImageBitmap(bitmap);
+    noteImage = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+    note_Image.setImageBitmap(noteImage);
     // TODO do something with the bitmap
   }
 

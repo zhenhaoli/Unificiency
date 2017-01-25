@@ -22,10 +22,8 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
@@ -187,7 +186,7 @@ public class ProfileEdit extends AppCompatActivity {
 
     final RequestParams params = new RequestParams();
 
-    File profilePic = bitmapToFile(profileBitmap);
+    File profilePic = ImageUtils.bitmapToFile(this, profileBitmap);
     Logger.d("Profile Pic File: " + profilePic);
     try {
       params.put("file", profilePic);
@@ -264,24 +263,5 @@ public class ProfileEdit extends AppCompatActivity {
     profileImage.setImageBitmap(profileBitmap);
   }
 
-  private File bitmapToFile(Bitmap bitmap){
-    try {
-      File f = new File(this.getCacheDir(), "profile.png");
-      f.createNewFile();
-
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-      byte[] bitmapdata = bos.toByteArray();
-
-      FileOutputStream fos = new FileOutputStream(f);
-      fos.write(bitmapdata);
-      fos.flush();
-      fos.close();
-      return f;
-    } catch (Exception e){
-      Logger.e(e, "Exception during Bitmap to File: ");
-      return null;
-    }
-  }
 
 }

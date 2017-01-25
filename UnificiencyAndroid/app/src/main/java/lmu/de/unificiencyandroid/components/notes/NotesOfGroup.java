@@ -18,6 +18,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -106,7 +107,9 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
             notesFromServer.add(new Note(id, topic, name, content, createdBy, null));
           }
 
+          Collections.reverse(notesFromServer);
           notes = notesFromServer;
+
           // use a linear layout manager
           mLayoutManager = new LinearLayoutManager(getContext());
           mRecyclerView.setLayoutManager(mLayoutManager);

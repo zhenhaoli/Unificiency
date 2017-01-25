@@ -9,8 +9,7 @@ import com.github.johnpersano.supertoasts.library.SuperActivityToast;
 import lmu.de.unificiencyandroid.R;
 
 public final class Message {
-  private Message(){
-  }
+  private Message() {}
 
   public static void success(Context context, String message){
     SuperActivityToast.cancelAllSuperToasts();
