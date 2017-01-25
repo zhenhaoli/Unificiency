@@ -56,7 +56,9 @@ module.exports = {
     });
 
     app.put('/notes/:id', function(req, res) {
+
       var noteId = req.params.id;
+      var groupId = req.body.groupId;
       var authToken = req.get('Authorization');
 
       unirest
@@ -96,12 +98,12 @@ module.exports = {
 
       function notifyGroupMembersAboutUpdatedNote(content) {
         var message = content.username + " updated the note #" + req.body.name +  " in your group @" + content.group;
-
+          console.log(groupId)
         unirest
           .post(config.firebaseAPI)
           .headers(config.firebaseAPIKey)
           .send({
-            "to": "/topics/group" + req.body.groupId,
+            "to": "/topics/group" + groupId,
             "data": {
               "message": message,
             },
