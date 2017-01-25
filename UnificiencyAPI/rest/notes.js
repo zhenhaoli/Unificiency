@@ -42,7 +42,7 @@ module.exports = {
           .post(config.firebaseAPI)
           .headers(config.firebaseAPIKey)
           .send({
-            "to": "/topics/group" + req.body.groupId,
+            "to": "/topics/group" + groupId,
             "data": {
               "message": message,
             },
