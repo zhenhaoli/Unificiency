@@ -35,7 +35,7 @@ module.exports = {
       }
 
       function notifyGroupMembersAboutNewNote(content) {
-        var message = content.username + " posted a new note #" + req.body.name +  "# in your group @" + content.group;
+        var message = content.username + " posted a new note #" + req.body.name +  " in your group @" + content.group;
 
         console.log(message)
         unirest
@@ -95,7 +95,7 @@ module.exports = {
       }
 
       function notifyGroupMembersAboutUpdatedNote(content) {
-        var message = content.username + " updated the note #" + req.body.name +  "# in your group @" + content.group;
+        var message = content.username + " updated the note #" + req.body.name +  " in your group @" + content.group;
 
         unirest
           .post(config.firebaseAPI)
