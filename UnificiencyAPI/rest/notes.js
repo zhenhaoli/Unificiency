@@ -72,7 +72,7 @@ module.exports = {
           var message = {};
           getGroupName(message);
         }
-        res.send(response.body);
+        res.status(response.statusCode).send(response.body);
       }
 
       function getGroupName(message) {
