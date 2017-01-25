@@ -7,31 +7,20 @@ module.exports = {
   setRoutes: function(app) {
 
     app.post('/groups/:groupId/notes/', function(req, res) {
+
       var authToken = req.get('Authorization');
       var groupId = req.params.groupId;
 
-      unirest
-        .post(config.pythonAPI + 'groups/' + groupId + '/notes/')
-        .headers({ 'Authorization': authToken })
-        .send(req.body)
-        .end(processResponse);
-
-      function processResponse(response) {
-        if(response.statusCode === 201){
-          var message = {};
-          getGroupName(message);
-        }
-        res.send(response.body);
-      }
+      var message = {};
+      getGroupName(message);
 
       function getGroupName(message) {
         unirest
-          .get(config.pythonAPI + 'groups/' + req.body.groupId)
+          .get(config.pythonAPI + 'groups/' + groupId)
           .headers({ 'Authorization': authToken })
           .end(function (response) {
             message.group = response.body.name;
             getUserName(message);
-
           })
       }
 
@@ -61,6 +50,8 @@ module.exports = {
           })
           .end()
       }
+
+      res.status(200).json({message: 'ok'});
 
     });
 

@@ -35,6 +35,7 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.ImageUtils;
@@ -85,7 +86,7 @@ public class NoteNew extends AppCompatActivity {
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
     Integer groupId = groupsNamesIdMap.get(spinner.getSelectedItem());
-    
+
     String name = this.name.getEditText().getText().toString();
     String content = this.content.getEditText().getText().toString();
     String topic =  this.topic.getEditText().getText().toString();
@@ -115,6 +116,8 @@ public class NoteNew extends AppCompatActivity {
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         Logger.json(response.toString());
 
+        notifyGroupMembersAboutNewNote();
+
         Intent intent = new Intent();
         intent.putExtra("success", "Note erfolgreich erstellt!");
         setResult(Activity.RESULT_OK,intent);
@@ -131,6 +134,31 @@ public class NoteNew extends AppCompatActivity {
         }
 
         Message.fail(NoteNew.this, errMsg);
+      }
+    });
+  }
+
+  public void notifyGroupMembersAboutNewNote(){
+
+    Integer groupId = groupsNamesIdMap.get(spinner.getSelectedItem());
+
+    String name = this.name.getEditText().getText().toString();
+
+    final RequestParams params = new RequestParams();
+    params.put("name", name);
+
+    UnificiencyClient client = new NodeAPIClient();
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    client.addHeader("Authorization", authToken);
+    client.post("groups/" + groupId + "/notes/", params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Logger.json(response.toString());
+      }
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Logger.e(errorResponse.toString());
       }
     });
   }
