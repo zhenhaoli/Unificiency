@@ -69,16 +69,17 @@
         <activity android:name=".components.notes.NoteDetails" />
         <activity android:name=".components.notes.NoteNew" />
         <activity android:name=".components.notes.NoteEdit" />
+        <activity android:name=".components.notes.NoteImage" />
         <activity android:name=".components.settings.SettingsGroups" />
         <activity android:name=".components.settings.SettingsNotes" />
         <activity android:name=".components.settings.ProfileEdit" />
 
-        <service android:name=".network.UnificiencyFCMIDService">
+        <service android:name=".network.FirebaseInstanceService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".network.UnificiencyFCMService">
+        <service android:name=".network.CloudMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

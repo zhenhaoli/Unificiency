@@ -7,7 +7,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.orhanobut.logger.Logger;
 
-public class UnificiencyFCMService extends FirebaseMessagingService {
+public class CloudMessagingService extends FirebaseMessagingService {
 
   @Override
   public void onMessageReceived(RemoteMessage remoteMessage) {

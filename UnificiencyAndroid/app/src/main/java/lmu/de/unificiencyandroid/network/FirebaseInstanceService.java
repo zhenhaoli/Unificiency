@@ -5,7 +5,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.orhanobut.logger.Logger;
 
 
-public class UnificiencyFCMIDService extends FirebaseInstanceIdService {
+public class FirebaseInstanceService extends FirebaseInstanceIdService {
   @Override
   public void onTokenRefresh() {
     // Get updated InstanceID token.

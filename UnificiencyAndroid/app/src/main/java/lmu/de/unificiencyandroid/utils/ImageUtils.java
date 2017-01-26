@@ -2,12 +2,16 @@ package lmu.de.unificiencyandroid.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+
+import lmu.de.unificiencyandroid.R;
 
 public final class ImageUtils {
 
@@ -31,5 +35,13 @@ public final class ImageUtils {
       Logger.e(e, "Exception during Bitmap to File: ");
       return null;
     }
+  }
+
+  public static void downloadToImageView(Context context, String imageUrl, ImageView imageView){
+    Picasso.with(context)
+        .load(imageUrl)
+        .placeholder(R.drawable.a7astr)
+        .error(R.drawable.account)
+        .into(imageView);
   }
 }

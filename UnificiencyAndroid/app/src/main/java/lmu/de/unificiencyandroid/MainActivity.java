@@ -15,9 +15,13 @@ import android.view.MenuItem;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import net.danlew.android.joda.JodaTimeAndroid;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +30,11 @@ import lmu.de.unificiencyandroid.components.groups.GroupsTab;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.components.notes.NotesTab;
 import lmu.de.unificiencyandroid.components.settings.SettingsTab;
+import lmu.de.unificiencyandroid.utils.SharedPref;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -48,6 +57,25 @@ public class MainActivity extends AppCompatActivity{
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     JodaTimeAndroid.init(this);
+
+    final String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
+
+    OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(new Interceptor() {
+          @Override
+          public Response intercept(Chain chain) throws IOException {
+            Request newRequest = chain.request().newBuilder()
+                .addHeader("Authorization", authToken)
+                .build();
+            return chain.proceed(newRequest);
+          }
+        })
+        .build();
+
+    final Picasso picasso = new Picasso.Builder(getApplicationContext())
+        .downloader(new OkHttp3Downloader(client))
+        .build();
+    Picasso.setSingletonInstance(picasso);
 
     Logger.i("Firebase Token: " + FirebaseInstanceId.getInstance().getToken());
     FirebaseMessaging.getInstance().subscribeToTopic("news");
