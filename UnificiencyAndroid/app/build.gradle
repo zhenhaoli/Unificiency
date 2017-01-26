@@ -67,6 +67,8 @@ dependencies {
     compile 'co.intentservice.android-chat-ui:chat-ui:0.1.1'
     compile 'com.github.Mariovc:ImagePicker:1.0.5'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     provided 'org.projectlombok:lombok:1.12.6'

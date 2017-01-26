@@ -63,9 +63,17 @@
                 android:id="@+id/note_detail_content"
                 android:layout_below="@id/note_detail_rating"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="60dp"
                 android:background="@color/cyan_100"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_below="@id/note_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"/>
 
             <Button
                 android:theme="@style/DangerButton"
@@ -74,7 +82,7 @@
                 android:id="@+id/delete"
                 android:text="@string/remove"
                 android:background="@color/red_400"
-                android:layout_alignParentBottom="true"/>
+                android:layout_below="@id/imageView"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -82,7 +90,7 @@
                 android:id="@+id/edit"
                 android:text="@string/edit"
                 android:background="@color/green_400"
-                android:layout_above="@id/delete"/>
+                android:layout_below="@id/delete"/>
 
             <ToggleButton
                 android:layout_width="match_parent"
@@ -92,7 +100,7 @@
                 android:textOff="@string/fav"
                 android:textOn="@string/unfav"
                 android:background="@color/deep_orange_200"
-                android:layout_above="@id/edit"/>
+                android:layout_below="@id/edit"/>
 
 
         </RelativeLayout>

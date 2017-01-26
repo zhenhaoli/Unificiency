@@ -8,13 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +30,10 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class NoteDetails extends AppCompatActivity {
@@ -55,6 +64,9 @@ public class NoteDetails extends AppCompatActivity {
 
   @BindView(R.id.fav)
   ToggleButton favNote;
+
+  @BindView(R.id.imageView)
+  ImageView imageView;
 
   Note note;
 
@@ -173,7 +185,7 @@ public class NoteDetails extends AppCompatActivity {
   }
 
   public void getNoteById(Integer noteId) {
-    String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
+    final String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
@@ -187,6 +199,7 @@ public class NoteDetails extends AppCompatActivity {
           String name = noteJSON.getString("name");
           String content = noteJSON.getString("content");
           String createdBy = noteJSON.getJSONObject("creator").getString("username");
+          Boolean hasImage = noteJSON.getBoolean("has_image");
 
           note = new Note(id, topic,name, content, createdBy, null);
 
@@ -195,6 +208,38 @@ public class NoteDetails extends AppCompatActivity {
           noteCreator.setText("Ersteller: " + createdBy);
           noteRating.setText("Rank: " + 0);
           noteContent.setText("Content: \n" + content);
+
+          if(hasImage){
+
+            OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                  @Override
+                  public Response intercept(Chain chain) throws IOException {
+                    Request newRequest = chain.request().newBuilder()
+                        .addHeader("Authorization", authToken)
+                        .build();
+                    return chain.proceed(newRequest);
+                  }
+                })
+                .build();
+
+
+            String imageUrl = "https://romue404.pythonanywhere.com/api/notes/" + id + "?image=true";
+
+            final Picasso picasso = new Picasso.Builder(NoteDetails.this)
+                .downloader(new OkHttp3Downloader(client))
+                .build();
+            Picasso.setSingletonInstance(picasso);
+
+            Picasso.with(NoteDetails.this)
+                .load(imageUrl)
+                .placeholder(R.drawable.a7astr)   // optional
+                .error(R.drawable.account)      // optional
+                .resize(400,400)                        // optional
+
+                .into(imageView);
+            Logger.d("download note image " + imageUrl);
+          }
 
         } catch (Exception e){
           Logger.e(e, "Exception");
