@@ -20,7 +20,7 @@ public class NoteImage extends AppCompatActivity  {
   public void back(){
     finish();
   }
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

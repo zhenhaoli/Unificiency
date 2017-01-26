@@ -17,6 +17,8 @@ public final class ImageUtils {
 
   private ImageUtils() {}
 
+  private static final String baseUrl = "https://romue404.pythonanywhere.com/api/";
+
   public static File bitmapToFile(Context context, Bitmap bitmap){
     try {
       File f = new File(context.getCacheDir(), "upload.png");
@@ -39,7 +41,7 @@ public final class ImageUtils {
 
   public static void downloadToImageView(Context context, String imageUrl, ImageView imageView){
     Picasso.with(context)
-        .load(imageUrl)
+        .load(baseUrl + imageUrl)
         .placeholder(R.drawable.a7astr)
         .error(R.drawable.account)
         .into(imageView);

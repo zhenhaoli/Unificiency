@@ -215,7 +215,7 @@ public class NoteDetails extends AppCompatActivity {
           noteContent.setText("Content: \n" + content);
 
           if(hasImage){
-            imageUrl = "https://romue404.pythonanywhere.com/api/notes/" + id + "?image=true";
+            imageUrl = "notes/" + id + "?image=true";
             ImageUtils.downloadToImageView(NoteDetails.this, imageUrl, imageView);
 
             Logger.d("download note image " + imageUrl);
