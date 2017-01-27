@@ -11,9 +11,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -34,6 +36,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.ImageUtils;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
@@ -59,6 +62,12 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
+  
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress)
+  GoogleProgressBar googleProgressBar;
 
   Bitmap profileBitmap;
 
@@ -78,6 +87,10 @@ public class ProfileEdit extends AppCompatActivity {
   }
 
   public void getUserInfo() {
+
+    googleProgressBar.setVisibility(View.VISIBLE);
+    LoadingUtils.enableView(layout, false);
+    
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     final RequestParams params = new RequestParams();
@@ -125,17 +138,26 @@ public class ProfileEdit extends AppCompatActivity {
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
         Logger.e(throwable.toString());
         Message.fail(ProfileEdit.this, throwable.toString());
+
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
       }
 
       @Override
       public void onSuccess(int statusCode, Header[] headers, File file) {
         Logger.d(file.toString());
         profileImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
       }
     });
   }
 
   public void setUserInfo() {
+
+    googleProgressBar.setVisibility(View.VISIBLE);
+    LoadingUtils.enableView(layout, false);
 
     String nickName = nicknameEditText.getText().toString();
     String majorName = majorEditText.getText().toString();
@@ -160,6 +182,8 @@ public class ProfileEdit extends AppCompatActivity {
           if(profileBitmap != null) {
             setUserProfileImage();
           } else {
+            LoadingUtils.enableView(layout, true);
+            googleProgressBar.setVisibility(View.INVISIBLE);
             backToProfileAfterSuccess();
           }
         } catch (Exception e) {
@@ -174,6 +198,8 @@ public class ProfileEdit extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
         Message.fail(ProfileEdit.this, errmsg);
       }
     });
@@ -202,6 +228,8 @@ public class ProfileEdit extends AppCompatActivity {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         Logger.json(response.toString());
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
         backToProfileAfterSuccess();
       }
       @Override
@@ -213,6 +241,8 @@ public class ProfileEdit extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
         Message.fail(ProfileEdit.this, errmsg);
       }
     });
@@ -228,7 +258,7 @@ public class ProfileEdit extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    
     setContentView(R.layout.settings_profile_edit);
     ButterKnife.bind(this);
 
