@@ -15,7 +15,9 @@ import lmu.de.unificiencyandroid.R;
 
 public final class ImageUtils {
 
-  private ImageUtils() {}
+  private ImageUtils() {
+
+  }
 
   private static final String baseUrl = "https://romue404.pythonanywhere.com/api/";
 

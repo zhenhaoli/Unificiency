@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -22,6 +24,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.Validate;
 
@@ -50,6 +53,12 @@ public class RegisterActivity extends AuthActivity {
 
   @BindView(R.id.major)
   AutoCompleteTextView actv;
+
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress)
+  GoogleProgressBar googleProgressBar;
 
   @OnTextChanged(R.id.username)
   public void validateUsername(){
@@ -109,6 +118,9 @@ public class RegisterActivity extends AuthActivity {
 
   private void doPost(String username, String nickname, String password, String major) {
 
+    googleProgressBar.setVisibility(View.VISIBLE);
+    LoadingUtils.enableView(layout, false);
+
     final RequestParams params = new RequestParams();
     params.put("email", username);
     params.put("username", nickname);
@@ -127,10 +139,14 @@ public class RegisterActivity extends AuthActivity {
         passwordWrapper.setErrorEnabled(false);
         passwordConfirmWrapper.setErrorEnabled(false);
 
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
+
         Intent returnToLoginIntent = new Intent();
         returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
         setResult(Activity.RESULT_OK,returnToLoginIntent);
         finish();
+
       }
 
       @Override
@@ -145,6 +161,9 @@ public class RegisterActivity extends AuthActivity {
           failMsg = "Dieses Email wird bereits verwendet, bitte ein anderes eingeben!";
         }
         Message.fail(RegisterActivity.this, failMsg);
+
+        LoadingUtils.enableView(layout, true);
+        googleProgressBar.setVisibility(View.INVISIBLE);
       }
     });
 

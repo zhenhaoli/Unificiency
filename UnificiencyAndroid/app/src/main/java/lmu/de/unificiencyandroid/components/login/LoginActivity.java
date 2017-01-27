@@ -46,6 +46,9 @@ public class LoginActivity extends AuthActivity {
   @BindView(R.id.google_progress)
   GoogleProgressBar googleProgressBar;
 
+  @BindView(R.id.login_layout)
+  View layout;
+
   @OnTextChanged(R.id.username)
   public void validateUsername(){
     Validate.email(usernameWrapper, this);
@@ -85,6 +88,7 @@ public class LoginActivity extends AuthActivity {
     if(validInput) {
 
       googleProgressBar.setVisibility(View.VISIBLE);
+      LoadingUtils.enableView(layout, false);
 
       final RequestParams params = new RequestParams();
       params.put("email", username);
@@ -114,6 +118,7 @@ public class LoginActivity extends AuthActivity {
           startActivity(loginIntent);
           finish();
           googleProgressBar.setVisibility(View.INVISIBLE);
+          LoadingUtils.enableView(layout, true);
         }
 
         @Override
@@ -123,6 +128,7 @@ public class LoginActivity extends AuthActivity {
             errMsg = "Email oder Passwort falsch!";
           }
           Message.fail(LoginActivity.this, errMsg);
+          LoadingUtils.enableView(layout, true);
         }
       });
     }
