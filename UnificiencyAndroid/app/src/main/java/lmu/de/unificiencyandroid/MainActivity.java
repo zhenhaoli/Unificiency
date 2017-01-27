@@ -72,10 +72,15 @@ public class MainActivity extends AppCompatActivity{
         })
         .build();
 
-    final Picasso picasso = new Picasso.Builder(getApplicationContext())
-        .downloader(new OkHttp3Downloader(client))
-        .build();
-    Picasso.setSingletonInstance(picasso);
+    try {
+
+      final Picasso picasso = new Picasso.Builder(getApplicationContext())
+          .downloader(new OkHttp3Downloader(client))
+          .build();
+      Picasso.setSingletonInstance(picasso);
+    } catch (Exception e){
+      Logger.e(e, "Picasson: ");
+    }
 
     Logger.i("Firebase Token: " + FirebaseInstanceId.getInstance().getToken());
     FirebaseMessaging.getInstance().subscribeToTopic("news");

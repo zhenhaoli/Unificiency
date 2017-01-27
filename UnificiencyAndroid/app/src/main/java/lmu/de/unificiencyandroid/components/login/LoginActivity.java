@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.widget.EditText;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -22,6 +24,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.components.Chat;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
@@ -40,6 +43,9 @@ public class LoginActivity extends AuthActivity {
   @BindView(R.id.password)
   EditText passwordEditText;
 
+  @BindView(R.id.google_progress)
+  GoogleProgressBar googleProgressBar;
+
   @OnTextChanged(R.id.username)
   public void validateUsername(){
     Validate.email(usernameWrapper, this);
@@ -49,7 +55,6 @@ public class LoginActivity extends AuthActivity {
   public void validatePassword(){
     Validate.password(passwordWrapper, this);
   }
-
 
   @OnClick(R.id.chat)
   public void chat() {
@@ -79,6 +84,8 @@ public class LoginActivity extends AuthActivity {
 
     if(validInput) {
 
+      googleProgressBar.setVisibility(View.VISIBLE);
+
       final RequestParams params = new RequestParams();
       params.put("email", username);
       params.put("password", password);
@@ -106,6 +113,7 @@ public class LoginActivity extends AuthActivity {
           Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
           startActivity(loginIntent);
           finish();
+          googleProgressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
