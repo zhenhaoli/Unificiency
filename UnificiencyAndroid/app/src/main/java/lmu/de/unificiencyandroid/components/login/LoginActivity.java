@@ -59,10 +59,10 @@ public class LoginActivity extends AuthActivity {
     Validate.password(passwordWrapper, this);
   }
 
-  @OnClick(R.id.chat)
-  public void chat() {
-    startActivity(new Intent(this, Chat.class));
-  }
+ // @OnClick(R.id.chat)
+ // public void chat() {
+ //   startActivity(new Intent(this, Chat.class));
+ // }
 
   @OnClick(R.id.register)
   public void register() {

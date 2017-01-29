@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,6 +73,7 @@
             android:layout_below="@id/groups_details_member_header"
             android:layout_margin="16dp">
         </ListView>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,24 +83,45 @@
             android:layout_alignParentBottom="true"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
-        <Button
-            android:theme="@style/DangerButton"
-            android:layout_width="match_parent"
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/pmenu"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/groups_details_leave"
-            android:text="@string/groups_details_leave"
-            android:visibility="invisible"
-            android:background="@color/red_400"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            fab:menu_icon="@drawable/pmenu"
+            fab:menu_colorNormal="@color/lmugreen"
+            fab:menu_colorPressed="@color/lmugreen"
+            fab:menu_colorRipple="@color/lmugreen"
+            >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/groups_details_modify"
-            android:text="@string/groups_details_modify"
-            android:background="@color/green_400"
-            android:visibility="invisible"
-            android:layout_above="@id/groups_details_leave"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/groups_details_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                fab:fab_label="@string/groups_details_modify"
+                fab:fab_colorNormal="@color/lmugreen"
+                fab:fab_colorPressed="@color/lmugreen"
+                fab:fab_colorRipple="@color/lmugreen"/>
+            />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/groups_details_leave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_exit"
+                fab:fab_label="@string/groups_details_leave"
+                fab:fab_colorNormal="@color/lmugreen"
+                fab:fab_colorPressed="@color/lmugreen"
+                fab:fab_colorRipple="@color/lmugreen"
+                />
+
+        </com.github.clans.fab.FloatingActionMenu>
     </RelativeLayout>
+
 
 </LinearLayout>

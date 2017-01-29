@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.github.clans.fab.FloatingActionMenu;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -33,6 +36,9 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
+
+
+
 public class GroupDetails extends AppCompatActivity implements GroupPasswordEnterListener {
 
   @BindView(R.id.group_details_name)
@@ -44,14 +50,17 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
   @BindView(R.id.groups_details_description)
   TextView description;
 
+  @BindView(R.id.pmenu)
+  FloatingActionMenu groupOption;
+
   @BindView(R.id.groups_details_join)
   Button joinButton;
 
   @BindView(R.id.groups_details_leave)
-  Button leaveButton;
+  FloatingActionButton leaveButton;
 
   @BindView(R.id.groups_details_modify)
-  Button modifyButton;
+  FloatingActionButton modifyButton;
 
   @BindView(R.id.groups_details_backButton)
   ImageView toolbar;
@@ -247,13 +256,11 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
 
   public void bindGroupData() {
     if(isMemberInGroup) {
-      leaveButton.setVisibility(View.VISIBLE);
+      groupOption.setVisibility(View.VISIBLE);
       joinButton.setVisibility(View.INVISIBLE);
-      modifyButton.setVisibility(View.VISIBLE);
     } else {
       joinButton.setVisibility(View.VISIBLE);
-      leaveButton.setVisibility(View.INVISIBLE);
-      modifyButton.setVisibility(View.INVISIBLE);
+      groupOption.setVisibility(View.INVISIBLE);
     }
 
     this.groupName.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
