@@ -1,15 +1,21 @@
 package lmu.de.unificiencyandroid.components.settings;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
+import lmu.de.unificiencyandroid.Manifest;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -81,10 +88,43 @@ public class ProfileEdit extends AppCompatActivity {
     setUserInfo();
   }
 
+  private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
+  @TargetApi(Build.VERSION_CODES.M)
+  public boolean CheckCameraPermission() {
+    int permissionCheckRead = ContextCompat.checkSelfPermission(getApplicationContext(),
+            android.Manifest.permission.CAMERA);
+    if (permissionCheckRead != PackageManager.PERMISSION_GRANTED) {
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+              android.Manifest.permission.CAMERA)) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.CAMERA},
+                REQUEST_PERMISSION_CAMERA_CODE);
+      } else {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.CAMERA},
+                REQUEST_PERMISSION_CAMERA_CODE);
+      }
+      return false;
+    } else
+      return true;
+  }
+
+  @Override
+  public void onRequestPermissionsResult(
+          int requestCode,
+          String permissions[],
+          int[] grantResults) {
+    switch (requestCode) {
+      case REQUEST_PERMISSION_CAMERA_CODE:
+        ImagePicker.pickImage(this, "Select your image:");
+    }
+  }
+
   @OnClick(R.id.camera_album)
   public void camera_album(){
-    ImagePicker.pickImage(this, "Select your image:");
+    if(CheckCameraPermission())ImagePicker.pickImage(this, "Select your image:");
   }
+
 
   public void getUserInfo() {
 
