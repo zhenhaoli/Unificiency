@@ -59,8 +59,6 @@ public class BuildingsNearest extends BuildingsBase {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    askLocationPermission();
-
     View view = inflater.inflate(R.layout.buildings_nearest, container, false);
     ButterKnife.bind(this, view);
 
@@ -84,20 +82,18 @@ public class BuildingsNearest extends BuildingsBase {
     try {
       mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
           mGoogleApiClient);
-      if(mLastLocation != null) {
-        Logger.d(mLastLocation.toString());
 
-        //LMU Info Bau
-        double myLat = 48.1493226;
-        double myLng = 11.5918366;
-        if(mLastLocation!=null){
-          myLat = mLastLocation.getLatitude();
-          myLng = mLastLocation.getLongitude();
-        }
+      //LMU Info Bau
+      double myLat = 48.1493226;
+      double myLng = 11.5918366;
+      if(mLastLocation!=null){
 
-        fetchData(myLat, myLng);
-
+        myLat = mLastLocation.getLatitude();
+        myLng = mLastLocation.getLongitude();
       }
+
+      fetchData(myLat, myLng);
+
     } catch (SecurityException e){
       Logger.e(e, "SecurityException");
       Message.fail(getContext(), e.toString());

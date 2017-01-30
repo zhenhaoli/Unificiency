@@ -1,12 +1,13 @@
 package lmu.de.unificiencyandroid.components.buildings;
 
-import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import java.util.List;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.utils.Message;
 
-import static com.google.android.gms.internal.zzs.TAG;
+import static android.R.attr.permission;
 
 public abstract class BuildingsBase extends Fragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
@@ -44,7 +45,9 @@ public abstract class BuildingsBase extends Fragment implements
   @Override
   public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+    checkLocationPermission();
     setUpLocationServices();
+
 
     InputStream is = getResources().openRawResource(R.raw.buildings);
 
@@ -64,24 +67,6 @@ public abstract class BuildingsBase extends Fragment implements
       Message.fail(getContext(), e.toString());
     }
     return null;
-  }
-
-  public void askLocationPermission(){
-    int MyVersion = Build.VERSION.SDK_INT;
-    if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
-      if (!checkIfAlreadyhavePermission()) {
-        requestForSpecificPermission();
-      }
-    }
-  }
-
-  private boolean checkIfAlreadyhavePermission() {
-    int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-    return (result == PackageManager.PERMISSION_GRANTED);
-  }
-
-  private void requestForSpecificPermission() {
-    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
   }
 
   public void setUpLocationServices(){
@@ -112,6 +97,26 @@ public abstract class BuildingsBase extends Fragment implements
 
   @Override
   public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+
+  private static final int REQUEST_PERMISSION_LOCATION_CODE = 1;
+  @TargetApi(Build.VERSION_CODES.M)
+  public boolean checkLocationPermission() {
+
+    int permission = ContextCompat.checkSelfPermission(getContext(),
+        android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+
+      ActivityCompat.requestPermissions(getActivity(),
+          new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+          REQUEST_PERMISSION_LOCATION_CODE);
+
+      return false;
+    }
+
+    return true;
+
+  }
 
 }
 

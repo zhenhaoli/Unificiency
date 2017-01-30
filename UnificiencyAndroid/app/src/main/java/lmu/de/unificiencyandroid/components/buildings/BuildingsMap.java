@@ -44,8 +44,6 @@ public class BuildingsMap extends BuildingsBase implements
 
     ButterKnife.bind(this, view);
 
-    askLocationPermission();
-
     mMapView.onCreate(savedInstanceState);
 
     mMapView.onResume(); // needed to get the map to display immediately

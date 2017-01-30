@@ -21,7 +21,6 @@ import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.MainActivity;
 import lmu.de.unificiencyandroid.R;
-import lmu.de.unificiencyandroid.components.Chat;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.LoadingUtils;
@@ -114,9 +113,11 @@ public class LoginActivity extends AuthActivity {
           usernameWrapper.setErrorEnabled(false);
           passwordWrapper.setErrorEnabled(false);
 
+          finish();
+
           Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
           startActivity(loginIntent);
-          finish();
+
           googleProgressBar.setVisibility(View.INVISIBLE);
           LoadingUtils.enableView(layout, true);
         }
