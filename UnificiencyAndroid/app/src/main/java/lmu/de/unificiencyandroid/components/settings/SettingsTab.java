@@ -62,7 +62,7 @@ public class SettingsTab extends Fragment {
         case 0 :
           return "Profile";
         case 1 :
-          return "Benachrichtigungen";
+          return "Bearbeiten";
       }
       return null;
     }

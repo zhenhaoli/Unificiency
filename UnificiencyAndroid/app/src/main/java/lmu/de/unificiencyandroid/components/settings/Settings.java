@@ -26,7 +26,7 @@ import lmu.de.unificiencyandroid.utils.SharedPref;
 
 public class Settings extends Fragment {
 
-  Button save,exit;
+  Button save;
 
   TextInputEditText nickName_editor, majorName_editor,text_email;
 
@@ -113,7 +113,6 @@ public class Settings extends Fragment {
     View view =  inflater.inflate(R.layout.setting,null);
 
     save = (Button) view.findViewById(R.id.save_setting);
-    exit = (Button) view.findViewById(R.id.exit_setting);
 
     nickName_editor= (TextInputEditText) view.findViewById(R.id.text_nickname);
     majorName_editor= (TextInputEditText) view.findViewById(R.id.text_major);
@@ -124,12 +123,6 @@ public class Settings extends Fragment {
     save.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         setUserInfo();
-      }
-    });
-    exit.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        Intent intent= new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
       }
     });
 
