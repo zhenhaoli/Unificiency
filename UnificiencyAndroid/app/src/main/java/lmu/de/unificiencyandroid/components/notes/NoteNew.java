@@ -1,10 +1,15 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -77,10 +82,42 @@ public class NoteNew extends AppCompatActivity {
   Map<String , Integer> groupsNamesMap = new HashMap<>();
   Map<String , Integer> groupsNamesIdMap = new HashMap<>();
 
+  private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
+  @TargetApi(Build.VERSION_CODES.M)
+  public boolean CheckCameraPermission() {
+    int permissionCheckRead = ContextCompat.checkSelfPermission(getApplicationContext(),
+            android.Manifest.permission.CAMERA);
+    if (permissionCheckRead != PackageManager.PERMISSION_GRANTED) {
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+              android.Manifest.permission.CAMERA)) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.CAMERA},
+                REQUEST_PERMISSION_CAMERA_CODE);
+      } else {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.CAMERA},
+                REQUEST_PERMISSION_CAMERA_CODE);
+      }
+      return false;
+    } else
+      return true;
+  }
+
+  @Override
+  public void onRequestPermissionsResult(
+          int requestCode,
+          String permissions[],
+          int[] grantResults) {
+    switch (requestCode) {
+      case REQUEST_PERMISSION_CAMERA_CODE:
+        ImagePicker.pickImage(this, "Select your image:");
+    }
+  }
+
   @OnClick(R.id.photo_new_note)
   public void addPhoto(){
     note_photo_layout.setVisibility(View.VISIBLE);
-    ImagePicker.pickImage(this, "Select your image:");
+    if(CheckCameraPermission())ImagePicker.pickImage(this, "Select your image:");
   }
 
   @OnClick(R.id.notes_new_note_create)
