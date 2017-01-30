@@ -16,11 +16,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
+import com.github.clans.fab.FloatingActionMenu;
+import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.TruncatedChunkException;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -51,13 +54,13 @@ public class NoteDetails extends AppCompatActivity {
   Toolbar toolbar;
 
   @BindView(R.id.edit)
-  Button editNote;
+  FloatingActionButton editNote;
 
   @BindView(R.id.delete)
-  Button deleteNote;
+  FloatingActionButton deleteNote;
 
   @BindView(R.id.fav)
-  ToggleButton favNote;
+  FloatingActionButton favNote;
 
   @BindView(R.id.imageView)
   ImageView imageView;
@@ -92,12 +95,12 @@ public class NoteDetails extends AppCompatActivity {
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
     client.addHeader("Authorization", authToken);
 
-    if(favNote.isChecked()){
+    if(true){
 
       client.post("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          favNote.setBackgroundColor(getResources().getColor(R.color.yellow_600));
+          favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " zum favorites hinzugefügt");
         }
 
