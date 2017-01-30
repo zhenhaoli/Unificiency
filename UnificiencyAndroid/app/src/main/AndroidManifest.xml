@@ -70,8 +70,6 @@
         <activity android:name=".components.notes.NoteNew" />
         <activity android:name=".components.notes.NoteEdit" />
         <activity android:name=".components.notes.NoteImage" />
-        <activity android:name=".components.settings.SettingsGroups" />
-        <activity android:name=".components.settings.SettingsNotes" />
         <activity android:name=".components.settings.ProfileEdit" />
 
         <service android:name=".network.FirebaseInstanceService">

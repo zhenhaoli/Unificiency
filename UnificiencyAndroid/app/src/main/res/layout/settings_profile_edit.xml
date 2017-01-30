@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="0dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -54,8 +54,8 @@
 
         <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
             android:id="@+id/google_progress"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:visibility="invisible"
             gpb:type="folding_circles"/>
