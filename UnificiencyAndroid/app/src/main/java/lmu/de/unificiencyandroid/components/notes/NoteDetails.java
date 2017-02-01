@@ -7,23 +7,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
-import com.github.clans.fab.FloatingActionMenu;
-import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.TruncatedChunkException;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -208,8 +204,11 @@ public class NoteDetails extends AppCompatActivity {
           String content = noteJSON.getString("content");
           String createdBy = noteJSON.getJSONObject("creator").getString("username");
           Boolean hasImage = noteJSON.getBoolean("has_image");
+          Integer rating = noteJSON.getInt("favorite_count");
+          Boolean isCreator = noteJSON.getBoolean("is_creator");
+          Boolean isFavorite = noteJSON.getBoolean("is_favorite");
 
-          note = new Note(id, topic,name, content, createdBy, null);
+          note = new Note(id, topic,name, content, createdBy, rating);
 
           noteTopic.setText("Vorlesung: " + topic);
           noteTitle.setText("Titel: " + name);
