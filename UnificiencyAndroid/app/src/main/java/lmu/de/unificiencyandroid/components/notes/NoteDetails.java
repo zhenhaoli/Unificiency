@@ -228,7 +228,7 @@ public class NoteDetails extends AppCompatActivity {
           noteTopic.setText("Vorlesung: " + topic);
           noteTitle.setText("Titel: " + name);
           noteCreator.setText("Ersteller: " + createdBy);
-          noteRating.setText("Rank: " + 0);
+          noteRating.setText("Favorisiert von: " + rating + " Studis");
           noteContent.setText("Content: \n" + content);
 
           if(isCreator) {
