@@ -73,6 +73,8 @@ public class NoteDetails extends AppCompatActivity {
   String imageUrl;
   Note note;
 
+  Boolean isFavorite;
+
 
   @OnClick(R.id.edit)
   public void editNote(){
@@ -85,19 +87,20 @@ public class NoteDetails extends AppCompatActivity {
   }
 
   @OnClick(R.id.fav)
-  public void facNote(){
+  public void favNote(){
     Integer noteId = getIntent().getIntExtra("noteId", -1);
     UnificiencyClient client = new PythonAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
     client.addHeader("Authorization", authToken);
 
-    if(true){
+    if(!isFavorite){
 
       client.post("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
           favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " zum favorites hinzugefügt");
+          isFavorite = true;
         }
 
         @Override
@@ -113,12 +116,13 @@ public class NoteDetails extends AppCompatActivity {
       });
 
     } else {
-      //TODO: wait for backend to del fav
+
       client.delete("notes/" + noteId + "/favor/", null, new JsonHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-          favNote.setBackgroundColor(getResources().getColor(R.color.yellow_600));
+          favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " von favorites gelöscht");
+          isFavorite = false;
         }
 
         @Override
@@ -133,7 +137,6 @@ public class NoteDetails extends AppCompatActivity {
         }
       });
 
-      favNote.setBackgroundColor(getResources().getColor(R.color.dark_purple_200));
     }
   }
 
@@ -206,7 +209,7 @@ public class NoteDetails extends AppCompatActivity {
           Boolean hasImage = noteJSON.getBoolean("has_image");
           Integer rating = noteJSON.getInt("favorite_count");
           Boolean isCreator = noteJSON.getBoolean("is_creator");
-          Boolean isFavorite = noteJSON.getBoolean("is_favorite");
+          isFavorite = noteJSON.getBoolean("is_favorite");
 
           note = new Note(id, topic,name, content, createdBy, rating);
 
@@ -215,6 +218,12 @@ public class NoteDetails extends AppCompatActivity {
           noteCreator.setText("Ersteller: " + createdBy);
           noteRating.setText("Rank: " + 0);
           noteContent.setText("Content: \n" + content);
+
+          if(isFavorite)
+            favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
+          else
+            favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
+
 
           if(hasImage){
             imageUrl = "notes/" + id + "?image=true";
