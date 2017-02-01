@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +62,12 @@ public class NoteDetails extends AppCompatActivity {
   @BindView(R.id.imageView)
   ImageView imageView;
 
+  @BindView(R.id.menuForCreator)
+  com.github.clans.fab.FloatingActionMenu menuForCreator;
+
+  @BindView(R.id.menu)
+  com.github.clans.fab.FloatingActionMenu menu;
+
   @OnClick(R.id.imageView)
   public void fullscreenImage(){
     Intent intent = new Intent(NoteDetails.this, NoteImage.class);
@@ -86,7 +93,7 @@ public class NoteDetails extends AppCompatActivity {
     startActivityForResult(intent, 1);
   }
 
-  @OnClick(R.id.fav)
+  @OnClick({R.id.fav,R.id.fav2} )
   public void favNote(){
     Integer noteId = getIntent().getIntExtra("noteId", -1);
     UnificiencyClient client = new PythonAPIClient();
@@ -219,6 +226,14 @@ public class NoteDetails extends AppCompatActivity {
           noteRating.setText("Rank: " + 0);
           noteContent.setText("Content: \n" + content);
 
+          if(isCreator) {
+            menu.setVisibility(View.INVISIBLE);
+            menuForCreator.setVisibility(View.VISIBLE);
+          } else {
+            menu.setVisibility(View.VISIBLE);
+            menuForCreator.setVisibility(View.INVISIBLE);
+          }
+
           if(isFavorite)
             favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
           else
@@ -262,7 +277,6 @@ public class NoteDetails extends AppCompatActivity {
         Bundle extras = data.getExtras();
         String message;
 
-        //TODO: get id from note, need backend for this
         if (extras != null) {
           getNoteById(extras.getInt("noteId"));
           message = extras.getString("saveSuccess");

@@ -138,7 +138,7 @@
             </RelativeLayout>
 
             <com.github.clans.fab.FloatingActionMenu
-                android:id="@+id/pmenu"
+                android:id="@+id/menuForCreator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -167,7 +167,7 @@
                     android:id="@+id/edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_edit"
+                    android:src="@drawable/ic_mode_edit_white_48dp"
                     fab:fab_label="@string/edit"
                     fab:fab_colorNormal="@color/lmugreen"
                     fab:fab_colorPressed="@color/lmugreen"
@@ -176,6 +176,34 @@
 
                 <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/fav_star"
+                    fab:fab_label="@string/fav"
+                    fab:fab_colorNormal="@color/lmugreen"
+                    fab:fab_colorPressed="@color/lmugreen"
+                    fab:fab_colorRipple="@color/lmugreen"
+                    />
+
+            </com.github.clans.fab.FloatingActionMenu>
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                fab:menu_icon="@drawable/pmenu"
+                fab:menu_colorNormal="@color/lmugreen"
+                fab:menu_colorPressed="@color/lmugreen"
+                fab:menu_colorRipple="@color/lmugreen"
+                >
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fav2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/fav_star"
