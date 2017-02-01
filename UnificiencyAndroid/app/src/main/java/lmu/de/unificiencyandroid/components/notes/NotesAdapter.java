@@ -24,6 +24,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     public TextView tvCourse;
     public TextView tvTitel;
+    public TextView tvFavs;
     public ImageView img;
     public View layout;
 
@@ -32,6 +33,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
       layout = view;
       tvCourse = (TextView) view.findViewById(R.id.note_course);
       tvTitel = (TextView) view.findViewById(R.id.note_title);
+      tvFavs = (TextView) view.findViewById(R.id.note_favs);
       img=(ImageView) view.findViewById(R.id.icon);
 
       this.mListener = listener;
@@ -79,7 +81,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     final Note note = mDataset.get(position);
     holder.tvCourse.setText(note.getTopic());
     holder.tvTitel.setText(note.getTitle());
+    holder.tvFavs.setText(note.getRating()+"");
     if(favorite_flag==Boolean.TRUE) holder.img.setBackgroundResource(R.drawable.favorite_note);
+
   }
 
   @Override
