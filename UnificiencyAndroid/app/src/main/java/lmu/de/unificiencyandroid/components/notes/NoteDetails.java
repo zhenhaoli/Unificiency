@@ -59,6 +59,9 @@ public class NoteDetails extends AppCompatActivity {
   @BindView(R.id.fav)
   FloatingActionButton favNote;
 
+  @BindView(R.id.fav2)
+  FloatingActionButton favNote2;
+
   @BindView(R.id.imageView)
   ImageView imageView;
 
@@ -106,6 +109,7 @@ public class NoteDetails extends AppCompatActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
           favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
+          favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " zum favorites hinzugefügt");
           isFavorite = true;
         }
@@ -128,6 +132,7 @@ public class NoteDetails extends AppCompatActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
           favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
+          favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " von favorites gelöscht");
           isFavorite = false;
         }
@@ -234,10 +239,14 @@ public class NoteDetails extends AppCompatActivity {
             menuForCreator.setVisibility(View.INVISIBLE);
           }
 
-          if(isFavorite)
+          if(isFavorite) {
             favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
-          else
+            favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
+          }
+          else {
             favNote.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
+            favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
+          }
 
 
           if(hasImage){
