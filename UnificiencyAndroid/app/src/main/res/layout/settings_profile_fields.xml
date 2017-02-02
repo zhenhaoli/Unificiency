@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/user" />
+                android:src="@drawable/ic_account_circle_black_24dp" />
 
             <TextView
                 android:id="@+id/name_account"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/ivContactItem1"
                 android:layout_toRightOf="@id/ivContactItem1"
-                android:text="Username"
+                android:text="Benutzername"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#727272" />
 
@@ -67,6 +67,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:checked="true"
                 android:padding="6dp"
+                android:visibility="invisible"
                 android:textOff=""
                 android:textOn="" />
 
@@ -86,8 +87,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/email"
-                android:visibility="invisible" />
+                android:src="@drawable/ic_email_black_24dp"
+                />
 
             <TextView
                 android:id="@+id/email_account"
@@ -124,6 +125,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:checked="false"
                 android:padding="6dp"
+                android:visibility="invisible"
                 android:textOff=""
                 android:textOn="" />
 
@@ -145,7 +147,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/major" />
+                android:src="@drawable/ic_local_library_black_24dp" />
 
             <TextView
                 android:id="@+id/major_account"
@@ -172,7 +174,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/ivContactItem3"
                 android:layout_toRightOf="@id/ivContactItem3"
-                android:text="Major"
+                android:text="Studiengang"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#727272" />
 
@@ -188,6 +190,7 @@
                 android:background="@drawable/placeholder"
                 android:checked="true"
                 android:padding="6dp"
+                android:visibility="invisible"
                 android:textOff=""
                 android:textOn="" />
 
