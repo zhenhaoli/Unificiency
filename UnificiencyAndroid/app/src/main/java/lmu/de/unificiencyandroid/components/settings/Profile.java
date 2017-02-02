@@ -112,7 +112,6 @@ public class Profile extends Fragment {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
         Logger.e(throwable.toString());
-        Message.fail(getContext(), throwable.toString());
       }
 
       @Override

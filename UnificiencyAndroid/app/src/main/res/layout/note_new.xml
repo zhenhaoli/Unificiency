@@ -111,8 +111,8 @@
     <LinearLayout
         android:id="@+id/note_photo"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:visibility="gone"
         android:padding="20dp">
 
@@ -125,8 +125,8 @@
 
         <ImageView
             android:id="@+id/note_Image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             />
     </LinearLayout>
 
