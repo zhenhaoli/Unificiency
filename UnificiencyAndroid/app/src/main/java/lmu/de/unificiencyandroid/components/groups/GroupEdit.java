@@ -43,6 +43,11 @@ public class GroupEdit extends AppCompatActivity {
   @BindView(R.id.my_toolbar)
   Toolbar toolbar;
 
+  @OnTextChanged(R.id.topic)
+  public void validateGroupTopic(){
+    Validate.requiredMinLength(topicTextInput, 2, getString(R.string.groups_new_group_error_name));
+  }
+
   @OnTextChanged(R.id.desc)
   public void validateGroupDescription(){
     Validate.requiredMinLength(descriptionTextInput, 9, getString(R.string.groups_new_group_error_description));
@@ -50,8 +55,9 @@ public class GroupEdit extends AppCompatActivity {
 
   @OnClick(R.id.save_edit)
   public void setGroupInfo() {
+    boolean groupTopicOk = Validate.requiredMinLength(topicTextInput, 2, getString(R.string.groups_new_group_error_name));
     boolean groupDescOk = Validate.requiredMinLength(descriptionTextInput, 9, getString(R.string.groups_new_group_error_description));
-    if(!groupDescOk) {
+    if(!groupTopicOk || !groupDescOk) {
       Message.fail(GroupEdit.this, getString(R.string.invalid_input));
       return;
     }

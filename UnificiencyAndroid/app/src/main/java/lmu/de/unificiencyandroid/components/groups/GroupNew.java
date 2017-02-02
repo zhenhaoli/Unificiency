@@ -36,7 +36,7 @@ public class GroupNew extends AppCompatActivity {
   Button createButton;
 
   @BindView(R.id.groups_new_group_topic)
-  TextInputLayout topic;
+  TextInputLayout inputLayoutTopic;
 
   @BindView(R.id.groups_new_group_description)
   TextInputLayout inputLayoutDesc;
@@ -53,6 +53,11 @@ public class GroupNew extends AppCompatActivity {
   @BindView(R.id.desc)
   TextInputEditText descEditText;
 
+  @OnTextChanged(R.id.topic)
+  public void validateGroupTopic(){
+    Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.groups_new_group_error_name));
+  }
+
   @OnTextChanged(R.id.name)
   public void validateGroupName(){
     Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
@@ -68,12 +73,13 @@ public class GroupNew extends AppCompatActivity {
     String name = this.inputLayoutName.getEditText().getText().toString();
     String description = this.inputLayoutDesc.getEditText().getText().toString();
     String password = this.password.getEditText().getText().toString();
-    String topic =  this.topic.getEditText().getText().toString();
+    String topic =  this.inputLayoutTopic.getEditText().getText().toString();
 
+    boolean groupTopicOk = Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.groups_new_group_error_name));
     boolean groupNameOk = Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
     boolean groupDescOk = Validate.requiredMinLength(inputLayoutDesc, 9, getString(R.string.groups_new_group_error_description));
 
-    if(groupNameOk && groupDescOk){
+    if(groupTopicOk && groupNameOk && groupDescOk){
 
       final RequestParams params = new RequestParams();
       params.put("topic_area", topic);
