@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
@@ -53,10 +54,13 @@ public class GroupsAll extends Fragment {
     avi.show();
     String authToken =  SharedPref.getDefaults("authToken", getContext());
 
+    final RequestParams params = new RequestParams();
+    params.put("isMember", false);
+
     UnificiencyClient client = new PythonAPIClient();
     client.addHeader("Authorization", authToken);
 
-    client.get("groups/lmu/", null, new JsonHttpResponseHandler() {
+    client.get("groups/lmu/", params, new JsonHttpResponseHandler() {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);

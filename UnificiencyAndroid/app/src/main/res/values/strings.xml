@@ -62,7 +62,7 @@
     <string name="addPhoto_new_note">Bild hinzufügen</string>
     <string name="notes_new_goupsName_spinner">Gruppname auswälhen:</string>
     <string name="note_detail">Notizdetail</string>
-    <string name="preview">Notizdetail</string>
+    <string name="preview">Notiz Vorschau</string>
     <string name="notes_new_note_topic">Topic eingeben</string>
     <string name="notes_new_note_create">Erstellen</string>
     <string name="notes_new_note_name">Notizenname eingeben</string>

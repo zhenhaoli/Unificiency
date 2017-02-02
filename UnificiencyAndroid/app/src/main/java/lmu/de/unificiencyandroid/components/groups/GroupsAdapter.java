@@ -2,7 +2,6 @@ package lmu.de.unificiencyandroid.components.groups;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,7 +84,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
           listener.onGroupClick(group);
         }
       });
-
     }
 
     public void onClick(View view) {

@@ -5,24 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.utils.ImageUtils;
 
 public class NotesGridAdapter extends BaseAdapter {
+
+  @BindView(R.id.topicTv)
+  TextView topicTv;
 
   @BindView(R.id.titleTv)
   TextView titleTv;
 
   @BindView(R.id.contentTv)
   TextView contentTv;
+
+  @BindView(R.id.imageIv)
+  ImageView imageIv;
 
   List<Note> notes;
   private Context mContext;
@@ -53,6 +58,8 @@ public class NotesGridAdapter extends BaseAdapter {
 
     View grid;
 
+    Note note = notes.get(position);
+
     if (convertView == null) {
       LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       grid = inflater.inflate(R.layout.notes_grid_card, null);
@@ -61,23 +68,20 @@ public class NotesGridAdapter extends BaseAdapter {
     }
 
     ButterKnife.bind(this, grid);
+    topicTv.setText("#" + note.getTopic());
+    titleTv.setText(note.getTitle());
 
-    titleTv.setText(notes.get(position).getTitle());
-    contentTv.setText(notes.get(position).getContent());
+    if(note.getHasImage()){
+      String imageUrl = "notes/" + note.getNoteId() + "?image=true";
+      ImageUtils.downloadToImageView(this.mContext, imageUrl, imageIv);
+      contentTv.setText("");
+    } else {
+      imageIv.setImageBitmap(null);
+      contentTv.setText(note.getContent());
+    }
 
-    //ImageView imageView = (ImageView)grid.findViewById(R.id.item_image);
 
-    ColorGenerator generator = ColorGenerator.MATERIAL;
-    String address = notes.get(position).getTitle();
-    TextDrawable drawable = TextDrawable.builder()
-        .beginConfig()
-        .fontSize(38)
-        .bold()
-        .toUpperCase()
-        .endConfig()
-        .buildRect(address, generator.getColor(address));
 
-    //imageView.setImageDrawable(drawable);
 
     return grid;
   }

@@ -107,7 +107,8 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
             String content = notesOfGroup.getJSONObject(i).getString("content");
             String createdBy = notesOfGroup.getJSONObject(i).getJSONObject("creator").getString("username");
             Integer rating = notesOfGroup.getJSONObject(i).getInt("favorite_count");
-            notesFromServer.add(new Note(id, topic, name, content, createdBy, rating));
+            Boolean hasImage = notesOfGroup.getJSONObject(i).getBoolean("has_image");
+            notesFromServer.add(new Note(id, topic, name, content, createdBy, rating, hasImage));
           }
 
           Collections.reverse(notesFromServer);

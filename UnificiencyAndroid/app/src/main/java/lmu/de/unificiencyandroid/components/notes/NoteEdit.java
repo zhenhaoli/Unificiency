@@ -134,8 +134,11 @@ public class NoteEdit extends AppCompatActivity {
           String name = noteJSON.getString("name");
           String content = noteJSON.getString("content");
           String createdBy = noteJSON.getJSONObject("creator").getString("username");
+          Integer rating = noteJSON.getInt("favorite_count");
+          Boolean isCreator = noteJSON.getBoolean("is_creator");
+          Boolean hasImage = noteJSON.getBoolean("has_image");
 
-          note = new Note(id, topic,name, content, createdBy, null);
+          note = new Note(id, topic,name, content, createdBy, rating, hasImage);
 
           topicTextInput.getEditText().setText(topic);
           nameTextInput.getEditText().setText(name);

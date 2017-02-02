@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,8 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -263,8 +262,8 @@ public class GroupDetails extends AppCompatActivity implements GroupPasswordEnte
       groupOption.setVisibility(View.INVISIBLE);
     }
 
-    this.groupName.setText(this.group.getName() + "[id: " + this.group.getId() + "]");
-    this.description.setText(this.group.getDescription());
+    this.groupName.setText(this.group.getName());
+    this.description.setText(this.group.getDescription() + "\n#" + this.group.getTopic());
     this.adapter = new GroupMemberAdapter(this, this.group.getMembers());
     this.memberList.setAdapter(this.adapter);
   }

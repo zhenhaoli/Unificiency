@@ -1,5 +1,6 @@
 package lmu.de.unificiencyandroid.components.notes;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -28,8 +29,15 @@ public class NoteImage extends AppCompatActivity  {
     setContentView(R.layout.note_image);
     ButterKnife.bind(this);
 
-    String imageUrl = getIntent().getExtras().getString("imageUrl");
-    ImageUtils.downloadToImageView(this, imageUrl, imgDisplay);
+    Bundle bundle = getIntent().getExtras();
+
+    if(bundle.getString("mode").equals("url")) {
+      String imageUrl = bundle.getString("imageUrl");
+      ImageUtils.downloadToImageView(this, imageUrl, imgDisplay);
+    } else {
+      Bitmap bitmap = getIntent().getParcelableExtra("image");
+      imgDisplay.setImageBitmap(bitmap);
+    }
 
     PhotoViewAttacher mAttacher = new PhotoViewAttacher(imgDisplay);
 

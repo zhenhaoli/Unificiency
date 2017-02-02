@@ -14,6 +14,7 @@ public class Note {
   private String content;
   private String createdBy;
   private Integer rating;
+  private Boolean hasImage;
 }
 
 

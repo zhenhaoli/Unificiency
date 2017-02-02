@@ -74,6 +74,7 @@ public class NoteDetails extends AppCompatActivity {
   @OnClick(R.id.imageView)
   public void fullscreenImage(){
     Intent intent = new Intent(NoteDetails.this, NoteImage.class);
+    intent.putExtra("mode", "url");
     intent.putExtra("imageUrl", imageUrl);
     startActivity(intent);
   }
@@ -223,7 +224,7 @@ public class NoteDetails extends AppCompatActivity {
           Boolean isCreator = noteJSON.getBoolean("is_creator");
           isFavorite = noteJSON.getBoolean("is_favorite");
 
-          note = new Note(id, topic,name, content, createdBy, rating);
+          note = new Note(id, topic,name, content, createdBy, rating, hasImage);
 
           noteTopic.setText("Vorlesung: " + topic);
           noteTitle.setText("Titel: " + name);

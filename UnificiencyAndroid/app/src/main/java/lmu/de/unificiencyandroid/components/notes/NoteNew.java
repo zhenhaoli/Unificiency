@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
+import fr.ganfra.materialspinner.MaterialSpinner;
 import id.zelory.compressor.Compressor;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
@@ -66,10 +67,7 @@ public class NoteNew extends AppCompatActivity {
   Button createButton;
 
   @BindView(R.id.spinner)
-  fr.ganfra.materialspinner.MaterialSpinner spinner;
-
-  @BindView(R.id.photo_new_note)
-  Button addPhoto;
+  MaterialSpinner spinner;
 
   @BindView(R.id.note_photo)
   LinearLayout note_photo_layout;
@@ -115,7 +113,7 @@ public class NoteNew extends AppCompatActivity {
     }
   }
 
-  @OnClick(R.id.photo_new_note)
+  @OnClick(R.id.camera_album)
   public void addPhoto(){
     note_photo_layout.setVisibility(View.VISIBLE);
     if(CheckCameraPermission())ImagePicker.pickImage(this, "Select your image:");
@@ -293,7 +291,6 @@ public class NoteNew extends AppCompatActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     noteImage = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
     note_Image.setImageBitmap(noteImage);
-    // TODO do something with the bitmap
   }
 
   /* restore back button functionality*/
