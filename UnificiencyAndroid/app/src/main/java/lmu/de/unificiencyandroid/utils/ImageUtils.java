@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +46,7 @@ public final class ImageUtils {
   public static void downloadToImageView(Context context, String imageUrl, ImageView imageView){
     Picasso.with(context)
         .load(baseUrl + imageUrl)
+        .memoryPolicy(MemoryPolicy.NO_CACHE)
         .networkPolicy(NetworkPolicy.NO_CACHE)
         .placeholder(R.drawable.placeholder)
         .error(R.drawable.error_loading)

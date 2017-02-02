@@ -68,7 +68,7 @@
     <string name="notes_new_note_name">Notizenname eingeben</string>
     <string name="notes_new_note_content">Notizinhalt eingeben</string>
     <string name="notes_new_note_password">Passwort eingeben (optional)</string>
-    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen.</string>
+    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen. Sie können bei Bedarf auch ein Foto von der Kamera bzw. Gallerie auswählen und zur Notiz hinzufügen.</string>
     <string name="notes_edit_note_information">Hier können Sie diese Notiz bearbeiten.</string>
 
     <!-- Settings and Eidt -->

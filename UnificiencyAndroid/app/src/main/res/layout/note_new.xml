@@ -1,8 +1,8 @@
 <LinearLayout android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,130 +14,130 @@
             <!-- Content here -->
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar_note"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:fitsSystemWindows="true"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/my_toolbar_note"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageView
-            android:id="@+id/camera_album"
-            android:layout_width="40dp"
-            android:layout_height="33dp"
-            android:backgroundTint="@color/white"
-            android:background="@drawable/camera"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            />
-    </android.support.v7.widget.Toolbar>
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+                <ImageView
+                    android:id="@+id/camera_album"
+                    android:layout_width="40dp"
+                    android:layout_height="33dp"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/camera"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    />
+            </android.support.v7.widget.Toolbar>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/notes_new_note_information"
-            android:layout_marginBottom="12dp"/>
-
-        <fr.ganfra.materialspinner.MaterialSpinner
-            android:id="@+id/spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:ms_multiline="false"
-            app:ms_enableFloatingLabel="true"
-            app:ms_enableErrorLabel="false"
-            app:ms_floatingLabelText="Notiz für die Gruppe"
-            app:ms_alignLabels="false"
-           />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/notes_new_new_topic">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/topic"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="@string/notes_new_note_topic" />
+                android:padding="20dp">
 
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/notes_new_note_name">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notes_new_note_information"
+                    android:layout_marginBottom="20dp"/>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/name"
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_multiline="false"
+                    app:ms_enableFloatingLabel="true"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_floatingLabelText="Notiz für die Gruppe"
+                    app:ms_alignLabels="false"
+                    />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/notes_new_new_topic">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="@string/notes_new_note_topic" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/notes_new_note_name">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="@string/notes_new_note_name" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/notes_new_note_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    xmlns:android="http://schemas.android.com/apk/res/android">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:hint="@string/notes_new_note_content" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/note_photo"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preview"
+                    android:layout_marginBottom="12dp"/>
+
+                <ImageView
+                    android:id="@+id/note_Image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:layout_margin="20dp"
+                android:background="@color/lmugreen"
+                android:textColor="@color/white"
+                android:id="@+id/notes_new_note_create"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="@string/notes_new_note_name" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/notes_new_note_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="@string/notes_new_note_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/note_photo"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:padding="20dp">
-
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/preview"
-            android:layout_marginBottom="12dp"/>
-
-        <ImageView
-            android:id="@+id/note_Image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
-    </LinearLayout>
-
-    <Button
-        android:layout_margin="20dp"
-        android:background="@color/lmugreen"
-        android:textColor="@color/white"
-        android:id="@+id/notes_new_note_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/notes_new_note_create"/>
+                android:text="@string/notes_new_note_create"/>
 
         </LinearLayout>
     </ScrollView>
