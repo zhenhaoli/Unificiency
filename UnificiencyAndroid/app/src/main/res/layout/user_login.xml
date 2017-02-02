@@ -73,11 +73,12 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:visibility="invisible"
+        android:layout_marginTop="-50dp"
         gpb:type="folding_circles"/>
 
 
     <LinearLayout
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="105dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
         android:layout_width="match_parent"
