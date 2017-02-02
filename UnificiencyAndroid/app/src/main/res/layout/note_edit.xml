@@ -1,6 +1,7 @@
 <LinearLayout android:orientation="vertical"
               android:layout_height="match_parent"
               android:layout_width="match_parent"
+              xmlns:gpb="http://schemas.android.com/apk/res-auto"
               xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -12,6 +13,7 @@
         android:elevation="4dp"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
+        xmlns:gpb="http://schemas.android.com/apk/res-auto"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -41,6 +43,15 @@
                 android:hint="@string/notes_new_note_topic" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
+            android:id="@+id/google_progress_editNote"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="-50dp"
+            gpb:type="folding_circles"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/name"
