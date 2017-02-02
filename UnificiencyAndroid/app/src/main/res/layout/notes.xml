@@ -38,7 +38,8 @@
                   android:gravity="center"
                   android:padding="6dp"
                   android:clipToPadding="false"
-                  android:scrollbarStyle="outsideOverlay"/>
+                  android:scrollbarStyle="outsideOverlay"
+                    android:background="@color/grey_100"/>
 
 
         <android.support.design.widget.FloatingActionButton

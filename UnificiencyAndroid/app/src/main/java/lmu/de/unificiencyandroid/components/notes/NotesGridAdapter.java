@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class NotesGridAdapter extends BaseAdapter {
 
   @BindView(R.id.imageIv)
   ImageView imageIv;
+
+  @BindView(R.id.ratingBar)
+  RatingBar ratingBar;
 
   List<Note> notes;
   private Context mContext;
@@ -78,6 +82,16 @@ public class NotesGridAdapter extends BaseAdapter {
     } else {
       imageIv.setImageBitmap(null);
       contentTv.setText(note.getContent());
+    }
+
+    if(note.getRating() >= 0 ){
+      ratingBar.setVisibility(View.VISIBLE);
+      ratingBar.setNumStars(note.getRating());
+      ratingBar.setRating(note.getRating());
+    } else {
+      ratingBar.setVisibility(View.INVISIBLE);
+      ratingBar.setNumStars(0);
+      ratingBar.setRating(0);
     }
 
 

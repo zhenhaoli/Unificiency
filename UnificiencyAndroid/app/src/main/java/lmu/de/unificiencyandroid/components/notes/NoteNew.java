@@ -37,6 +37,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -48,6 +49,8 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class NoteNew extends AppCompatActivity {
 
@@ -73,7 +76,17 @@ public class NoteNew extends AppCompatActivity {
   LinearLayout note_photo_layout;
 
   @BindView(R.id.note_Image)
-  ImageView note_Image;
+  ImageView noteImageIv;
+
+  @OnTextChanged(R.id.topic)
+  public void checkTopic(){
+    validateTopic();
+  }
+
+  @OnTextChanged(R.id.name)
+  public void checkName(){
+    validateName();
+  }
 
   Bitmap noteImage;
 
@@ -121,6 +134,13 @@ public class NoteNew extends AppCompatActivity {
 
   @OnClick(R.id.notes_new_note_create)
   public void uploadNote(){
+
+    if(!validateName() || !validateTopic() ) {
+      Message.fail(NoteNew.this, getString(R.string.invalid_input));
+      return;
+    }
+
+
     Integer groupId = groupsNamesIdMap.get(spinner.getSelectedItem());
 
     String name = this.name.getEditText().getText().toString();
@@ -290,7 +310,8 @@ public class NoteNew extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     noteImage = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-    note_Image.setImageBitmap(noteImage);
+    noteImageIv.setImageBitmap(noteImage);
+    PhotoViewAttacher mAttacher = new PhotoViewAttacher(noteImageIv);
   }
 
   /* restore back button functionality*/
@@ -304,6 +325,14 @@ public class NoteNew extends AppCompatActivity {
       default:{return super.onOptionsItemSelected(item);}
 
     }
+  }
+
+  public boolean validateName(){
+    return Validate.requiredMinLength(name, 2, getString(R.string.there_letters_min));
+  }
+
+  public boolean validateTopic() {
+    return Validate.requiredMinLength(topic, 2, getString(R.string.there_letters_min));
   }
 
 }

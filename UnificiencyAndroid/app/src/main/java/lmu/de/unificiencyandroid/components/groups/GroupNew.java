@@ -55,12 +55,12 @@ public class GroupNew extends AppCompatActivity {
 
   @OnTextChanged(R.id.topic)
   public void validateGroupTopic(){
-    Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.groups_new_group_error_name));
+    Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.there_letters_min));
   }
 
   @OnTextChanged(R.id.name)
   public void validateGroupName(){
-    Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
+    Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.there_letters_min));
   }
 
   @OnTextChanged(R.id.desc)
@@ -75,8 +75,8 @@ public class GroupNew extends AppCompatActivity {
     String password = this.password.getEditText().getText().toString();
     String topic =  this.inputLayoutTopic.getEditText().getText().toString();
 
-    boolean groupTopicOk = Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.groups_new_group_error_name));
-    boolean groupNameOk = Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.groups_new_group_error_name));
+    boolean groupTopicOk = Validate.requiredMinLength(inputLayoutTopic, 2, getString(R.string.there_letters_min));
+    boolean groupNameOk = Validate.requiredMinLength(inputLayoutName, 2, getString(R.string.there_letters_min));
     boolean groupDescOk = Validate.requiredMinLength(inputLayoutDesc, 9, getString(R.string.groups_new_group_error_description));
 
     if(groupTopicOk && groupNameOk && groupDescOk){

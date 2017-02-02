@@ -45,7 +45,7 @@ public class GroupEdit extends AppCompatActivity {
 
   @OnTextChanged(R.id.topic)
   public void validateGroupTopic(){
-    Validate.requiredMinLength(topicTextInput, 2, getString(R.string.groups_new_group_error_name));
+    Validate.requiredMinLength(topicTextInput, 2, getString(R.string.there_letters_min));
   }
 
   @OnTextChanged(R.id.desc)
@@ -55,7 +55,7 @@ public class GroupEdit extends AppCompatActivity {
 
   @OnClick(R.id.save_edit)
   public void setGroupInfo() {
-    boolean groupTopicOk = Validate.requiredMinLength(topicTextInput, 2, getString(R.string.groups_new_group_error_name));
+    boolean groupTopicOk = Validate.requiredMinLength(topicTextInput, 2, getString(R.string.there_letters_min));
     boolean groupDescOk = Validate.requiredMinLength(descriptionTextInput, 9, getString(R.string.groups_new_group_error_description));
     if(!groupTopicOk || !groupDescOk) {
       Message.fail(GroupEdit.this, getString(R.string.invalid_input));

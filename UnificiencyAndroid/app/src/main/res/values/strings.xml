@@ -52,7 +52,7 @@
     <string name="groups_new_group_topic">Topic eingeben</string>
     <string name="groups_new_group_description">Gruppenbeschreibung eingeben</string>
     <string name="groups_new_group_password">Passwort eingeben (optional)</string>
-    <string name="groups_new_group_error_name">Bitte mindestens 3 Zeichen eingeben!</string>
+
     <string name="groups_new_group_error_description">Bitte mindestens 10 Zeichen eingeben!</string>
     <string name="groups_edit_group_save">Speichern</string>
     <string name="groups_edit_group_information">Hier können Sie die Beschreibung und Zweck der Gruppe anpassen.</string>
@@ -72,7 +72,7 @@
     <string name="notes_edit_note_information">Hier können Sie diese Notiz bearbeiten.</string>
 
     <!-- Settings and Eidt -->
-    <string name="setting_hint">Hier können Sie Ihr Nickname and Studiengang verändern und speichern.</string>
+    <string name="setting_hint">Hier können Sie die Benachrichtigungen einstellen.</string>
     <string name="edit_hint">Hier können Sie Ihr Profile editieren und speichern. Durch Drucken des Bilds können Sie Ihr ProfileBild ändern.</string>
     <string name="toolbar_edit_profile">Profile editieren</string>
     <string name="toolbar_edit_note">Notiz editieren</string>
@@ -94,5 +94,6 @@
     <string name="yes">Ja</string>
     <string name="cancel">Abbrechen</string>
     <string name="invalid_input">Ihre Eingaben sind fehlerhaft</string>
+    <string name="there_letters_min">Bitte mindestens 3 Zeichen eingeben!</string>
 
 </resources>
