@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@color/grey_100">
 
+    <!--
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="fill_parent"
@@ -16,146 +17,111 @@
             android:layout_margin="12dp"
             card_view:cardCornerRadius="5dp"
             card_view:contentPadding="5dp">
-
-            <RelativeLayout
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-               >
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/placeholder"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FF000000"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="20dp"/>
+-->
 
 
-                <ImageView
-                    android:id="@+id/img_account"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="70dp"
-                    android:src="@drawable/user"
-                    android:layout_below="@id/profile_image"
-                    />
 
-                <TextView
-                    android:id="@+id/name_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@id/img_account"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="16.0sp" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/tools"
+        android:background="@color/lmugreen"
+        android:gravity="center"
+        >
 
-                <ImageView
-                    android:id="@+id/img_account_email"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@id/img_account"
-                    android:layout_marginLeft="80dp"
-                    android:src="@drawable/email" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/placeholder"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"/>
 
-                <TextView
-                    android:id="@+id/email_account"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/img_account"
-                    android:layout_toRightOf="@id/img_account_email"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="16.0sp" />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/img_account_major"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="80dp"
-                    android:layout_below="@id/img_account_email"
-                    android:src="@drawable/major"
-                    />
+    <RelativeLayout
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
 
-                <TextView
-                    android:id="@+id/major_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_below="@id/img_account_email"
-                    android:layout_toRightOf="@id/img_account_major"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="16.0sp" />
+        <TextView
+            android:id="@+id/name_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
 
-                <ImageView
-                    android:id="@+id/img_stars"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/major_account"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="70dp"
-                    android:src="@drawable/stars"
-                    />
+            android:layout_marginLeft="10dp"
+            android:textSize="16.0sp" />
+            android:src="@drawable/email" />
 
-                <TextView
-                    android:id="@+id/stars_nummber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@id/major_account"
-                    android:layout_toRightOf="@id/img_stars"
-                    android:drawablePadding="10.0dip"
-                    android:includeFontPadding="false"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="16.0sp" />
+        <TextView
+            android:id="@+id/email_account"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="16.0sp" />
 
 
-                <ImageView
-                    android:id="@+id/img_notes"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/major_account"
-                    android:layout_toRightOf="@id/stars_nummber"
-                    android:src="@drawable/note"
-                    />
+            />
 
-                <TextView
-                    android:id="@+id/notes_nummber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@id/major_account"
-                    android:layout_toRightOf="@id/img_notes"
-                    android:drawablePadding="10.0dip"
-                    android:includeFontPadding="false"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="16.0sp" />
+        <TextView
+            android:id="@+id/major_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="16.0sp" />
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/edit_floating_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="16dp"
-                    android:src="@drawable/ic_mode_edit_white_48dp"
-                    android:clickable="true"
-                    />
 
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/stars_nummber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/major_account"
+            android:drawablePadding="10.0dip"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"
+            android:textSize="16.0sp" />
 
+
+
+        <TextView
+            android:id="@+id/notes_nummber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/major_account"
+            android:drawablePadding="10.0dip"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"
+            android:textSize="16.0sp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/edit_floating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_mode_edit_white_48dp"
+            android:clickable="true"
+            />
+
+    </RelativeLayout>
+    <!--
         </android.support.v7.widget.CardView>
-
+-->
 
 
 
