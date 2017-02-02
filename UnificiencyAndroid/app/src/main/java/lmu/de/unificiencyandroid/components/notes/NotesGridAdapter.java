@@ -90,7 +90,7 @@ public class NotesGridAdapter extends BaseAdapter {
       ratingBar.setNumStars(note.getRating());
       ratingBar.setRating(note.getRating());
     } else {
-      ratingBar.setVisibility(View.INVISIBLE);
+      ratingBar.setVisibility(View.GONE);
       ratingBar.setNumStars(0);
       ratingBar.setRating(0);
     }

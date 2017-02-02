@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -46,6 +47,9 @@ public class NoteDetails extends AppCompatActivity {
 
   @BindView(R.id.my_toolbar_noteDetials)
   Toolbar toolbar;
+
+  @BindView(R.id.ratingBar)
+  RatingBar ratingBar;
 
   @BindView(R.id.edit)
   FloatingActionButton editNote;
@@ -110,6 +114,7 @@ public class NoteDetails extends AppCompatActivity {
           favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star_show)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " zum favorites hinzugefügt");
           isFavorite = true;
+          setFavUI();
         }
 
         @Override
@@ -133,6 +138,7 @@ public class NoteDetails extends AppCompatActivity {
           favNote2.setImageDrawable(getApplicationContext().getResources().getDrawable((R.drawable.fav_star)));
           Message.success(NoteDetails.this, "Note " + note.getTitle() + " von favorites gelöscht");
           isFavorite = false;
+          setFavUI();
         }
 
         @Override
@@ -227,6 +233,9 @@ public class NoteDetails extends AppCompatActivity {
           noteTitle.setText(name);
           noteCreator.setText("von " + createdBy);
 
+
+         setFavUI();
+
           noteContent.setText(content);
 
           if(isCreator) {
@@ -308,6 +317,18 @@ public class NoteDetails extends AppCompatActivity {
       }
       default:{return super.onOptionsItemSelected(item);}
 
+    }
+  }
+
+  public void setFavUI(){
+    if(note.getRating() >= 0 ){
+      ratingBar.setVisibility(View.VISIBLE);
+      ratingBar.setNumStars(note.getRating());
+      ratingBar.setRating(note.getRating());
+    } else {
+      ratingBar.setVisibility(View.GONE);
+      ratingBar.setNumStars(0);
+      ratingBar.setRating(0);
     }
   }
 }

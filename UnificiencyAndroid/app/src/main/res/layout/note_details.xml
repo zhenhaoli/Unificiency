@@ -66,6 +66,7 @@
                     android:theme="@style/RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:isIndicator="true"
                     />
 
@@ -82,14 +83,17 @@
                     android:layout_below="@id/note_detail_creator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     />
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_below="@id/note_detail_content"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    />
 
                 <com.github.clans.fab.FloatingActionMenu
                     android:id="@+id/menuForCreator"
