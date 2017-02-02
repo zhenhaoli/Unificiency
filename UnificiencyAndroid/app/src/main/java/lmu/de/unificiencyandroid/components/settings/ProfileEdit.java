@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -36,7 +36,9 @@ import java.io.FileNotFoundException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.util.TextUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 import lmu.de.unificiencyandroid.R;
@@ -46,11 +48,12 @@ import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 public class ProfileEdit extends AppCompatActivity {
 
-  @BindView(R.id.save_edit)
-  Button save;
+  @BindView(R.id.profileEditDesc)
+  TextView profileEditDesc;
 
   @BindView(R.id.profile_image)
   CircleImageView profileImage;
@@ -58,14 +61,32 @@ public class ProfileEdit extends AppCompatActivity {
   @BindView(R.id.camera_album)
   ImageView camera_album;
 
-  @BindView(R.id.edit_nickname)
-  TextInputEditText nicknameEditText;
-
-  @BindView(R.id.edit_email)
-  TextInputEditText emailEditText;
-
   @BindView(R.id.edit_major)
   AutoCompleteTextView majorEditText;
+
+  @BindView(R.id.passwordWrapper)
+  TextInputLayout passwordWrapper;
+
+  @BindView(R.id.passwordConfirmWrapper)
+  TextInputLayout passwordConfirmWrapper;
+
+  @OnTextChanged(R.id.password)
+  public void validatePassword(){
+    checkPassword();
+  }
+
+  @OnTextChanged(R.id.passwordConfirm)
+  public void validatePasswordConfirm(){
+    checkPasswordConfirm();
+  }
+
+  public boolean checkPassword() {
+    return Validate.password(passwordWrapper, this);
+  }
+
+  public boolean checkPasswordConfirm() {
+    return Validate.password(passwordConfirmWrapper, this);
+  }
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
@@ -143,11 +164,9 @@ public class ProfileEdit extends AppCompatActivity {
 
           String nickName = response.getString("username");
           String majorName = response.getString("major");
-          String email = response.getString("email");
 
-          nicknameEditText.setText(nickName);
+          profileEditDesc.setText("Hallo " + nickName + " " + getString(R.string.edit_hint) );
           majorEditText.setText(majorName);
-          emailEditText.setText(email);
 
           getProfilePicture();
 
@@ -196,16 +215,22 @@ public class ProfileEdit extends AppCompatActivity {
     googleProgressBar.setVisibility(View.VISIBLE);
     LoadingUtils.enableView(layout, false);
 
-    String nickName = nicknameEditText.getText().toString();
+    if(!checkPassword() ||!checkPasswordConfirm()){
+      Message.fail(ProfileEdit.this, getString(R.string.invalid_input));
+      return;
+    }
+
     String majorName = majorEditText.getText().toString();
-    String email = emailEditText.getText().toString();
+    String password = passwordConfirmWrapper.getEditText().getText().toString();
 
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     final RequestParams params = new RequestParams();
-    params.put("username",nickName);
-    params.put("email",email);
+
     params.put("major",majorName);
+    if(!TextUtils.isBlank(password) && !TextUtils.isEmpty(password)){
+      params.put("password",password);
+    }
     params.setUseJsonStreamer(true);
 
     UnificiencyClient client = new PythonAPIClient();

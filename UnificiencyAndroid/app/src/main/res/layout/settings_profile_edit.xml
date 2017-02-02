@@ -26,6 +26,7 @@
         android:paddingBottom="0dp">
 
         <TextView
+            android:id="@+id/profileEditDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_hint"
@@ -61,49 +62,60 @@
             gpb:type="folding_circles"/>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/majorWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edit_nickname"
+            <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
+
+
+            <AutoCompleteTextView
+                android:id="@+id/edit_major"
+                android:nextFocusUp="@id/edit_major"
+                android:nextFocusLeft="@id/edit_major"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="Nickname" />
+                android:hint="@string/major"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/passwordWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/majorWrapper"
+            android:layout_marginTop="4dp">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/password"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-
+            android:id="@+id/passwordConfirmWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:android="http://schemas.android.com/apk/res/android">
+            android:layout_below="@id/passwordWrapper"
+            android:layout_marginTop="4dp">
 
-
-                <AutoCompleteTextView
-                    android:id="@+id/edit_major"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textAutoComplete"
-                    android:hint="@string/major"/>
-
-
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edit_email"
+            <EditText
+                android:id="@+id/passwordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="Email" />
+                android:inputType="textPassword"
+                android:hint="@string/password_confirm"/>
 
         </android.support.design.widget.TextInputLayout>
 

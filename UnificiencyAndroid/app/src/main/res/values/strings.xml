@@ -47,7 +47,7 @@
     <!--  Group -->
     <string name="groups_new_group_title">Neue Gruppe erstellen</string>
     <string name="groups_new_group_create">Erstellen</string>
-    <string name="groups_new_group_information">Hier können Sie eine neue Lerngruppe erstellen. Wenn sie kein Passwort eingeben kann jeder der Gruppe beitreten.</string>
+    <string name="groups_new_group_information">Hier kannst du eine neue Lerngruppe erstellen. Wenn du kein Passwort eingibst, kann jeder der Gruppe beitreten.</string>
     <string name="groups_new_group_groupname">Gruppenname eingeben</string>
     <string name="groups_new_group_topic">Topic eingeben</string>
     <string name="groups_new_group_description">Gruppenbeschreibung eingeben</string>
@@ -55,7 +55,7 @@
 
     <string name="groups_new_group_error_description">Bitte mindestens 10 Zeichen eingeben!</string>
     <string name="groups_edit_group_save">Speichern</string>
-    <string name="groups_edit_group_information">Hier können Sie die Beschreibung und Zweck der Gruppe anpassen.</string>
+    <string name="groups_edit_group_information">Hier kannst du die Beschreibung und Topic der Gruppe anpassen.</string>
 
     <!-- Notes -->
     <string name="notes_new_note_title">Neue Notiz erstellen</string>
@@ -68,12 +68,12 @@
     <string name="notes_new_note_name">Notizenname eingeben</string>
     <string name="notes_new_note_content">Notizinhalt eingeben</string>
     <string name="notes_new_note_password">Passwort eingeben (optional)</string>
-    <string name="notes_new_note_information">Hier können Sie eine neue Notiz erstellen. Sie können bei Bedarf auch ein Foto von der Kamera bzw. Gallerie auswählen und zur Notiz hinzufügen.</string>
-    <string name="notes_edit_note_information">Hier können Sie diese Notiz bearbeiten.</string>
+    <string name="notes_new_note_information">Hier kannst du eine neue Notiz erstellen. Du kannst bei Bedarf auch ein Foto von der Kamera bzw. Gallerie auswählen und zur Notiz hinzufügen.</string>
+    <string name="notes_edit_note_information">Hier kannst du diese Notiz bearbeiten.</string>
 
     <!-- Settings and Eidt -->
-    <string name="setting_hint">Hier können Sie die Benachrichtigungen einstellen.</string>
-    <string name="edit_hint">Hier können Sie Ihr Profile editieren und speichern. Durch Drucken des Bilds können Sie Ihr ProfileBild ändern.</string>
+    <string name="setting_hint">Hier kannst du die Benachrichtigungen einstellen.</string>
+    <string name="edit_hint">, hier kannst du deine Profile aktualisieren. Lass die Passwörter Felder leer, wenn du sie nicht ändern willst.</string>
     <string name="toolbar_edit_profile">Profile editieren</string>
     <string name="toolbar_edit_note">Notiz editieren</string>
     <string name="toolbar_edit_group">Gruppe editieren</string>
@@ -93,7 +93,7 @@
     <string name="remove">Löschen</string>
     <string name="yes">Ja</string>
     <string name="cancel">Abbrechen</string>
-    <string name="invalid_input">Ihre Eingaben sind fehlerhaft</string>
+    <string name="invalid_input">Eingaben sind fehlerhaft. Bitte nochmal überprüfen!</string>
     <string name="there_letters_min">Bitte mindestens 3 Zeichen eingeben!</string>
 
 </resources>

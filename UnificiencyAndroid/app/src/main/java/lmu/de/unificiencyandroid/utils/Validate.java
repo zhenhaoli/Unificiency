@@ -35,7 +35,7 @@ public final class Validate {
 
   public static Boolean password(TextInputLayout textInputLayout, Context context) {
     String input = (textInputLayout.getEditText().getText().toString());
-    boolean validPassword =  !TextUtils.isEmpty(input) && input.length() > 5;
+    boolean validPassword =  TextUtils.isEmpty(input) || input.length() > 5;
     String errorMessage = context.getString(R.string.validation_password);
 
     updateUI(textInputLayout, validPassword, errorMessage);
