@@ -50,7 +50,9 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     String topic = group.getTopic();
     holder.groupNameTextView.setText(name);
     if(group.isHasPassword()){
-     holder.groupNameTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_https_blue_grey_500_18dp, 0);
+      holder.lock.setVisibility(View.VISIBLE);
+    } else {
+      holder.lock.setVisibility(View.INVISIBLE);
     }
     holder.groupTopicTextView.setText("#" + topic);
     //make colored circle with text
@@ -71,11 +73,13 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     public TextView groupTopicTextView;
     public TextView groupNameTextView;
     public ImageView groupFirtCharsImageView;
+    public ImageView lock;
     public ViewHolderGroups(View itemView) {
       super(itemView);
       this.groupNameTextView = (TextView) itemView.findViewById(R.id.group_name);
       this.groupTopicTextView = (TextView) itemView.findViewById(R.id.group_topic);
       this.groupFirtCharsImageView = (ImageView) itemView.findViewById(R.id.group_name_first_chars);
+     this.lock = (ImageView) itemView.findViewById(R.id.lock);
     }
 
     public void bind(final Group group, final OnGroupItemClickListener listener) {
