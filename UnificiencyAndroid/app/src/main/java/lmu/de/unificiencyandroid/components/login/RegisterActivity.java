@@ -30,8 +30,7 @@ import lmu.de.unificiencyandroid.utils.Validate;
 
 public class RegisterActivity extends AuthActivity {
 
-  //TODO: Load this from CSV OR DB, instead matching begin only match anyword in between too
-  String[] majors ={"Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
+  String[] majors ={"Medizin", "Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
 
   @BindView(R.id.register)
   Button createAccountButton;

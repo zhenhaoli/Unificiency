@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -17,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -64,7 +65,7 @@ public class ProfileEdit extends AppCompatActivity {
   TextInputEditText emailEditText;
 
   @BindView(R.id.edit_major)
-  TextInputEditText majorEditText;
+  AutoCompleteTextView majorEditText;
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
@@ -76,11 +77,8 @@ public class ProfileEdit extends AppCompatActivity {
   GoogleProgressBar googleProgressBar;
 
   Bitmap profileBitmap;
-
-  String[] filePathColumn;
-  Uri selectedImage;
-
-  final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE=2;
+  
+  String[] majors ={"Medizin", "Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
 
   @OnClick(R.id.save_edit)
   public void save(){
@@ -304,6 +302,13 @@ public class ProfileEdit extends AppCompatActivity {
     ButterKnife.bind(this);
 
     setupToolbar();
+
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>
+        (this,android.R.layout.select_dialog_item,majors);
+    majorEditText.setThreshold(1);
+    majorEditText.setAdapter(adapter);
+
+
     getUserInfo();
 
     ImagePicker.setMinQuality(600, 600);

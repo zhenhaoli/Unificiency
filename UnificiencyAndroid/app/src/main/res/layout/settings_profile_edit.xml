@@ -80,12 +80,15 @@
             android:layout_height="wrap_content"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edit_major"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="Studiengang" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_major"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete"
+                    android:hint="@string/major"/>
+
+
 
         </android.support.design.widget.TextInputLayout>
 
