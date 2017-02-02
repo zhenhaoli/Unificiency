@@ -55,6 +55,9 @@ public class Profile extends Fragment {
   @BindView(R.id.profile_image)
   CircleImageView profileImage;
 
+  @BindView(R.id.layout)
+  View layout;
+
   @OnClick(R.id.edit_floating_button)
   public void startEditProfile() {
     Intent intent= new Intent(getContext(), ProfileEdit.class);
@@ -140,7 +143,18 @@ public class Profile extends Fragment {
 
     getUserInfo();
 
+
     return view;
+  }
+
+  @Override
+  public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    if (isVisibleToUser) {
+      layout.setVisibility(View.INVISIBLE);
+    } else {
+      layout.setVisibility(View.INVISIBLE);
+    }
   }
 
   @Override
