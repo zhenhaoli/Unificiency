@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mvc.imagepicker.ImagePicker;
@@ -47,6 +48,7 @@ import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.ImageUtils;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
@@ -77,6 +79,12 @@ public class NoteNew extends AppCompatActivity {
 
   @BindView(R.id.note_Image)
   ImageView noteImageIv;
+
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress_newNote)
+  GoogleProgressBar googleProgressBar;
 
   @OnTextChanged(R.id.topic)
   public void checkTopic(){
@@ -164,6 +172,7 @@ public class NoteNew extends AppCompatActivity {
       }
     }
 
+    showLoad(true);
     UnificiencyClient client = new PythonAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -179,6 +188,7 @@ public class NoteNew extends AppCompatActivity {
         intent.putExtra("success", "Note erfolgreich erstellt!");
         setResult(Activity.RESULT_OK,intent);
         finish();
+        showLoad(false);
       }
 
       @Override
@@ -191,6 +201,7 @@ public class NoteNew extends AppCompatActivity {
         }
 
         Message.fail(NoteNew.this, errMsg);
+        showLoad(false);
       }
     });
   }
@@ -204,6 +215,7 @@ public class NoteNew extends AppCompatActivity {
     final RequestParams params = new RequestParams();
     params.put("name", name);
 
+    showLoad(true);
     UnificiencyClient client = new NodeAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -212,10 +224,12 @@ public class NoteNew extends AppCompatActivity {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         Logger.json(response.toString());
+        showLoad(false);
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         Logger.e(errorResponse.toString());
+        showLoad(false);
       }
     });
   }
@@ -243,6 +257,7 @@ public class NoteNew extends AppCompatActivity {
     final RequestParams params = new RequestParams();
     params.put("isMember", true);
 
+    showLoad(true);
     UnificiencyClient client = new PythonAPIClient();
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -275,6 +290,7 @@ public class NoteNew extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         setDefaultGroupNameToSpinner();
+        showLoad(false);
       }
 
       @Override
@@ -286,6 +302,7 @@ public class NoteNew extends AppCompatActivity {
           Logger.e(e, "Exception");
         }
         Message.fail(NoteNew.this, errMsg);
+        showLoad(false);
       }
     });
   }
@@ -333,6 +350,11 @@ public class NoteNew extends AppCompatActivity {
 
   public boolean validateTopic() {
     return Validate.requiredMinLength(topic, 2, getString(R.string.there_letters_min));
+  }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
   }
 
 }

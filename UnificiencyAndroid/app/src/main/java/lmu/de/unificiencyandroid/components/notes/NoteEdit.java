@@ -8,7 +8,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -24,6 +26,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
@@ -41,6 +44,12 @@ public class NoteEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar)
   Toolbar toolbar;
+
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress_editNote)
+  GoogleProgressBar googleProgressBar;
 
   @OnTextChanged(R.id.topicText)
   public void checkTopic(){
@@ -78,6 +87,7 @@ public class NoteEdit extends AppCompatActivity {
     params.put("groupId", groupId);
     params.setUseJsonStreamer(true);
 
+    showLoad(true);
     UnificiencyClient client = new NodeAPIClient();
 
     client.addHeader("Authorization", authToken);
@@ -98,6 +108,7 @@ public class NoteEdit extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
+        showLoad(false);
       }
 
       @Override
@@ -109,6 +120,7 @@ public class NoteEdit extends AppCompatActivity {
           Logger.e(e, "Exception");
         }
         Message.fail(NoteEdit.this, errmsg);
+        showLoad(false);
       }
 
       @Override
@@ -116,6 +128,7 @@ public class NoteEdit extends AppCompatActivity {
         super.onFailure(statusCode, headers, responseString, throwable);
         Message.fail(NoteEdit.this, responseString);
         Logger.e(responseString);
+        showLoad(false);
       }
     });
   }
@@ -136,6 +149,7 @@ public class NoteEdit extends AppCompatActivity {
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
     UnificiencyClient client = new PythonAPIClient();
 
+    showLoad(true);
     client.addHeader("Authorization", authToken);
     client.get("notes/" + noteId, null, new JsonHttpResponseHandler() {
       @Override
@@ -161,6 +175,7 @@ public class NoteEdit extends AppCompatActivity {
           Logger.e(e, "Exception");
           Message.fail(NoteEdit.this, e.toString());
         }
+        showLoad(false);
       }
 
       @Override
@@ -173,6 +188,7 @@ public class NoteEdit extends AppCompatActivity {
           Logger.e(e, "Exception");
         }
         Message.fail(NoteEdit.this, errmsg);
+        showLoad(false);
       }
     });
 
@@ -205,6 +221,11 @@ public class NoteEdit extends AppCompatActivity {
 
   public boolean validateTopic() {
     return Validate.requiredMinLength(topicTextInput, 2, getString(R.string.there_letters_min));
+  }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
   }
 
 }

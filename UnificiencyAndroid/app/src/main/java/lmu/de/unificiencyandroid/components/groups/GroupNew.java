@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -26,6 +27,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
@@ -49,6 +51,12 @@ public class GroupNew extends AppCompatActivity {
 
   @BindView(R.id.name)
   TextInputEditText nameEditText;
+
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress_newGroup)
+  GoogleProgressBar googleProgressBar;
 
   @BindView(R.id.desc)
   TextInputEditText descEditText;
@@ -90,6 +98,7 @@ public class GroupNew extends AppCompatActivity {
       }
       params.setUseJsonStreamer(true);
 
+      showLoad(true);
       UnificiencyClient client = new PythonAPIClient();
       String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -103,6 +112,7 @@ public class GroupNew extends AppCompatActivity {
           intent.putExtra("createGroupSuccess", "Gruppe erfolgreich erstellt!");
           setResult(Activity.RESULT_OK,intent);
           finish();
+          showLoad(false);
         }
 
         @Override
@@ -115,11 +125,13 @@ public class GroupNew extends AppCompatActivity {
           }
 
           Message.fail(GroupNew.this, errMsg);
+          showLoad(false);
         }
       });
 
     } else {
       Message.fail(GroupNew.this, getString(R.string.invalid_input));
+      showLoad(false);
     }
   }
 
@@ -163,5 +175,10 @@ public class GroupNew extends AppCompatActivity {
       default:{return super.onOptionsItemSelected(item);}
     }
 
+  }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
   }
 }
