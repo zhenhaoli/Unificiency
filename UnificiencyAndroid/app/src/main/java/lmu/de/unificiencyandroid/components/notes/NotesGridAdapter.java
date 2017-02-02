@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.github.siyamed.shapeimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class NotesGridAdapter extends BaseAdapter {
   TextView contentTv;
 
   @BindView(R.id.imageIv)
-  ImageView imageIv;
+  RoundedImageView imageIv;
 
   @BindView(R.id.ratingBar)
   RatingBar ratingBar;
