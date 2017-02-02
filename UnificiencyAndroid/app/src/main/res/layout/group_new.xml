@@ -60,15 +60,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
-            android:id="@+id/google_progress_newGroup"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_marginTop="-50dp"
-            gpb:type="folding_circles"/>
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/groups_new_group_description"
             android:layout_width="match_parent"
@@ -83,6 +74,15 @@
                 android:hint="@string/groups_new_group_description" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
+            android:id="@+id/google_progress_newGroup"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="-50dp"
+            gpb:type="folding_circles"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -106,6 +106,7 @@
         android:id="@+id/groups_new_group_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:text="@string/groups_new_group_create"/>
 
 
