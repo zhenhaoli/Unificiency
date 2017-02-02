@@ -117,8 +117,7 @@ public class RegisterActivity extends AuthActivity {
 
   private void doPost(String username, String nickname, String password, String major) {
 
-    googleProgressBar.setVisibility(View.VISIBLE);
-    LoadingUtils.enableView(layout, false);
+    showLoad(true);
 
     final RequestParams params = new RequestParams();
     params.put("email", username);
@@ -138,8 +137,7 @@ public class RegisterActivity extends AuthActivity {
         passwordWrapper.setErrorEnabled(false);
         passwordConfirmWrapper.setErrorEnabled(false);
 
-        LoadingUtils.enableView(layout, true);
-        googleProgressBar.setVisibility(View.INVISIBLE);
+        showLoad(false);
 
         Intent returnToLoginIntent = new Intent();
         returnToLoginIntent.putExtra("registerSuccess", "Registrierung erfolgreich");
@@ -161,8 +159,7 @@ public class RegisterActivity extends AuthActivity {
         }
         Message.fail(RegisterActivity.this, failMsg);
 
-        LoadingUtils.enableView(layout, true);
-        googleProgressBar.setVisibility(View.INVISIBLE);
+        showLoad(false);
       }
     });
 
@@ -198,6 +195,11 @@ public class RegisterActivity extends AuthActivity {
 
   boolean passwordsEqual(String password, String passwordConfirm) {
     return password.equals(passwordConfirm);
+  }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
   }
 
 }
