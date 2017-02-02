@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
+import id.zelory.compressor.Compressor;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -86,17 +87,17 @@ public class NoteNew extends AppCompatActivity {
   @TargetApi(Build.VERSION_CODES.M)
   public boolean CheckCameraPermission() {
     int permissionCheckRead = ContextCompat.checkSelfPermission(getApplicationContext(),
-            android.Manifest.permission.CAMERA);
+        android.Manifest.permission.CAMERA);
     if (permissionCheckRead != PackageManager.PERMISSION_GRANTED) {
       if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-              android.Manifest.permission.CAMERA)) {
+          android.Manifest.permission.CAMERA)) {
         ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.CAMERA},
-                REQUEST_PERMISSION_CAMERA_CODE);
+            new String[]{android.Manifest.permission.CAMERA},
+            REQUEST_PERMISSION_CAMERA_CODE);
       } else {
         ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.CAMERA},
-                REQUEST_PERMISSION_CAMERA_CODE);
+            new String[]{android.Manifest.permission.CAMERA},
+            REQUEST_PERMISSION_CAMERA_CODE);
       }
       return false;
     } else
@@ -105,9 +106,9 @@ public class NoteNew extends AppCompatActivity {
 
   @Override
   public void onRequestPermissionsResult(
-          int requestCode,
-          String permissions[],
-          int[] grantResults) {
+      int requestCode,
+      String permissions[],
+      int[] grantResults) {
     switch (requestCode) {
       case REQUEST_PERMISSION_CAMERA_CODE:
         ImagePicker.pickImage(this, "Select your image:");
@@ -136,9 +137,10 @@ public class NoteNew extends AppCompatActivity {
 
     if(noteImage != null){
       File noteImageFile = ImageUtils.bitmapToFile(this, noteImage);
-      Logger.d("Note Image File: " + noteImageFile);
+      File imageToUpload = Compressor.getDefault(this).compressToFile(noteImageFile);
+      Logger.d("Note Image File: " + imageToUpload);
       try {
-        params.put("file", noteImageFile);
+        params.put("file", imageToUpload);
       } catch(FileNotFoundException e) {
         Logger.e(e, "File not found: ");
       }

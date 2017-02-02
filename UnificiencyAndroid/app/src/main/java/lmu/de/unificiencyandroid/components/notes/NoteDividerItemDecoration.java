@@ -7,6 +7,4 @@ public class NoteDividerItemDecoration extends DividerItemDecoration {
     public NoteDividerItemDecoration(Context context, int orientation) {
         super(context, orientation);
     }
-
-
 }

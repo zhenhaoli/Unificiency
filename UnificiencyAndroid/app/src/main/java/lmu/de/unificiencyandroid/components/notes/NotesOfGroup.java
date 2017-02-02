@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.orhanobut.logger.Logger;
@@ -24,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
@@ -31,12 +33,13 @@ import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
-import static java.lang.Boolean.TRUE;
-
 public class NotesOfGroup extends Fragment implements NoteClickListener {
 
-  @BindView(R.id.notes_public_recycler_view)
-  RecyclerView mRecyclerView;
+  //@BindView(R.id.notes_public_recycler_view)
+ // RecyclerView mRecyclerView;
+
+  @BindView(R.id.gridView)
+  GridView gridView;
 
   @BindView(R.id.avi)
   com.wang.avi.AVLoadingIndicatorView avi;
@@ -110,6 +113,11 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
           Collections.reverse(notesFromServer);
           notes = notesFromServer;
 
+          NotesGridAdapter adapter= new NotesGridAdapter(getContext(), notes);
+
+          gridView.setAdapter(adapter);
+
+          /*
           // use a linear layout manager
           mLayoutManager = new LinearLayoutManager(getContext());
           mRecyclerView.setLayoutManager(mLayoutManager);
@@ -123,6 +131,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
           // specify an itemDecoration
           mDividerItemDecoration = new NoteDividerItemDecoration(mRecyclerView.getContext(), (new LinearLayoutManager(NotesOfGroup.this.getContext())).getOrientation());
           mRecyclerView.addItemDecoration(mDividerItemDecoration);
+          */
 
         } catch (Exception e) {
           Logger.e(e, "Exception");
@@ -144,6 +153,19 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
 
     startActivityForResult(notesDetails, 1);
   }
+
+  @OnItemClick(R.id.gridView)
+  public void onNoteClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+  {
+    Note note = notes.get(position);
+    Intent notesDetails = new Intent(getActivity(), NoteDetails.class);
+    notesDetails.putExtra("noteId", note.getNoteId());
+    notesDetails.putExtra("groupId", groupId);
+
+    startActivityForResult(notesDetails, 1);
+  }
+
+
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {

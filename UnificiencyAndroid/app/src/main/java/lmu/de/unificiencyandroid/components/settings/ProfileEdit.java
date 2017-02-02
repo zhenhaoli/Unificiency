@@ -15,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
-import lmu.de.unificiencyandroid.Manifest;
+import id.zelory.compressor.Compressor;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
@@ -253,9 +252,11 @@ public class ProfileEdit extends AppCompatActivity {
     final RequestParams params = new RequestParams();
 
     File profilePic = ImageUtils.bitmapToFile(this, profileBitmap);
-    Logger.d("Profile Pic File: " + profilePic);
+    File imageToUpload = Compressor.getDefault(this).compressToFile(profilePic);
+
+    Logger.d("Profile Pic File: " + imageToUpload);
     try {
-      params.put("file", profilePic);
+      params.put("file", imageToUpload);
     } catch(FileNotFoundException e) {
       Logger.e(e, "File not found: ");
     }
