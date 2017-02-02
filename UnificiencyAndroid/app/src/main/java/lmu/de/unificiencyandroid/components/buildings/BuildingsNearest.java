@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -99,6 +100,20 @@ public class BuildingsNearest extends BuildingsBase {
       Message.fail(getContext(), e.toString());
     }
   }
+
+
+  public void onRequestPermissionsResult(int requestCode,  String[] permissions, int[] grantResults) {
+    Logger.d("REQ LOCATION " + requestCode);
+    if (requestCode == REQUEST_LOCATION) {
+      if(grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+        getLocation();
+      }
+    } else {
+      Message.fail(getContext(), "GPS Funktionen deaktiviert. Bitte unter Einstellung -> Apps Permission vergeben");
+    }
+  }
+
 
   public void fetchData(double lat, double lng) {
     avi.show();

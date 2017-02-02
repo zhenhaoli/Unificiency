@@ -69,7 +69,7 @@ public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.toolbar_edit_profile)
   Toolbar toolbar;
-  
+
   @BindView(R.id.layout)
   View layout;
 
@@ -77,7 +77,7 @@ public class ProfileEdit extends AppCompatActivity {
   GoogleProgressBar googleProgressBar;
 
   Bitmap profileBitmap;
-  
+
   String[] majors ={"Medizin", "Informatik", "Medieninformatik", "Mensch-Maschine-Interaktion", "Physik", "Mathematik", "Statistik", "Jura", "Betriebswirtschaft"};
 
   @OnClick(R.id.save_edit)
@@ -89,17 +89,17 @@ public class ProfileEdit extends AppCompatActivity {
   @TargetApi(Build.VERSION_CODES.M)
   public boolean CheckCameraPermission() {
     int permissionCheckRead = ContextCompat.checkSelfPermission(getApplicationContext(),
-            android.Manifest.permission.CAMERA);
+        android.Manifest.permission.CAMERA);
     if (permissionCheckRead != PackageManager.PERMISSION_GRANTED) {
       if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-              android.Manifest.permission.CAMERA)) {
+          android.Manifest.permission.CAMERA)) {
         ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.CAMERA},
-                REQUEST_PERMISSION_CAMERA_CODE);
+            new String[]{android.Manifest.permission.CAMERA},
+            REQUEST_PERMISSION_CAMERA_CODE);
       } else {
         ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.CAMERA},
-                REQUEST_PERMISSION_CAMERA_CODE);
+            new String[]{android.Manifest.permission.CAMERA},
+            REQUEST_PERMISSION_CAMERA_CODE);
       }
       return false;
     } else
@@ -108,9 +108,9 @@ public class ProfileEdit extends AppCompatActivity {
 
   @Override
   public void onRequestPermissionsResult(
-          int requestCode,
-          String permissions[],
-          int[] grantResults) {
+      int requestCode,
+      String permissions[],
+      int[] grantResults) {
     switch (requestCode) {
       case REQUEST_PERMISSION_CAMERA_CODE:
         ImagePicker.pickImage(this, "Select your image:");
@@ -127,7 +127,7 @@ public class ProfileEdit extends AppCompatActivity {
 
     googleProgressBar.setVisibility(View.VISIBLE);
     LoadingUtils.enableView(layout, false);
-    
+
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
     final RequestParams params = new RequestParams();
@@ -297,7 +297,7 @@ public class ProfileEdit extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     setContentView(R.layout.settings_profile_edit);
     ButterKnife.bind(this);
 
