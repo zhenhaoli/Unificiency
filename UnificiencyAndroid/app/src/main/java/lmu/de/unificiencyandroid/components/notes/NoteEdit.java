@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -19,6 +18,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.NodeAPIClient;
@@ -26,6 +26,7 @@ import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
+import lmu.de.unificiencyandroid.utils.Validate;
 
 public class NoteEdit extends AppCompatActivity {
 
@@ -41,13 +42,25 @@ public class NoteEdit extends AppCompatActivity {
   @BindView(R.id.toolbar)
   Toolbar toolbar;
 
-  @BindView(R.id.save)
-  Button save;
+  @OnTextChanged(R.id.topicText)
+  public void checkTopic(){
+    validateTopic();
+  }
+
+  @OnTextChanged(R.id.nameText)
+  public void checkName(){
+    validateName();
+  }
 
   Note note;
 
   @OnClick(R.id.save)
   public void updateNote() {
+
+    if(!validateName() || !validateTopic() ) {
+      Message.fail(NoteEdit.this, getString(R.string.invalid_input));
+      return;
+    }
 
     String topic = topicTextInput.getEditText().getText().toString();
     String name = nameTextInput.getEditText().getText().toString();
@@ -184,6 +197,14 @@ public class NoteEdit extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
       }
     }
+  }
+
+  public boolean validateName(){
+    return Validate.requiredMinLength(nameTextInput, 2, getString(R.string.there_letters_min));
+  }
+
+  public boolean validateTopic() {
+    return Validate.requiredMinLength(topicTextInput, 2, getString(R.string.there_letters_min));
   }
 
 }
