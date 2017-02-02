@@ -42,11 +42,14 @@ public class Profile extends Fragment {
   @BindView(R.id.major_account)
   TextView majorAccount;
 
-  @BindView(R.id.stars_nummber)
-  TextView starsNummber;
+  @BindView(R.id.groupsCount)
+  TextView groupsCountTv;
 
-  @BindView(R.id.notes_nummber)
-  TextView notesNummber;
+  @BindView(R.id.notesCount)
+  TextView notesCountTv;
+
+  @BindView(R.id.favCount)
+  TextView favCountTv;
 
   @BindView(R.id.profile_image)
   ImageView profileImage;
@@ -74,6 +77,7 @@ public class Profile extends Fragment {
           String nickName = response.getString("username");
           String majorName = response.getString("major");
           String email = response.getString("email");
+
           Integer groupsCount = response.getInt("groups_count");
           Integer notesCount = response.getInt("notes_count");
           Integer favCount = response.getInt("favorite_notes_count");
@@ -81,8 +85,11 @@ public class Profile extends Fragment {
           nameAccount.setText(nickName);
           majorAccount.setText(majorName);
           emailAccount.setText(email);
-          starsNummber.setText(groupsCount.toString());
-          notesNummber.setText(notesCount.toString());
+
+          groupsCountTv.setText(groupsCount.toString());
+          notesCountTv.setText(notesCount.toString());
+          favCountTv.setText(favCount.toString());
+
           getProfilePicture();
 
         } catch (Exception e) {
