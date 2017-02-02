@@ -50,6 +50,8 @@ import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
 
+import static lmu.de.unificiencyandroid.R.id.passwordConfirm;
+
 public class ProfileEdit extends AppCompatActivity {
 
   @BindView(R.id.profileEditDesc)
@@ -75,7 +77,7 @@ public class ProfileEdit extends AppCompatActivity {
     checkPassword();
   }
 
-  @OnTextChanged(R.id.passwordConfirm)
+  @OnTextChanged(passwordConfirm)
   public void validatePasswordConfirm(){
     checkPasswordConfirm();
   }
@@ -128,10 +130,7 @@ public class ProfileEdit extends AppCompatActivity {
   }
 
   @Override
-  public void onRequestPermissionsResult(
-      int requestCode,
-      String permissions[],
-      int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     switch (requestCode) {
       case REQUEST_PERMISSION_CAMERA_CODE:
         ImagePicker.pickImage(this, "Select your image:");
@@ -146,8 +145,7 @@ public class ProfileEdit extends AppCompatActivity {
 
   public void getUserInfo() {
 
-    googleProgressBar.setVisibility(View.VISIBLE);
-    LoadingUtils.enableView(layout, false);
+    showLoad(true);
 
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -195,8 +193,7 @@ public class ProfileEdit extends AppCompatActivity {
         Logger.e(throwable.toString());
         Message.fail(ProfileEdit.this, throwable.toString());
 
-        LoadingUtils.enableView(layout, true);
-        googleProgressBar.setVisibility(View.INVISIBLE);
+        showLoad(false);
       }
 
       @Override
@@ -204,16 +201,12 @@ public class ProfileEdit extends AppCompatActivity {
         Logger.d(file.toString());
         profileImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
 
-        LoadingUtils.enableView(layout, true);
-        googleProgressBar.setVisibility(View.INVISIBLE);
+        showLoad(false);
       }
     });
   }
 
   public void setUserInfo() {
-
-    googleProgressBar.setVisibility(View.VISIBLE);
-    LoadingUtils.enableView(layout, false);
 
     if(!checkPassword() ||!checkPasswordConfirm()){
       Message.fail(ProfileEdit.this, getString(R.string.invalid_input));
@@ -221,7 +214,18 @@ public class ProfileEdit extends AppCompatActivity {
     }
 
     String majorName = majorEditText.getText().toString();
-    String password = passwordConfirmWrapper.getEditText().getText().toString();
+    String password = passwordWrapper.getEditText().getText().toString();
+    String passwordConfirm = passwordConfirmWrapper.getEditText().getText().toString();
+
+    Logger.d("password " + password);
+    Logger.d("passwordConfirm  " + passwordConfirm);
+
+    if(!password.equals(passwordConfirm)){
+      passwordWrapper.setError(getString(R.string.validation_passwords_equal));
+      return;
+    }
+
+    showLoad(true);
 
     String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
 
@@ -244,8 +248,7 @@ public class ProfileEdit extends AppCompatActivity {
           if(profileBitmap != null) {
             setUserProfileImage();
           } else {
-            LoadingUtils.enableView(layout, true);
-            googleProgressBar.setVisibility(View.INVISIBLE);
+            showLoad(false);
             backToProfileAfterSuccess();
           }
         } catch (Exception e) {
@@ -260,8 +263,7 @@ public class ProfileEdit extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
-        LoadingUtils.enableView(layout, true);
-        googleProgressBar.setVisibility(View.INVISIBLE);
+        showLoad(false);
         Message.fail(ProfileEdit.this, errmsg);
       }
     });
@@ -363,6 +365,12 @@ public class ProfileEdit extends AppCompatActivity {
     profileBitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
     profileImage.setImageBitmap(profileBitmap);
   }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
+  }
+
 
 
 }

@@ -86,8 +86,7 @@ public class LoginActivity extends AuthActivity {
 
     if(validInput) {
 
-      googleProgressBar.setVisibility(View.VISIBLE);
-      LoadingUtils.enableView(layout, false);
+      showLoad(true);
 
       final RequestParams params = new RequestParams();
       params.put("email", username);
@@ -118,8 +117,7 @@ public class LoginActivity extends AuthActivity {
           Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
           startActivity(loginIntent);
 
-          googleProgressBar.setVisibility(View.INVISIBLE);
-          LoadingUtils.enableView(layout, true);
+          showLoad(false);
         }
 
         @Override
@@ -128,8 +126,9 @@ public class LoginActivity extends AuthActivity {
           if(errMsg.contains("user")||errMsg.contains("password")){
             errMsg = "Email oder Passwort falsch!";
           }
+
           Message.fail(LoginActivity.this, errMsg);
-          LoadingUtils.enableView(layout, true);
+          showLoad(false);
         }
       });
     }
@@ -166,5 +165,10 @@ public class LoginActivity extends AuthActivity {
       }
     }
   }//onActivityResult
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
+  }
 
 }
