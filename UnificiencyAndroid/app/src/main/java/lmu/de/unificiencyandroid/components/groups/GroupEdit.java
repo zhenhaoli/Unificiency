@@ -8,8 +8,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
@@ -24,6 +26,7 @@ import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.LoadingUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import lmu.de.unificiencyandroid.utils.Validate;
@@ -42,6 +45,12 @@ public class GroupEdit extends AppCompatActivity {
 
   @BindView(R.id.my_toolbar)
   Toolbar toolbar;
+
+  @BindView(R.id.layout)
+  View layout;
+
+  @BindView(R.id.google_progress_editGroup)
+  GoogleProgressBar googleProgressBar;
 
   @OnTextChanged(R.id.topic)
   public void validateGroupTopic(){
@@ -74,6 +83,7 @@ public class GroupEdit extends AppCompatActivity {
     params.put("description", description);
     params.setUseJsonStreamer(true);
 
+    showLoad(true);
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
@@ -92,6 +102,7 @@ public class GroupEdit extends AppCompatActivity {
         } catch (Exception e) {
           Logger.e(e, "Exception");
         }
+        showLoad(false);
       }
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -102,6 +113,7 @@ public class GroupEdit extends AppCompatActivity {
           Logger.e(e, "Exception");
         }
         Message.fail(GroupEdit.this, errmsg);
+        showLoad(false);
       }
 
       @Override
@@ -109,6 +121,7 @@ public class GroupEdit extends AppCompatActivity {
         super.onFailure(statusCode, headers, responseString, throwable);
         Message.fail(GroupEdit.this, responseString);
         Logger.e(responseString);
+        showLoad(false);
       }
     });
   }
@@ -122,6 +135,7 @@ public class GroupEdit extends AppCompatActivity {
     }
 
     String authToken = SharedPref.getDefaults("authToken", getApplicationContext());
+    showLoad(true);
     UnificiencyClient client = new PythonAPIClient();
 
     client.addHeader("Authorization", authToken);
@@ -140,6 +154,7 @@ public class GroupEdit extends AppCompatActivity {
         }
         topicTextInput.getEditText().setText(topic);
         descriptionTextInput.getEditText().setText(description);
+        showLoad(false);
       }
     });
   }
@@ -174,5 +189,10 @@ public class GroupEdit extends AppCompatActivity {
       }
       default:{return super.onOptionsItemSelected(item);}
     }
+  }
+
+  public void showLoad(boolean show){
+    googleProgressBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    LoadingUtils.enableView(layout, !show);
   }
 }
