@@ -44,9 +44,6 @@ public class NoteDetails extends AppCompatActivity {
   @BindView(R.id.note_detail_content)
   TextView noteContent;
 
-  @BindView(R.id.note_detail_rating)
-  TextView noteRating;
-
   @BindView(R.id.my_toolbar_noteDetials)
   Toolbar toolbar;
 
@@ -226,11 +223,11 @@ public class NoteDetails extends AppCompatActivity {
 
           note = new Note(id, topic,name, content, createdBy, rating, hasImage);
 
-          noteTopic.setText("Vorlesung: " + topic);
-          noteTitle.setText("Titel: " + name);
-          noteCreator.setText("Ersteller: " + createdBy);
-          noteRating.setText("Favorisiert von: " + rating + " Studis");
-          noteContent.setText("Content: \n" + content);
+          noteTopic.setText("#" + topic);
+          noteTitle.setText(name);
+          noteCreator.setText("von " + createdBy);
+
+          noteContent.setText(content);
 
           if(isCreator) {
             menu.setVisibility(View.INVISIBLE);
