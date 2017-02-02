@@ -117,7 +117,7 @@ public class RegisterActivity extends AuthActivity {
 
   private void doPost(String username, String nickname, String password, String major) {
 
-    googleProgressBar.setVisibility(View.VISIBLE);
+    googleProgressBar.setVisibility(View.GONE);
     LoadingUtils.enableView(layout, false);
 
     final RequestParams params = new RequestParams();
