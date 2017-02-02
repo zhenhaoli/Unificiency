@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -25,9 +24,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import de.hdodenhof.circleimageview.CircleImageView;
 import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.Message;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 
@@ -52,7 +53,7 @@ public class Profile extends Fragment {
   TextView favCountTv;
 
   @BindView(R.id.profile_image)
-  ImageView profileImage;
+  CircleImageView profileImage;
 
   @OnClick(R.id.edit_floating_button)
   public void startEditProfile() {
@@ -90,7 +91,8 @@ public class Profile extends Fragment {
           notesCountTv.setText(notesCount.toString());
           favCountTv.setText(favCount.toString());
 
-          getProfilePicture();
+          ImageUtils.downloadToImageView(getContext(), "users/images/", profileImage);
+         // getProfilePicture();
 
         } catch (Exception e) {
           Logger.e(e, "Exception");
