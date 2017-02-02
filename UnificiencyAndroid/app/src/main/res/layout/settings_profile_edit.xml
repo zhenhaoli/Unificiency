@@ -45,8 +45,8 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/placeholder"
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"
@@ -59,6 +59,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:visibility="invisible"
+            android:layout_marginTop="-50dp"
             gpb:type="folding_circles"/>
 
         <android.support.design.widget.TextInputLayout
