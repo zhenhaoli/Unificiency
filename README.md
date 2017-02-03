@@ -1,3 +1,5 @@
+Praktikum Mobile und Verteilte Systeme WS1617 @ LMU <3
+
 ## Unificiency
 
 Unificiency is an app to increase the collaborative studying by letting students creating study groups and exchanging notes easily. It also includes a location based suggestion for finding available rooms so students can quickly find a place to study together.
