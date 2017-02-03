@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cz.msebera.android.httpclient.Header;
 import lmu.de.unificiencyandroid.R;
+import lmu.de.unificiencyandroid.network.NodeAPIClient;
 import lmu.de.unificiencyandroid.network.PythonAPIClient;
 import lmu.de.unificiencyandroid.network.UnificiencyClient;
 import lmu.de.unificiencyandroid.utils.LoadingUtils;
@@ -113,6 +114,8 @@ public class GroupNew extends AppCompatActivity {
           setResult(Activity.RESULT_OK,intent);
           finish();
           showLoad(false);
+          tellMiddleAboutNewGroup();
+
         }
 
         @Override
@@ -133,6 +136,11 @@ public class GroupNew extends AppCompatActivity {
       Message.fail(GroupNew.this, getString(R.string.invalid_input));
       showLoad(false);
     }
+  }
+
+  public void tellMiddleAboutNewGroup(){
+    UnificiencyClient client = new NodeAPIClient();
+    client.post("groups/", null, null);
   }
 
   @Override
