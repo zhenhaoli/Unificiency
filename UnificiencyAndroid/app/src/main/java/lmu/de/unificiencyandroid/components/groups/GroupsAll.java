@@ -42,10 +42,10 @@ public class GroupsAll extends Fragment {
   BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
-      String message = intent.getStringExtra("Status");
+      String message = intent.getStringExtra("Message");
       if(message!=null) {
         bindGroupData();
-        Message.success(getContext(), message);
+        Message.success(getContext(), "Eine neue Lerngruppe wurde gegründet!");
       }
     }
   };
