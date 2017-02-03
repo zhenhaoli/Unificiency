@@ -23,11 +23,7 @@ let areas = [
 ];
 
 
-let names = ["multirooted", "bacchylides", "commotion", "pseudoresidential", "unsupportableness", "zigzagging", "ethnolinguistic", "roddy", "jujuy", "overurge", "spidery", "cyclometer", "unexpounded", "remediably", "rejoin", "cyphella", "telephoned", "graphotype", "constableship", "purport", "companionless", "outsin", "sovietising", "submersing", "cedalion", "three", "spokesman", "nos", "protoxide", "nabalism", "zoser", "octave", "misproduce", "dubiety", "wanter", "nonsympathy", "papulose", "reverberating", "nonobservational", "glencoe", "mechanicsville", "electrostrictive", "percurrent", "cantata", "kedushoth", "dauphin", "rivalrousness", "aldo", "gipsy", "unnigh", "briskly", "monarda", "rampingly", "thick", "yeti", "gimmal", "lobulated", "hylozoistic", "lymphangitis", "posthaste", "guayaquil", "paradigm", "uninterpretative", "barefacedly", "oversized", "poignantly", "fibrocement", "repatronize", "edhessa", "missionaries", "faradizing", "porkier", "unoverhauled", "nominalism", "shiftingness", "overpricing", "illiberality", "helpfully", "bathythermograph", "potch", "leghorn", "steeper", "nucleus", "kashruth", "trotskyism", "catchpoll", "wastingness", "reroll", "tucker", "recopy", "sizeableness", "petalody", "shopman", "grapelike", "likeliest", "barracker", "reproducibility", "trochoidally", "wagoner", "cornel"];
-
-
-
-
+let names = ["Gallon", "Stretch", "Sheep", "Modernize", "Rare", "Lean", "Situation", "Physical", "Bake", "Cord", "Stake", "Valid", "Depend", "Qualified", "Background", "Hot", "Hand", "Ally", "Casualty", "Inside"];
 
 names.forEach(function (name) {
 
@@ -38,7 +34,7 @@ names.forEach(function (name) {
     .headers({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3MiwiZXhwIjoxNDg3MTc2MzA1fQ.NUCZV85_yKgAt7jIZL-XpANI3ibwiBFJ1cJjYhpBqyI'
+      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMzQsImV4cCI6MTQ4ODY3NjQzM30.DKnpnEcFpyAysFGVx-5-8WJkPdo48bgF0_XY-QduSsA'
     })
 
 
