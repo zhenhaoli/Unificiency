@@ -72,7 +72,7 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
       String message = intent.getStringExtra("Message");
       if(message!=null) {
         getNotesOfGroup();
-        Message.success(getContext(), "Eine neue Notiz wurde gepostet!");
+        Message.success(getContext(), message);
       }
     }
   };
@@ -216,5 +216,5 @@ public class NotesOfGroup extends Fragment implements NoteClickListener {
     super.onDestroy();
     LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
   }
-  
+
 }
