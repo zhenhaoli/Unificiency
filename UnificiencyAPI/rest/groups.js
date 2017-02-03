@@ -32,6 +32,7 @@ module.exports = {
 
 
     app.post('/groups/', function(req, res) {
+      console.log('send new group info to clients');
         unirest
           .post(config.firebaseAPI)
           .headers(config.firebaseAPIKey)
