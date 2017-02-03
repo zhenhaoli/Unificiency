@@ -33,16 +33,17 @@ module.exports = {
 
     app.post('/groups/', function(req, res) {
       console.log('send new group info to clients');
-        unirest
-          .post(config.firebaseAPI)
-          .headers(config.firebaseAPIKey)
-          .send({
-            "to": "/topics/news",
-            "data": {
-              "message": 'new group was created',
-            }
-          })
-          .end()
+      unirest
+        .post(config.firebaseAPI)
+        .headers(config.firebaseAPIKey)
+        .send({
+          "to": "/topics/news",
+          "data": {
+            "message": 'new group was created',
+          }
+        })
+        .end();
+      res.status(200).send({message: 'ok'});
     });
 
 

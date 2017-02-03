@@ -140,7 +140,18 @@ public class GroupNew extends AppCompatActivity {
 
   public void tellMiddleAboutNewGroup(){
     UnificiencyClient client = new NodeAPIClient();
-    client.post("groups/", null, null);
+    client.post("groups/", null, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Logger.json(response.toString());
+        showLoad(false);
+      }
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Logger.e(errorResponse.toString());
+        showLoad(false);
+      }
+    }););
   }
 
   @Override
