@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.orhanobut.logger.Logger;
 
@@ -30,7 +31,7 @@ import lmu.de.unificiencyandroid.R;
 import lmu.de.unificiencyandroid.utils.Message;
 
 public abstract class BuildingsBase extends Fragment implements
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
   GoogleApiClient mGoogleApiClient;
   Location mLastLocation;
@@ -101,6 +102,8 @@ public abstract class BuildingsBase extends Fragment implements
   @Override
   public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
-
+  @Override
+  public void onLocationChanged(Location location) {
+  }
 }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -77,6 +78,11 @@ public class BuildingsNearest extends BuildingsBase {
   public void onConnected(@Nullable Bundle bundle) {
     super.onConnected(bundle);
     getLocation();
+  }
+
+  @Override
+  public void onLocationChanged(Location location) {
+    fetchData(location.getLatitude(), location.getLongitude());
   }
 
   public void getLocation(){
