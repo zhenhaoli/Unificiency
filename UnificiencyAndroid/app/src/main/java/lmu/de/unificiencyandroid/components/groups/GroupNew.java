@@ -146,12 +146,7 @@ public class GroupNew extends AppCompatActivity {
         Logger.json(response.toString());
         showLoad(false);
       }
-      @Override
-      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Logger.e(errorResponse.toString());
-        showLoad(false);
-      }
-    }););
+    });
   }
 
   @Override
