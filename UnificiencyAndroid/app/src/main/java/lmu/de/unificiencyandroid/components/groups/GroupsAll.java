@@ -1,11 +1,15 @@
 package lmu.de.unificiencyandroid.components.groups;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +38,17 @@ import static com.orhanobut.logger.Logger.e;
 
 
 public class GroupsAll extends Fragment {
+
+  BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      String message = intent.getStringExtra("Status");
+      if(message!=null) {
+        bindGroupData();
+        Message.success(getContext(), message);
+      }
+    }
+  };
 
   RecyclerView groupsRecyclerView;
   GroupsAdapter groupsAdapter;
@@ -145,6 +160,11 @@ public class GroupsAll extends Fragment {
     this.groupsRecyclerView.setVerticalScrollBarEnabled(true);
 
     bindGroupData();
+
+    LocalBroadcastManager.getInstance(getContext()).registerReceiver(
+        mMessageReceiver, new IntentFilter("ServerUpdates"));
+
+
     return view;
   }
 
@@ -175,6 +195,12 @@ public class GroupsAll extends Fragment {
   public void onResume() {
     super.onResume();
     bindGroupData();
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
   }
 
 }

@@ -31,17 +31,19 @@ module.exports = {
     });
 
 
-    app.post('/groups/:id/join', function(req, res) {
-      // notify group members new user joined
+    app.post('/groups/', function(req, res) {
+        unirest
+          .post(config.firebaseAPI)
+          .headers(config.firebaseAPIKey)
+          .send({
+            "to": "/topics/news",
+            "data": {
+              "message": 'new group was created',
+            }
+          })
+          .end()
     });
 
-    app.post('/groups/:id/leave', function(req, res) {
-      // notify group members member named xx left
-    });
-
-    app.put('/groups/:id', function(req, res) {
-      // notify group members user xx changed group info
-    });
 
   }
 };
