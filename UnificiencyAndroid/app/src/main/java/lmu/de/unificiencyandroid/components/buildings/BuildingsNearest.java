@@ -77,6 +77,7 @@ public class BuildingsNearest extends BuildingsBase {
   @Override
   public void onConnected(@Nullable Bundle bundle) {
     super.onConnected(bundle);
+    startLocationUpdates();
     getLocation();
   }
 
@@ -202,5 +203,16 @@ public class BuildingsNearest extends BuildingsBase {
     super.onDestroy();
     LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
   }
+
+  protected void startLocationUpdates() {
+    try {
+      LocationServices.FusedLocationApi.requestLocationUpdates(
+          mGoogleApiClient, mLocationRequest, this);
+    } catch (SecurityException e){
+      Message.fail(getContext(), e.toString());
+      Logger.e(e.toString());
+    }
+  }
+
 
 }

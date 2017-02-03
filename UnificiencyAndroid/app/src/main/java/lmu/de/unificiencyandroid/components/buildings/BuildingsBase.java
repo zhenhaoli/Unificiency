@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.orhanobut.logger.Logger;
 
@@ -33,8 +34,18 @@ import lmu.de.unificiencyandroid.utils.Message;
 public abstract class BuildingsBase extends Fragment implements
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+
+  static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+  static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+
+
+
   GoogleApiClient mGoogleApiClient;
   Location mLastLocation;
+  LocationRequest mLocationRequest;
+
+  Boolean mRequestingLocationUpdates;
+
 
   List<Building> buildings = new ArrayList<Building>();
   protected static Integer REQUEST_LOCATION = 101;
@@ -73,7 +84,14 @@ public abstract class BuildingsBase extends Fragment implements
     return null;
   }
 
-  public void setUpLocationServices(){
+  protected void createLocationRequest() {
+    mLocationRequest = new LocationRequest();
+    mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+    mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+    mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+  }
+
+  protected synchronized void setUpLocationServices(){
     if (mGoogleApiClient == null) {
       mGoogleApiClient = new GoogleApiClient.Builder(getContext())
           .addConnectionCallbacks(this)
@@ -81,6 +99,7 @@ public abstract class BuildingsBase extends Fragment implements
           .addApi(LocationServices.API)
           .build();
     }
+    createLocationRequest();
   }
 
   public void onStart() {
@@ -105,5 +124,7 @@ public abstract class BuildingsBase extends Fragment implements
   @Override
   public void onLocationChanged(Location location) {
   }
+
+
 }
 
