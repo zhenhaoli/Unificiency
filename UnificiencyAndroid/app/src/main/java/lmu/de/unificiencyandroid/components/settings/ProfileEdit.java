@@ -8,14 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -193,8 +191,6 @@ public class ProfileEdit extends AppCompatActivity {
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
         Logger.e(throwable.toString());
-        Message.fail(ProfileEdit.this, throwable.toString());
-
         showLoad(false);
       }
 

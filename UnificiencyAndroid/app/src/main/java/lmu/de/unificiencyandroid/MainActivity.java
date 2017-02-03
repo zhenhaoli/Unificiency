@@ -2,6 +2,8 @@ package lmu.de.unificiencyandroid;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -16,20 +18,32 @@ import android.view.MenuItem;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
+import id.zelory.compressor.Compressor;
 import lmu.de.unificiencyandroid.components.buildings.BuildingsTab;
 import lmu.de.unificiencyandroid.components.groups.GroupsTab;
 import lmu.de.unificiencyandroid.components.login.LoginActivity;
 import lmu.de.unificiencyandroid.components.notes.NotesTab;
 import lmu.de.unificiencyandroid.components.settings.Profile;
+import lmu.de.unificiencyandroid.network.PythonAPIClient;
+import lmu.de.unificiencyandroid.network.UnificiencyClient;
+import lmu.de.unificiencyandroid.utils.ImageUtils;
 import lmu.de.unificiencyandroid.utils.SharedPref;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -53,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    getProfilePicture();
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     JodaTimeAndroid.init(this);
@@ -159,4 +173,61 @@ public class MainActivity extends AppCompatActivity{
         .setNegativeButton(getString(R.string.cancel), null)
         .show();
   }
+
+  public void getProfilePicture() {
+    String authToken = SharedPref.getDefaults("authToken", this);
+
+    final RequestParams params = new RequestParams();
+
+    UnificiencyClient client = new PythonAPIClient();
+
+    client.addHeader("Authorization", authToken);
+    client.get("users/images/", params, new FileAsyncHttpResponseHandler(this) {
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+        Logger.e(throwable.toString());
+        setUserProfileImage();
+      }
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, File file) {
+        Logger.d(file.toString());
+      }
+    });
+  }
+
+  public void setUserProfileImage(){
+
+    String authToken =  SharedPref.getDefaults("authToken", getApplicationContext());
+
+    final RequestParams params = new RequestParams();
+
+    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.who_icon);
+    File profilePic = ImageUtils.bitmapToFile(this, bm);
+    File imageToUpload = Compressor.getDefault(this).compressToFile(profilePic);
+
+    Logger.d("Profile Pic File: " + imageToUpload);
+    try {
+      params.put("file", imageToUpload);
+    } catch(FileNotFoundException e) {
+      Logger.e(e, "File not found: ");
+    }
+
+    UnificiencyClient client = new PythonAPIClient();
+
+    client.addHeader("Authorization", authToken);
+    client.post("users/images/", params, new JsonHttpResponseHandler() {
+
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Logger.json(response.toString());
+      }
+      @Override
+      public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        Logger.e(errorResponse.toString());
+      }
+    });
+  }
+
+
 }
