@@ -157,8 +157,8 @@ public class GroupNew extends AppCompatActivity {
     setupToolbar();
 
     //TODO: remove this in prd
-    this.inputLayoutName.getEditText().setText("My Crew <3");
-    this.inputLayoutDesc.getEditText().setText("A very long long long inputLayoutDesc to pass this validation");
+   // this.inputLayoutName.getEditText().setText("My Crew <3");
+   // this.inputLayoutDesc.getEditText().setText("A very long long long inputLayoutDesc to pass this validation");
 
     this.createButton.setOnClickListener(new View.OnClickListener() {
       @Override
