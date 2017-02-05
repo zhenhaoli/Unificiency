@@ -1,6 +1,8 @@
 var unirest = require('unirest');
+fs = require('fs');
 
-var groups = [169, 171, 172];
+
+var groups = [1, 39, 41, 42, 43, 44];
 
 var names = [
   "Building API aufsetzen",
@@ -11,47 +13,56 @@ var names = [
   "Location aware",
   "Context Awareness",
   "Klausurtermin",
-  "Vortrag slides"
+  "Vortrag slides",
+  "Aufgabe2 von MMN","Übungen von ML","Aufgabe2 von MMN","Übungen von ML","MMI","KRR","MMI2","Übungen von ML","Wissenschaftliche Arbeit","Data Science","Python","Java","Javascript","C","C++","C#","Scala","Fotran","OpenMP","Julia","Spring Framework","Neural Netword","Deep learning","Data Mining","Verteilte System","Mobilkommunication","Data Struktur","Algorithmus","IT Management","VR","AR","MR","Web Design","Software entwickln","Medientechnik","3D Printing","Hardware","Automobil Praktikzum","Recent Data Science","Clustering","Classification","Unsupervised Training","Supervised Leraning","Reforcement Learning","Auto encode","DCGAN"
 ];
 
 var topics = [
+  "MSP",
+  "Proggen",
+  "Hacken",
+  "Hackathon",
+  "Lernen",
+  "Klausur",
+  "Party",
+  "Mathe",
+  "Java",
+  "JavaScript",
+  "Python",
+  "Machine Learning",
+  "Data Science",
+  "Stohastik",
+  "Jobs",
+  "Meetup",
+  "Essen",
+  "Android",
   "verteilte Systeme",
   "netzwerk",
   "mobile systeme"
 ];
 
-var contents = [
-  "hier schreiben wir was cooles",
-  "und da auch was cooles",
-  "sometimes you win, sometimes you lose",
-  "never give it up",
-  "always have a good time"
-];
 
 
 for(let group of groups){
   for(let name of names ){
     for(let topic of topics) {
-      for(let content of contents){
 
-        unirest.post('http://romue404.pythonanywhere.com/api/notes/' + group)
+        unirest.post('http://romue404.pythonanywhere.com/api/groups/' + groupId + '/notes/')
           .headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDYsImV4cCI6MTQ4NzQ1Mzc4Mn0.tiH1mntQLQMMmr-wzELfAij2D6UNqyYx6FUDLhs2jZ4'
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE0ODg5MDU5MTl9.C092k6aQsCQSsGZHdvEq3JDGp1fQzYQrlBrgWw5LPYQ'
           })
           .send({
             "name": name,
             "topic": topic ,
-            "content": content
+            "file": fs.readFileSync('./logo.gif')
           })
           .end(function (response) {
             console.log(response.body);
           });
 
 
-
-      }
     }
   }
 

@@ -23,26 +23,33 @@ let areas = [
 ];
 
 
-let names = ["Gallon", "Stretch", "Sheep", "Modernize", "Rare", "Lean", "Situation", "Physical", "Bake", "Cord", "Stake", "Valid", "Depend", "Qualified", "Background", "Hot", "Hand", "Ally", "Casualty", "Inside"];
+let names = ["Belt", "Wash", "Haircut", "Recession", "Forward", "Stem", "Story", "Lamp", "Whip", "Commitment", "Sheep", "Viable", "Corn", "Print", "Bulletin", "Smile", "Graze", "Rotate", "Beautiful", "Prospect"];
 
-names.forEach(function (name) {
+names.forEach(function (name, index) {
 
   let rnd = Math.floor((Math.random() * areas.length));
   let rnd2 = Math.floor((Math.random() * names.length));
-  let descriptions = (names.map( n => n + " " + areas[rnd])).map(d => d + " " +names[rnd2]);
+  let description = "Das ist die Beschreibung der Gruppe " + name + " für das Thema " + areas[rnd] + ". Wir sind eine tolle Gruppe! :) ";
+
+  var toSend = {
+    "topic_area": areas[rnd],
+    "name": name,
+    "description": description
+  };
+
+  if( !(index % 3) ){
+    toSend.password = "123456"
+  }
+
+
   unirest.post('http://romue404.pythonanywhere.com/api/groups/')
     .headers({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMzQsImV4cCI6MTQ4ODY3NjQzM30.DKnpnEcFpyAysFGVx-5-8WJkPdo48bgF0_XY-QduSsA'
+      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE0ODg5MDU5MTl9.C092k6aQsCQSsGZHdvEq3JDGp1fQzYQrlBrgWw5LPYQ'
     })
 
-
-    .send({
-      "topic_area": areas[rnd],
-      "name": name,
-      "description": descriptions[rnd2]
-    })
+    .send(toSend)
     .end(function (response) {
     });
 })
